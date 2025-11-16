@@ -1,8 +1,25 @@
-numpy
-matplotlib
-scikit-learn
-ipywidgets
-ipympl
-notebook
-jupyterlab
-jupyterlab_widgets
+# --- Python version ---
+python_version == "3.11"
+
+# --- Core scientific stack ---
+numpy == 1.26.4
+matplotlib == 3.8.4
+scikit-learn == 1.4.1.post1
+scipy == 1.13.0
+Pillow == 12.0.0
+
+# --- Jupyter environment ---
+notebook == 6.5.7
+jupyterlab == 3.6.8
+jupyterlab_widgets == 3.0.16
+ipykernel == 6.25.2
+nbconvert== 7.16.6
+
+# --- Widgets: Required for interactive demos ---
+ipywidgets == 8.1.8
+ipympl == 0.9.8
+widgetsnbextension == 4.0.15
+
+# --- Misc helpers ---
+tqdm== 4.67.1
+requests== 2.31.0
