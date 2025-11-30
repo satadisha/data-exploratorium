@@ -15085,7 +15085,7 @@ function GRADIENT_DESCENT(J, v, η):
   $$
   </span>
 <span class="fragment">
-  Starting at $\theta = (0.8, 0.8)$ with a step size of $\eta=0.1$, here we run the Gradient Descent algorithm for 20 steps.
+  Starting at $\theta^{(0)} = (0.8, 0.8)$ with a step size of $\eta=0.1$, here we run the Gradient Descent algorithm for 20 steps.
 
 <p>The value of $f$ at $\theta^{(20)}$ after 20 iterations is $1.7014 \times 10^{-4}$, which is quite close to the global minimum of 0.
 </p></span>
@@ -15135,12 +15135,12 @@ function GRADIENT_DESCENT(J, v, η):
 <!-- LEFT COLUMN -->
 <div style="flex: 1;">
 <h3 id="Choosing-a-good-step-size">Choosing a good step-size<a class="anchor-link" href="#Choosing-a-good-step-size">¶</a></h3><p><span class="fragment">The parameter learning rate $\eta$ determines the magnitude of the step taken in the direction of negative gradient.</span></p>
-<p><span class="fragment">For example, consider gradient descent on a function $f(x) = (x-5)^2$ starting at $x_0=10$, with learning rate $\eta=1$. The minima is at $x=5$. Is this a good learning rate?</span></p>
+<p><span class="fragment">For example, consider gradient descent on a function $f(x) = (x-5)^2$ starting at $x^{(0)}=10$, with learning rate $\eta=1$. The minima is at $x=5$. Is this a good learning rate?</span></p>
 <span class="fragment">
 <h4 style="color: blue; font-weight: bold; font-style: italic;">Your Turn</h4>
-What are the values of $x$ by the end of the first and second iterations of gradient descent?<br/>
+<p>What values do $x$ assume by the end of the first and second iterations of gradient descent: $x^{(1)}$ and $x^{(2)}$?<br/>
 What does that tell us about the learning rate?
-</span>
+</p></span>
 </div>
 <!-- RIGHT COLUMN -->
 <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
@@ -15169,23 +15169,23 @@ What does that tell us about the learning rate?
 </div>
 <div class="fragment">
 <p>Consider the convex function $f(x) = \frac{1}{2}x^2$ with a global minima at $x=0$.
-Start with $\eta = 0.1$, $x^{(0)}=1$, and use a decreasing sequence of learning rates.<br>
+Start with $\eta^{(0)} = 0.1$, $x^{(0)}=1$, and use a decreasing sequence of learning rates.<br>
 Do we reach the minima?</br></p>
 </div>
 <div class="fragment">
 <ol>
-<li>$\eta_{0}=0.1*1,\ \eta_{1}=0.1*\tfrac12,\ \eta_{2}=0.1*\tfrac14,\dots, \eta_{t}=0.1*\tfrac1{2^t}$</li>
-<li>$\eta_{0}=0.1*1,\ \eta_{1}=0.1*\tfrac12,\ \eta_{2}=0.1*\tfrac13,\dots, \eta_{t}=0.1*\tfrac1{t+1}$</li>
+<li>$\eta^{0}=0.1*1,\ \eta^{1}=0.1*\tfrac12,\ \eta^{2}=0.1*\tfrac14,\dots, \eta^{t}=0.1*\tfrac1{2^t}$</li>
+<li>$\eta^{0}=0.1*1,\ \eta^{1}=0.1*\tfrac12,\ \eta^{2}=0.1*\tfrac13,\dots, \eta^{t}=0.1*\tfrac1{t+1}$</li>
 </ol>
 </div>
 <div class="fragment">
 <p>With $\nabla f(x) = x$, we have the following Gradient Descent updates,
 $$\small \begin{aligned}
-x^1 = x^0 - \eta_{0}x^0 = (1-\eta_{0})x^0 \\
-x^2 = (1-\eta_{1})x^1 = (1-\eta_{1})(1-\eta_{0})x^0 \\
-x^t = (1-\eta_{t-1})\dots(1-\eta_{1})(1-\eta_{0})x^0 = x^{(0)} \prod_{k=0}^{t-1} (1-\eta_{k})
+x^1 = x^0 - \eta^{0}x^0 = (1-\eta^{0})x^0 \\
+x^2 = (1-\eta^{1})x^1 = (1-\eta^{1})(1-\eta^{0})x^0 \\
+x^t = (1-\eta^{t-1})\dots(1-\eta^{1})(1-\eta^{0})x^0 = x^{(0)} \prod_{k=0}^{t-1} (1-\eta^{k})
 \end{aligned}$$
-As $t \rightarrow \infty$, $x^{\infty} = x^{(0)} \prod_{k=0}^{\infty} (1-\eta_{k})$</p>
+As $t \rightarrow \infty$, $x^{\infty} = x^{(0)} \prod_{k=0}^{\infty} (1-\eta^{k})$</p>
 </div>
 </div>
 </div>
@@ -15198,10 +15198,11 @@ As $t \rightarrow \infty$, $x^{\infty} = x^{(0)} \prod_{k=0}^{\infty} (1-\eta_{k
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Choosing-a-good-step-size">Choosing a good step-size<a class="anchor-link" href="#Choosing-a-good-step-size">¶</a></h3><div class="fragment">
-<p>For $0 \leq \eta_{k} &lt; 1$, convergence to $x=0$ as $t \rightarrow \infty$, depends on:
+<p>Convergence to $x=0$ as $t \rightarrow \infty$, depends on $\prod_{k=0}^{\infty} (1-\eta^{k}) \rightarrow 0$.<br/>
+For $0 \leq \eta^{k} &lt; 1$, we know from the <a href="https://archive.org/details/theoryandapplica031692mbp" target="_blank"> criteria of convergence for infinite products</a>:
 $$\small \begin{aligned}
-\text{if }\sum_{k=0}^{\infty}\eta_{k}={\infty}  \text{ ; } \prod_{k=0}^{\infty} (1-\eta_{k})=0\\
-\text{if } \sum_{k=0}^{\infty}\eta_{k}&lt;{\infty} \text{ ; } \prod_{k=0}^{\infty} (1-\eta_{k})=\text{C; a finite positive number }
+\text{if }\sum_{k=0}^{\infty}\eta^{k}={\infty}  \text{ ; } \prod_{k=0}^{\infty} (1-\eta^{k})=0\\
+\text{if } \sum_{k=0}^{\infty}\eta^{k}&lt;{\infty} \text{ ; } \prod_{k=0}^{\infty} (1-\eta^{k})=\text{C; a finite positive number }
 \end{aligned}$$</p>
 </div>
 <div class="fragment">
@@ -15212,26 +15213,26 @@ $$\small \begin{aligned}
 </tr>
 <tr>
 <td style="border: 1px solid black; text-align: center;">
-    $\eta_{0}=0.1*1,\ \eta_{1}=0.1*\tfrac12,\ \eta_{2}=0.1*\tfrac14,\dots, \eta_{t}=0.1*\tfrac1{2^t}$
+    $\eta^{0}=0.1*1,\ \eta^{1}=0.1*\tfrac12,\ \eta^{2}=0.1*\tfrac14,\dots, \eta^{t}=0.1*\tfrac1{2^t}$
     </td>
 <td style="border: 1px solid black; text-align: center;">
-    $\eta_{0}=0.1*1,\ \eta_{1}=0.1*\tfrac12,\ \eta_{2}=0.1*\tfrac13,\dots, \eta_{t}=0.1*\tfrac1{t+1}$
-    </td>
-</tr>
-<tr>
-<td style="border: 1px solid black; text-align: center;">
-      $\sum_{k=0}^{\infty}\eta_{k} = \sum_{k=0}^{\infty}\frac{0.1}{2^k}$
-    </td>
-<td style="border: 1px solid black; text-align: center;">
-      $\sum_{k=0}^{\infty}\eta_{k} = \sum_{k=0}^{\infty}\frac{0.1}{k+1}$
+    $\eta^{0}=0.1*1,\ \eta^{1}=0.1*\tfrac12,\ \eta^{2}=0.1*\tfrac13,\dots, \eta^{t}=0.1*\tfrac1{t+1}$
     </td>
 </tr>
 <tr>
 <td style="border: 1px solid black; text-align: center;">
-      $\sum_{k=0}^{\infty}\eta_{k} = 0.2$
+      $\sum_{k=0}^{\infty}\eta^{k} = \sum_{k=0}^{\infty}\frac{0.1}{2^k}$
     </td>
 <td style="border: 1px solid black; text-align: center;">
-      $\sum_{k=0}^{\infty}\eta_{k} = \infty$
+      $\sum_{k=0}^{\infty}\eta^{k} = \sum_{k=0}^{\infty}\frac{0.1}{k+1}$
+    </td>
+</tr>
+<tr>
+<td style="border: 1px solid black; text-align: center;">
+      $\sum_{k=0}^{\infty}\eta^{k} = 0.2$
+    </td>
+<td style="border: 1px solid black; text-align: center;">
+      $\sum_{k=0}^{\infty}\eta^{k} = \infty$
     </td>
 </tr>
 <tr>
@@ -15413,7 +15414,7 @@ $$</p>
   </span>
 -->
 <span class="fragment">
-  Starting at $\theta = (0.8, 0.8)$, here we run Newton's Method.
+  Starting at $\theta^{(0)} = (0.8, 0.8)$, here we run Newton's Method.
 
 <p>After just 5 iterations, value of $f$ at $\theta^{(5)}$ is $1.7014 \times 10^{-4}$. This is quite close to the global minimum of 0.</p>
 <p>It took Gradient Descent 20 iterations to get to this value.
@@ -15519,20 +15520,20 @@ $$</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Gradient-Descent-in-Practice">Gradient Descent in Practice<a class="anchor-link" href="#Gradient-Descent-in-Practice">¶</a></h3><div style="display: flex; align-items: center; gap: 5px;">
 <div ;="" class="fragment" style="flex: 1;">
-<div class="fragment">
+<div>
 <b>Problem</b>: Binary Classification of Tumor Cell as Benign or Malignant
   </div>
-<div class="fragment">
+<div>
 <b>Dataset</b>: Wisconsin Diagnostic Breast Cancer (WDBC) dataset; <br/>
            569 cell samples; 8 real valued features
   </div>
-<div class="fragment">
+<div>
 <b>Train/Test Split</b>: 80/20
   </div>
-<div class="fragment">
+<div>
 <b>Model of Choice</b>: Logistic Regression
   </div>
-<div class="fragment">
+<div>
 <b>Loss Function</b>: Logistic Loss
   </div>
 </div>
@@ -15629,6 +15630,26 @@ $$</p>
     </td>
 </tr>
 </table>
+</div>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Thank-You!">Thank You!<a class="anchor-link" href="#Thank-You!">¶</a></h3><div style="display: flex; align-items: center; gap: 5px;">
+<div style="flex: 1;">
+<h3>Remember:</h3>
+<h4>Things going downhill, not so bad!</h4><br/><br/>
+<h4>The losses are the friends you made along the way!</h4>
+</div>
+<div style="flex: 2;">
+<img alt="Gradient Descent" scale="0.40;" src="media/images/gd-cartoon.png" style="width: 90%;"/>
+</div>
 </div>
 </div>
 </div>
