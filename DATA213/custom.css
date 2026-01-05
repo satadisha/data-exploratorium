@@ -1,0 +1,31 @@
+/* Reduce global font size */
+.reveal {
+    font-size: 20px;   /* default is ~32px */
+}
+
+/* Headings */
+.reveal h1 { font-size: 1.8em; }
+.reveal h2 { font-size: 1.5em; }
+.reveal h3 { font-size: 1.2em; }
+.reveal h4 { font-size: 1.0em; }
+
+/* Body text */
+.reveal p, 
+.reveal li {
+    font-size: 0.9em;
+}
+
+/* Make normal text + bullets obey it */
+.reveal p, .reveal li, .reveal td, .reveal th, .reveal div, .reveal span {
+  font-size: 1em !important;
+  line-height: 1.25 !important;
+}
+
+/* Code */
+.reveal pre, .reveal code { font-size: 0.75em !important; }
+
+/* Math */
+.reveal .math {
+    font-size: 0.9em;
+}
+
