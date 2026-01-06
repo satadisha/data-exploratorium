@@ -1,2 +1,2 @@
 # data-exploratorium
-ML and Data Science related labs and demos
+ML and Data Science related lectures, labs and demos
