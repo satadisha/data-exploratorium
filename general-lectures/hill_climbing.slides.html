@@ -15101,7 +15101,7 @@ function GRADIENT_DESCENT(J, v, η):
 </p></span>
 </div>
 <div ;="" class="fragment" style="flex: 1;">
-<img alt="Gradient Descent" scale="0.55;" src="media/gif/gd_fixed_0.10.gif" style="width: 90%;"/>
+<img alt="Gradient Descent Example" scale="0.55;" src="media/gif/gd_fixed_0.10.gif" style="width: 90%;"/>
 </div>
 </div>
 </div>
@@ -15177,105 +15177,6 @@ What does that tell us about the learning rate?
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Choosing-a-good-step-size">Choosing a good step-size<a class="anchor-link" href="#Choosing-a-good-step-size">¶</a></h3><div class="fragment">
-  Learning rate is important for convergence. But how do we choose it?
-</div>
-<div class="fragment">
-<p>Consider the convex function $f(x) = \frac{1}{2}x^2$ with a global minima at $x=0$.
-Start with $\eta^{(0)} = 0.1$, $x^{(0)}=1$, and use a decreasing sequence of learning rates.<br>
-Do we reach the minima?</br></p>
-</div>
-<div class="fragment">
-<ol>
-<li>$\eta^{0}=0.1*1,\ \eta^{1}=0.1*\tfrac12,\ \eta^{2}=0.1*\tfrac14,\dots, \eta^{t}=0.1*\tfrac1{2^t}$</li>
-<li>$\eta^{0}=0.1*1,\ \eta^{1}=0.1*\tfrac12,\ \eta^{2}=0.1*\tfrac13,\dots, \eta^{t}=0.1*\tfrac1{t+1}$</li>
-</ol>
-</div>
-<div class="fragment">
-<p>With $\nabla f(x) = x$, we have the following Gradient Descent updates,
-$$\small \begin{aligned}
-x^1 = x^0 - \eta^{0}x^0 = (1-\eta^{0})x^0 \\
-x^2 = (1-\eta^{1})x^1 = (1-\eta^{1})(1-\eta^{0})x^0 \\
-x^t = (1-\eta^{t-1})\dots(1-\eta^{1})(1-\eta^{0})x^0 = x^{(0)} \prod_{k=0}^{t-1} (1-\eta^{k})
-\end{aligned}$$
-As $t \rightarrow \infty$, $x^{\infty} = x^{(0)} \prod_{k=0}^{\infty} (1-\eta^{k})$</p>
-</div>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Choosing-a-good-step-size">Choosing a good step-size<a class="anchor-link" href="#Choosing-a-good-step-size">¶</a></h3><div class="fragment">
-<p>Convergence to $x=0$ as $t \rightarrow \infty$, depends on $\prod_{k=0}^{\infty} (1-\eta^{k}) \rightarrow 0$.<br/>
-For $0 \leq \eta^{k} &lt; 1$, we know from the <a href="https://archive.org/details/theoryandapplica031692mbp" target="_blank"> criteria of convergence for infinite products</a>:
-$$\small \begin{aligned}
-\text{if }\sum_{k=0}^{\infty}\eta^{k}={\infty}  \text{ ; } \prod_{k=0}^{\infty} (1-\eta^{k})=0\\
-\text{if } \sum_{k=0}^{\infty}\eta^{k}&lt;{\infty} \text{ ; } \prod_{k=0}^{\infty} (1-\eta^{k})=\text{C; a finite positive number }
-\end{aligned}$$</p>
-</div>
-<div class="fragment">
-<table style="border-collapse: collapse; width: 80%; margin: auto;">
-<tr>
-<th style="border: 1px solid black; text-align: center;">Case 1</th>
-<th style="border: 1px solid black; text-align: center;">Case 2</th>
-</tr>
-<tr>
-<td style="border: 1px solid black; text-align: center;">
-    $\eta^{0}=0.1*1,\ \eta^{1}=0.1*\tfrac12,\ \eta^{2}=0.1*\tfrac14,\dots, \eta^{t}=0.1*\tfrac1{2^t}$
-    </td>
-<td style="border: 1px solid black; text-align: center;">
-    $\eta^{0}=0.1*1,\ \eta^{1}=0.1*\tfrac12,\ \eta^{2}=0.1*\tfrac13,\dots, \eta^{t}=0.1*\tfrac1{t+1}$
-    </td>
-</tr>
-<tr>
-<td style="border: 1px solid black; text-align: center;">
-      $\sum_{k=0}^{\infty}\eta^{k} = \sum_{k=0}^{\infty}\frac{0.1}{2^k}$
-    </td>
-<td style="border: 1px solid black; text-align: center;">
-      $\sum_{k=0}^{\infty}\eta^{k} = \sum_{k=0}^{\infty}\frac{0.1}{k+1}$
-    </td>
-</tr>
-<tr>
-<td style="border: 1px solid black; text-align: center;">
-      $\sum_{k=0}^{\infty}\eta^{k} = 0.2$
-    </td>
-<td style="border: 1px solid black; text-align: center;">
-      $\sum_{k=0}^{\infty}\eta^{k} = \infty$
-    </td>
-</tr>
-<tr>
-<td style="border: 1px solid black; text-align: center;">
-      As $t \rightarrow \infty$, $x^{\infty} = x^{(0)} C \neq 0$
-    </td>
-<td style="border: 1px solid black; text-align: center;">
-      As $t \rightarrow \infty$, $x^{\infty} = x^{(0)} 0 = 0$
-    </td>
-</tr>
-<tr>
-<td style="border: 1px solid black; text-align: center;">
-      finite movement; freezes above minimum
-    </td>
-<td style="border: 1px solid black; text-align: center;">
-      infinite movement; eventually converges to minimum
-    </td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-</div>
-</div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Choosing-a-good-step-size">Choosing a good step-size<a class="anchor-link" href="#Choosing-a-good-step-size">¶</a></h3><div class="fragment">
   Could be tuned like a hyperparameter! Remember:
   <ol>
 <li>Cannot be too high when gradients are large.</li>
@@ -15293,206 +15194,19 @@ $$\small \begin{aligned}
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Adagrad">Adagrad<a class="anchor-link" href="#Adagrad">¶</a></h3><div class="fragment">
-Should all features be assigned the same learning rate?
-
+<h3 id="What-next?">What next?<a class="anchor-link" href="#What-next?">¶</a></h3><p>Follow-up lecture:</p>
 <ul>
-<li>Even after feature scaling, different features have different rates of influence on the learning problem, and consequently on the model and the cost function.</li></ul></div>
-
-
-<div class="fragment">
-Solution:
-
+<li>Learning Rate Schedules</li>
 <ul>
-<li>Keep a history of feature updates</li>
-<li>Decay the learning rate of a feature over time in proportion to the update history.<ul>
-<li>Large gradients: Dense features or high rate of change; small learning rate.</li>
-<li>Small gradients: Sparse features or low rate of change; large learning rate.</li></ul></li></ul></div>
-
-
-
-
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h4 id="Adagrad-Pseudocode">Adagrad Pseudocode<a class="anchor-link" href="#Adagrad-Pseudocode">¶</a></h4><div style="
-    border: 2px solid #a2aab9ff;
-    background: #eef3ff;
-    padding: 14px;
-    border-radius: 6px;
-    font-family: 'Courier New', monospace;
-    width: 90%;
-    margin: 15px auto;
-    box-sizing: border-box;">
-<pre>
-function ADAGRAD(J, v, η):
-    ∀i: θ⁽⁰⁾ ← v; grad_hᵢ⁽⁰⁾ ← 0
-    while not converged:
-        ∀i: grad_hᵢ⁽ᵗ⁾ ← grad_hᵢ⁽ᵗ⁻¹⁾+ ∇Jᵢ(θᵢ⁽ᵗ⁾)²
-        ∀i: θᵢ⁽ᵗ⁺¹⁾ ← θᵢ⁽ᵗ⁾ − η/√(grad_hᵢ⁽ᵗ⁾ + ε) * ∇Jᵢ(θᵢ⁽ᵗ⁾)
-    return θ
-</pre>
-<p>convergence is defined by $\lVert\theta^{t+1}-\theta^{t}\rVert_2 &lt; \tau$</p>
-</div>
-</div>
-</div>
-</div>
-</div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<div style="display: flex; gap: 30px; align-items: flex-start; min-height: 400px;">
-<!-- LEFT COLUMN -->
-<div style="flex: 1;">
-<h3 id="Newton's-Method">Newton's Method<a class="anchor-link" href="#Newton's-Method">¶</a></h3> <div class="fragment">
-<p>Gradient Descent assumes a linear approximation of a function and moves down it's slope in small steps to iteratively reach the minima. Alternatively, one can approach optimization using a quadratic approximation of the loss function.</p>
-</div>
-<div class="fragment">
-<p>If $\vec{h} \in {\cal R}^{n}$ is small enough, i.e. $\lVert \vec{h} \rVert \approx 0$, Taylor expansion can be used to obtain a quadratic approximation of $f$ around $\vec{\theta} = (\theta_{1}, \theta_{2} \dots \theta_{n})$ to capture curvature, not just slope.
-$$
-  f(\vec{\theta}+\vec{h}) \approx f(\vec{\theta}) + \nabla f(\vec{\theta})^{T} \vec{h} + \frac{1}{2} \vec{h}^T H(\vec{\theta})\vec{h}
-  $$</p>
-</div>
-</div>
-<!-- RIGHT COLUMN -->
-<div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
-<!-- IMAGE FIRST -->
-<div class="fragment">
-<img alt="Taylor Expansion" src="media/images/taylor_2.png" style="width: 90%;"/>
-</div>
-</div>
-</div>
-<div class="fragment">
-  This is equivalent to locally fitting a parabola around the point of interest $\vec{\theta}$. 
-  Here we assume that the function is <b>twice differentiable</b>. The iterative search here follows by taking the next step to the minima of this convex parabola.
-</div>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Newton's-Method:-Example-2">Newton's Method: Example 2<a class="anchor-link" href="#Newton's-Method:-Example-2">¶</a></h3><div style="display: flex; align-items: center; gap: 5px;">
-<div ;="" class="fragment" style="flex: 1;">
-<p>For the convex function $f(\theta_{1}, \theta_{2}) = \theta_{1}^2+\theta_{2}^2$</p>
-<!--
-  <span class="fragment">
-  $$
-  \begin{aligned}
-    \frac{\partial f}{\partial \theta_{1}} = 2\theta_{1}; \frac{\partial f}{\partial \theta_{2}} = 2\theta_{2} \\
-  \end{aligned}
-  $$
-  </span>
--->
-<span class="fragment">
-  Starting at $\theta^{(0)} = (0.8, 0.8)$, here we run Newton's Method.
-
-<p>After just 5 iterations, value of $f$ at $\theta^{(5)}$ is $1.7014 \times 10^{-4}$. This is quite close to the global minimum of 0.</p>
-<p>It took Gradient Descent 20 iterations to get to this value.
-</p></span>
-</div>
-<div ;="" class="fragment" style="flex: 2;">
-<img alt="Gradient Descent" scale="0.55;" src="media/gif/newton.gif" style="width: 90%;"/>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Newton's-Method">Newton's Method<a class="anchor-link" href="#Newton's-Method">¶</a></h3><span class="fragment">
-<p> Pros: </p>
-<ul>
-<li>Newton's method ensures much faster convergence than Gradient Descent.</li>
-<li>Automatically adapts the step size based on the curvature of the function (Hessian), removing the need for hyperparameter tuning of learning rate.</li>
+<li>Can we decreasing sequence of learning rates?</li>
 </ul>
-</span>
-<span class="fragment">
-<p> Cons: </p>
+<li>Strategies for Learning Rate adjustment</li>
 <ul>
-<li>Computing both the Gradient and the Hessian and its inverse involves high computational costs for very high dimensional function</li>
-<li>Starting from a bad initial guess, may cause the function to diverge or oscillate over the optima.</li>
+<li>AdaGrad: asymmetrical learning rate along different dimensions</li>
+<li>Newton's Method: use curvature information from second order derivative instead of fixed learning rate</li>
 </ul>
-</span>
-</div>
-</div>
-</div>
-</div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Where-do-we-start?">Where do we start?<a class="anchor-link" href="#Where-do-we-start?">¶</a></h3><div class="fragment">
-<p>Gradient Descent requires us to initialize the parameter search with an initial guess. What constitutes a good guess?<p>
-</p></p></div>
-<div class="fragment">
-<p><strong>Random Initialization</strong></p>
-<ul>
-<li>Small random values.</li>
-<li>Things are better with a convex objective function.<ul>
-<li>Unique global minima, so guaranteed to converge.</li>
+<li>Algorithmic variants of Gradient Descent for large-scale learning</li>
 </ul>
-</li>
-<li>For non-convex function, we can get trapped in a local minima depending on initialization.<ul>
-<li>Start the search from different positions, and see where each search ends up.</li>
-<li>Choose the best out of all minimizers.</li></ul></li></ul></div>
-
-
-
-
-</div>
-</div>
-</div>
-</div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Algorithmic-Variants">Algorithmic Variants<a class="anchor-link" href="#Algorithmic-Variants">¶</a></h3><span class="fragment">
-<b>Batch Gradient Descent</b>
-<ul>
-<li>Regular Gradient Descent involves computing the full cost function – loss function for all training examples – to adjust a parameter value in a single iterative step. Computationally infeasible for large datasets!
-</li></ul></span>
-
-<span class="fragment">
-<b>Stochastic Gradient Descent</b>
-<ul>
-<li>Every step of gradient descent is taken based of the loss computed on one example.</li>
-<li>Extremely fast updates. But calculations based on single example can introduce a lot of variance (random updates hence stochastic)! It also never fully converges but hovers asymptotically close to the local minima.</li>
-<li>Updates are noisy but the randomness helps us get out of local minima or other bad regions. Less prone to overfitting.
-</li></ul></span>
-
-<span class="fragment">
-<b>Mini Batch Gradient Descent</b>
-<ul>
-<li>Randomly split training data into mini-batches, compute a gradient descent step according to a mini-batch. Most commonly used in practice.</li>
-<li>Parallelizable on GPUs.</li>
-<li>A happy medium. Smoother convergence but also computationally less expensive.
-</li></ul></span>
-
 </div>
 </div>
 </div>
@@ -15662,7 +15376,7 @@ require(
             progress: true,
             history: true,
             transition: "slide",
-            slideNumber: "",
+            slideNumber: "c/t",
             plugins: [RevealNotes]
         });
 
