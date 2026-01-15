@@ -15798,7 +15798,7 @@ By substituting $y = X\beta + \epsilon$ we get, $\hat{\beta} = \beta + (X^TX)^{-
 </ul>
 </li>
 <li>Standardized coefficients individually follow a Student's T Distribution. Also called the observed $t$-statistics of the model coefficients.<ul>
-<li>$ \frac{\hat{\beta}_j-\beta_j}{se(\hat{\beta}_j)} \sim \mathcal{t}_{n-p-1}$; $\beta_j$ reflects your prior belief in the predictor's coefficient. Typically set to 0.</li>
+<li>$ \frac{\hat{\beta}_j-\beta_j}{se(\hat{\beta}_j)} \sim \mathcal{t}_{n-p-1}$; $\beta_j$ reflects your prior belief in the predictor's coefficient. <u style="color: blue; font-size: 1.0em; font-weight: bold; font-style: italic;">Typically set to 0</u>.</li>
 <li>The standard error of model coefficient $\hat{\beta}_j$ is $se(\hat{\beta}_j) = \sqrt{se^2 (X^TX)^{-1}_{jj}}$, where $se$ is the standard error of regression.</li>
 <li>For simple linear regression, the standard error of the slope is given by $se(\hat{\beta}_1) = \sqrt{ \frac{se^2}{\sum_{i=1}^n(x_i-\bar{x})^2}}$</li>
 </ul>
