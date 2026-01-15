@@ -16071,9 +16071,9 @@ What we estimate as prediction $\hat{y}$ is the expected value of the response v
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Confidence-Intervals-for-the-Mean-Response">Confidence Intervals for the Mean Response<a class="anchor-link" href="#Confidence-Intervals-for-the-Mean-Response">¶</a></h3><p>As mentioned before, we can use the regression model to estimate $E(y_h|X_h) = X_h\beta$. Much like before, we can calculate the standard error of the expected prediction and use this to generate a $t$-interval.</p>
-<p>The general formula is: $\text{Sample estimate} \pm (\text{t-multiplier} \times \text{standard error})$</p>
-<p>Standard error of the fit: $SE[\bar{y_h}] = \sqrt{se^2(X_h^T(X^TX)^{-1}X_h)}$</p>
+<h3 id="Confidence-Intervals-for-the-Mean-Response">Confidence Intervals for the Mean Response<a class="anchor-link" href="#Confidence-Intervals-for-the-Mean-Response">¶</a></h3><p>As mentioned before, we can use the regression model to estimate $E(y_h|\vec{x}_h) = \vec{x}_h\beta$. Much like before, we can calculate the standard error of the expected prediction and use this to generate a $t$-interval.</p>
+<p>The general formula is: $\text{sample estimate} \pm (\text{t-multiplier} \times \text{standard error of expected prediction})$</p>
+<p>Standard error of the fit: $SE[\bar{y_h}] = \sqrt{se^2(\vec{x}_h^T(X^TX)^{-1}\vec{x}_h)}$</p>
 <ul>
 <li>For Simple Linear Regression, $SE[\bar{y_h}] = se\sqrt{\frac{1}{n}+\frac{(x_h-\bar{x})^2}{\sum_{i=1}^n(x_i-\bar{x})^2}}$</li>
 </ul>
@@ -16090,9 +16090,9 @@ What we estimate as prediction $\hat{y}$ is the expected value of the response v
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Confidence-Intervals-for-the-Mean-Response">Confidence Intervals for the Mean Response<a class="anchor-link" href="#Confidence-Intervals-for-the-Mean-Response">¶</a></h3><div style="display: flex; align-items: center; gap: 5px;">
 <div ;="" class="fragment" style="flex: 1;">
-<p>Standard error grows for values of $X_h$ further away from $\bar{X}$.</p>
+<p>Standard error grows for values of $\vec{x}_h$ further away from $\bar{X}$.</p>
 <p>Estimated variance of $y_h$ is at the minimum at the mean of the independent variable</p>
-<p>Predictions near $\bar{X}$ have the narrowest confidence band and the corresponding predictions are the most stable. Confidence bands flare out further away from the mean of the independent variable.</p>
+<p>Predictions near $\bar{x}$ have the narrowest confidence band and the corresponding predictions are the most stable. Confidence bands flare out further away from the mean of the independent variable.</p>
 </div>
 <div ;="" class="fragment" style="flex: 1;">
 <img alt="Confidence Band" scale="0.45;" src="images/LinRegCIBand.png" style="width: 90%;"/>
@@ -16108,12 +16108,12 @@ What we estimate as prediction $\hat{y}$ is the expected value of the response v
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Prediction-Intervals-of-an-Individual-Response">Prediction Intervals of an Individual Response<a class="anchor-link" href="#Prediction-Intervals-of-an-Individual-Response">¶</a></h3><p>Prediction intervals are uncertainty around an individual response value $\hat{y_h}$, for a given observation $X_h$, rather than a statistic like the mean response or a model coefficient.</p>
+<h3 id="Prediction-Intervals-of-an-Individual-Response">Prediction Intervals of an Individual Response<a class="anchor-link" href="#Prediction-Intervals-of-an-Individual-Response">¶</a></h3><p>Prediction intervals are uncertainty around an individual response value $\hat{y_h}$, for a given observation $\vec{x}_h$, rather than a statistic like the mean response or a model coefficient.</p>
 <ul>
 <li>Gives us the range of likely predicted values for a given observation.</li>
 </ul>
 <p>Much like before, the general formula is: $\text{Sample estimate} \pm (\text{t-multiplier} \times \text{standard error})$</p>
-<p>Standard error of the prediction: $SE[\hat{y_h}] = \sqrt{se^2(1+X_h^T(X^TX)^{-1}X_h)}$</p>
+<p>Standard error of the prediction: $SE[\hat{y_h}] = \sqrt{se^2(1+\vec{x}_h^T(X^TX)^{-1}\vec{x}_h)}$</p>
 <ul>
 <li>For Simple Linear Regression, $SE[\hat{y_h}] = se\sqrt{1+\frac{1}{n}+\frac{(x_h-\bar{x})^2}{\sum_{i=1}^n(x_i-\bar{x})^2}}$</li>
 </ul>
@@ -16257,7 +16257,7 @@ What we estimate as prediction $\hat{y}$ is the expected value of the response v
 </ul>
 <p><b>Data-based multicollinearity</b>: Result of a poorly designed experiment, reliance on purely observational data. Why can't a researcher just collect his data in such a way to ensure that the predictors aren't highly correlated?</p>
 <ul>
-<li>Unfortunately, researchers often can't control the predictors. For example when gather a person's gender, race, grade point average, math SAT score, IQ, and starting salary. One or more variables maybe dependent on others but data collectors in such observational studies cannot control for them.</li>
+<li>Unfortunately, researchers often can't control the predictors. For example when gathering a person's gender, race, grade point average, math SAT score, IQ, and starting salary, one or more variables maybe dependent on others but data collectors in such observational studies cannot control for them.</li>
 </ul>
 </div>
 </div>
@@ -16274,8 +16274,8 @@ What we estimate as prediction $\hat{y}$ is the expected value of the response v
 <ul>
 <li><b>First check</b>: Derive a correlation matrix of your predictors. Do not include the response variable as we want our predictors to have high correlation with it.</li>
 <li><b>Second check</b>: Variance Inflation Factor to systematically remove variables that can be explained by others.<ul>
-<li>$VIF = \frac{1}{(1-R^2_X)}$; where $R^2_X$ is the variation in $X$ that can be explained by its relationship to other variables in the model.<ul>
-<li>Treat X as the response variable that you are trying to predict from the remaining explanatory variables.</li>
+<li>$VIF = \frac{1}{(1-R^2_x)}$; where $R^2_x$ is the variation in $x$ that can be explained by its relationship to other variables in the model.<ul>
+<li>Treat x as the response variable that you are trying to predict from the remaining explanatory variables. Calculate R^2 of this auxiliary regression.</li>
 <li>VIF over 10 is worrisome.</li>
 </ul>
 </li>
@@ -16876,8 +16876,8 @@ What we estimate as prediction $\hat{y}$ is the expected value of the response v
 <h4 id="Multicollinearity-handling">Multicollinearity handling<a class="anchor-link" href="#Multicollinearity-handling">¶</a></h4><p>Now all out VIFs are below 10!</p>
 <ul>
 <li>Likely explanation is that <code>Weight_OSU</code> exhibited strong collinearity with Gender. On average, males could be reasonably assumed to weigh higher than female subjects.</li>
-<li>Upon centering, gender now explains the deviation of observed weight from the mean, not the mean itself and the shared variance shrinks!<ul>
-<li>Before centering gender explained mean difference (that was large), after centering it somewhat explains difference in deviation from mean but that's a relatively smaller effect.</li>
+<li>Upon centering, gender is correlated only with deviations from the mean weight rather than the mean itself, so the shared variance shrinks!<ul>
+<li>Before centering gender explained mean difference (that was large), after centering it only explains difference in deviation from mean but that's a relatively smaller effect.</li>
 </ul>
 </li>
 </ul>
