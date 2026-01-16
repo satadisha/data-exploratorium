@@ -14648,6 +14648,48 @@ div.jp-OutputPrompt {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<!-- ### Learning Loop -->
+<div style="display: flex; align-items: center;gap: 5px;">
+<div style="flex: 1;">
+<h3>About Me</h3>
+<h4>Satadisha Saha Bhowmick, Ph.D</h4>
+<div class="fragment" style="font-size: 14px;">
+<h4>Affiliation</h4>
+<ul>
+<li>Postdoctoral Teaching Fellow <br/> Data Science Institute, University of Chicago</li>
+</ul>
+</div>
+<div class="fragment" style="font-size: 14px;">
+<h4>Courses I teach</h4>
+<ul>
+<li>Introduction to Data Science</li>
+<li>Mathematical Methods for Data Science</li>
+<li>Ethics, Fairness, Responsibility, and Privacy in Data Science</li>
+<li>Object Oriented Programming with Java</li>
+</ul>
+</div>
+<div class="fragment" style="font-size: 14px;">
+<h4>Research Interest</h4>
+<ul>
+<li>Information Extraction</li>
+<li>Short Text Mining</li>
+</ul>
+</div>
+</div>
+<div style="flex: 1;">
+<img alt="Self" scale="0.3" src="media/images/satadisha-photo.png"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Teaching-Demonstration">Teaching Demonstration<a class="anchor-link" href="#Teaching-Demonstration">¶</a></h3><p>Course Module from DATA 231 Machine Learning Fundamentals</p>
 <div style="display: flex; gap: 2px;">
 <div style="flex: 1;">
@@ -15152,38 +15194,6 @@ What does that tell us about the learning rate?
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Algorithmic-Variants">Algorithmic Variants<a class="anchor-link" href="#Algorithmic-Variants">¶</a></h3><span class="fragment">
-<b>Batch Gradient Descent</b>
-<ul>
-<li>Regular Gradient Descent involves computing the full cost function – loss function for all training examples – to adjust a parameter value in a single iterative step. Computationally infeasible for large datasets!
-</li></ul></span>
-
-<span class="fragment">
-<b>Stochastic Gradient Descent</b>
-<ul>
-<li>Every step of gradient descent is taken based of the loss computed on one example.</li>
-<li>Extremely fast updates. But calculations based on single example can introduce a lot of variance (random updates hence stochastic)! It also never fully converges but hovers asymptotically close to the local minima.</li>
-<li>Updates are noisy but the randomness helps us get out of local minima or other bad regions. Less prone to overfitting.
-</li></ul></span>
-
-<span class="fragment">
-<b>Mini Batch Gradient Descent</b>
-<ul>
-<li>Randomly split training data into mini-batches, compute a gradient descent step according to a mini-batch. Most commonly used in practice.</li>
-<li>Parallelizable on GPUs.</li>
-<li>A happy medium. Smoother convergence but also computationally less expensive.
-</li></ul></span>
-
-</div>
-</div>
-</div>
-</div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="What-next?">What next?<a class="anchor-link" href="#What-next?">¶</a></h3><p>Follow-up lecture:</p>
 <ul>
 <li>Learning Rate Schedules</li>
@@ -15195,6 +15205,7 @@ What does that tell us about the learning rate?
 <li>AdaGrad: asymmetrical learning rate along different dimensions</li>
 <li>Newton's Method: use curvature information from second order derivative instead of fixed learning rate</li>
 </ul>
+<li>Algorithmic variants in practice</li>
 </ul>
 </div>
 </div>
