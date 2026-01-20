@@ -15311,10 +15311,10 @@ Or, $SST = SSR + SSE$</br></p>
 <th>Method:</th> <td>Least Squares</td> <th>  F-statistic:       </th> <td>   42.39</td>
 </tr>
 <tr>
-<th>Date:</th> <td>Sat, 10 Jan 2026</td> <th>  Prob (F-statistic):</th> <td>2.06e-06</td>
+<th>Date:</th> <td>Tue, 20 Jan 2026</td> <th>  Prob (F-statistic):</th> <td>2.06e-06</td>
 </tr>
 <tr>
-<th>Time:</th> <td>00:16:54</td> <th>  Log-Likelihood:    </th> <td>  52.538</td>
+<th>Time:</th> <td>00:37:50</td> <th>  Log-Likelihood:    </th> <td>  52.538</td>
 </tr>
 <tr>
 <th>No. Observations:</th> <td>    16</td> <th>  AIC:               </th> <td>  -93.08</td>
@@ -15424,10 +15424,10 @@ $$</p>
 <th>Method:</th> <td>Least Squares</td> <th>  F-statistic:       </th> <td>   42.39</td>
 </tr>
 <tr>
-<th>Date:</th> <td>Sat, 10 Jan 2026</td> <th>  Prob (F-statistic):</th> <td>2.06e-06</td>
+<th>Date:</th> <td>Tue, 20 Jan 2026</td> <th>  Prob (F-statistic):</th> <td>2.06e-06</td>
 </tr>
 <tr>
-<th>Time:</th> <td>00:16:54</td> <th>  Log-Likelihood:    </th> <td>  52.538</td>
+<th>Time:</th> <td>00:37:50</td> <th>  Log-Likelihood:    </th> <td>  52.538</td>
 </tr>
 <tr>
 <th>No. Observations:</th> <td>    16</td> <th>  AIC:               </th> <td>  -93.08</td>
@@ -16318,10 +16318,10 @@ What we estimate as prediction $\hat{y}$ is the expected value of the response v
 <th>Method:</th> <td>Least Squares</td> <th>  F-statistic:       </th> <td>   42.39</td>
 </tr>
 <tr>
-<th>Date:</th> <td>Sat, 10 Jan 2026</td> <th>  Prob (F-statistic):</th> <td>2.06e-06</td>
+<th>Date:</th> <td>Tue, 20 Jan 2026</td> <th>  Prob (F-statistic):</th> <td>2.06e-06</td>
 </tr>
 <tr>
-<th>Time:</th> <td>00:16:54</td> <th>  Log-Likelihood:    </th> <td>  52.538</td>
+<th>Time:</th> <td>00:37:51</td> <th>  Log-Likelihood:    </th> <td>  52.538</td>
 </tr>
 <tr>
 <th>No. Observations:</th> <td>    16</td> <th>  AIC:               </th> <td>  -93.08</td>
@@ -16403,10 +16403,10 @@ What we estimate as prediction $\hat{y}$ is the expected value of the response v
 <th>Method:</th> <td>Least Squares</td> <th>  F-statistic:       </th> <td>   42.39</td>
 </tr>
 <tr>
-<th>Date:</th> <td>Sat, 10 Jan 2026</td> <th>  Prob (F-statistic):</th> <td>2.06e-06</td>
+<th>Date:</th> <td>Tue, 20 Jan 2026</td> <th>  Prob (F-statistic):</th> <td>2.06e-06</td>
 </tr>
 <tr>
-<th>Time:</th> <td>00:16:54</td> <th>  Log-Likelihood:    </th> <td>  52.538</td>
+<th>Time:</th> <td>00:37:51</td> <th>  Log-Likelihood:    </th> <td>  52.538</td>
 </tr>
 <tr>
 <th>No. Observations:</th> <td>    16</td> <th>  AIC:               </th> <td>  -93.08</td>
@@ -17218,16 +17218,16 @@ $$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [24]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [32]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sm</span>
 <span class="n">influence</span> <span class="o">=</span> <span class="n">model2</span><span class="o">.</span><span class="n">get_influence</span><span class="p">()</span>
 <span class="n">leverage</span> <span class="o">=</span> <span class="n">influence</span><span class="o">.</span><span class="n">hat_matrix_diag</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Leverage of all 16 points:"</span><span class="p">,</span> <span class="n">leverage</span><span class="p">)</span>
-
+<span class="nb">print</span><span class="p">(</span><span class="n">leverage</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
 <span class="c1">#checking individually for high leverage as per rule of thumb</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">leverage</span><span class="o">&gt;</span><span class="mi">2</span><span class="o">*</span><span class="mi">4</span><span class="o">/</span><span class="mi">16</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">leverage</span><span class="o">&gt;</span><span class="mi">2</span><span class="o">*</span><span class="mi">5</span><span class="o">/</span><span class="mi">16</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -17243,7 +17243,8 @@ $$</p>
 <pre>Leverage of all 16 points: [0.22596846 0.3596798  0.56095405 0.27875375 0.20131429 0.54924536
  0.22692039 0.14906195 0.50928662 0.37632013 0.27584885 0.20429398
  0.31281635 0.24972917 0.37267669 0.14713016]
-[False False  True False False  True False False  True False False False
+5.000000000000002
+[False False False False False False False False False False False False
  False False False False]
 </pre>
 </div>
