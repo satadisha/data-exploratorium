@@ -17367,7 +17367,7 @@ Name: cooks_d, dtype: float64
 <p><b><u style="color: blue;">Studentized Residual</u></b>: This ensures that our residuals approximately follow a standard normal distribution. 95% of the residuals must fall between -2 and 2 and those beyond that can be considered unusual.</p>
 <ul>
 <li>Internally studentized residual: $\frac{e_i}{se\sqrt{1-h_i}}$; $h_i$ is the leverage of the corresponding observation</li>
-<li>Internally studentized residual: $\frac{e_i}{se_{(i)}\sqrt{1-h_i}}$; $se_{(i)}$ is the estimated standard deviation of fit <u>after removing</u> the observation in question</li>
+<li>Externally studentized residual: $\frac{e_i}{se_{(i)}\sqrt{1-h_i}}$; $se_{(i)}$ is the estimated standard deviation of fit <u>after removing</u> the observation in question</li>
 </ul>
 </div>
 </div>
