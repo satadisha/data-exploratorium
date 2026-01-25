@@ -15523,12 +15523,10 @@ n\bar{y}\\
 <h3 id="Key-Properties">Key Properties<a class="anchor-link" href="#Key-Properties">¶</a></h3><ul>
 <li>Turns out that upon centering $X^TX$ is diagonal. Its columns are orthogonal and all the transformed features are uncorrelated.</li>
 <li>This condition is highly desirable as it makes calculations for regression coefficients numerically stable and simplified!</li>
-<li>In practice we actually standardize our features and response variables. We can test a few things here.<ol>
+<li>In practice we actually standardize our features and response variables. We can test a few things here.<ul>
 <li>The correlation between the predictor and the response is a <b>standardized comparison</b>, meaning that the raw data correlation and the standardized value correlation are the <b><u>same</u></b>.</li>
-</ol>
-<ul>
 <li>The slope of the regression line upon standardizing the data is actually the correlation coefficient between $x$ and $y$.</li>
-<li>Pearson's Correlation coefficient $\mathbf{\color{blue}{r_{xy} = \beta_1 \times \frac{\sigma_y}{\sigma_x}}}$. (You will verify this empirically!)</li>
+<li>Pearson's Correlation coefficient $\mathbf{\color{blue}{r_{xy} = \beta_1 \times \frac{\sigma_x}{\sigma_y}}}$. (You will verify this empirically!)</li>
 </ul>
 </li>
 </ul>
