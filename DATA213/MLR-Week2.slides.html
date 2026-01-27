@@ -15367,9 +15367,9 @@ Dividing the sum of squares by $n-1$, instead of the sample size $n$, to calcula
 <h3 id="Degrees-of-Freedom-in-Regression">Degrees of Freedom in Regression<a class="anchor-link" href="#Degrees-of-Freedom-in-Regression">¶</a></h3><p>In linear regression we are dealing with two types of degrees of freedom.</p>
 <ol>
 <li>$\color{blue}{\textbf{Total Degrees of Freedom}}$: You can think of it as the degrees of freedom for SST. Follows from the previous discussion that this is given by $n-1$, with $n$ being the number of observations.</li>
-<li>$\color{blue}{\textbf{Residual Degrees of Freedom}}$: You can think of it as the degrees of freedom for SSE, i.e. the sum of squared residuals. For a regression model with $p$ feature coefficients (hyperplane of $p+1$ independent vectors including the intercept), the residual degrees of freedom is given by $n-p-1$.</li>
+<li>$\color{blue}{\textbf{Residual Degrees of Freedom}}$: You can think of it as the degrees of freedom for SSE, i.e. the sum of squared residuals. For a regression model with $p$ feature coefficients (hyperplane of $p+1$ vectors including the intercept), the residual degrees of freedom is given by $n-p-1$.</li>
 </ol>
-<p>Remember, $p$ is the $\color{blue}{\textbf{number of predictors}}$ within the data used in your regression model.</p>
+<p>Remember, $p$ is the $\color{blue}{\textbf{number of predictors}}$ in your regression model coming from the data (<b>excluding the intercept</b>).</p>
 </div>
 </div>
 </div>
