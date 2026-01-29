@@ -15173,7 +15173,104 @@ $$</p>
 </div>
 </div>
 </div>
-</div></div></section></section><section><section>
+</div></div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Linear-Spline-with-3-internal-knots">Linear Spline with 3 internal knots<a class="anchor-link" href="#Linear-Spline-with-3-internal-knots">¶</a></h3><p>The formula for a linear spline with $3$ knots $\tau_1, \tau_2, \tau_3$ is:
+$$
+y_{i}=\beta _{0}+\beta _{1}x_{i}+\beta _{2}(x_{i}-\tau _{1})_{+}+\beta _{3}(x_{i}-\tau _{3})_{+}+\beta _{4}(x_{i}-\tau _{3})_{+}+\epsilon _{i}
+$$
+where for each $i \in (1,2,3)$,
+$$(x-\tau_{i})_+ = \begin{cases} 0 &amp; \text{If } x &lt; \tau_{i}\\
+x-\tau_{i} &amp; \text{If } x \geq \tau_{i}\end{cases}$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Linear-Spline-with-3-internal-knots">Linear Spline with 3 internal knots<a class="anchor-link" href="#Linear-Spline-with-3-internal-knots">¶</a></h3><p>Fully expanded piecewise form:</p>
+<p>$$
+s(x) =
+\begin{cases}
+\beta_0 + \beta_1 x,
+&amp; x \le \xi_1, \\[6pt]
+
+\beta_0 + \beta_1 x
++ \beta_2 (x - \xi_1),
+&amp; \xi_1 &lt; x \le \xi_2, \\[6pt]
+
+\beta_0 + \beta_1 x
++ \beta_2 (x - \xi_1)
++ \beta_3 (x - \xi_2),
+&amp; \xi_2 &lt; x \le \xi_3, \\[6pt]
+
+\beta_0 + \beta_1 x
++ \beta_2 (x - \xi_1)
++ \beta_3 (x - \xi_2)
++ \beta_4 (x - \xi_3),
+&amp; x &gt; \xi_3 .
+\end{cases}
+$$</p>
+<p>Linear splines are often called <b>``broken-stick"</b> models.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Linear-Spline-with-3-internal-knots">Linear Spline with 3 internal knots<a class="anchor-link" href="#Linear-Spline-with-3-internal-knots">¶</a></h3><p>Taking derivatives interval by interval: <i>specifically, the slope of the spline is</i></p>
+<p>$$
+s'(x) =
+\begin{cases}
+\beta_1,
+&amp; x \le \xi_1, \\[6pt]
+
+\beta_1 + \beta_2,
+&amp; \xi_1 &lt; x \le \xi_2, \\[6pt]
+
+\beta_1 + \beta_2 + \beta_3,
+&amp; \xi_2 &lt; x \le \xi_3, \\[6pt]
+
+\beta_1 + \beta_2 + \beta_3 + \beta_4,
+&amp; x &gt; \xi_3 .
+\end{cases}
+$$</p>
+<p>The derivative is a piecewise-constant within each interval.</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Linear-Spline-with-3-internal-knots">Linear Spline with 3 internal knots<a class="anchor-link" href="#Linear-Spline-with-3-internal-knots">¶</a></h3><div style="display: flex; gap: 2px;">
+<div style="flex: 1;">
+<img alt="piecewise-spline" src="images/piecewise-linear-spline.png" width="100%"/>
+</div>
+<div style="flex: 1;">
+<img alt="piecewise-gradient" src="images/piecewise-linear-spline-gradient.png" width="100%"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
