@@ -14760,7 +14760,7 @@ div.jp-OutputPrompt {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s2">"Diameter"</span><span class="p">,</span> <span class="s2">"Height"</span><span class="p">]]</span>
@@ -14794,7 +14794,7 @@ div.jp-OutputPrompt {
 </div>
 </div>
 <div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[5]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[2]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -14846,6 +14846,44 @@ div.jp-OutputPrompt {
 </div>
 </div>
 </div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>150 100 50
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<img alt="Tree Data" scale="0.55;" src="media/images/tree-data.png" style="width: 90%;"/>
+</div>
+</div>
+</div>
 </div></section><section>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper" tabindex="0">
@@ -14868,7 +14906,700 @@ div.jp-OutputPrompt {
 </div>
 </div>
 </div>
-</div></div></section></section>
+</div></div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Decision-Tree:-Example">Decision Tree: Example<a class="anchor-link" href="#Decision-Tree:-Example">¶</a></h3><p>We can use the <code>DecisionTreeClassifier</code> module from <code>scikit-learn</code> with some added parameters to fit a full decision tree on this data.</p>
+</div>
+</div>
+</div>
+</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Features and label</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s2">"Diameter"</span><span class="p">,</span> <span class="s2">"Height"</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">y_raw</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"Family"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+
+<span class="c1"># Encode class labels</span>
+<span class="n">le</span> <span class="o">=</span> <span class="n">LabelEncoder</span><span class="p">()</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">le</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">y_raw</span><span class="p">)</span>
+<span class="n">class_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">le</span><span class="o">.</span><span class="n">classes_</span><span class="p">)</span>
+
+<span class="c1"># Fit a full (no max_depth cap) classification tree</span>
+<span class="n">clf</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">criterion</span><span class="o">=</span><span class="s2">"entropy"</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div></div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Decision-Trees:-Terminology">Decision Trees: Terminology<a class="anchor-link" href="#Decision-Trees:-Terminology">¶</a></h3><p><span style="color:darkorange;"><b>Root Node</b></span>: Top of the tree, the whole sample is still together.
+<img alt="Decision Tree" scale="2.5" src="media/images/full-DTree.png" style="height: 200%;"/></p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Decision-Trees:-Terminology">Decision Trees: Terminology<a class="anchor-link" href="#Decision-Trees:-Terminology">¶</a></h3><p><span style="color:darkorange;"><b>Node</b></span>: Decision nodes that create splits.
+<img alt="Decision Tree" scale="2.5" src="media/images/full-DTree.png" style="height: 200%;"/></p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Decision-Trees:-Terminology">Decision Trees: Terminology<a class="anchor-link" href="#Decision-Trees:-Terminology">¶</a></h3><p><span style="color:darkorange;"><b>Child</b></span>: Nodes below the current node.
+<img alt="Decision Tree" scale="2.5" src="media/images/full-DTree.png" style="height: 200%;"/></p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Decision-Trees:-Terminology">Decision Trees: Terminology<a class="anchor-link" href="#Decision-Trees:-Terminology">¶</a></h3><p><span style="color:darkorange;"><b>Parent</b></span>: Node above the current node.
+<img alt="Decision Tree" scale="2.5" src="media/images/full-DTree.png" style="height: 200%;"/></p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Decision-Trees:-Terminology">Decision Trees: Terminology<a class="anchor-link" href="#Decision-Trees:-Terminology">¶</a></h3><p><span style="color:darkorange;"><b>Leaf/Terminal Node</b></span>: Nodes that have no children, predictions depend on data at these nodes.
+<img alt="Decision Tree" scale="2.5" src="media/images/full-DTree.png" style="height: 200%;"/></p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Decision-Trees:-Terminology">Decision Trees: Terminology<a class="anchor-link" href="#Decision-Trees:-Terminology">¶</a></h3><p><span style="color:darkorange;"><b>Pruning</b></span>: Removing unnecessary branches.
+<img alt="Decision Tree" scale="2.5" src="media/images/full-DTree.png" style="height: 200%;"/></p>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Decision-Trees:-Algorithm">Decision Trees: Algorithm<a class="anchor-link" href="#Decision-Trees:-Algorithm">¶</a></h3><div style="display: flex; align-items: center;gap: 20px;">
+<div style="flex: 1;">
+<h4><span style="color:darkorange;"><b>Top-Down Greedy Recursive Partitioning </b></span></h4>
+<p>Choose the most efficient split locally that creates the most homogenous groups.</p>
+<ul>
+<li>Continuous and Discrete Features</li>
+<li>Can split at the same attribute multiple times at different values.</li>
+<li>Recursively keep splitting on each child node until a homogeneous label group is attained.</li>
+</ul>
+<h4><span style="color:darkorange;"><b>Algorithms:</b></span></h4>
+<ul>
+<li>ID3 (Iterative Dichotomiser 3): <span style="color:blue;"><u>Quinlan, 1986</u></span></li>
+<li>C4.5 (successor of ID3)</li>
+<li>CART (Classification And Regression Tree): <span style="color:blue;"><u>Breiman, 1984</u></span></li>
+<li>And more…</li>
+</ul>
+</div>
+<div style="flex: 1;">
+<img alt="Decision Tree: Comparison" scale="0.9" src="media/images/table-ss.png"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Building-a-Tree-with-an-Impurity-Function">Building a Tree with an Impurity Function<a class="anchor-link" href="#Building-a-Tree-with-an-Impurity-Function">¶</a></h3><p>The split which results in node with minimal impurity is considered the optimal split.</p>
+<img alt="Decision Tree: Impurity" scale="0.9" src="media/images/impurity-1.png"/>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Building-a-Tree-with-an-Gini-Impurity">Building a Tree with an Gini Impurity<a class="anchor-link" href="#Building-a-Tree-with-an-Gini-Impurity">¶</a></h3><p>Range of values go from 0 for perfectly pure nodes to 0.5 for perfectly impure nodes.</p>
+<img alt="Decision Tree: Impurity" scale="0.9" src="media/images/gini-impurity-1.png"/>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Building-a-Tree-with-an-Gini-Impurity">Building a Tree with an Gini Impurity<a class="anchor-link" href="#Building-a-Tree-with-an-Gini-Impurity">¶</a></h3><p>Calculating the Gini Impurity on Numeric column like Age (that contains numbers and not just Yes/No values) is little more involved.</p>
+<img alt="Decision Tree: Impurity" scale="0.9" src="media/images/gini-impurity-2.png"/>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Building-a-Tree-with-an-Gini-Impurity">Building a Tree with an Gini Impurity<a class="anchor-link" href="#Building-a-Tree-with-an-Gini-Impurity">¶</a></h3><p>All 3 possible first splits!</p>
+<img alt="Decision Tree: Impurity" scale="0.9" src="media/images/gini-impurity-3.png"/>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Building-a-Tree-with-an-Gini-Impurity">Building a Tree with an Gini Impurity<a class="anchor-link" href="#Building-a-Tree-with-an-Gini-Impurity">¶</a></h3><p>Natural feature selection $\rightarrow$ loves popcorn doesn’t appear in the full tree for the decision making process!</p>
+<img alt="Decision Tree: Impurity" scale="0.9" src="media/images/full-tree-gini.png"/>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Entropy-as-Impurity">Entropy as Impurity<a class="anchor-link" href="#Entropy-as-Impurity">¶</a></h3><ul>
+<li><span style="color:darkorange;"><b>Entropy</b></span> is a measure of <span style="color:darkorange;">disorder</span>. The entropy of a random variable is the average level of "surprise", or "uncertainty" inherent to the variable's possible outcomes.</li>
+<ul>
+<li> $E(S) = \sum_{i=1}^{C}-p_ilog_2p_i$ </li>
+<li> $p_i$ is the probability of class $i$. </li>
+</ul>
+
+<li> 
+    Varies between <span style="color:darkorange;"><b>0</b></span> and <span style="color:darkorange;"><b>$log_2C$</b></span>.<br/>
+    Worst case is a <span style="color:darkorange;">uniform distribution of labels</span> – all classes being equally likely. For binary classification $E(S) \in (0,1)$
+    </li>
+</ul>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Entropy-as-Impurity">Entropy as Impurity<a class="anchor-link" href="#Entropy-as-Impurity">¶</a></h3><div style="display: flex; align-items: center;gap: 20px;">
+<div style="flex: 1;">
+<p>In <span style="color:darkorange;">Information Theory</span>: minimum number of bits needed to encode the classification of an example in $S$.</p>
+<ul>
+<li> If all examples are in the same class, receiver knows it’s always that class <span style="color:darkorange;"><b>0 bit</b></span> (no information has to be sent)!</li>
+<li> If both classes are equally likely, i.e. probability = 0.5, then we need <span style="color:darkorange;"><b>1 bit</b></span>.</li>
+<li>If one class has probability 0.8, on average it can be conveyed using shorter messages.</li>
+</ul>
+<p>I can start provisioning my bits in an optimal manner. $1^{st}$ bit to say red or not, add $2^{nd}$ bit only if it is blue, $3^{rd}$ bit if neither red not blue, and value of the bit tells us if it is green or yellow.</p>
+</div>
+<div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
+<img alt="Entropy" scale="0.015" src="media/images/entropy-calculation.png"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Building-a-Tree-with-Entropy">Building a Tree with Entropy<a class="anchor-link" href="#Building-a-Tree-with-Entropy">¶</a></h3><ul>
+<li>Entropy tells us how much information we need to define the uncertainty of a variable.<ul>
+<li><span style="color:darkorange;">Low Entropy means more homogeneity! $\rightarrow$ Can be used to quantify Impurity</span></li>
+</ul>
+</li>
+<li>Our goal when building the Decision Tree is to reduce uncertainty or disorder with every split.</li>
+<li>Mathematically this is quantified as <span style="color:darkorange;"><b>Information Gain</b></span> $\in (0,1)$.<ul>
+<li>Expected reduction in entropy caused by partitioning the examples according to this attribute.</li>
+<li>It measures <i>how well</i> a given attribute separates the training examples according to their target classification.</li>
+<li>$IG(Y,X) = 𝐸(𝑌)− 𝐸(𝑌|𝑋)$</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Building-a-Tree-with-Entropy">Building a Tree with Entropy<a class="anchor-link" href="#Building-a-Tree-with-Entropy">¶</a></h3><p>Here, we see part of a decision tree predicting if a person will be able to repay a loan.<br/>
+Calculate the Entropy at the parent node and check how much uncertainty can be reduced upon splitting on the feature Balance.</p>
+<ul>
+<li>${\scriptsize E(Parent) = -\frac{16}{30}log_2\frac{16}{30} - \frac{14}{30}log_2\frac{14}{30} = 0.99}$</li>
+<li>${\scriptsize E(Balance&lt;50K) = -\frac{12}{13}log_2\frac{12}{13} - \frac{1}{13}log_2\frac{1}{13} = 0.39}$</li>
+<li>${\scriptsize E(Balance&gt;50K) = -\frac{4}{17}log_2\frac{4}{17} - \frac{13}{17}log_2\frac{13}{17} = 0.79}$</li>
+</ul>
+<div style="display: flex; align-items: center;gap: -20px;">
+<div style="flex: 1;">
+<p>Weighted average of Entropy for splitting on Balance
+  $${\scriptsize E(Balance) = \frac{13}{30}0.39 + \frac{17}{30}0.79 = 0.62}$$
+  </p>
+<p>Information Gain through split
+  $${\scriptsize IG(Parent, Balance) = E(Parent) - E(Balance) = 0.37}$$
+  </p>
+</div>
+<div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
+<img alt="Entropy" scale="0.65" src="media/images/entropy-node-split.png"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Automatic-Feature-Selection">Automatic Feature Selection<a class="anchor-link" href="#Automatic-Feature-Selection">¶</a></h3><p><b>Decision Trees are prone to overfitting.</b><br/>
+Without any additional oversight, CART and ID3 algorithms grows each branch of the tree just deeply enough to perfectly classify the training examples.</p>
+<div style="display: flex; align-items: center;gap: -20px;">
+<div style="flex: 1;">
+<p>Even at impure nodes, we might not choose to split on an attribute if the impurity function is not minimized upon splitting the node as opposed to its original value.</p>
+<p>Choosing not to split despite having attributes remaining for further split is a type of <span style="color:darkorange;">automatic feature selection</span>.</p>
+<p>Alternatively, instead of just checking for impurity reduction upon split, one can also set the threshold such that the reduction needs to exceed its value.</p>
+<p>Prevents <span style="color:darkorange;">overfitting</span>!</p>
+</div>
+<div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
+<img alt="Entropy" scale="0.65" src="media/images/dt-feature-selection.png"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Minimize-overfitting">Minimize overfitting<a class="anchor-link" href="#Minimize-overfitting">¶</a></h3><p>Must balance the depth and complexity of the tree to <b>generalize</b> to unseen data.</p>
+<div style="display: flex; align-items: center;gap: -20px;">
+<div style="flex: 1;">
+<p>Two Main Options:</p>
+<ul>
+<li>Early stopping</li>
+<ul>
+<li>Restrict tree depth</li>
+<li>Restrict node size</li>
+</ul>
+<li>Pruning</li>
+</ul>
+<p>Training a full decision tree with $67\%$ of initial data and testing on the rest yields an F1-score of $\color{darkorange}{87\%}$</p>
+</div>
+<div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
+<img alt="DTSurface" scale="0.65" src="media/images/full-decision-surface.png"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Early-stopping:-Limit-tree-depth">Early stopping: <span style="color:darkorange;">Limit tree depth</span><a class="anchor-link" href="#Early-stopping:-Limit-tree-depth">¶</a></h3><p>Stop splitting after a certain depth by setting <code>max_depth</code> parameter.</p>
+<div class="highlight"><pre><span></span><span class="n">clf</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+<div style="display: flex; align-items: center;gap: -20px;">
+<div style="flex: 1;">
+<p>Training a decision tree of maximum depth 4 with $67\%$ of initial data and testing on the rest yields an F1-score of $\color{darkorange}{93\%}$</p>
+</div>
+<div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
+<img alt="DTSurface4" src="media/images/decision-boundary-depth4.png" style="width:100%;"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Early-stopping:-Minimum-node-size">Early stopping: <span style="color:darkorange;">Minimum node size</span><a class="anchor-link" href="#Early-stopping:-Minimum-node-size">¶</a></h3><p>Do not split intermediate node which contains fewer than a minimum number of samples by setting <code>min_samples_split</code> parameter</p>
+<div class="highlight"><pre><span></span><span class="n">clf</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">min_samples_split</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+<div style="display: flex; align-items: center;gap: -20px;">
+<div style="flex: 1;">
+<p>Training a decision tree requiring a minimum of 4 samples in its internal node, with $67\%$ of initial data and testing on the rest, yields an F1-score of $\color{darkorange}{89\%}$</p>
+</div>
+<div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
+<img alt="DTSurface4minsample" src="media/images/decision-boundary-minsplit4.png" style="width:100%;"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="More-on-Decision-Trees">More on Decision Trees<a class="anchor-link" href="#More-on-Decision-Trees">¶</a></h3><img alt="Entropy" scale="0.65" src="media/images/dt-pros-cons.png"/>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="The-problem-with-single-trees">The problem with single trees<a class="anchor-link" href="#The-problem-with-single-trees">¶</a></h3><ul>
+<li>Single pruned trees are poor predictors</li>
+<li>Single deep trees are noisy $\rightarrow$ <b>very sensitive to small perturbations in data</b>.</li>
+</ul>
+<p>Only $5\%$ Gaussian noise in the data changes the tree.
+<img alt="DTwGaussianNoise" src="media/images/dt-w-gaussian-noise.png" style="width:100%;"/></p>
+<p><b>Fix<b>: <span style="color:darkorange;">an ensemble of trees</span>!</b></b></p>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Ensemble-Learning">Ensemble Learning<a class="anchor-link" href="#Ensemble-Learning">¶</a></h3><p>An ML paradigm that combines multiple individual models to create a stronger and more robust model.</p>
+<p><span style="color:darkorange;">Bias Variance Decomposition</span> of Learning Error:
+${\scriptsize E[(h_D(x)-y)^2] = \underbrace{E[(h_D(x)-\bar{h}(x))^2]}_{Variance}+ \underbrace{E[(\bar{h}(x)-\bar{y}(x))^2]}_{Bias} + \underbrace{E[(\bar{y}(x)-y(x))^2]}_{Noise}}$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Ensemble-Learning:-Bagging">Ensemble Learning: Bagging<a class="anchor-link" href="#Ensemble-Learning:-Bagging">¶</a></h3><ul>
+<li>Reduces variance, so has a strong beneficial effect on high variance classifiers.</li>
+<li>Train multiple instances of the same model on different subsets of the training data</li>
+<li>Each subset is created by sampling with replacement - <span style="color:darkorange;"><b>bootstrapping</b></span>!!</li>
+<li>The final prediction is an average (for regression) or a majority vote (for classification) of the individual models.</li>
+</ul>
+<h3 id="Ensemble-Learning:-Boosting">Ensemble Learning: Boosting<a class="anchor-link" href="#Ensemble-Learning:-Boosting">¶</a></h3><ul>
+<li>Boosting focuses on sequentially improving the model's weaknesses.</li>
+<li>It gives more weight to misclassified instances, allowing the model to learn from its mistakes.</li>
+<li>Focuses on improving accuracy by systematically reducing <span style="color:darkorange;">bias</span>.</li>
+</ul>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Bagging-(Bootstrap-Aggregating)">Bagging (Bootstrap Aggregating)<a class="anchor-link" href="#Bagging-(Bootstrap-Aggregating)">¶</a></h3><p>Downside of Decision Trees – easily overfit and often inaccurate on new samples.<br/>
+Goal: Reduce Variance term $E[(h_D(x)-\bar{h}(x))^2]$ <br/>
+To achieve this, we use Bagging.</p>
+<div style="display: flex; align-items: center;gap: -20px;">
+<div style="flex: 1;">
+<p>Inspired by the <span style="color:darkorange;"><b>Weak law of large numbers</b></span>. Apply this to classifiers.</p>
+<p>Assume we have $m$ training sets $D_1,D_2,\dots,D_m$ drawn from population. Train a classifier on each one and average result:
+  $\hat{h} = \frac{1}{m}\sum_{i=1}^mh_{D_i} \rightarrow \bar{h}$ as $m \rightarrow \infty$.<br/>
+  If $\hat{h} \rightarrow \bar{h}$ the variance component of the error must also vanish. Problem is we don’t have m data sets, we only have one D.</p>
+</div>
+<div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
+<img alt="Random Forest" src="media/images/bagging-fig.png" style="width:80%;"/>
+</div>
+</div>
+<p>A popular bagged model with Decision Trees is called Random Forest.</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Bagging:-Random-Forest">Bagging: Random Forest<a class="anchor-link" href="#Bagging:-Random-Forest">¶</a></h3><div style="display: flex; align-items: center;gap: -20px;">
+<div style="flex: 1;">
+<p>1. <span style="color:darkorange;"><b>Bootstrapping</b></span>: Sample different subsets of data (sampling with replacement).</p>
+<p>2. Builds multiple ‘overfit’ decision trees and combines their predictions.</p>
+<p>3. Random subsets of features are considered for splitting at each node to <span style="color:darkorange;"><b>avoid tree correlation</b></span>. <span style="color:red;"><b>Crucial!</b></span></p>
+<p>4. The final prediction is an average (regression) or majority vote (classification) of individual tree predictions.</p>
+</div>
+<div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
+<img alt="Random Forest" src="media/images/rf.png" style="width:100%;"/>
+<div style="margin-top: 20px; color:darkorange; text-align: center;">
+      Randomized feature selection with
+      Variance in Prediction
+    </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Random-Forest:-Example-(Tree-Data)">Random Forest: Example (Tree Data)<a class="anchor-link" href="#Random-Forest:-Example-(Tree-Data)">¶</a></h3><p>Training a full decision tree with $67\%$ of initial data and testing on the rest yields an F1-score of $\color{darkorange}{91\%}$</p>
+</div>
+</div>
+</div>
+</div><div class="fragment"><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="c1"># Fit Random Forest</span>
+<span class="n">rf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span>
+    <span class="n">n_estimators</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>     <span class="c1"># number of trees</span>
+    <span class="n">max_depth</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>      <span class="c1"># grow full trees</span>
+    <span class="n">min_samples_split</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span>
+<span class="p">)</span>
+
+<span class="n">rf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">rf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">f1</span> <span class="o">=</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="s1">'weighted'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"F1 Score (weighted): </span><span class="si">{</span><span class="n">f1</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div></div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Evaluation-of-a-Random-Forest">Evaluation of a Random Forest<a class="anchor-link" href="#Evaluation-of-a-Random-Forest">¶</a></h3><ul>
+<li><span style="color:darkorange;"><b>Out-of-Bag Data</b></span>: Entries that did not make into a bootstrapped dataset.<ul>
+<li>For large enough N, on average, 63.21% or the original records end up in any bootstrap sample.</li>
+<li>Roughly 36.79% of the observations are not used in the construction of a particular tree.</li>
+</ul>
+</li>
+<li>An out-of-bag sample can be used to test all the trees in the Random Forest trained without it.</li>
+<li><span style="color:darkorange;"><b>Free cross-validation</b></span>: Random Forest accuracy can be gauged by the proportion of out-of-bag samples that were correctly classified by the forest.</li>
+<li>The proportion of out-of-bag samples that were incorrectly classified is the <span style="color:darkorange;"><b>Out-of-Bag Error</b></span>.<ul>
+<li>This is an unbiased estimate of the test error.</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Random-Forest-for-Classifying-Digits">Random Forest for Classifying Digits<a class="anchor-link" href="#Random-Forest-for-Classifying-Digits">¶</a></h3><p>We want to use Random Forest to classify hand-written digits. We use separate out $25\%$ of the data for evaluation and train the model on the rest.
+<img alt="Digits Data" src="media/images/digits-data.png" style="width:60%;"/></p>
+</div>
+</div>
+</div>
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">Xtrain</span><span class="p">,</span> <span class="n">Xtest</span><span class="p">,</span> <span class="n">ytrain</span><span class="p">,</span> <span class="n">ytest</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">digits</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">digits</span><span class="o">.</span><span class="n">target</span><span class="p">,</span>
+                                                <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">Xtrain</span><span class="p">,</span> <span class="n">ytrain</span><span class="p">)</span>
+<span class="n">ypred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">Xtest</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">ypred</span><span class="p">,</span> <span class="n">ytest</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>              precision    recall  f1-score   support
+
+           0       1.00      0.97      0.99        38
+           1       0.98      0.95      0.97        44
+           2       0.95      1.00      0.98        42
+           3       0.98      0.98      0.98        45
+           4       0.97      1.00      0.99        37
+           5       0.98      0.96      0.97        49
+           6       1.00      1.00      1.00        52
+           7       1.00      0.96      0.98        50
+           8       0.94      0.98      0.96        46
+           9       0.98      0.98      0.98        47
+
+    accuracy                           0.98       450
+   macro avg       0.98      0.98      0.98       450
+weighted avg       0.98      0.98      0.98       450
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Out-of-Bag-Error">Out-of-Bag Error<a class="anchor-link" href="#Out-of-Bag-Error">¶</a></h3><p>Although for smaller samples (small $N$), OOB is less reliable than validation, as $N$ increases OOB  is more efficient than cross-validation.<br/>
+OOB error and Test errors both stabilize with the number of trees.</p>
+<p>Albeit a lower test error is a bit lucky! $\downarrow$</p>
+<img alt="Digits Data- OOB v Test" src="media/images/rf-oob-vs-test.png" style="width:70%;"/>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Rounding-up-our-thoughts">Rounding up our thoughts<a class="anchor-link" href="#Rounding-up-our-thoughts">¶</a></h3><div style="display: flex; gap: 2px;">
+<div style="flex: 1;">
+<p><span style="color:darkorange;"><b>What did we learn?</b></span></p>
+<ul>
+<li>Decision Trees</li>
+<ul>
+<li>Confident and Fast</li>
+<li>Good at learning structures within feature space</li>
+<li>But alone it overfits</li>
+</ul>
+<li>Bagging</li>
+<ul>
+<li>Wisdom of the crowd!</li>
+</ul>
+</ul>
+</div>
+<div style="flex: 1;">
+<p><span style="color:darkorange;"><b>What more on Decision Trees?</b></span></p>
+<ul>
+<li>A closer look at Regression Trees</li>
+<li> Minimize Overfitting in Single Trees w Reduced Error Pruning</li>
+<li> Boosting</li>
+<ul>
+<li> AdaBoost</li>
+<li> Gradient Boosting with Regression Trees</li>
+<li> XGBoost for Classification and Regression</li>
+</ul>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Thats-all-folks!">Thats all folks!<a class="anchor-link" href="#Thats-all-folks!">¶</a></h3><div style="text-align: center;">
+<img alt="The End" scale="0.01;" src="media/images/end-slide.jpg" style="width: 40%;"/>
+</div>
+</div>
+</div>
+</div>
+</div></section></section>
 </div>
 </div>
 </body>

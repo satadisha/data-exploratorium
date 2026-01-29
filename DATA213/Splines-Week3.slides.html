@@ -15183,7 +15183,8 @@ $$</p>
 <h3 id="Choosing-Knot-Placement">Choosing Knot Placement<a class="anchor-link" href="#Choosing-Knot-Placement">¶</a></h3><ul>
 <li>If you have an idea of how many knots their should be you could do hyperparameter tuning to determine their location.</li>
 <li>Regression Splines are most flexible in regions that have a lot of knots as the coefficients can change rapidly. Hence one strategy is to place more knots in places where the function might vary most rapidly, and fewer where the function is relatively stable.</li>
-<li>We can also place knots at uniform quantiles across the domain. We can do this programmatically by specifying the number of knots or degrees of freedom (df). For a polynomial of degree $d$, the number of knots would be $df-d$.</li>
+<li>We can also place knots at uniform quantiles across the domain. We can do this programmatically by specifying the number of knots or degrees of freedom (df) of the overall model space.<br/>
+If each piece of the spline is a polynomial of degree $d$, the number of knots would be $df-d$.</li>
 </ul>
 </div>
 </div>
