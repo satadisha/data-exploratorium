@@ -14660,7 +14660,7 @@ div.jp-OutputPrompt {
 </ul>
 </div>
 <div class="fragment" style="font-size: 14px;">
-<h4>Courses I teach</h4>
+<h4>Courses Sequences I teach</h4>
 <ul>
 <li>Introduction to Data Science</li>
 <li>Mathematical Methods for Data Science</li>
@@ -14703,7 +14703,7 @@ div.jp-OutputPrompt {
 <ul>
 <li class="fragment">Using an ensemble of tree-based learners</li>
 <li class="fragment"> Bagging</li>
-<li class="fragment"> Boosting</li>
+<li class="fragment"> Random Forest</li>
 </ul>
 </div>
 </div>
@@ -14748,8 +14748,8 @@ div.jp-OutputPrompt {
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Decision-Tree:-Example">Decision Tree: Example<a class="anchor-link" href="#Decision-Tree:-Example">¶</a></h3><ul>
 <li>Assume a toy task that consisting of a dataset that contains several attributes related to trees growing in a plot of land.</li>
-<li>Given only the $\color{blue}{\textbf{Diameter}}$ and $\color{blue}{\textbf{Height}}$ of a tree trunk, we must determine if it's an Apple, Cherry, or Oak tree.</li>
-<li>To do this, we'll use a $\color{blue}{\textbf{Decision Tree}}$.</li>
+<li>Given only the $\color{darkorange}{\textbf{Diameter}}$ and $\color{darkorange}{\textbf{Height}}$ of a tree trunk, we must determine if it's an Apple, Cherry, or Oak tree.</li>
+<li>To do this, we'll use a $\color{darkorange}{\textbf{Decision Tree}}$.</li>
 </ul>
 <p><i>Let's start by investigating the data!</i></p>
 </div>
@@ -14842,33 +14842,6 @@ div.jp-OutputPrompt {
 </tbody>
 </table>
 </div>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="CodeMirror cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span> 
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>150 100 50
-</pre>
 </div>
 </div>
 </div>
@@ -15064,7 +15037,7 @@ div.jp-OutputPrompt {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Building-a-Tree-with-an-Gini-Impurity">Building a Tree with an Gini Impurity<a class="anchor-link" href="#Building-a-Tree-with-an-Gini-Impurity">¶</a></h3><p>Range of values go from 0 for perfectly pure nodes to 0.5 for perfectly impure nodes.</p>
+<h3 id="Building-a-Tree-with-Gini-Impurity">Building a Tree with Gini Impurity<a class="anchor-link" href="#Building-a-Tree-with-Gini-Impurity">¶</a></h3><p>Range of values go from 0 for perfectly pure nodes to 0.5 for perfectly impure nodes.</p>
 <img alt="Decision Tree: Impurity" scale="0.9" src="media/images/gini-impurity-1.png"/>
 </div>
 </div>
@@ -15076,7 +15049,7 @@ div.jp-OutputPrompt {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Building-a-Tree-with-an-Gini-Impurity">Building a Tree with an Gini Impurity<a class="anchor-link" href="#Building-a-Tree-with-an-Gini-Impurity">¶</a></h3><p>Calculating the Gini Impurity on Numeric column like Age (that contains numbers and not just Yes/No values) is little more involved.</p>
+<h3 id="Building-a-Tree-with-Gini-Impurity">Building a Tree with Gini Impurity<a class="anchor-link" href="#Building-a-Tree-with-Gini-Impurity">¶</a></h3><p>Calculating the Gini Impurity on Numeric column like Age (that contains numbers and not just Yes/No values) is little more involved.</p>
 <img alt="Decision Tree: Impurity" scale="0.9" src="media/images/gini-impurity-2.png"/>
 </div>
 </div>
@@ -15088,7 +15061,7 @@ div.jp-OutputPrompt {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Building-a-Tree-with-an-Gini-Impurity">Building a Tree with an Gini Impurity<a class="anchor-link" href="#Building-a-Tree-with-an-Gini-Impurity">¶</a></h3><p>All 3 possible first splits!</p>
+<h3 id="Building-a-Tree-with-Gini-Impurity">Building a Tree with Gini Impurity<a class="anchor-link" href="#Building-a-Tree-with-Gini-Impurity">¶</a></h3><p>All 3 possible first splits!</p>
 <img alt="Decision Tree: Impurity" scale="0.9" src="media/images/gini-impurity-3.png"/>
 </div>
 </div>
@@ -15100,7 +15073,7 @@ div.jp-OutputPrompt {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Building-a-Tree-with-an-Gini-Impurity">Building a Tree with an Gini Impurity<a class="anchor-link" href="#Building-a-Tree-with-an-Gini-Impurity">¶</a></h3><p>Natural feature selection $\rightarrow$ loves popcorn doesn’t appear in the full tree for the decision making process!</p>
+<h3 id="Building-a-Tree-with-Gini-Impurity">Building a Tree with Gini Impurity<a class="anchor-link" href="#Building-a-Tree-with-Gini-Impurity">¶</a></h3><p>Natural feature selection $\rightarrow$ loves popcorn doesn’t appear in the full tree for the decision making process!</p>
 <img alt="Decision Tree: Impurity" scale="0.9" src="media/images/full-tree-gini.png"/>
 </div>
 </div>
@@ -15136,7 +15109,7 @@ div.jp-OutputPrompt {
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Entropy-as-Impurity">Entropy as Impurity<a class="anchor-link" href="#Entropy-as-Impurity">¶</a></h3><div style="display: flex; align-items: center;gap: 20px;">
 <div style="flex: 1;">
-<p>In <span style="color:darkorange;">Information Theory</span>: minimum number of bits needed to encode the classification of an example in $S$.</p>
+<p>In <span style="color:darkorange;">Information Theory</span>: average number of bits needed to encode the classification of an example in $S$.</p>
 <ul>
 <li> If all examples are in the same class, receiver knows it’s always that class <span style="color:darkorange;"><b>0 bit</b></span> (no information has to be sent)!</li>
 <li> If both classes are equally likely, i.e. probability = 0.5, then we need <span style="color:darkorange;"><b>1 bit</b></span>.</li>
@@ -15211,19 +15184,34 @@ Calculate the Entropy at the parent node and check how much uncertainty can be r
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Automatic-Feature-Selection">Automatic Feature Selection<a class="anchor-link" href="#Automatic-Feature-Selection">¶</a></h3><p><b>Decision Trees are prone to overfitting.</b><br/>
-Without any additional oversight, CART and ID3 algorithms grows each branch of the tree just deeply enough to perfectly classify the training examples.</p>
-<div style="display: flex; align-items: center;gap: -20px;">
+<h3 id="Automatic-Feature-Selection">Automatic Feature Selection<a class="anchor-link" href="#Automatic-Feature-Selection">¶</a></h3><div style="display: flex; align-items: center;gap: -20px;">
 <div style="flex: 1;">
 <p>Even at impure nodes, we might not choose to split on an attribute if the impurity function is not minimized upon splitting the node as opposed to its original value.</p>
 <p>Choosing not to split despite having attributes remaining for further split is a type of <span style="color:darkorange;">automatic feature selection</span>.</p>
 <p>Alternatively, instead of just checking for impurity reduction upon split, one can also set the threshold such that the reduction needs to exceed its value.</p>
-<p>Prevents <span style="color:darkorange;">overfitting</span>!</p>
+<p>One way to limit <span style="color:darkorange;">overfitting</span>!</p>
 </div>
 <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
-<img alt="Entropy" scale="0.65" src="media/images/dt-feature-selection.png"/>
+<img alt="Entropy" src="media/images/dt-feature-selection.png" width="85%"/>
 </div>
 </div>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Single-trees-overfit">Single trees overfit<a class="anchor-link" href="#Single-trees-overfit">¶</a></h3><p><span style="color:darkorange;"><b>Decision Trees are prone to overfitting.</b></span><br/>
+Without any additional oversight, CART and ID3 algorithms grows each branch of the tree just deeply enough to perfectly classify the training examples.</p>
+<p>Overfit trees are:</p>
+<ul>
+<li>Too mindful to randomness of the training data</li>
+<li>Compromises generalizability on unseen test data.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -15377,9 +15365,10 @@ To achieve this, we use Bagging.</p>
 <p>Assume we have $m$ training sets $D_1,D_2,\dots,D_m$ drawn from population. Train a classifier on each one and average result:
   $\hat{h} = \frac{1}{m}\sum_{i=1}^mh_{D_i} \rightarrow \bar{h}$ as $m \rightarrow \infty$.<br/>
   If $\hat{h} \rightarrow \bar{h}$ the variance component of the error must also vanish. Problem is we don’t have m data sets, we only have one D.</p>
+<p><span style="color:darkorange;"><b>Solution</b></span>: Use bootstrapped samples!</p>
 </div>
 <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
-<img alt="Random Forest" src="media/images/bagging-fig.png" style="width:80%;"/>
+<img alt="Random Forest" src="media/images/bagging-fig.png" style="width:90%;"/>
 </div>
 </div>
 <p>A popular bagged model with Decision Trees is called Random Forest.</p>
@@ -15479,8 +15468,9 @@ To achieve this, we use Bagging.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Random-Forest-for-Classifying-Digits">Random Forest for Classifying Digits<a class="anchor-link" href="#Random-Forest-for-Classifying-Digits">¶</a></h3><p>We want to use Random Forest to classify hand-written digits. We use separate out $25\%$ of the data for evaluation and train the model on the rest.
-<img alt="Digits Data" src="media/images/digits-data.png" style="width:60%;"/></p>
+<h3 id="Random-Forest-for-Classifying-Digits">Random Forest for Classifying Digits<a class="anchor-link" href="#Random-Forest-for-Classifying-Digits">¶</a></h3><p>We want to use Random Forest to classify hand-written digits. Our dataset consists of 1797 grayscale images of handwritten digits, from 0 to 9. Each image is an $8 \times 8$ pixel grid that has been flattened into a vector of 64 numerical features.</p>
+<p>We use separate out $25\%$ of the data for evaluation and train the model on the rest.
+<img alt="Digits Data" src="media/images/digits-data.png" style="width:50%;"/></p>
 </div>
 </div>
 </div>
