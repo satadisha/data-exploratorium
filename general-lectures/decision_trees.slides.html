@@ -15186,6 +15186,7 @@ Calculate the Entropy at the parent node and check how much uncertainty can be r
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Automatic-Feature-Selection">Automatic Feature Selection<a class="anchor-link" href="#Automatic-Feature-Selection">¶</a></h3><div style="display: flex; align-items: center;gap: -20px;">
 <div style="flex: 1;">
+<p>Reduction in impurity provides a way to determine the most important features.</p>
 <p>Even at impure nodes, we might not choose to split on an attribute if the impurity function is not minimized upon splitting the node as opposed to its original value.</p>
 <p>Choosing not to split despite having attributes remaining for further split is a type of <span style="color:darkorange;">automatic feature selection</span>.</p>
 <p>Alternatively, instead of just checking for impurity reduction upon split, one can also set the threshold such that the reduction needs to exceed its value.</p>
@@ -15386,7 +15387,7 @@ To achieve this, we use Bagging.</p>
 <div style="flex: 1;">
 <p>1. <span style="color:darkorange;"><b>Bootstrapping</b></span>: Sample different subsets of data (sampling with replacement).</p>
 <p>2. Builds multiple ‘overfit’ decision trees and combines their predictions.</p>
-<p>3. Random subsets of features are considered for splitting at each node to <span style="color:darkorange;"><b>avoid tree correlation</b></span>. <span style="color:red;"><b>Crucial!</b></span></p>
+<p>3. Random subsets of $m$ (or $mtry$) features (out of $p$) are considered for splitting at each node to <span style="color:darkorange;"><b>avoid tree correlation</b></span>. <span style="color:red;"><b>Crucial!</b></span></p>
 <p>4. The final prediction is an average (regression) or majority vote (classification) of individual tree predictions.</p>
 </div>
 <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
@@ -15455,6 +15456,35 @@ To achieve this, we use Bagging.</p>
 <li><span style="color:darkorange;"><b>Free cross-validation</b></span>: Random Forest accuracy can be gauged by the proportion of out-of-bag samples that were correctly classified by the forest.</li>
 <li>The proportion of out-of-bag samples that were incorrectly classified is the <span style="color:darkorange;"><b>Out-of-Bag Error</b></span>.<ul>
 <li>This is an unbiased estimate of the test error.</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Tuning-Random-Forests">Tuning Random Forests<a class="anchor-link" href="#Tuning-Random-Forests">¶</a></h3><p>Random Forests are a powerful model but we can still tune some hyperparameters to maximize gains.</p>
+<ul>
+<li>Number of trees:<ul>
+<li>Typically have the largest impact on predictive accuracy and stabilizes error.</li>
+</ul>
+</li>
+<li>$mtry$:<ul>
+<li>Balances low tree correlation and reasonable predictive strength.</li>
+</ul>
+</li>
+<li>Node Size:<ul>
+<li>Has an impact on tree complexity.</li>
+</ul>
+</li>
+<li>Split rule<ul>
+<li>Generally used to increase computational efficiency.</li>
 </ul>
 </li>
 </ul>
