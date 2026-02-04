@@ -15267,10 +15267,10 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Choosing-Knot-Placement">Choosing Knot Placement<a class="anchor-link" href="#Choosing-Knot-Placement">¶</a></h3><ul>
-<li>If you have an idea of how many knots their should be you could do hyperparameter tuning to determine their location.</li>
+<li>If you have an idea of how many knots there should be you could do hyperparameter tuning to determine their location.</li>
 <li>Regression Splines are most flexible in regions that have a lot of knots as the coefficients can change rapidly. Hence one strategy is to place more knots in places where the function might vary most rapidly, and fewer where the function is relatively stable.</li>
 <li>We can also place knots at uniform quantiles across the domain. We can do this programmatically by specifying the number of knots or degrees of freedom (df) of the overall model space.<br/>
-If each piece of the spline is a polynomial of degree $d$, the number of knots would be $df-d$.</li>
+If each piece of the spline is a polynomial of degree $d$, the number of knots would be $\color{blue}{{df-d}}$ (without intercept in the overall spline function space) $\rightarrow \color{blue}{\textbf{Proof Optional!}}$</li>
 </ul>
 </div>
 </div>
@@ -15282,7 +15282,7 @@ If each piece of the spline is a polynomial of degree $d$, the number of knots w
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Choosing-Knots">Choosing Knots<a class="anchor-link" href="#Choosing-Knots">¶</a></h3><p>If their are "obvious" changes in behavior in a dataset you might choose knots manually. However, this generally isn't the best approach.
+<h3 id="Choosing-Knots">Choosing Knots<a class="anchor-link" href="#Choosing-Knots">¶</a></h3><p>If there are "obvious" changes in behavior in a dataset you might choose knots manually. However, this generally isn't the best approach.
 Instead what's better is using "too many" knots and then applying a penalty to prevent the model from getting "too complicated".</p>
 </div>
 </div>
@@ -15294,7 +15294,7 @@ Instead what's better is using "too many" knots and then applying a penalty to p
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h4 id="Specifying-Knots-in-Implementation">Specifying Knots in Implementation<a class="anchor-link" href="#Specifying-Knots-in-Implementation">¶</a></h4><p>We can use a set of splines called basis splines or B-splines by importing the <code>BSplines</code> module from <code>statsmodels.gam.api</code> package.</p>
+<h4 id="Specifying-Knots-in-Implementation">Specifying Knots in Implementation<a class="anchor-link" href="#Specifying-Knots-in-Implementation">¶</a></h4><p>We can use a set of splines called basis splines or B-splines by importing the <code>BSplines</code> module from <code>statsmodels.gam.api</code> package. Intuitively speaking, any spline curve you want (with given degree and knots) can be built by adding together these B-spline shapes with the right weights (<i>analogous to the basis of a vector space</i>).</p>
 <p>Here we use B-splines to create terms for regression models and fit some non-linear data. The number of knots is provided by specifying the polynomial degree (3 because we use <b>Cubic Basis Splines</b>) and the degrees of freedom (8).</p>
 <p>Once the design matrix has been built with spline features, we use Ordinary Least Squares to fit the resulting model.</p>
 </div>
@@ -15399,9 +15399,10 @@ Instead what's better is using "too many" knots and then applying a penalty to p
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Natural-Splines">Natural Splines<a class="anchor-link" href="#Natural-Splines">¶</a></h3><p>Splines can exhibit high variance towards the outer ranges of the predictor value: that is closer to the minimum and maximum values of $\textrm{x}$.<br/>
+<h3 id="Natural-Splines">Natural Splines<a class="anchor-link" href="#Natural-Splines">¶</a></h3><p>Splines can exhibit high variance towards the outer ranges of the predictor value: that is closer to the minimum and maximum values of $\textrm{x}$. At the edges, a spline is allowed to bend arbitrarily.<br/>
 To fix this, we impose <u>additional boundary constraints</u> on the spline.</p>
-<p>$\color{blue}{\textbf{Natural Spline}}$: a regression spline where the function is required to be <i>linear</i> at the boundaries, i.e., in the regions where $\textrm{x}$ is smaller than the smallest knot, or larger than the largest knot. Natural Splines generally produce more stable estimates at the boundary.</p>
+<p>$\color{blue}{\textbf{Natural Spline}}$: a regression spline where the function is required to be <i>linear</i> at the boundaries, i.e., in the regions where $\textrm{x}$ is smaller than the smallest knot, or larger than the largest knot. For natural cubic splines, this ensures curvature ($2^{nd}$ order derivative) at boundaries is zero.
+Natural Splines generally produce more stable estimates at the boundary.</p>
 <img alt="Natural Splines" scale="0.75;" src="images/natural-v-standard-spline-boundary.png" style="width: 70%;"/>
 </div>
 </div>
@@ -15415,7 +15416,7 @@ To fix this, we impose <u>additional boundary constraints</u> on the spline.</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Smoothness-of-Splines">Smoothness of Splines<a class="anchor-link" href="#Smoothness-of-Splines">¶</a></h3><p>Recall this spline from earlier, with knots at $-1$ and $2$. Note how you can't even really tell from the graph where the 2nd knot is. This because the function $x^2+2x$ and $2x^2-2x+4$ have the same derivatives at the knot $x=2$.<br/>
 $\color{blue}{\textbf{This is a key continuity principle!}}$</p>
-<p>Smoothness requires polynomials of degree $d$, adjacent to each other at a knot, to have same value as well as the same value of derivatives of degree $1, 2, \dots d-1$.</p>
+<p>Smoothness requires polynomials of degree $d$, adjacent to each other at a knot, to have same value ($0$-th derivative) as well as the same value of derivatives of degree $1, 2, \dots d-1$.</p>
 <p>For cubic spline, at knot $\tau_i$, this means:
 $$
 P_i(\tau_i) = P_{i+1}(\tau_i),  
@@ -15435,7 +15436,7 @@ $$
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Types-of-Splines">Types of Splines<a class="anchor-link" href="#Types-of-Splines">¶</a></h3><p>Typically when used splines are broke up into one of the following cases.</p>
 <ul>
-<li><p><b>Linear Splines</b> (Sometimes called elbow regression) where all components are linear.</p>
+<li><p><b>Linear Splines</b> or $C^0$, (Sometimes called elbow regression) where all components are linear.</p>
 </li>
 <li><p><b>Quadratic Splines</b> or $C^1$, will be continuous at 1st derivatives, they'll have basis
 $$
