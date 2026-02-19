@@ -15069,41 +15069,7 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Some-of-the-most-popular-conjugate-pairs:">Some of the most popular conjugate pairs:<a class="anchor-link" href="#Some-of-the-most-popular-conjugate-pairs:">¶</a></h3><table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Data</th>
-<th>Prior</th>
-<th>Likelihood</th>
-<th>Posterior</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>$p$</td>
-<td>$d_i \; (N)$</td>
-<td>$\text{Beta}(p \mid \alpha, \beta)$ <br/> $\sim p^{\alpha}(1-p)^{\beta}$</td>
-<td>$\text{Binomial}(p \mid d_i, N)$ <br/> $\sim p^{d_i}(1-p)^{N-d_i}$</td>
-<td>$\text{Beta}(p \mid \alpha + d_i, \beta + N - d_i)$ <br/> $\sim p^{\alpha+d_i}(1-p)^{\beta+N-d_i}$</td>
-</tr>
-<tr>
-<td>$\lambda$</td>
-<td>$d_i$</td>
-<td>$\text{Gamma}(\lambda \mid \alpha, \beta)$ <br/> $\sim \lambda^{\alpha-1} e^{-\beta \lambda}$</td>
-<td>$\text{Poisson}(\lambda \mid d_i)$ <br/> $\sim \lambda^{d_i} e^{-\lambda}$</td>
-<td>$\text{Gamma}(\lambda \mid \alpha + d_i, \beta + 1)$ <br/> $\sim \lambda^{\alpha-1+d_i} e^{-(\beta+1)\lambda}$</td>
-</tr>
-<tr>
-<td>$x$</td>
-<td>$d_i$</td>
-<td>$\text{Normal}(x \mid \mu, \sigma)$ <br/> $\sim e^{-(x-\mu)^2 / 2\sigma^2}$</td>
-<td>$\text{Normal}(x \mid d_i, s)$* <br/> $\sim e^{-(x-d_i)^2 / 2s^2}$</td>
-<td>$\text{Normal}\!\left(x \mid \frac{s^2\mu + \sigma^2 d_i}{\sigma^2 + s^2}, \frac{\sigma^2 s^2}{\sigma^2 + s^2}\right)$ <br/> $\sim e^{-\left(x - \frac{s^2\mu + \sigma^2 d_i}{\sigma^2 + s^2}\right)^2 \big/ \left(\frac{2\sigma^2 s^2}{\sigma^2 + s^2}\right)}$</td>
-</tr>
-</tbody>
-</table>
-<hr/>
+<h3 id="Some-of-the-most-popular-conjugate-pairs:">Some of the most popular conjugate pairs:<a class="anchor-link" href="#Some-of-the-most-popular-conjugate-pairs:">¶</a></h3><img alt="Table of Conjugate Pairs" scale="0.75;" src="images/conjugacy-table.png" style="width: 80%;"/>
 <p>* If the value of $s$ is unknown, the population variance needs to be estimated from multiple data points.</p>
 </div>
 </div>
