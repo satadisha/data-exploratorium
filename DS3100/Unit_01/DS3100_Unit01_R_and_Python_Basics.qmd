@@ -421,7 +421,7 @@ import pandas as pd
 
 # Part 3
 
-<span style="color:#1565C0; font-size:1.8em; font-weight:600;"> Data objects in R and Python</span>
+<span style="color:#1565C0; font-size:1.8em; font-weight:600;"> How data is organized in R and Python</span>
 
 ---
 
@@ -462,6 +462,8 @@ Both R and Python have a small set of **atomic data types** that are the buildin
 
 ::: {.callout-note style="font-size:0.75em;"}
 ## Remember
+
+- Both R and Python allow arithmetic operations on logical values, treating `TRUE` / `True` as 1 and `FALSE` / `False` as 0. This is an example of **implicit type conversion**.
 
 - R treats even a single string as a **character vector of length 1**, whereas Python treats a string as a sequence of characters. You can see the difference by creating `"Hello"` in both languages and comparing R's `length()` with Python's `len()`.
 
@@ -516,10 +518,15 @@ These structures differ in their **dimensionality**, the **types of values they 
       <td>1-D container</td>
       <td>elements can be different types or objects</td>
     </tr>
+    <tr>
+      <td><strong>Factor</strong></td>
+      <td>1-D</td>
+      <td>categorical values with defined levels</td>
+    </tr>
   </tbody>
 </table>
 
-These distinctions matter because they determine **what a data structure can contain** and **how we access and manipulate its elements**.
+These distinctions matter because they determine **what a data structure can contain** and **how we can access and manipulate its elements**.
 
 ---
 
@@ -527,15 +534,20 @@ These distinctions matter because they determine **what a data structure can con
 
 While there are not like for like equivalents for every R structure in Python, the general idea prevails.
 
+::: {style="font-size:0.75em;"}
+
 | R idea | Python analogue | Important difference |
 |---|---|---|
-| Vector | list / NumPy array | Python lists may mix types |
+| Vector | `list` / NumPy array | Python lists may mix types |
 | Matrix | NumPy array | NumPy arrays are typically homogeneous |
 | Array | NumPy array | n-dimensional structure |
 | Data frame | pandas `DataFrame` | tabular data by rows and columns |
-| List | `list` | ordered heterogeneous container |
+| List | `list` | general heterogeneous container |
+| Factor | `pandas.Categorical` | categorical values with defined categories |
 
-::: {.callout-note}
+:::
+
+::: {.callout-note style="font-size:0.75em;"}
 The goal is **not** to memorize a one-to-one mapping of data structures across languages. The goal is to understand the structural idea and then learn the language-specific implementation.
 :::
 
@@ -549,27 +561,24 @@ The goal is **not** to memorize a one-to-one mapping of data structures across l
 vec_num <- c(1, 2, 3, 4)
 vec_chr <- c("yes", "no", "maybe")
 vec_log <- c(TRUE, FALSE, TRUE)
-```
-<br>
-<small>A useful sequence shortcut:</small>
 
-```r
-5:8
+# appending elements to a vector
+vec_num <- c(vec_num, 5)
 ```
 <br>
-<small>This creates a vector of integers from 5 to 8.</small>
+<small>A useful sequence shortcut is `1:5`. This creates a vector of integers from 1 to 5.</small>
 
 ```text
-5 6 7 8
+1 2 3 4 5
 ```
 
 ::: {.callout-note}
 R and Python handle integer sequences differently:
 
-- In **R**, `5:8` produces `5, 6, 7, 8` — **both endpoints are included**.
-- In **Python**, `range(5, 8)` produces `5, 6, 7` — the **stop value `8` is excluded**.
+- In **R**, `1:5` produces `1, 2, 3, 4, 5` — **both endpoints are included**.
+- In **Python**, `range(1, 5)` produces `1, 2, 3, 4` — the **stop value `5` is excluded**.
 
-Therefore, the Python equivalent of R's `5:8` would be `range(5, 9)`.
+Therefore, the Python equivalent of R's `1:5` would be `range(1, 6)`.
 :::
 
 ---
@@ -578,9 +587,15 @@ Therefore, the Python equivalent of R's `5:8` would be `range(5, 9)`.
 
 The everyday Python list is also one-dimensional, but unlike a basic R vector it can contain mixed types.
 
-```python
+```{python}
 vec_num = [1, 2, 3, 4]
 vec_mixed = [1, 2, False, "yes"]
+
+print(vec_mixed)
+
+# appending elements to a list
+vec_num.append(5)
+print(vec_num)
 ```
 
 The mixed list remains a list.
@@ -626,22 +641,21 @@ x = [1, 2, False, "yes"]
 
 Python lists can contain mixed types, so no coercion is required and lists can be heterogeneous.
 
-```{python}
-type(x)
-```
-<br>
+::: {.callout-note style="font-size:0.75em;"}
 
-#### Compare
+## Remember
 
 **R:** homogeneous vector → coercion
 
 **Python:** heterogeneous list → mixed values allowed
 
+:::
+
 ---
 
 ## Matrices
 
-They are two dimensional structures in either language.
+They are **two dimensional** structures in either language.
 
 ::: {.columns}
 
@@ -668,10 +682,7 @@ mat
 ```{python}
 import numpy as np
 
-mat = np.array([
-  [1, 2],
-  [3, 4]
-])
+mat = np.array([1, 2, 3, 4]).reshape(2, 2)
 
 mat
 ```
@@ -739,20 +750,23 @@ mat <- matrix(
 mat["row1", "col2"]
 ```
 
-Python typically uses explicit labels through a tabular structure such as a pandas `DataFrame` rather than relying on matrix row/column names in the same way. That's the data structure you will see in the next section and more commonly use during large scale data analysis.
+Python typically uses explicit labels (<span style="color: #1565C0;">*for its rows and columns through index and column names*</span>) through a tabular structure such as a pandas `DataFrame` rather than relying on matrix row/column names in the same way.<br> That's the data structure you will see in the next section and more commonly use during large scale data analysis.
 
 ---
 
-## Data frames vs. lists
+## Tabular Data
 
-#### R data frame
+::: {style="font-size:0.75em;"}
+A data frame is a **2-D table** in which rows represent observations, columns represent variables, and columns may have different types.
+:::
 
-A data frame is a **2-D table** in which columns may have different types.
+#### R `data.frame`
 
 ```{r}
 df <- data.frame(
   name = c("A", "B"),
-  score = c(90, 84)
+  score = c(90, 84),
+  subject = c("Math", NA)
 )
 df
 ```
@@ -764,7 +778,8 @@ import pandas as pd
 
 df = pd.DataFrame({
     "name": ["A", "B"],
-    "score": [90, 84]
+    "score": [90, 84],
+    "subject": ["Math", np.nan]
 })
 df
 ```
@@ -773,7 +788,114 @@ Both are designed to deal with tabular data.
 
 ---
 
-## Lists
+## Indexing Dataframes
+
+Often we need to probe into specific rows and columns of a data frame. Both R and Python provide multiple ways to access data frame elements.<br><br>
+
+::: {.columns}
+
+::: {.column width="45%" style="font-size:0.75em;"}
+
+#### R
+R uses the `[row, column]` syntax to access elements of a data frame.
+
+```{r}
+# to access the element in row 1, column 2
+df[1, 2]
+
+# to access all columns in row 1
+df[1, ]
+
+#to access the score column
+df[, "score"]
+```
+
+:::
+
+::: {.column width="50%" style="font-size:0.75em;"}
+
+#### Python
+Python uses the `.loc` and `.iloc` methods to access elements of a DataFrame. `.loc[]` uses row/column labels, while `.iloc[]` uses their integer positions.
+
+```{python}
+# iloc supports integer-based (positional) indexing
+df.iloc[0, 1]  # row 0, column 1
+
+# loc supports label-based indexing
+df.loc[0, "score"]  # row 0, column "score"
+
+# to print a whole column
+df["score"]
+```
+:::
+
+:::
+
+
+---
+
+## Missing values
+
+<small>Missing data require explicit attention.</small>
+
+::: {.columns}
+
+::: {.column width="48%" style="font-size:0.75em;"}
+
+#### R
+
+<small>`NA` represents missingness.</small>
+
+```{r}
+# for the whole data frame
+is.na(df)
+
+#how many missing values can be found per row
+rowSums(is.na(df))
+
+#count the number of missing values in a specific column
+sum(is.na(df$score))
+
+#remove missing values when calculating the mean of a column
+mean(df[, "score"], na.rm = TRUE)
+```
+
+:::
+
+::: {.column width="48%" style="font-size:0.75em;"}
+
+#### Python
+
+<small>Pandas commonly uses `NaN` for missing values.</small>
+
+```{python}
+
+#check for missing values in whole data frame
+df.isna()
+
+# count the missing values in a specific column
+df["score"].isna().sum()
+
+# number of rows with missing values in any column
+df.isna().any(axis=1).sum()
+```
+
+:::
+
+:::
+
+::: {.callout-note style="font-size:0.75em;"}
+
+**What you are missing can be key information.** 
+
+- Do not silently ignore it. Missingness can be informative and may require special handling.
+- Missingness can be **random** or **systematic**. If it is systematic, it may bias your results.
+- Missingness can introduce errors in your analysis if not handled properly.
+:::
+
+---
+
+## Heterogeneous Lists
 
 #### R
 
@@ -786,7 +908,7 @@ x <- list(
 )
 ```
 
-#### Python
+#### Python 
 
 ```{python}
 x = [
@@ -800,11 +922,11 @@ x = [
 ::: {.callout-note style="font-size:0.75em;"}
 
 ### Remember
-- A list is a **container for objects**.
+- A list is a **heterogeneous container for objects/data types**.
 
 - R lists can contain vectors, matrices, data frames, or other lists.
 
-- Python lists can contain values and other containers as well.
+- The major difference in these structures across the two language ecosystems is in the way they are indexed and accessed, and that R lists can have **named** elements.
 :::
 
 ---
@@ -929,13 +1051,246 @@ For a dictionary that is indexed by keys, you can use the key name to extract th
 person["name"]
 ```
 
-The broad concept is shared:
+---
 
-> **Select or extract a part of an object.**
+## Categorical data
 
-The syntax depends on the object's structure.
+::: {style="font-size:0.75em;"}
+Some variables represent a **fixed set of categories** rather than arbitrary text.
+
+Examples:
+
+- `"ELA"`, `"Math"`, `"Science"`
+- `"Freshman"`, `"Sophomore"`, `"Junior"`, `"Senior"`
+
+:::
+
+::: {.columns}
+
+::: {.column width="48%" style="font-size:0.75em;"}
+
+#### R: `factor`
+
+```{r}
+subject <- factor(
+  c("Math", "ELA", "Math", "Science")
+)
+
+subject
+levels(subject)
+```
+
+A factor stores categorical values using a set of **levels**.
+
+:::
+
+::: {.column width="48%" style="font-size:0.75em;"}
+
+#### Python: `pandas.Categorical`
+
+```{python}
+import pandas as pd
+
+subject = pd.Categorical(
+    ["Math", "ELA", "Math", "Science"]
+)
+
+subject
+subject.categories
+```
+
+A pandas `Categorical` represents values using a defined set of **categories**.
+
+:::
+
+:::
+
+<div style="position:relative; height:32vh;">
+
+::: {.fragment .fade-out data-fragment-index="1" style="position:absolute; top:0; left:5%; width:90%; z-index:2;"}
+
+::: {.callout-tip style="font-size:0.75em;"}
+
+## Think about it
+
+Why might we want to represent a categorical variable as a **factor** (R) or **categorical variable** (pandas) rather than simply storing it as a string?
+
+Give **1–2 reasons**.
+
+:::
+
+:::
+
+
+::: {.fragment .fade-in data-fragment-index="1" style="position:absolute; top:0; left:5%; width:90%; z-index:3;"}
+
+::: {.callout-note style="font-size:0.72em;"}
+
+## Why does this matter?
+
+- Storing categories as strings can lead to errors and inconsistencies (capitalization, typos, etc.). Using a factor or categorical variable makes an explicit set of valid categories.
+
+- The **definition and ordering of categories** can affect how results are displayed and interpreted.
+
+:::
+
+:::
+
+</div>
 
 ---
+
+## Ordered data
+
+Sometimes categories have a meaningful order. For examples, the months of the year, or a rating scale such as *Low < Medium < High*. Often observations need to be compared or sorted based on this order.
+
+::: {.columns}
+
+::: {.column width="48%" style="font-size:0.75em;"}
+
+#### R
+The **levels** tell R the intended ordering.
+
+```{r}
+month <- factor(
+  c("Dec", "Apr", "Jan", "Mar"),
+  levels = c(
+  "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+  ),
+  ordered = TRUE
+)
+
+print(sort(month))
+```
+
+:::
+
+::: {.column width="48%" style="font-size:0.75em;"}
+
+#### Python / pandas
+
+The **categories** and `ordered=True` tell pandas how the values should be ordered.
+
+```{python}
+rating = pd.Categorical(
+    ["Medium", "Low", "High", "Low"],
+    categories=["Low", "Medium", "High"],
+    ordered=True
+)
+
+rating.sort_values()
+```
+
+:::
+
+:::
+
+::: {.callout-note style="font-size:0.72em;"}
+## Remember
+
+Note that if entries do not match the defined levels or categories, they will be treated as **missing values** or `NA`. This is a common source of confusion when working with categorical data especially in R where missing values can be contagious to subsequent operations.
+:::
+
+---
+
+## Dates and Times
+
+::: {style="font-size:0.75em;"}
+These commonly appear on your datasets. Dates may **look like strings**, but representing them as actual dates allows us to sort, compare, and calculate with them. Consider:
+
+```text
+"2026-08-27"
+```
+
+It helps to make this a specialized **date** object rather than a string so that the computer understands its position in time.
+
+:::
+
+::: {.columns}
+
+::: {.column width="48%" style="font-size:0.75em;"}
+
+### R
+
+```{r}
+date <- as.Date("2026-08-27")
+
+date
+class(date)
+```
+
+:::
+
+::: {.column width="48%" style="font-size:0.75em;"}
+
+### Python / pandas
+
+```{python}
+date1 = pd.to_datetime(
+    "2026-08-27"
+)
+
+date2 = pd.to_datetime(
+    "2026-08-30"
+)
+
+elapsed_time = date2-date1
+elapsed_time
+```
+
+:::
+
+:::
+
+::: {.callout-tip style="font-size:0.75em;"}
+## Note
+
+Once dates are represented correctly, we can perform operations such as calculating elapsed time.<br>
+Learn more about date and time handling in R and Python here:
+
+- R: [Dates and Times](https://r4ds.had.co.nz/dates-and-times.html)
+- Python: [Time Series](https://pandas.pydata.org/docs/user_guide/timeseries.html)
+
+:::
+
+---
+
+## Bonus: Tibbles
+
+::: {.callout-note style="font-size:0.75em;"}
+
+A **tibble** is the tidyverse's modern version of an R `data.frame`.
+
+```{r}
+library(tibble)
+
+students <- tibble(
+  name = c("A", "B", "C"),
+  score = c(82, 91, 88)
+)
+
+students
+```
+
+A tibble is still a **2-D tabular object**:
+
+- rows represent **observations**
+- columns represent **variables**
+- different columns can have **different types**
+
+### Why tibbles?
+
+Compared with a traditional `data.frame`, tibbles provide some conveniences for data analysis:
+
+- cleaner printing of large datasets
+- natural integration with the **tidyverse**
+- many `dplyr` operations naturally return tibbles
+
+:::
+
+---
+
 
 # Part 4
 
@@ -1080,7 +1435,7 @@ The important idea is **relative paths**: to make your analysis work from your p
 
 ---
 
-## Step 3: Know the file type
+## Knowing your file type
 
 Common formats include:
 
@@ -1099,17 +1454,22 @@ The extension helps you choose the right reader.
 
 ---
 
-## Step 4: Load the data
+## Loading the data
 
-This is where file extension matters. Different file types require different readers.
-<br>
+::: {style="font-size:0.75em;"}
+
+This is where file extension matters. Different file types require different readers.<br>
 Here we write some code to load data from a CSV file into a dataframe in memory. The syntax differs, but the reasoning is the same: **file → reader → object in memory**
+
+:::
 
 <div style="position: relative; height: 55vh;">
 
 ::: {.fragment .fade-out data-fragment-index="1" style="position:absolute; top:0; left:10%; width:80%;"}
 
 #### R
+
+`head()` is a base R function that returns the first few rows of a data frame.
 
 ```{r}
 ten <- read.csv("data/tenn2018.csv")
@@ -1126,6 +1486,8 @@ knitr::kable(
 ::: {.fragment .fade-in data-fragment-index="1" style="position:absolute; top:0; left:10%; width:80%; z-index:10;"}
 
 #### Python
+
+`head()` is a pandas method that returns the first few rows of a DataFrame.
 
 ```{python}
 import pandas as pd
@@ -1200,16 +1562,16 @@ Before analysis, ask:
 
 ## Activity: Tennessee education data
 
-::: {.callout-tip style="font-size:0.75em;"}
+::: {.callout-important style="font-size:0.75em;"}
 ### 💻 Your turn
 
 Using **R or Python**, read `tenn2018.csv` into a data frame called `ten`. Use what you have learned about **data frames, objects, and indexing** to answer the following:
 
-1. Print the first few observations in `ten`.
+1. Print the first seven observations in `ten`.
 
 2. Determine the **number of rows and columns** in the data frame.
 
-3. Print the **column names**. How many different variables are available?
+3. Print the **column names**. How many different variables are available? How many do you think are categorical?
 
 4. Access and print the `overall_subject` column.
 
@@ -1220,9 +1582,13 @@ Using **R or Python**, read `tenn2018.csv` into a data frame called `ten`. Use w
     - Access the value of `district_name` for the **first observation**.
     - Access the value of `percent_below` for the **first observation**.
 
-6. **Bonus**: How many columns in this dataset have **missing values**?
+6. **Bonus**: How many columns in this dataset have **missing values**? List all of them.
 
-#### 📚 Need a reference?
+:::
+
+::: {.callout-tip style="font-size:0.75em;"}
+
+### 📚 Need a reference?
 If you get stuck, consult the documentation for your language:
 
 - **R:** [R Documentation — Data Frames](https://search.r-project.org/R/refmans/base/html/data.frame.html)
@@ -1627,46 +1993,6 @@ df.groupby("school_name")["percent_below_cap"].mean()
 
 ---
 
-## Missing values
-
-<small>Missing data require explicit attention.</small>
-
-#### R
-
-<small>`NA` represents missingness.</small>
-
-```r
-is.na(x)
-```
-
-```r
-mean(x, na.rm = TRUE)
-```
-
-#### Python
-
-<small>Pandas commonly uses `NaN` / `NA`-like missing values.</small>
-
-```python
-df["x"].isna()
-```
-
-```python
-df["x"].mean()
-```
-
-::: {.callout-note style="font-size:0.75em;"}
-
-**What you are missing can be key information.** 
-
-- Do not silently ignore it.
-- Missingness can be informative and may require special handling.
-- Missingness can be **random** or **systematic**. If it is systematic, it may bias your results.
-- Missingness can introduce errors in your analysis if not handled properly.
-:::
-
----
-
 ## Appending observations in R
 
 <small>Sometimes new data contain **additional observations with the same variables** as an existing dataset.<br>
@@ -1899,100 +2225,11 @@ For each result, ask yourself: *Which `key` values should remain, and where shou
 
 ---
 
-# Part 6
+## Wrap-up: 
 
-<span style="color:#1565C0; font-size:1.8em; font-weight:600;"> A small end-to-end example</span>
+### What should feel familiar across languages?
 
----
-
-## Pop Icons: start with a simple vector
-
-#### R
-
-```r
-pop_icons <- c(
-  "Ariana Grande", "Taylor Swift",
-  "Chris Strauss", "Olivia Rodrigo",
-  "Alex Christensen", "Beyonce",
-  "Britney Spears"
-)
-```
-
-#### Python
-
-```python
-pop_icons = [
-    "Ariana Grande", "Taylor Swift",
-    "Chris Strauss", "Olivia Rodrigo",
-    "Alex Christensen", "Beyonce",
-    "Britney Spears"
-]
-```
-
----
-
-## Add an observation
-
-#### R
-
-```r
-pop_icons <- c(pop_icons, "Andres Gannon")
-```
-
-#### Python
-
-```python
-pop_icons.append("Andres Gannon")
-```
-
-Same conceptual operation:
-
-> **Add one new observation to a collection.**
-
----
-
-## Convert to a table
-
-#### R
-
-```r
-pop_df <- data.frame(pop_icons = pop_icons)
-```
-
-#### Python
-
-```python
-pop_df = pd.DataFrame({"pop_icons": pop_icons})
-```
-
-Now the object is explicitly tabular, which makes row/column operations natural.
-
----
-
-# Part 7
-
-<span style="color:#1565C0; font-size:1.8em; font-weight:600;"> Activity: translate the workflow </span>
-
-Choose **R or Python**.
-
-::: {.callout-note style="font-size:0.75em;"}
-Starting from a table called `df`:
-
-1. Remove rows where `percent_below` is missing.
-2. Keep observations where `overall_subject == "ELA"`.
-3. Add the condition `percent_below >= 20`.
-4. Rename `name` to `school_name`.
-5. Create `diff = percent_below - percent_below_previous`.
-6. Compute the mean of `diff`.
-7. Group by `school_name` and calculate the mean of `percent_below`.
-
-:::
-
----
-
-## What should feel familiar across languages?
-
-#### The syntax changes but the thinking does not
+The syntax changes but the thinking does not
 
 ```text
 Question
@@ -2028,6 +2265,5 @@ Make sure you can:
 
 :::
 
-::: {.callout-tip}
-**Bring your questions to lab.** The goal of the first lab is not to prove that you already know R or Python; it is to make sure you can work comfortably in the environment before we move deeper into data analysis.
-:::
+**Bring your questions to class! 😄**
+
