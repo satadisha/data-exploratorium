@@ -1018,7 +1018,9 @@ categorical values with defined levels
 1    B     84     NaN</code></pre>
 </div>
 </div>
+<div style="font-size:0.75em;">
 <p>Both are designed to deal with tabular data.</p>
+</div>
 </section>
 <section id="indexing-dataframes" class="slide level2">
 <h2>Indexing Dataframes</h2>
@@ -1069,9 +1071,13 @@ Name: score, dtype: int64</code></pre>
 </div>
 </div></div>
 </section>
-<section id="missing-values" class="slide level2">
-<h2>Missing values</h2>
-<p><small>Missing data require explicit attention.</small></p>
+<section class="slide level2">
+
+<h3 id="missing-data-require-explicit-attention">Missing data require explicit attention</h3>
+<!-- ===================================================== -->
+<!-- STAGE 1: ORIGINAL TWO-COLUMN CONTENT -->
+<!-- ===================================================== -->
+<div class="fragment fade-out" data-fragment-index="1" style="position:relative; z-index:1;">
 <div class="columns">
 <div class="column" style="font-size:0.75em;">
 <h4 id="r-7">R</h4>
@@ -1084,17 +1090,17 @@ Name: score, dtype: int64</code></pre>
 [1,] FALSE FALSE   FALSE
 [2,] FALSE FALSE    TRUE</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="" aria-label="1"></a><span class="co">#how many missing values can be found per row</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="" aria-label="1"></a><span class="co"># how many missing values per row</span></span>
 <span id="cb57-2"><a href="" aria-label="2"></a><span class="fu">rowSums</span>(<span class="fu">is.na</span>(df))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0 1</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="" aria-label="1"></a><span class="co">#count the number of missing values in a specific column</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="" aria-label="1"></a><span class="co"># count missing values in a specific column</span></span>
 <span id="cb59-2"><a href="" aria-label="2"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(df<span class="sc">$</span>score))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="" aria-label="1"></a><span class="co">#remove missing values when calculating the mean of a column</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="" aria-label="1"></a><span class="co"># ignore missing values when calculating the mean</span></span>
 <span id="cb61-2"><a href="" aria-label="2"></a><span class="fu">mean</span>(df[, <span class="st">"score"</span>], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 87</code></pre>
@@ -1104,14 +1110,14 @@ Name: score, dtype: int64</code></pre>
 <h4 id="python-6">Python</h4>
 <p><small>Pandas commonly uses <code>NaN</code> for missing values.</small></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb63-1"><a href="" aria-label="1"></a><span class="co">#check for missing values in whole data frame</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb63-1"><a href="" aria-label="1"></a><span class="co"># check for missing values in whole data frame</span></span>
 <span id="cb63-2"><a href="" aria-label="2"></a>df.isna()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    name  score  subject
 0  False  False    False
 1  False  False     True</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb65-1"><a href="" aria-label="1"></a><span class="co"># count the missing values in a specific column</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb65-1"><a href="" aria-label="1"></a><span class="co"># count missing values in a specific column</span></span>
 <span id="cb65-2"><a href="" aria-label="2"></a>df[<span class="st">"score"</span>].isna().<span class="bu">sum</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>np.int64(0)</code></pre>
@@ -1123,6 +1129,44 @@ Name: score, dtype: int64</code></pre>
 </div>
 </div>
 </div></div>
+</div>
+<!-- ===================================================== -->
+<!-- STAGE 2: EXPLANATION OF ROWS WITH ANY MISSING VALUE -->
+<!-- ===================================================== -->
+<div class="fragment fade-in" data-fragment-index="1" style="position:absolute; top:25%; left:12%; width:76%; z-index:5;">
+<div style="font-size:0.72em;">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong><strong>How many observations have at least one missing value?</strong></strong></p>
+</div>
+<div class="callout-content">
+<h3 id="r-8">R</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="" aria-label="1"></a><span class="fu">rowSums</span>(<span class="fu">is.na</span>(df)) <span class="sc">&gt;</span> <span class="dv">0</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li><code>is.na(df)</code> identifies missing cells.</li>
+<li><code>rowSums(...)</code> counts missing values <strong>within each row</strong>.</li>
+<li><code>&gt; 0</code> identifies rows with <strong>at least one</strong> missing value.</li>
+</ul>
+<h3 id="python-7">Python</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb70"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb70-1"><a href="" aria-label="1"></a>df.isna().<span class="bu">any</span>(axis<span class="op">=</span><span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li><code>df.isna()</code> identifies missing cells.</li>
+<li><code>.any(axis=1)</code> asks whether <strong>any column</strong> in each row contains a missing value.</li>
+<li><code>.sum()</code> counts the rows for which the answer is <code>True</code>.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- ===================================================== -->
+<!-- STAGE 3: FINAL MISSINGNESS NOTE -->
+<!-- ===================================================== -->
+<div class="fragment fade-in" data-fragment-index="2" style="position:absolute; top:75%; left:12%; width:76%; z-index:10;">
 <div style="font-size:0.75em;">
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
@@ -1130,12 +1174,11 @@ Name: score, dtype: int64</code></pre>
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Note</strong></p>
+<p><strong>What you are missing can be key information.</strong></p>
 </div>
 <div class="callout-content">
-<p><strong>What you are missing can be key information.</strong></p>
 <ul>
-<li>Do not silently ignore it. Missingness can be informative and may require special handling.</li>
+<li>Do not silently ignore missing values. Missingness can be informative and may require special handling.</li>
 <li>Missingness can be <strong>random</strong> or <strong>systematic</strong>. If it is systematic, it may bias your results.</li>
 <li>Missingness can introduce errors in your analysis if not handled properly.</li>
 </ul>
@@ -1143,26 +1186,27 @@ Name: score, dtype: int64</code></pre>
 </div>
 </div>
 </div>
+</div>
 </section>
 <section id="heterogeneous-lists" class="slide level2">
 <h2>Heterogeneous Lists</h2>
-<h4 id="r-8">R</h4>
+<h4 id="r-9">R</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="" aria-label="1"></a>x <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb69-2"><a href="" aria-label="2"></a>  <span class="at">number =</span> <span class="dv">1</span>,</span>
-<span id="cb69-3"><a href="" aria-label="3"></a>  <span class="at">flag =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb69-4"><a href="" aria-label="4"></a>  <span class="at">word =</span> <span class="st">"yes"</span>,</span>
-<span id="cb69-5"><a href="" aria-label="5"></a>  <span class="at">values =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
-<span id="cb69-6"><a href="" aria-label="6"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="" aria-label="1"></a>x <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb71-2"><a href="" aria-label="2"></a>  <span class="at">number =</span> <span class="dv">1</span>,</span>
+<span id="cb71-3"><a href="" aria-label="3"></a>  <span class="at">flag =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb71-4"><a href="" aria-label="4"></a>  <span class="at">word =</span> <span class="st">"yes"</span>,</span>
+<span id="cb71-5"><a href="" aria-label="5"></a>  <span class="at">values =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
+<span id="cb71-6"><a href="" aria-label="6"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<h4 id="python-7">Python</h4>
+<h4 id="python-8">Python</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb70-1"><a href="" aria-label="1"></a>x <span class="op">=</span> [</span>
-<span id="cb70-2"><a href="" aria-label="2"></a>    <span class="dv">1</span>,</span>
-<span id="cb70-3"><a href="" aria-label="3"></a>    <span class="va">False</span>,</span>
-<span id="cb70-4"><a href="" aria-label="4"></a>    <span class="st">"yes"</span>,</span>
-<span id="cb70-5"><a href="" aria-label="5"></a>    [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
-<span id="cb70-6"><a href="" aria-label="6"></a>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb72-1"><a href="" aria-label="1"></a>x <span class="op">=</span> [</span>
+<span id="cb72-2"><a href="" aria-label="2"></a>    <span class="dv">1</span>,</span>
+<span id="cb72-3"><a href="" aria-label="3"></a>    <span class="va">False</span>,</span>
+<span id="cb72-4"><a href="" aria-label="4"></a>    <span class="st">"yes"</span>,</span>
+<span id="cb72-5"><a href="" aria-label="5"></a>    [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
+<span id="cb72-6"><a href="" aria-label="6"></a>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div style="font-size:0.75em;">
 <div class="callout callout-note callout-titled callout-style-default">
@@ -1228,7 +1272,7 @@ Name: score, dtype: int64</code></pre>
 <div class="column" style="width:33%;">
 <h4 id="subset"><code>[ ]</code> — Subset</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="" aria-label="1"></a>x[<span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb73"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="" aria-label="1"></a>x[<span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$number
 [1] 1</code></pre>
@@ -1242,7 +1286,7 @@ $number
 ``` -->
 <p><small>The result is still a <strong>list</strong> containing one element.</small></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb73"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="" aria-label="1"></a><span class="fu">typeof</span>(x[<span class="dv">1</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb75"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="" aria-label="1"></a><span class="fu">typeof</span>(x[<span class="dv">1</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "list"</code></pre>
 </div>
@@ -1250,7 +1294,7 @@ $number
 </div><div class="column" style="width:33%;">
 <h4 id="element"><code>[[ ]]</code> — Element</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb75"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="" aria-label="1"></a>x[[<span class="dv">1</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb77"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="" aria-label="1"></a>x[[<span class="dv">1</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1</code></pre>
 </div>
@@ -1262,7 +1306,7 @@ $number
 ``` -->
 <p><small>The result is the <strong>object stored inside</strong> the list.</small></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb77"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="" aria-label="1"></a><span class="fu">typeof</span>(x[[<span class="dv">1</span>]])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb79"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="" aria-label="1"></a><span class="fu">typeof</span>(x[[<span class="dv">1</span>]])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "double"</code></pre>
 </div>
@@ -1270,7 +1314,7 @@ $number
 </div><div class="column" style="width:33%;">
 <h4 id="extract-by-name"><code>$</code> — Extract by name</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb79"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="" aria-label="1"></a>x<span class="sc">$</span>number</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb81"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="" aria-label="1"></a>x<span class="sc">$</span>number</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1</code></pre>
 </div>
@@ -1282,7 +1326,7 @@ $number
 ``` -->
 <p><small>This extracts an element using its <strong>name</strong> rather than its position.</small></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb81"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="" aria-label="1"></a><span class="fu">typeof</span>(x<span class="sc">$</span>number)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb83"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="" aria-label="1"></a><span class="fu">typeof</span>(x<span class="sc">$</span>number)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "double"</code></pre>
 </div>
@@ -1311,15 +1355,15 @@ $number
 <h2>Python indexing tools</h2>
 <p>Python commonly uses square brackets:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb83"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb83-1"><a href="" aria-label="1"></a>x[<span class="dv">0</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb85"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb85-1"><a href="" aria-label="1"></a>x[<span class="dv">0</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>1</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb85"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb85-1"><a href="" aria-label="1"></a>x[<span class="op">-</span><span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb87"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb87-1"><a href="" aria-label="1"></a>x[<span class="op">-</span><span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1, 2, 3]</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb87"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb87-1"><a href="" aria-label="1"></a>df[<span class="st">"score"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb89"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb89-1"><a href="" aria-label="1"></a>df[<span class="st">"score"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>0    90
 1    84
@@ -1327,7 +1371,7 @@ Name: score, dtype: int64</code></pre>
 </div>
 </div>
 <p>For a dictionary that is indexed by keys, you can use the key name to extract the value:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb89"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb89-1"><a href="" aria-label="1"></a>person[<span class="st">"name"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb91"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb91-1"><a href="" aria-label="1"></a>person[<span class="st">"name"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="categorical-data" class="slide level2">
 <h2>Categorical data</h2>
@@ -1343,16 +1387,16 @@ Name: score, dtype: int64</code></pre>
 <div class="column" style="font-size:0.75em;">
 <h4 id="r-factor">R: <code>factor</code></h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb90"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="" aria-label="1"></a>subject <span class="ot">&lt;-</span> <span class="fu">factor</span>(</span>
-<span id="cb90-2"><a href="" aria-label="2"></a>  <span class="fu">c</span>(<span class="st">"Math"</span>, <span class="st">"ELA"</span>, <span class="st">"Math"</span>, <span class="st">"Science"</span>)</span>
-<span id="cb90-3"><a href="" aria-label="3"></a>)</span>
-<span id="cb90-4"><a href="" aria-label="4"></a></span>
-<span id="cb90-5"><a href="" aria-label="5"></a>subject</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb92"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="" aria-label="1"></a>subject <span class="ot">&lt;-</span> <span class="fu">factor</span>(</span>
+<span id="cb92-2"><a href="" aria-label="2"></a>  <span class="fu">c</span>(<span class="st">"Math"</span>, <span class="st">"ELA"</span>, <span class="st">"Math"</span>, <span class="st">"Science"</span>)</span>
+<span id="cb92-3"><a href="" aria-label="3"></a>)</span>
+<span id="cb92-4"><a href="" aria-label="4"></a></span>
+<span id="cb92-5"><a href="" aria-label="5"></a>subject</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] Math    ELA     Math    Science
 Levels: ELA Math Science</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb92"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="" aria-label="1"></a><span class="fu">levels</span>(subject)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb94"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="" aria-label="1"></a><span class="fu">levels</span>(subject)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "ELA"     "Math"    "Science"</code></pre>
 </div>
@@ -1361,18 +1405,18 @@ Levels: ELA Math Science</code></pre>
 </div><div class="column" style="font-size:0.75em;">
 <h4 id="python-pandas.categorical">Python: <code>pandas.Categorical</code></h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb94"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb94-1"><a href="" aria-label="1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb94-2"><a href="" aria-label="2"></a></span>
-<span id="cb94-3"><a href="" aria-label="3"></a>subject <span class="op">=</span> pd.Categorical(</span>
-<span id="cb94-4"><a href="" aria-label="4"></a>    [<span class="st">"Math"</span>, <span class="st">"ELA"</span>, <span class="st">"Math"</span>, <span class="st">"Science"</span>]</span>
-<span id="cb94-5"><a href="" aria-label="5"></a>)</span>
-<span id="cb94-6"><a href="" aria-label="6"></a></span>
-<span id="cb94-7"><a href="" aria-label="7"></a>subject</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb96"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb96-1"><a href="" aria-label="1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb96-2"><a href="" aria-label="2"></a></span>
+<span id="cb96-3"><a href="" aria-label="3"></a>subject <span class="op">=</span> pd.Categorical(</span>
+<span id="cb96-4"><a href="" aria-label="4"></a>    [<span class="st">"Math"</span>, <span class="st">"ELA"</span>, <span class="st">"Math"</span>, <span class="st">"Science"</span>]</span>
+<span id="cb96-5"><a href="" aria-label="5"></a>)</span>
+<span id="cb96-6"><a href="" aria-label="6"></a></span>
+<span id="cb96-7"><a href="" aria-label="7"></a>subject</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>['Math', 'ELA', 'Math', 'Science']
 Categories (3, str): ['ELA', 'Math', 'Science']</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb96"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb96-1"><a href="" aria-label="1"></a>subject.categories</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb98"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb98-1"><a href="" aria-label="1"></a>subject.categories</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Index(['ELA', 'Math', 'Science'], dtype='str')</code></pre>
 </div>
@@ -1425,19 +1469,19 @@ Categories (3, str): ['ELA', 'Math', 'Science']</code></pre>
 <p>Sometimes categories have a meaningful order. For examples, the months of the year, or a rating scale such as <em>Low &lt; Medium &lt; High</em>. Often observations need to be compared or sorted based on this order.</p>
 <div class="columns">
 <div class="column" style="font-size:0.75em;">
-<h4 id="r-9">R</h4>
+<h4 id="r-10">R</h4>
 <p>The <strong>levels</strong> tell R the intended ordering.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb98"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="" aria-label="1"></a>month <span class="ot">&lt;-</span> <span class="fu">factor</span>(</span>
-<span id="cb98-2"><a href="" aria-label="2"></a>  <span class="fu">c</span>(<span class="st">"Dec"</span>, <span class="st">"Apr"</span>, <span class="st">"Jan"</span>, <span class="st">"Mar"</span>),</span>
-<span id="cb98-3"><a href="" aria-label="3"></a>  <span class="at">levels =</span> <span class="fu">c</span>(</span>
-<span id="cb98-4"><a href="" aria-label="4"></a>  <span class="st">"Jan"</span>, <span class="st">"Feb"</span>, <span class="st">"Mar"</span>, <span class="st">"Apr"</span>, <span class="st">"May"</span>, <span class="st">"Jun"</span>,</span>
-<span id="cb98-5"><a href="" aria-label="5"></a>  <span class="st">"Jul"</span>, <span class="st">"Aug"</span>, <span class="st">"Sep"</span>, <span class="st">"Oct"</span>, <span class="st">"Nov"</span>, <span class="st">"Dec"</span></span>
-<span id="cb98-6"><a href="" aria-label="6"></a>  ),</span>
-<span id="cb98-7"><a href="" aria-label="7"></a>  <span class="at">ordered =</span> <span class="cn">TRUE</span></span>
-<span id="cb98-8"><a href="" aria-label="8"></a>)</span>
-<span id="cb98-9"><a href="" aria-label="9"></a></span>
-<span id="cb98-10"><a href="" aria-label="10"></a><span class="fu">print</span>(<span class="fu">sort</span>(month))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb100"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="" aria-label="1"></a>month <span class="ot">&lt;-</span> <span class="fu">factor</span>(</span>
+<span id="cb100-2"><a href="" aria-label="2"></a>  <span class="fu">c</span>(<span class="st">"Dec"</span>, <span class="st">"Apr"</span>, <span class="st">"Jan"</span>, <span class="st">"Mar"</span>),</span>
+<span id="cb100-3"><a href="" aria-label="3"></a>  <span class="at">levels =</span> <span class="fu">c</span>(</span>
+<span id="cb100-4"><a href="" aria-label="4"></a>  <span class="st">"Jan"</span>, <span class="st">"Feb"</span>, <span class="st">"Mar"</span>, <span class="st">"Apr"</span>, <span class="st">"May"</span>, <span class="st">"Jun"</span>,</span>
+<span id="cb100-5"><a href="" aria-label="5"></a>  <span class="st">"Jul"</span>, <span class="st">"Aug"</span>, <span class="st">"Sep"</span>, <span class="st">"Oct"</span>, <span class="st">"Nov"</span>, <span class="st">"Dec"</span></span>
+<span id="cb100-6"><a href="" aria-label="6"></a>  ),</span>
+<span id="cb100-7"><a href="" aria-label="7"></a>  <span class="at">ordered =</span> <span class="cn">TRUE</span></span>
+<span id="cb100-8"><a href="" aria-label="8"></a>)</span>
+<span id="cb100-9"><a href="" aria-label="9"></a></span>
+<span id="cb100-10"><a href="" aria-label="10"></a><span class="fu">print</span>(<span class="fu">sort</span>(month))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] Jan Mar Apr Dec
 12 Levels: Jan &lt; Feb &lt; Mar &lt; Apr &lt; May &lt; Jun &lt; Jul &lt; Aug &lt; Sep &lt; ... &lt; Dec</code></pre>
@@ -1447,13 +1491,13 @@ Categories (3, str): ['ELA', 'Math', 'Science']</code></pre>
 <h4 id="python-pandas">Python / pandas</h4>
 <p>The <strong>categories</strong> and <code>ordered=True</code> tell pandas how the values should be ordered.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb100"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb100-1"><a href="" aria-label="1"></a>rating <span class="op">=</span> pd.Categorical(</span>
-<span id="cb100-2"><a href="" aria-label="2"></a>    [<span class="st">"Medium"</span>, <span class="st">"Low"</span>, <span class="st">"High"</span>, <span class="st">"Low"</span>],</span>
-<span id="cb100-3"><a href="" aria-label="3"></a>    categories<span class="op">=</span>[<span class="st">"Low"</span>, <span class="st">"Medium"</span>, <span class="st">"High"</span>],</span>
-<span id="cb100-4"><a href="" aria-label="4"></a>    ordered<span class="op">=</span><span class="va">True</span></span>
-<span id="cb100-5"><a href="" aria-label="5"></a>)</span>
-<span id="cb100-6"><a href="" aria-label="6"></a></span>
-<span id="cb100-7"><a href="" aria-label="7"></a>rating.sort_values()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb102"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb102-1"><a href="" aria-label="1"></a>rating <span class="op">=</span> pd.Categorical(</span>
+<span id="cb102-2"><a href="" aria-label="2"></a>    [<span class="st">"Medium"</span>, <span class="st">"Low"</span>, <span class="st">"High"</span>, <span class="st">"Low"</span>],</span>
+<span id="cb102-3"><a href="" aria-label="3"></a>    categories<span class="op">=</span>[<span class="st">"Low"</span>, <span class="st">"Medium"</span>, <span class="st">"High"</span>],</span>
+<span id="cb102-4"><a href="" aria-label="4"></a>    ordered<span class="op">=</span><span class="va">True</span></span>
+<span id="cb102-5"><a href="" aria-label="5"></a>)</span>
+<span id="cb102-6"><a href="" aria-label="6"></a></span>
+<span id="cb102-7"><a href="" aria-label="7"></a>rating.sort_values()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>['Low', 'Low', 'Medium', 'High']
 Categories (3, str): ['Low' &lt; 'Medium' &lt; 'High']</code></pre>
@@ -1480,20 +1524,20 @@ Categories (3, str): ['Low' &lt; 'Medium' &lt; 'High']</code></pre>
 <h2>Dates and Times</h2>
 <div style="font-size:0.75em;">
 <p>These commonly appear on your datasets. Dates may <strong>look like strings</strong>, but representing them as actual dates allows us to sort, compare, and calculate with them. Consider:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb102"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb102-1"><a href="" aria-label="1"></a>"2026-08-27"</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb104"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb104-1"><a href="" aria-label="1"></a>"2026-08-27"</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>It helps to make this a specialized <strong>date</strong> object rather than a string so that the computer understands its position in time.</p>
 </div>
 <div class="columns">
 <div class="column" style="font-size:0.75em;">
-<h3 id="r-10">R</h3>
+<h3 id="r-11">R</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb103"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="" aria-label="1"></a>date <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="st">"2026-08-27"</span>)</span>
-<span id="cb103-2"><a href="" aria-label="2"></a></span>
-<span id="cb103-3"><a href="" aria-label="3"></a>date</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb105"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="" aria-label="1"></a>date <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="st">"2026-08-27"</span>)</span>
+<span id="cb105-2"><a href="" aria-label="2"></a></span>
+<span id="cb105-3"><a href="" aria-label="3"></a>date</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "2026-08-27"</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb105"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="" aria-label="1"></a><span class="fu">class</span>(date)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb107"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="" aria-label="1"></a><span class="fu">class</span>(date)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Date"</code></pre>
 </div>
@@ -1501,16 +1545,16 @@ Categories (3, str): ['Low' &lt; 'Medium' &lt; 'High']</code></pre>
 </div><div class="column" style="font-size:0.75em;">
 <h3 id="python-pandas-1">Python / pandas</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb107"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb107-1"><a href="" aria-label="1"></a>date1 <span class="op">=</span> pd.to_datetime(</span>
-<span id="cb107-2"><a href="" aria-label="2"></a>    <span class="st">"2026-08-27"</span></span>
-<span id="cb107-3"><a href="" aria-label="3"></a>)</span>
-<span id="cb107-4"><a href="" aria-label="4"></a></span>
-<span id="cb107-5"><a href="" aria-label="5"></a>date2 <span class="op">=</span> pd.to_datetime(</span>
-<span id="cb107-6"><a href="" aria-label="6"></a>    <span class="st">"2026-08-30"</span></span>
-<span id="cb107-7"><a href="" aria-label="7"></a>)</span>
-<span id="cb107-8"><a href="" aria-label="8"></a></span>
-<span id="cb107-9"><a href="" aria-label="9"></a>elapsed_time <span class="op">=</span> date2<span class="op">-</span>date1</span>
-<span id="cb107-10"><a href="" aria-label="10"></a>elapsed_time</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb109"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb109-1"><a href="" aria-label="1"></a>date1 <span class="op">=</span> pd.to_datetime(</span>
+<span id="cb109-2"><a href="" aria-label="2"></a>    <span class="st">"2026-08-27"</span></span>
+<span id="cb109-3"><a href="" aria-label="3"></a>)</span>
+<span id="cb109-4"><a href="" aria-label="4"></a></span>
+<span id="cb109-5"><a href="" aria-label="5"></a>date2 <span class="op">=</span> pd.to_datetime(</span>
+<span id="cb109-6"><a href="" aria-label="6"></a>    <span class="st">"2026-08-30"</span></span>
+<span id="cb109-7"><a href="" aria-label="7"></a>)</span>
+<span id="cb109-8"><a href="" aria-label="8"></a></span>
+<span id="cb109-9"><a href="" aria-label="9"></a>elapsed_time <span class="op">=</span> date2<span class="op">-</span>date1</span>
+<span id="cb109-10"><a href="" aria-label="10"></a>elapsed_time</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Timedelta('3 days 00:00:00')</code></pre>
 </div>
@@ -1550,14 +1594,14 @@ Categories (3, str): ['Low' &lt; 'Medium' &lt; 'High']</code></pre>
 <div class="callout-content">
 <p>A <strong>tibble</strong> is the tidyverse’s modern version of an R <code>data.frame</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb109"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="" aria-label="1"></a><span class="fu">library</span>(tibble)</span>
-<span id="cb109-2"><a href="" aria-label="2"></a></span>
-<span id="cb109-3"><a href="" aria-label="3"></a>students <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb109-4"><a href="" aria-label="4"></a>  <span class="at">name =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>),</span>
-<span id="cb109-5"><a href="" aria-label="5"></a>  <span class="at">score =</span> <span class="fu">c</span>(<span class="dv">82</span>, <span class="dv">91</span>, <span class="dv">88</span>)</span>
-<span id="cb109-6"><a href="" aria-label="6"></a>)</span>
-<span id="cb109-7"><a href="" aria-label="7"></a></span>
-<span id="cb109-8"><a href="" aria-label="8"></a>students</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb111"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="" aria-label="1"></a><span class="fu">library</span>(tibble)</span>
+<span id="cb111-2"><a href="" aria-label="2"></a></span>
+<span id="cb111-3"><a href="" aria-label="3"></a>students <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb111-4"><a href="" aria-label="4"></a>  <span class="at">name =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>),</span>
+<span id="cb111-5"><a href="" aria-label="5"></a>  <span class="at">score =</span> <span class="fu">c</span>(<span class="dv">82</span>, <span class="dv">91</span>, <span class="dv">88</span>)</span>
+<span id="cb111-6"><a href="" aria-label="6"></a>)</span>
+<span id="cb111-7"><a href="" aria-label="7"></a></span>
+<span id="cb111-8"><a href="" aria-label="8"></a>students</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
   name  score
@@ -1603,28 +1647,28 @@ Categories (3, str): ['Low' &lt; 'Medium' &lt; 'High']</code></pre>
 <li>Somewhere else?</li>
 </ul>
 <p>A professional project should have a predictable directory structure.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb111"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb111-1"><a href="" aria-label="1"></a>project/</span>
-<span id="cb111-2"><a href="" aria-label="2"></a>├── data/</span>
-<span id="cb111-3"><a href="" aria-label="3"></a>├── figures/</span>
-<span id="cb111-4"><a href="" aria-label="4"></a>├── notebooks/</span>
-<span id="cb111-5"><a href="" aria-label="5"></a>└── reports/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb113"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb113-1"><a href="" aria-label="1"></a>project/</span>
+<span id="cb113-2"><a href="" aria-label="2"></a>├── data/</span>
+<span id="cb113-3"><a href="" aria-label="3"></a>├── figures/</span>
+<span id="cb113-4"><a href="" aria-label="4"></a>├── notebooks/</span>
+<span id="cb113-5"><a href="" aria-label="5"></a>└── reports/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="understanding-the-relative-file-path" class="slide level2">
 <h2>Understanding the relative file path</h2>
 <p><small> A file path tells the us where a file lives relative to our current working directory. Suppose your project directory is organized as follows:</small></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb112"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb112-1"><a href="" aria-label="1"></a>DS3100/</span>
-<span id="cb112-2"><a href="" aria-label="2"></a>├── data/</span>
-<span id="cb112-3"><a href="" aria-label="3"></a>│   └── my_data.csv</span>
-<span id="cb112-4"><a href="" aria-label="4"></a>│</span>
-<span id="cb112-5"><a href="" aria-label="5"></a>└── Unit_01/</span>
-<span id="cb112-6"><a href="" aria-label="6"></a>    └── analysis.qmd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb114"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb114-1"><a href="" aria-label="1"></a>DS3100/</span>
+<span id="cb114-2"><a href="" aria-label="2"></a>├── data/</span>
+<span id="cb114-3"><a href="" aria-label="3"></a>│   └── my_data.csv</span>
+<span id="cb114-4"><a href="" aria-label="4"></a>│</span>
+<span id="cb114-5"><a href="" aria-label="5"></a>└── Unit_01/</span>
+<span id="cb114-6"><a href="" aria-label="6"></a>    └── analysis.qmd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><br></p>
 <div class="fragment fade-out" data-fragment-index="1">
 <div class="columns">
 <div class="column" style="width:48%;">
 <h4 id="current-directory"><code>./</code> — Current directory</h4>
 <p><small> If your current directory is <code>DS3100/</code> then</small></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb113"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb113-1"><a href="" aria-label="1"></a>./data/my_data.csv</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb115"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb115-1"><a href="" aria-label="1"></a>./data/my_data.csv</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <blockquote>
 <p><span style="font-size:0.75em;">Start <strong>here</strong>, enter the <code>data</code> folder, and find <code>my_data.csv</code>.</span></p>
 </blockquote>
@@ -1632,7 +1676,7 @@ Categories (3, str): ['Low' &lt; 'Medium' &lt; 'High']</code></pre>
 </div><div class="column" style="width:48%;">
 <h4 id="parent-directory"><code>../</code> — Parent directory</h4>
 <p><small> If your current directory is <code>DS3100/Unit_01/</code> then</small></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb114"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb114-1"><a href="" aria-label="1"></a>../data/my_data.csv</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb116"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb116-1"><a href="" aria-label="1"></a>../data/my_data.csv</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <blockquote>
 <p><span style="font-size:0.75em;">Go <strong>up one level</strong> from <code>Unit_01</code> to <code>DS3100</code>, then enter the <code>data</code> folder.</span></p>
 </blockquote>
@@ -1666,18 +1710,18 @@ Categories (3, str): ['Low' &lt; 'Medium' &lt; 'High']</code></pre>
 <section id="locating-the-current-file-path" class="slide level2">
 <h2>Locating the current file path</h2>
 <p>Obtaining the path to the current working directory is a useful first step.</p>
-<h4 id="r-11">R</h4>
+<h4 id="r-12">R</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb115"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a href="" aria-label="1"></a><span class="fu">getwd</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb117"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="" aria-label="1"></a><span class="fu">getwd</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "/Users/sahabs1/Desktop/Teaching/DS-3100/Unit_01"</code></pre>
 </div>
 </div>
 <p><br></p>
-<h4 id="python-8">Python</h4>
+<h4 id="python-9">Python</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb117"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb117-1"><a href="" aria-label="1"></a><span class="im">import</span> os</span>
-<span id="cb117-2"><a href="" aria-label="2"></a>os.getcwd()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb119"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb119-1"><a href="" aria-label="1"></a><span class="im">import</span> os</span>
+<span id="cb119-2"><a href="" aria-label="2"></a>os.getcwd()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'/Users/sahabs1/Desktop/Teaching/DS-3100/Unit_01'</code></pre>
 </div>
@@ -1686,20 +1730,20 @@ Categories (3, str): ['Low' &lt; 'Medium' &lt; 'High']</code></pre>
 <section id="path-separators" class="slide level2">
 <h2>Path separators</h2>
 <p>Modern Python code should generally use <code>/</code> even on Windows, or use <code>pathlib</code> for portable paths.<br></p>
-<h4 id="python-9">Python</h4>
+<h4 id="python-10">Python</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb119"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb119-1"><a href="" aria-label="1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
-<span id="cb119-2"><a href="" aria-label="2"></a></span>
-<span id="cb119-3"><a href="" aria-label="3"></a>path <span class="op">=</span> Path(<span class="st">"data"</span>) <span class="op">/</span> <span class="st">"tenn2018.csv"</span></span>
-<span id="cb119-4"><a href="" aria-label="4"></a><span class="bu">print</span>(path)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb121"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb121-1"><a href="" aria-label="1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb121-2"><a href="" aria-label="2"></a></span>
+<span id="cb121-3"><a href="" aria-label="3"></a>path <span class="op">=</span> Path(<span class="st">"data"</span>) <span class="op">/</span> <span class="st">"tenn2018.csv"</span></span>
+<span id="cb121-4"><a href="" aria-label="4"></a><span class="bu">print</span>(path)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>data/tenn2018.csv</code></pre>
 </div>
 </div>
 <p><br></p>
-<h4 id="r-12">R</h4>
+<h4 id="r-13">R</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb121"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb121-1"><a href="" aria-label="1"></a><span class="st">"data/tenn2018.csv"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb123"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb123-1"><a href="" aria-label="1"></a><span class="st">"data/tenn2018.csv"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "data/tenn2018.csv"</code></pre>
 </div>
@@ -1760,15 +1804,15 @@ Categories (3, str): ['Low' &lt; 'Medium' &lt; 'High']</code></pre>
 </div>
 <div style="position: relative; height: 55vh;">
 <div class="fragment fade-out" data-fragment-index="1" style="position:absolute; top:0; left:10%; width:80%;">
-<h4 id="r-13">R</h4>
+<h4 id="r-14">R</h4>
 <p><code>head()</code> is a base R function that returns the first few rows of a data frame.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb123"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb123-1"><a href="" aria-label="1"></a>ten <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/tenn2018.csv"</span>)</span>
-<span id="cb123-2"><a href="" aria-label="2"></a></span>
-<span id="cb123-3"><a href="" aria-label="3"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb123-4"><a href="" aria-label="4"></a>  <span class="fu">head</span>(ten, <span class="at">n=</span><span class="dv">2</span>),</span>
-<span id="cb123-5"><a href="" aria-label="5"></a>  <span class="at">format =</span> <span class="st">"html"</span></span>
-<span id="cb123-6"><a href="" aria-label="6"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb125"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb125-1"><a href="" aria-label="1"></a>ten <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/tenn2018.csv"</span>)</span>
+<span id="cb125-2"><a href="" aria-label="2"></a></span>
+<span id="cb125-3"><a href="" aria-label="3"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb125-4"><a href="" aria-label="4"></a>  <span class="fu">head</span>(ten, <span class="at">n=</span><span class="dv">2</span>),</span>
+<span id="cb125-5"><a href="" aria-label="5"></a>  <span class="at">format =</span> <span class="st">"html"</span></span>
+<span id="cb125-6"><a href="" aria-label="6"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top">
 <thead>
@@ -1840,19 +1884,19 @@ Categories (3, str): ['Low' &lt; 'Medium' &lt; 'High']</code></pre>
 </div>
 </div>
 <div class="fragment fade-in" data-fragment-index="1" style="position:absolute; top:0; left:10%; width:80%; z-index:10;">
-<h4 id="python-10">Python</h4>
+<h4 id="python-11">Python</h4>
 <p><code>head()</code> is a pandas method that returns the first few rows of a DataFrame.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb124"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb124-1"><a href="" aria-label="1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb124-2"><a href="" aria-label="2"></a><span class="im">from</span> IPython.display <span class="im">import</span> HTML</span>
-<span id="cb124-3"><a href="" aria-label="3"></a><span class="co"># Force pandas to display all columns</span></span>
-<span id="cb124-4"><a href="" aria-label="4"></a>pd.set_option(<span class="st">'display.max_columns'</span>, <span class="va">None</span>)</span>
-<span id="cb124-5"><a href="" aria-label="5"></a></span>
-<span id="cb124-6"><a href="" aria-label="6"></a>ten <span class="op">=</span> pd.read_csv(<span class="st">"data/tenn2018.csv"</span>)</span>
-<span id="cb124-7"><a href="" aria-label="7"></a></span>
-<span id="cb124-8"><a href="" aria-label="8"></a>HTML(</span>
-<span id="cb124-9"><a href="" aria-label="9"></a>    ten.head(<span class="dv">2</span>).to_html(index<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb124-10"><a href="" aria-label="10"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb126"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb126-1"><a href="" aria-label="1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb126-2"><a href="" aria-label="2"></a><span class="im">from</span> IPython.display <span class="im">import</span> HTML</span>
+<span id="cb126-3"><a href="" aria-label="3"></a><span class="co"># Force pandas to display all columns</span></span>
+<span id="cb126-4"><a href="" aria-label="4"></a>pd.set_option(<span class="st">'display.max_columns'</span>, <span class="va">None</span>)</span>
+<span id="cb126-5"><a href="" aria-label="5"></a></span>
+<span id="cb126-6"><a href="" aria-label="6"></a>ten <span class="op">=</span> pd.read_csv(<span class="st">"data/tenn2018.csv"</span>)</span>
+<span id="cb126-7"><a href="" aria-label="7"></a></span>
+<span id="cb126-8"><a href="" aria-label="8"></a>HTML(</span>
+<span id="cb126-9"><a href="" aria-label="9"></a>    ten.head(<span class="dv">2</span>).to_html(index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb126-10"><a href="" aria-label="10"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="dataframe caption-top" data-border="1">
 <thead>
@@ -1927,16 +1971,16 @@ Categories (3, str): ['Low' &lt; 'Medium' &lt; 'High']</code></pre>
 </section>
 <section id="other-file-formats" class="slide level2">
 <h2>Other file formats</h2>
-<h4 id="r-14">R</h4>
+<h4 id="r-15">R</h4>
 <p><small>Reading RData, R’s native binary format:</small></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb125"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb125-1"><a href="" aria-label="1"></a><span class="fu">load</span>(<span class="st">"data/tenn2018.RData"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb127"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb127-1"><a href="" aria-label="1"></a><span class="fu">load</span>(<span class="st">"data/tenn2018.RData"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><small>For SPSS, data coming from the SPSS (<em>Statistical Package for the Social Sciences</em>) software suite:</small></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb126"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb126-1"><a href="" aria-label="1"></a><span class="fu">library</span>(haven)</span>
-<span id="cb126-2"><a href="" aria-label="2"></a>ten <span class="ot">&lt;-</span> <span class="fu">read_sav</span>(<span class="st">"data/tenn2018.sav"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb128"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb128-1"><a href="" aria-label="1"></a><span class="fu">library</span>(haven)</span>
+<span id="cb128-2"><a href="" aria-label="2"></a>ten <span class="ot">&lt;-</span> <span class="fu">read_sav</span>(<span class="st">"data/tenn2018.sav"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><br></p>
-<h4 id="python-11">Python</h4>
+<h4 id="python-12">Python</h4>
 <p><small>For Excel:</small></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb127"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb127-1"><a href="" aria-label="1"></a>pd.read_excel(<span class="st">"data/tenn2018.xlsx"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb129"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb129-1"><a href="" aria-label="1"></a>pd.read_excel(<span class="st">"data/tenn2018.xlsx"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><small>For SPSS, common Python tools include <code>pyreadstat</code> or pandas interfaces built around it.</small></p>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
@@ -2083,18 +2127,18 @@ Categories (3, str): ['Low' &lt; 'Medium' &lt; 'High']</code></pre>
 <h2>Filtering rows: R</h2>
 <p><small>Using <code>dplyr</code>: R package for <strong>data manipulation</strong>. Provides functions for common data-wrangling tasks such as filtering, selecting, renaming, grouping and summarizing data. <br> The <code>filter()</code> function asks <em>which rows satisfy the condition I specify</em>?</small></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb128"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb128-1"><a href="" aria-label="1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb128-2"><a href="" aria-label="2"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb128-3"><a href="" aria-label="3"></a>  <span class="at">school =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"D"</span>),</span>
-<span id="cb128-4"><a href="" aria-label="4"></a>  <span class="at">overall_subject =</span> <span class="fu">c</span>(<span class="st">"ELA"</span>, <span class="st">"Math"</span>, <span class="st">"ELA"</span>, <span class="st">"Math"</span>),</span>
-<span id="cb128-5"><a href="" aria-label="5"></a>  <span class="at">percent_below_cap =</span> <span class="fu">c</span>(<span class="fl">12.5</span>, <span class="cn">NA</span>, <span class="fl">18.2</span>, <span class="fl">9.7</span>)</span>
-<span id="cb128-6"><a href="" aria-label="6"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb130"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb130-1"><a href="" aria-label="1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb130-2"><a href="" aria-label="2"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb130-3"><a href="" aria-label="3"></a>  <span class="at">school =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"D"</span>),</span>
+<span id="cb130-4"><a href="" aria-label="4"></a>  <span class="at">overall_subject =</span> <span class="fu">c</span>(<span class="st">"ELA"</span>, <span class="st">"Math"</span>, <span class="st">"ELA"</span>, <span class="st">"Math"</span>),</span>
+<span id="cb130-5"><a href="" aria-label="5"></a>  <span class="at">percent_below_cap =</span> <span class="fu">c</span>(<span class="fl">12.5</span>, <span class="cn">NA</span>, <span class="fl">18.2</span>, <span class="fl">9.7</span>)</span>
+<span id="cb130-6"><a href="" aria-label="6"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <h4 id="example-1.-remove-observations-with-missing-values">Example 1. Remove observations with missing values</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb129"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb129-1"><a href="" aria-label="1"></a>filtered <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
-<span id="cb129-2"><a href="" aria-label="2"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(percent_below_cap))</span>
-<span id="cb129-3"><a href="" aria-label="3"></a>filtered</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb131"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb131-1"><a href="" aria-label="1"></a>filtered <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb131-2"><a href="" aria-label="2"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(percent_below_cap))</span>
+<span id="cb131-3"><a href="" aria-label="3"></a>filtered</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  school overall_subject percent_below_cap
 1      A             ELA              12.5
@@ -2113,7 +2157,7 @@ Categories (3, str): ['Low' &lt; 'Medium' &lt; 'High']</code></pre>
 </div>
 <div class="callout-content">
 <p><code>NA</code> is R’s standard representation of a <strong>missing value</strong>. So</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb131"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb131-1"><a href="" aria-label="1"></a><span class="sc">!</span><span class="fu">is.na</span>(percent_below_cap)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb133"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb133-1"><a href="" aria-label="1"></a><span class="sc">!</span><span class="fu">is.na</span>(percent_below_cap)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>can be read as <code>percent_below_cap</code> is <strong>not missing</strong>.</p>
 </div>
 </div>
@@ -2125,9 +2169,9 @@ Categories (3, str): ['Low' &lt; 'Medium' &lt; 'High']</code></pre>
 <h4 id="example-2.-filter-to-one-subject">Example 2. Filter to one subject</h4>
 <p>Suppose we only want observations for the subject <strong>ELA</strong>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb132"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb132-1"><a href="" aria-label="1"></a>filtered <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
-<span id="cb132-2"><a href="" aria-label="2"></a>  <span class="fu">filter</span>(overall_subject <span class="sc">==</span> <span class="st">"ELA"</span>)</span>
-<span id="cb132-3"><a href="" aria-label="3"></a>filtered</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb134"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb134-1"><a href="" aria-label="1"></a>filtered <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb134-2"><a href="" aria-label="2"></a>  <span class="fu">filter</span>(overall_subject <span class="sc">==</span> <span class="st">"ELA"</span>)</span>
+<span id="cb134-3"><a href="" aria-label="3"></a>filtered</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  school overall_subject percent_below_cap
 1      A             ELA              12.5
@@ -2151,13 +2195,13 @@ Categories (3, str): ['Low' &lt; 'Medium' &lt; 'High']</code></pre>
 <h4 id="example-1-remove-observations-with-missing-values">Example 1: Remove observations with missing values</h4>
 <p><small>Suppose we want to keep only rows where <code>percent_below</code> has a recorded value.</small></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb134"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb134-1"><a href="" aria-label="1"></a>df <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb134-2"><a href="" aria-label="2"></a>    <span class="st">"school"</span>: [<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"D"</span>],</span>
-<span id="cb134-3"><a href="" aria-label="3"></a>    <span class="st">"overall_subject"</span>: [<span class="st">"ELA"</span>, <span class="st">"Math"</span>, <span class="st">"ELA"</span>, <span class="st">"Math"</span>],</span>
-<span id="cb134-4"><a href="" aria-label="4"></a>    <span class="st">"percent_below_cap"</span>: [<span class="fl">12.5</span>, <span class="va">None</span>, <span class="fl">18.2</span>, <span class="fl">9.7</span>]</span>
-<span id="cb134-5"><a href="" aria-label="5"></a>})</span>
-<span id="cb134-6"><a href="" aria-label="6"></a>filtered <span class="op">=</span> df[df[<span class="st">"percent_below_cap"</span>].notna()]</span>
-<span id="cb134-7"><a href="" aria-label="7"></a>filtered</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb136"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb136-1"><a href="" aria-label="1"></a>df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb136-2"><a href="" aria-label="2"></a>    <span class="st">"school"</span>: [<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"D"</span>],</span>
+<span id="cb136-3"><a href="" aria-label="3"></a>    <span class="st">"overall_subject"</span>: [<span class="st">"ELA"</span>, <span class="st">"Math"</span>, <span class="st">"ELA"</span>, <span class="st">"Math"</span>],</span>
+<span id="cb136-4"><a href="" aria-label="4"></a>    <span class="st">"percent_below_cap"</span>: [<span class="fl">12.5</span>, <span class="va">None</span>, <span class="fl">18.2</span>, <span class="fl">9.7</span>]</span>
+<span id="cb136-5"><a href="" aria-label="5"></a>})</span>
+<span id="cb136-6"><a href="" aria-label="6"></a>filtered <span class="op">=</span> df[df[<span class="st">"percent_below_cap"</span>].notna()]</span>
+<span id="cb136-7"><a href="" aria-label="7"></a>filtered</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  school overall_subject  percent_below_cap
 0      A             ELA               12.5
@@ -2168,8 +2212,8 @@ Categories (3, str): ['Low' &lt; 'Medium' &lt; 'High']</code></pre>
 <h4 id="example-2-keep-observations-from-one-category">Example 2: Keep observations from one category</h4>
 <p><small>Suppose we want to keep only observations for the subject <strong>ELA</strong>.</small></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb136"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb136-1"><a href="" aria-label="1"></a>filtered <span class="op">=</span> df[df[<span class="st">"overall_subject"</span>] <span class="op">==</span> <span class="st">"ELA"</span>]</span>
-<span id="cb136-2"><a href="" aria-label="2"></a>filtered</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb138"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb138-1"><a href="" aria-label="1"></a>filtered <span class="op">=</span> df[df[<span class="st">"overall_subject"</span>] <span class="op">==</span> <span class="st">"ELA"</span>]</span>
+<span id="cb138-2"><a href="" aria-label="2"></a>filtered</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  school overall_subject  percent_below_cap
 0      A             ELA               12.5
@@ -2185,22 +2229,22 @@ Categories (3, str): ['Low' &lt; 'Medium' &lt; 'High']</code></pre>
 <p><code>overall_subject == "ELA"</code> <strong>AND</strong> <code>percent_below_cap &gt;= 20</code></p>
 </blockquote>
 </div>
-<h4 id="r-15">R</h4>
+<h4 id="r-16">R</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb138"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb138-1"><a href="" aria-label="1"></a>df <span class="sc">%&gt;%</span></span>
-<span id="cb138-2"><a href="" aria-label="2"></a>  <span class="fu">filter</span>(overall_subject <span class="sc">==</span> <span class="st">"ELA"</span> <span class="sc">&amp;</span> percent_below_cap <span class="sc">&gt;=</span> <span class="dv">20</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb140"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb140-1"><a href="" aria-label="1"></a>df <span class="sc">%&gt;%</span></span>
+<span id="cb140-2"><a href="" aria-label="2"></a>  <span class="fu">filter</span>(overall_subject <span class="sc">==</span> <span class="st">"ELA"</span> <span class="sc">&amp;</span> percent_below_cap <span class="sc">&gt;=</span> <span class="dv">20</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] school            overall_subject   percent_below_cap
 &lt;0 rows&gt; (or 0-length row.names)</code></pre>
 </div>
 </div>
 <p><br></p>
-<h4 id="python-12">Python</h4>
+<h4 id="python-13">Python</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb140"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb140-1"><a href="" aria-label="1"></a>df[</span>
-<span id="cb140-2"><a href="" aria-label="2"></a>    (df[<span class="st">"overall_subject"</span>] <span class="op">==</span> <span class="st">"ELA"</span>) <span class="op">&amp;</span></span>
-<span id="cb140-3"><a href="" aria-label="3"></a>    (df[<span class="st">"percent_below_cap"</span>] <span class="op">&gt;=</span> <span class="dv">20</span>)</span>
-<span id="cb140-4"><a href="" aria-label="4"></a>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb142"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb142-1"><a href="" aria-label="1"></a>df[</span>
+<span id="cb142-2"><a href="" aria-label="2"></a>    (df[<span class="st">"overall_subject"</span>] <span class="op">==</span> <span class="st">"ELA"</span>) <span class="op">&amp;</span></span>
+<span id="cb142-3"><a href="" aria-label="3"></a>    (df[<span class="st">"percent_below_cap"</span>] <span class="op">&gt;=</span> <span class="dv">20</span>)</span>
+<span id="cb142-4"><a href="" aria-label="4"></a>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Empty DataFrame
 Columns: [school, overall_subject, percent_below_cap]
@@ -2211,10 +2255,10 @@ Index: []</code></pre>
 <section id="and-and-or-conditions-1" class="slide level2">
 <h2>AND and OR conditions</h2>
 <p>For conditions joined by <code>OR</code> where satisfying either condition is sufficient:</p>
-<h4 id="r-16">R</h4>
+<h4 id="r-17">R</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb142"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb142-1"><a href="" aria-label="1"></a>df <span class="sc">%&gt;%</span></span>
-<span id="cb142-2"><a href="" aria-label="2"></a>  <span class="fu">filter</span>(overall_subject <span class="sc">==</span> <span class="st">"ELA"</span> <span class="sc">|</span> percent_below_cap <span class="sc">&gt;=</span> <span class="dv">20</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb144"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb144-1"><a href="" aria-label="1"></a>df <span class="sc">%&gt;%</span></span>
+<span id="cb144-2"><a href="" aria-label="2"></a>  <span class="fu">filter</span>(overall_subject <span class="sc">==</span> <span class="st">"ELA"</span> <span class="sc">|</span> percent_below_cap <span class="sc">&gt;=</span> <span class="dv">20</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  school overall_subject percent_below_cap
 1      A             ELA              12.5
@@ -2222,12 +2266,12 @@ Index: []</code></pre>
 </div>
 </div>
 <p><br></p>
-<h4 id="python-13">Python</h4>
+<h4 id="python-14">Python</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb144"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb144-1"><a href="" aria-label="1"></a>df[</span>
-<span id="cb144-2"><a href="" aria-label="2"></a>    (df[<span class="st">"overall_subject"</span>] <span class="op">==</span> <span class="st">"ELA"</span>) <span class="op">|</span></span>
-<span id="cb144-3"><a href="" aria-label="3"></a>    (df[<span class="st">"percent_below_cap"</span>] <span class="op">&gt;=</span> <span class="dv">20</span>)</span>
-<span id="cb144-4"><a href="" aria-label="4"></a>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb146"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb146-1"><a href="" aria-label="1"></a>df[</span>
+<span id="cb146-2"><a href="" aria-label="2"></a>    (df[<span class="st">"overall_subject"</span>] <span class="op">==</span> <span class="st">"ELA"</span>) <span class="op">|</span></span>
+<span id="cb146-3"><a href="" aria-label="3"></a>    (df[<span class="st">"percent_below_cap"</span>] <span class="op">&gt;=</span> <span class="dv">20</span>)</span>
+<span id="cb146-4"><a href="" aria-label="4"></a>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  school overall_subject  percent_below_cap
 0      A             ELA               12.5
@@ -2250,15 +2294,15 @@ Index: []</code></pre>
 </section>
 <section id="membership-in-versus-in" class="slide level2">
 <h2>Membership: <code>%in%</code> versus <code>in</code></h2>
-<h4 id="r-17">R:</h4>
+<h4 id="r-18">R:</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb146"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb146-1"><a href="" aria-label="1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb146-2"><a href="" aria-label="2"></a>  <span class="at">school =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"D"</span>, <span class="st">"E"</span>, <span class="st">"F"</span>),</span>
-<span id="cb146-3"><a href="" aria-label="3"></a>  <span class="at">state =</span> <span class="fu">c</span>(<span class="st">"TN"</span>, <span class="st">"KY"</span>, <span class="st">"VA"</span>, <span class="st">"GA"</span>, <span class="st">"NC"</span>, <span class="st">"TN"</span>),</span>
-<span id="cb146-4"><a href="" aria-label="4"></a>  <span class="at">score =</span> <span class="fu">c</span>(<span class="dv">82</span>, <span class="dv">91</span>, <span class="cn">NA</span>, <span class="dv">88</span>, <span class="dv">85</span>, <span class="dv">94</span>),</span>
-<span id="cb146-5"><a href="" aria-label="5"></a>  <span class="at">percent_below_cap =</span> <span class="fu">c</span>(<span class="fl">12.5</span>, <span class="cn">NA</span>, <span class="fl">18.2</span>, <span class="fl">9.7</span>, <span class="fl">4.2</span>, <span class="fl">15.3</span>)</span>
-<span id="cb146-6"><a href="" aria-label="6"></a>)</span>
-<span id="cb146-7"><a href="" aria-label="7"></a>df <span class="sc">%&gt;%</span><span class="fu">filter</span>(state <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"TN"</span>, <span class="st">"KY"</span>, <span class="st">"GA"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb148"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb148-1"><a href="" aria-label="1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb148-2"><a href="" aria-label="2"></a>  <span class="at">school =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"D"</span>, <span class="st">"E"</span>, <span class="st">"F"</span>),</span>
+<span id="cb148-3"><a href="" aria-label="3"></a>  <span class="at">state =</span> <span class="fu">c</span>(<span class="st">"TN"</span>, <span class="st">"KY"</span>, <span class="st">"VA"</span>, <span class="st">"GA"</span>, <span class="st">"NC"</span>, <span class="st">"TN"</span>),</span>
+<span id="cb148-4"><a href="" aria-label="4"></a>  <span class="at">score =</span> <span class="fu">c</span>(<span class="dv">82</span>, <span class="dv">91</span>, <span class="cn">NA</span>, <span class="dv">88</span>, <span class="dv">85</span>, <span class="dv">94</span>),</span>
+<span id="cb148-5"><a href="" aria-label="5"></a>  <span class="at">percent_below_cap =</span> <span class="fu">c</span>(<span class="fl">12.5</span>, <span class="cn">NA</span>, <span class="fl">18.2</span>, <span class="fl">9.7</span>, <span class="fl">4.2</span>, <span class="fl">15.3</span>)</span>
+<span id="cb148-6"><a href="" aria-label="6"></a>)</span>
+<span id="cb148-7"><a href="" aria-label="7"></a>df <span class="sc">%&gt;%</span><span class="fu">filter</span>(state <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"TN"</span>, <span class="st">"KY"</span>, <span class="st">"GA"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  school state score percent_below_cap
 1      A    TN    82              12.5
@@ -2267,15 +2311,15 @@ Index: []</code></pre>
 4      F    TN    94              15.3</code></pre>
 </div>
 </div>
-<h4 id="python-14">Python:</h4>
+<h4 id="python-15">Python:</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb148"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb148-1"><a href="" aria-label="1"></a>df <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb148-2"><a href="" aria-label="2"></a>    <span class="st">"school"</span>: [<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"D"</span>, <span class="st">"E"</span>, <span class="st">"F"</span>],</span>
-<span id="cb148-3"><a href="" aria-label="3"></a>    <span class="st">"state"</span>: [<span class="st">"TN"</span>, <span class="st">"KY"</span>, <span class="st">"VA"</span>, <span class="st">"GA"</span>, <span class="st">"NC"</span>, <span class="st">"TN"</span>],</span>
-<span id="cb148-4"><a href="" aria-label="4"></a>    <span class="st">"score"</span>: [<span class="dv">82</span>, <span class="dv">91</span>, <span class="va">None</span>, <span class="dv">88</span>, <span class="dv">85</span>, <span class="dv">94</span>],</span>
-<span id="cb148-5"><a href="" aria-label="5"></a>    <span class="st">"percent_below_cap"</span>: [<span class="fl">12.5</span>, <span class="va">None</span>, <span class="fl">18.2</span>, <span class="fl">9.7</span>, <span class="fl">4.2</span>, <span class="fl">15.3</span>]</span>
-<span id="cb148-6"><a href="" aria-label="6"></a>})</span>
-<span id="cb148-7"><a href="" aria-label="7"></a>df[df[<span class="st">"state"</span>].isin([<span class="st">"TN"</span>, <span class="st">"KY"</span>, <span class="st">"GA"</span>])]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb150"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb150-1"><a href="" aria-label="1"></a>df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb150-2"><a href="" aria-label="2"></a>    <span class="st">"school"</span>: [<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"D"</span>, <span class="st">"E"</span>, <span class="st">"F"</span>],</span>
+<span id="cb150-3"><a href="" aria-label="3"></a>    <span class="st">"state"</span>: [<span class="st">"TN"</span>, <span class="st">"KY"</span>, <span class="st">"VA"</span>, <span class="st">"GA"</span>, <span class="st">"NC"</span>, <span class="st">"TN"</span>],</span>
+<span id="cb150-4"><a href="" aria-label="4"></a>    <span class="st">"score"</span>: [<span class="dv">82</span>, <span class="dv">91</span>, <span class="va">None</span>, <span class="dv">88</span>, <span class="dv">85</span>, <span class="dv">94</span>],</span>
+<span id="cb150-5"><a href="" aria-label="5"></a>    <span class="st">"percent_below_cap"</span>: [<span class="fl">12.5</span>, <span class="va">None</span>, <span class="fl">18.2</span>, <span class="fl">9.7</span>, <span class="fl">4.2</span>, <span class="fl">15.3</span>]</span>
+<span id="cb150-6"><a href="" aria-label="6"></a>})</span>
+<span id="cb150-7"><a href="" aria-label="7"></a>df[df[<span class="st">"state"</span>].isin([<span class="st">"TN"</span>, <span class="st">"KY"</span>, <span class="st">"GA"</span>])]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  school state  score  percent_below_cap
 0      A    TN   82.0               12.5
@@ -2290,17 +2334,17 @@ Index: []</code></pre>
 <p>To ask whether <code>"TN"</code> appears anywhere in the <code>state</code> column:</p>
 <div class="columns">
 <div class="column" style="width:48%;">
-<h4 id="r-18">R</h4>
+<h4 id="r-19">R</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb150"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb150-1"><a href="" aria-label="1"></a><span class="st">"TN"</span> <span class="sc">%in%</span> df<span class="sc">$</span>state</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb152"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb152-1"><a href="" aria-label="1"></a><span class="st">"TN"</span> <span class="sc">%in%</span> df<span class="sc">$</span>state</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] TRUE</code></pre>
 </div>
 </div>
 </div><div class="column" style="width:48%;">
-<h4 id="python-15">Python</h4>
+<h4 id="python-16">Python</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb152"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb152-1"><a href="" aria-label="1"></a><span class="co">"TN"</span> <span class="kw">in</span> df[<span class="st">"state"</span>].values</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb154"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb154-1"><a href="" aria-label="1"></a><span class="co">"TN"</span> <span class="kw">in</span> df[<span class="st">"state"</span>].values</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>True</code></pre>
 </div>
@@ -2314,13 +2358,13 @@ Index: []</code></pre>
 </section>
 <section id="renaming-variables" class="slide level2">
 <h2>Renaming variables</h2>
-<h4 id="r-19">R</h4>
+<h4 id="r-20">R</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb154"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb154-1"><a href="" aria-label="1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
-<span id="cb154-2"><a href="" aria-label="2"></a>  <span class="fu">rename</span>(</span>
-<span id="cb154-3"><a href="" aria-label="3"></a>    <span class="at">school_name =</span> school</span>
-<span id="cb154-4"><a href="" aria-label="4"></a>  )</span>
-<span id="cb154-5"><a href="" aria-label="5"></a>df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb156"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb156-1"><a href="" aria-label="1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb156-2"><a href="" aria-label="2"></a>  <span class="fu">rename</span>(</span>
+<span id="cb156-3"><a href="" aria-label="3"></a>    <span class="at">school_name =</span> school</span>
+<span id="cb156-4"><a href="" aria-label="4"></a>  )</span>
+<span id="cb156-5"><a href="" aria-label="5"></a>df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  school_name state score percent_below_cap
 1           A    TN    82              12.5
@@ -2331,12 +2375,12 @@ Index: []</code></pre>
 6           F    TN    94              15.3</code></pre>
 </div>
 </div>
-<h4 id="python-16">Python</h4>
+<h4 id="python-17">Python</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb156"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb156-1"><a href="" aria-label="1"></a>df <span class="op">=</span> df.rename(columns<span class="op">=</span>{</span>
-<span id="cb156-2"><a href="" aria-label="2"></a>    <span class="st">"school"</span>: <span class="st">"school_name"</span></span>
-<span id="cb156-3"><a href="" aria-label="3"></a>})</span>
-<span id="cb156-4"><a href="" aria-label="4"></a>df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb158"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb158-1"><a href="" aria-label="1"></a>df <span class="op">=</span> df.rename(columns<span class="op">=</span>{</span>
+<span id="cb158-2"><a href="" aria-label="2"></a>    <span class="st">"school"</span>: <span class="st">"school_name"</span></span>
+<span id="cb158-3"><a href="" aria-label="3"></a>})</span>
+<span id="cb158-4"><a href="" aria-label="4"></a>df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  school_name state  score  percent_below_cap
 0           A    TN   82.0               12.5
@@ -2356,17 +2400,17 @@ Index: []</code></pre>
 <section id="creating-a-new-variable" class="slide level2">
 <h2>Creating a new variable</h2>
 <p>Suppose <code>df</code> contains the percentage of students below a given threshold in the current and previous periods and we want to create a new variable that measures the difference between the two.</p>
-<h4 id="r-20">R</h4>
+<h4 id="r-21">R</h4>
 <p><small>In <code>dplyr</code>, <code>mutate()</code> is used to <strong>create new variables (columns)</strong> or modify existing ones.</small></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb158"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb158-1"><a href="" aria-label="1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
-<span id="cb158-2"><a href="" aria-label="2"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb158-3"><a href="" aria-label="3"></a>    <span class="at">diff =</span> percent_below_cap <span class="sc">-</span> percent_below_cap_previous</span>
-<span id="cb158-4"><a href="" aria-label="4"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<h4 id="python-17">Python</h4>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb159"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb159-1"><a href="" aria-label="1"></a>df[<span class="st">"diff"</span>] <span class="op">=</span> (</span>
-<span id="cb159-2"><a href="" aria-label="2"></a>    df[<span class="st">"percent_below_cap"</span>] <span class="op">-</span></span>
-<span id="cb159-3"><a href="" aria-label="3"></a>    df[<span class="st">"percent_below_cap_previous"</span>]</span>
-<span id="cb159-4"><a href="" aria-label="4"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb160"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb160-1"><a href="" aria-label="1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb160-2"><a href="" aria-label="2"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb160-3"><a href="" aria-label="3"></a>    <span class="at">diff =</span> percent_below_cap <span class="sc">-</span> percent_below_cap_previous</span>
+<span id="cb160-4"><a href="" aria-label="4"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<h4 id="python-18">Python</h4>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb161"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb161-1"><a href="" aria-label="1"></a>df[<span class="st">"diff"</span>] <span class="op">=</span> (</span>
+<span id="cb161-2"><a href="" aria-label="2"></a>    df[<span class="st">"percent_below_cap"</span>] <span class="op">-</span></span>
+<span id="cb161-3"><a href="" aria-label="3"></a>    df[<span class="st">"percent_below_cap_previous"</span>]</span>
+<span id="cb161-4"><a href="" aria-label="4"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This is a central data-science pattern:</p>
 <blockquote>
 <p><strong>new variable = transformation of existing variables</strong></p>
@@ -2375,10 +2419,10 @@ Index: []</code></pre>
 <section id="summaries" class="slide level2">
 <h2>Summaries</h2>
 <p>A <strong>summary statistic</strong> reduces a variable to a useful numerical description, such as its mean, median, minimum, or maximum.</p>
-<h4 id="r-21">R</h4>
+<h4 id="r-22">R</h4>
 <p><small>Calculate the mean of the <code>score</code> column:</small></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb160"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb160-1"><a href="" aria-label="1"></a><span class="fu">mean</span>(df<span class="sc">$</span>score, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb162"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb162-1"><a href="" aria-label="1"></a><span class="fu">mean</span>(df<span class="sc">$</span>score, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 88</code></pre>
 </div>
@@ -2397,9 +2441,9 @@ Index: []</code></pre>
 </div>
 </div>
 </div>
-<h4 id="python-18">Python</h4>
+<h4 id="python-19">Python</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb162"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb162-1"><a href="" aria-label="1"></a>df[<span class="st">"score"</span>].mean()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb164"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb164-1"><a href="" aria-label="1"></a>df[<span class="st">"score"</span>].mean()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>np.float64(88.0)</code></pre>
 </div>
@@ -2412,10 +2456,10 @@ Index: []</code></pre>
 <p><em>What is the average <code>percent_below_cap</code> for each school?</em><br> Sometimes we want a summary <strong>for each group</strong> rather than one value for the entire dataset.</p>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb164"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb164-1"><a href="" aria-label="1"></a>df <span class="sc">%&gt;%</span><span class="fu">group_by</span>(school_name) <span class="sc">%&gt;%</span></span>
-<span id="cb164-2"><a href="" aria-label="2"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb164-3"><a href="" aria-label="3"></a>    <span class="at">mean_percent_below_cap =</span> <span class="fu">mean</span>(percent_below_cap, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb164-4"><a href="" aria-label="4"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb166"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb166-1"><a href="" aria-label="1"></a>df <span class="sc">%&gt;%</span><span class="fu">group_by</span>(school_name) <span class="sc">%&gt;%</span></span>
+<span id="cb166-2"><a href="" aria-label="2"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb166-3"><a href="" aria-label="3"></a>    <span class="at">mean_percent_below_cap =</span> <span class="fu">mean</span>(percent_below_cap, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb166-4"><a href="" aria-label="4"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 2
   school_name mean_percent_below_cap
@@ -2469,7 +2513,7 @@ Index: []</code></pre>
 <p><em>What is the average <code>percent_below_cap</code> for each school?</em><br> Sometimes we want a summary <strong>for each group</strong> rather than one value for the entire dataset.</p>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb166"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb166-1"><a href="" aria-label="1"></a>df.groupby(<span class="st">"school_name"</span>)[<span class="st">"percent_below_cap"</span>].mean()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb168"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb168-1"><a href="" aria-label="1"></a>df.groupby(<span class="st">"school_name"</span>)[<span class="st">"percent_below_cap"</span>].mean()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>school_name
 A    12.5
@@ -2506,18 +2550,18 @@ Name: percent_below_cap, dtype: float64</code></pre>
 <h2>Appending observations in R</h2>
 <p><small>Sometimes new data contain <strong>additional observations with the same variables</strong> as an existing dataset.<br> Suppose we have two tables containing information about different schools.<br> </small></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb168"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb168-1"><a href="" aria-label="1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb168-2"><a href="" aria-label="2"></a>  <span class="at">school =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>),</span>
-<span id="cb168-3"><a href="" aria-label="3"></a>  <span class="at">state =</span> <span class="fu">c</span>(<span class="st">"TN"</span>, <span class="st">"KY"</span>),</span>
-<span id="cb168-4"><a href="" aria-label="4"></a>  <span class="at">score =</span> <span class="fu">c</span>(<span class="dv">82</span>, <span class="dv">91</span>)</span>
-<span id="cb168-5"><a href="" aria-label="5"></a>)</span>
-<span id="cb168-6"><a href="" aria-label="6"></a>df2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb168-7"><a href="" aria-label="7"></a>  <span class="at">school =</span> <span class="fu">c</span>(<span class="st">"C"</span>, <span class="st">"D"</span>),</span>
-<span id="cb168-8"><a href="" aria-label="8"></a>  <span class="at">state =</span> <span class="fu">c</span>(<span class="st">"GA"</span>, <span class="st">"TN"</span>),</span>
-<span id="cb168-9"><a href="" aria-label="9"></a>  <span class="at">score =</span> <span class="fu">c</span>(<span class="dv">88</span>, <span class="dv">94</span>)</span>
-<span id="cb168-10"><a href="" aria-label="10"></a>)</span>
-<span id="cb168-11"><a href="" aria-label="11"></a>combined <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(df1, df2)</span>
-<span id="cb168-12"><a href="" aria-label="12"></a>combined</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb170"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb170-1"><a href="" aria-label="1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb170-2"><a href="" aria-label="2"></a>  <span class="at">school =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>),</span>
+<span id="cb170-3"><a href="" aria-label="3"></a>  <span class="at">state =</span> <span class="fu">c</span>(<span class="st">"TN"</span>, <span class="st">"KY"</span>),</span>
+<span id="cb170-4"><a href="" aria-label="4"></a>  <span class="at">score =</span> <span class="fu">c</span>(<span class="dv">82</span>, <span class="dv">91</span>)</span>
+<span id="cb170-5"><a href="" aria-label="5"></a>)</span>
+<span id="cb170-6"><a href="" aria-label="6"></a>df2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb170-7"><a href="" aria-label="7"></a>  <span class="at">school =</span> <span class="fu">c</span>(<span class="st">"C"</span>, <span class="st">"D"</span>),</span>
+<span id="cb170-8"><a href="" aria-label="8"></a>  <span class="at">state =</span> <span class="fu">c</span>(<span class="st">"GA"</span>, <span class="st">"TN"</span>),</span>
+<span id="cb170-9"><a href="" aria-label="9"></a>  <span class="at">score =</span> <span class="fu">c</span>(<span class="dv">88</span>, <span class="dv">94</span>)</span>
+<span id="cb170-10"><a href="" aria-label="10"></a>)</span>
+<span id="cb170-11"><a href="" aria-label="11"></a>combined <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(df1, df2)</span>
+<span id="cb170-12"><a href="" aria-label="12"></a>combined</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  school state score
 1      A    TN    82
@@ -2546,20 +2590,20 @@ Name: percent_below_cap, dtype: float64</code></pre>
 <h2>Appending observations in Python</h2>
 <p><small>Think of <strong>append = add observations</strong>.</small></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb170"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb170-1"><a href="" aria-label="1"></a>df1 <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb170-2"><a href="" aria-label="2"></a>    <span class="st">"school"</span>: [<span class="st">"A"</span>, <span class="st">"B"</span>],</span>
-<span id="cb170-3"><a href="" aria-label="3"></a>    <span class="st">"state"</span>: [<span class="st">"TN"</span>, <span class="st">"KY"</span>],</span>
-<span id="cb170-4"><a href="" aria-label="4"></a>    <span class="st">"score"</span>: [<span class="dv">82</span>, <span class="dv">91</span>]</span>
-<span id="cb170-5"><a href="" aria-label="5"></a>})</span>
-<span id="cb170-6"><a href="" aria-label="6"></a></span>
-<span id="cb170-7"><a href="" aria-label="7"></a>df2 <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb170-8"><a href="" aria-label="8"></a>    <span class="st">"school"</span>: [<span class="st">"C"</span>, <span class="st">"D"</span>],</span>
-<span id="cb170-9"><a href="" aria-label="9"></a>    <span class="st">"state"</span>: [<span class="st">"GA"</span>, <span class="st">"TN"</span>],</span>
-<span id="cb170-10"><a href="" aria-label="10"></a>    <span class="st">"score"</span>: [<span class="dv">88</span>, <span class="dv">94</span>]</span>
-<span id="cb170-11"><a href="" aria-label="11"></a>})</span>
-<span id="cb170-12"><a href="" aria-label="12"></a></span>
-<span id="cb170-13"><a href="" aria-label="13"></a>combined <span class="op">=</span> pd.concat([df1, df2],ignore_index<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb170-14"><a href="" aria-label="14"></a>combined</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb172"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb172-1"><a href="" aria-label="1"></a>df1 <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb172-2"><a href="" aria-label="2"></a>    <span class="st">"school"</span>: [<span class="st">"A"</span>, <span class="st">"B"</span>],</span>
+<span id="cb172-3"><a href="" aria-label="3"></a>    <span class="st">"state"</span>: [<span class="st">"TN"</span>, <span class="st">"KY"</span>],</span>
+<span id="cb172-4"><a href="" aria-label="4"></a>    <span class="st">"score"</span>: [<span class="dv">82</span>, <span class="dv">91</span>]</span>
+<span id="cb172-5"><a href="" aria-label="5"></a>})</span>
+<span id="cb172-6"><a href="" aria-label="6"></a></span>
+<span id="cb172-7"><a href="" aria-label="7"></a>df2 <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb172-8"><a href="" aria-label="8"></a>    <span class="st">"school"</span>: [<span class="st">"C"</span>, <span class="st">"D"</span>],</span>
+<span id="cb172-9"><a href="" aria-label="9"></a>    <span class="st">"state"</span>: [<span class="st">"GA"</span>, <span class="st">"TN"</span>],</span>
+<span id="cb172-10"><a href="" aria-label="10"></a>    <span class="st">"score"</span>: [<span class="dv">88</span>, <span class="dv">94</span>]</span>
+<span id="cb172-11"><a href="" aria-label="11"></a>})</span>
+<span id="cb172-12"><a href="" aria-label="12"></a></span>
+<span id="cb172-13"><a href="" aria-label="13"></a>combined <span class="op">=</span> pd.concat([df1, df2],ignore_index<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb172-14"><a href="" aria-label="14"></a>combined</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  school state  score
 0      A    TN     82
@@ -2623,20 +2667,20 @@ Name: percent_below_cap, dtype: float64</code></pre>
 <h2>Joining tables: R</h2>
 <p><small>A <strong>join</strong> combines information from two tables by matching values of a shared <strong>key</strong>.<br> Suppose one table contains school locations and another contains school scores. Here, <code>school_number</code> is the <strong>key</strong> shared by both tables. </small></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb172"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb172-1"><a href="" aria-label="1"></a>schools <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb172-2"><a href="" aria-label="2"></a>  <span class="at">school_number =</span> <span class="fu">c</span>(<span class="dv">101</span>, <span class="dv">102</span>, <span class="dv">103</span>),</span>
-<span id="cb172-3"><a href="" aria-label="3"></a>  <span class="at">school_name =</span> <span class="fu">c</span>(<span class="st">"Central"</span>, <span class="st">"West"</span>, <span class="st">"East"</span>)</span>
-<span id="cb172-4"><a href="" aria-label="4"></a>)</span>
-<span id="cb172-5"><a href="" aria-label="5"></a>scores <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb172-6"><a href="" aria-label="6"></a>  <span class="at">school_number =</span> <span class="fu">c</span>(<span class="dv">101</span>, <span class="dv">102</span>, <span class="dv">104</span>),</span>
-<span id="cb172-7"><a href="" aria-label="7"></a>  <span class="at">score =</span> <span class="fu">c</span>(<span class="dv">82</span>, <span class="dv">91</span>, <span class="dv">88</span>)</span>
-<span id="cb172-8"><a href="" aria-label="8"></a>)</span>
-<span id="cb172-9"><a href="" aria-label="9"></a></span>
-<span id="cb172-10"><a href="" aria-label="10"></a><span class="fu">left_join</span>(</span>
-<span id="cb172-11"><a href="" aria-label="11"></a>  schools,</span>
-<span id="cb172-12"><a href="" aria-label="12"></a>  scores,</span>
-<span id="cb172-13"><a href="" aria-label="13"></a>  <span class="at">by =</span> <span class="st">"school_number"</span></span>
-<span id="cb172-14"><a href="" aria-label="14"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb174"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb174-1"><a href="" aria-label="1"></a>schools <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb174-2"><a href="" aria-label="2"></a>  <span class="at">school_number =</span> <span class="fu">c</span>(<span class="dv">101</span>, <span class="dv">102</span>, <span class="dv">103</span>),</span>
+<span id="cb174-3"><a href="" aria-label="3"></a>  <span class="at">school_name =</span> <span class="fu">c</span>(<span class="st">"Central"</span>, <span class="st">"West"</span>, <span class="st">"East"</span>)</span>
+<span id="cb174-4"><a href="" aria-label="4"></a>)</span>
+<span id="cb174-5"><a href="" aria-label="5"></a>scores <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb174-6"><a href="" aria-label="6"></a>  <span class="at">school_number =</span> <span class="fu">c</span>(<span class="dv">101</span>, <span class="dv">102</span>, <span class="dv">104</span>),</span>
+<span id="cb174-7"><a href="" aria-label="7"></a>  <span class="at">score =</span> <span class="fu">c</span>(<span class="dv">82</span>, <span class="dv">91</span>, <span class="dv">88</span>)</span>
+<span id="cb174-8"><a href="" aria-label="8"></a>)</span>
+<span id="cb174-9"><a href="" aria-label="9"></a></span>
+<span id="cb174-10"><a href="" aria-label="10"></a><span class="fu">left_join</span>(</span>
+<span id="cb174-11"><a href="" aria-label="11"></a>  schools,</span>
+<span id="cb174-12"><a href="" aria-label="12"></a>  scores,</span>
+<span id="cb174-13"><a href="" aria-label="13"></a>  <span class="at">by =</span> <span class="st">"school_number"</span></span>
+<span id="cb174-14"><a href="" aria-label="14"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  school_number school_name score
 1           101     Central    82
@@ -2665,21 +2709,21 @@ Name: percent_below_cap, dtype: float64</code></pre>
 <h2>Joining tables: Python</h2>
 <p><small> In <code>pandas</code>, the <code>merge()</code> function is used to join two DataFrames based on a common key. The <code>how</code> parameter specifies the type of join.<br> The pandas equivalent of a full join is specified with the parameter <code>how="outer"</code>. Again, in this example, <code>school_number</code> is the <strong>key</strong> used to match observations. </small></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb174"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb174-1"><a href="" aria-label="1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb174-2"><a href="" aria-label="2"></a></span>
-<span id="cb174-3"><a href="" aria-label="3"></a>schools <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb174-4"><a href="" aria-label="4"></a>    <span class="st">"school_number"</span>: [<span class="dv">101</span>, <span class="dv">102</span>, <span class="dv">103</span>],</span>
-<span id="cb174-5"><a href="" aria-label="5"></a>    <span class="st">"school_name"</span>: [<span class="st">"Central"</span>, <span class="st">"West"</span>, <span class="st">"East"</span>]</span>
-<span id="cb174-6"><a href="" aria-label="6"></a>})</span>
-<span id="cb174-7"><a href="" aria-label="7"></a>scores <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb174-8"><a href="" aria-label="8"></a>    <span class="st">"school_number"</span>: [<span class="dv">101</span>, <span class="dv">102</span>, <span class="dv">104</span>],</span>
-<span id="cb174-9"><a href="" aria-label="9"></a>    <span class="st">"score"</span>: [<span class="dv">82</span>, <span class="dv">91</span>, <span class="dv">88</span>]</span>
-<span id="cb174-10"><a href="" aria-label="10"></a>})</span>
-<span id="cb174-11"><a href="" aria-label="11"></a>schools.merge(</span>
-<span id="cb174-12"><a href="" aria-label="12"></a>    scores,</span>
-<span id="cb174-13"><a href="" aria-label="13"></a>    on<span class="op">=</span><span class="st">"school_number"</span>,</span>
-<span id="cb174-14"><a href="" aria-label="14"></a>    how<span class="op">=</span><span class="st">"outer"</span></span>
-<span id="cb174-15"><a href="" aria-label="15"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb176"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb176-1"><a href="" aria-label="1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb176-2"><a href="" aria-label="2"></a></span>
+<span id="cb176-3"><a href="" aria-label="3"></a>schools <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb176-4"><a href="" aria-label="4"></a>    <span class="st">"school_number"</span>: [<span class="dv">101</span>, <span class="dv">102</span>, <span class="dv">103</span>],</span>
+<span id="cb176-5"><a href="" aria-label="5"></a>    <span class="st">"school_name"</span>: [<span class="st">"Central"</span>, <span class="st">"West"</span>, <span class="st">"East"</span>]</span>
+<span id="cb176-6"><a href="" aria-label="6"></a>})</span>
+<span id="cb176-7"><a href="" aria-label="7"></a>scores <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb176-8"><a href="" aria-label="8"></a>    <span class="st">"school_number"</span>: [<span class="dv">101</span>, <span class="dv">102</span>, <span class="dv">104</span>],</span>
+<span id="cb176-9"><a href="" aria-label="9"></a>    <span class="st">"score"</span>: [<span class="dv">82</span>, <span class="dv">91</span>, <span class="dv">88</span>]</span>
+<span id="cb176-10"><a href="" aria-label="10"></a>})</span>
+<span id="cb176-11"><a href="" aria-label="11"></a>schools.merge(</span>
+<span id="cb176-12"><a href="" aria-label="12"></a>    scores,</span>
+<span id="cb176-13"><a href="" aria-label="13"></a>    on<span class="op">=</span><span class="st">"school_number"</span>,</span>
+<span id="cb176-14"><a href="" aria-label="14"></a>    how<span class="op">=</span><span class="st">"outer"</span></span>
+<span id="cb176-15"><a href="" aria-label="15"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   school_number school_name  score
 0            101     Central   82.0
@@ -2827,17 +2871,17 @@ Name: percent_below_cap, dtype: float64</code></pre>
 <h2>Wrap-up:</h2>
 <h3 id="what-should-feel-familiar-across-languages">What should feel familiar across languages?</h3>
 <p>The syntax changes but the thinking does not</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb176"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb176-1"><a href="" aria-label="1"></a>Question</span>
-<span id="cb176-2"><a href="" aria-label="2"></a>   ↓</span>
-<span id="cb176-3"><a href="" aria-label="3"></a>Data</span>
-<span id="cb176-4"><a href="" aria-label="4"></a>   ↓</span>
-<span id="cb176-5"><a href="" aria-label="5"></a>Select / transform</span>
-<span id="cb176-6"><a href="" aria-label="6"></a>   ↓</span>
-<span id="cb176-7"><a href="" aria-label="7"></a>Summarize</span>
-<span id="cb176-8"><a href="" aria-label="8"></a>   ↓</span>
-<span id="cb176-9"><a href="" aria-label="9"></a>Interpret</span>
-<span id="cb176-10"><a href="" aria-label="10"></a>   ↓</span>
-<span id="cb176-11"><a href="" aria-label="11"></a>Communicate</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb178"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb178-1"><a href="" aria-label="1"></a>Question</span>
+<span id="cb178-2"><a href="" aria-label="2"></a>   ↓</span>
+<span id="cb178-3"><a href="" aria-label="3"></a>Data</span>
+<span id="cb178-4"><a href="" aria-label="4"></a>   ↓</span>
+<span id="cb178-5"><a href="" aria-label="5"></a>Select / transform</span>
+<span id="cb178-6"><a href="" aria-label="6"></a>   ↓</span>
+<span id="cb178-7"><a href="" aria-label="7"></a>Summarize</span>
+<span id="cb178-8"><a href="" aria-label="8"></a>   ↓</span>
+<span id="cb178-9"><a href="" aria-label="9"></a>Interpret</span>
+<span id="cb178-10"><a href="" aria-label="10"></a>   ↓</span>
+<span id="cb178-11"><a href="" aria-label="11"></a>Communicate</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="before-the-next-class" class="slide level2">
 <h2>Before the next class</h2>

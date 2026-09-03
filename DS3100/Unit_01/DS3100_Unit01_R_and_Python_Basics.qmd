@@ -784,7 +784,11 @@ df = pd.DataFrame({
 df
 ```
 
+::: {style="font-size:0.75em;"}
+
 Both are designed to deal with tabular data.
+
+:::
 
 ---
 
@@ -834,9 +838,14 @@ df["score"]
 
 ---
 
-## Missing values
+### Missing data require explicit attention
 
-<small>Missing data require explicit attention.</small>
+<!-- ===================================================== -->
+<!-- STAGE 1: ORIGINAL TWO-COLUMN CONTENT -->
+<!-- ===================================================== -->
+
+::: {.fragment .fade-out data-fragment-index="1"
+style="position:relative; z-index:1;"}
 
 ::: {.columns}
 
@@ -850,13 +859,13 @@ df["score"]
 # for the whole data frame
 is.na(df)
 
-#how many missing values can be found per row
+# how many missing values per row
 rowSums(is.na(df))
 
-#count the number of missing values in a specific column
+# count missing values in a specific column
 sum(is.na(df$score))
 
-#remove missing values when calculating the mean of a column
+# ignore missing values when calculating the mean
 mean(df[, "score"], na.rm = TRUE)
 ```
 
@@ -869,11 +878,10 @@ mean(df[, "score"], na.rm = TRUE)
 <small>Pandas commonly uses `NaN` for missing values.</small>
 
 ```{python}
-
-#check for missing values in whole data frame
+# check for missing values in whole data frame
 df.isna()
 
-# count the missing values in a specific column
+# count missing values in a specific column
 df["score"].isna().sum()
 
 # number of rows with missing values in any column
@@ -884,13 +892,62 @@ df.isna().any(axis=1).sum()
 
 :::
 
+:::
+
+
+<!-- ===================================================== -->
+<!-- STAGE 2: EXPLANATION OF ROWS WITH ANY MISSING VALUE -->
+<!-- ===================================================== -->
+
+::: {.fragment .fade-in data-fragment-index="1"
+style="position:absolute; top:25%; left:12%; width:76%; z-index:5;"}
+
+::: {.callout-tip style="font-size:0.72em;"}
+
+## **How many observations have at least one missing value?**
+
+### R
+
+```r
+rowSums(is.na(df)) > 0
+```
+
+- `is.na(df)` identifies missing cells.
+- `rowSums(...)` counts missing values **within each row**.
+- `> 0` identifies rows with **at least one** missing value.
+
+### Python
+
+```python
+df.isna().any(axis=1)
+```
+
+- `df.isna()` identifies missing cells.
+- `.any(axis=1)` asks whether **any column** in each row contains a missing value.
+- `.sum()` counts the rows for which the answer is `True`.
+
+:::
+
+:::
+
+
+<!-- ===================================================== -->
+<!-- STAGE 3: FINAL MISSINGNESS NOTE -->
+<!-- ===================================================== -->
+
+::: {.fragment .fade-in data-fragment-index="2"
+style="position:absolute; top:75%; left:12%; width:76%; z-index:10;"}
+
 ::: {.callout-note style="font-size:0.75em;"}
 
-**What you are missing can be key information.** 
+## What you are missing can be key information.
 
-- Do not silently ignore it. Missingness can be informative and may require special handling.
+- Do not silently ignore missing values. Missingness can be informative and may require special handling.
 - Missingness can be **random** or **systematic**. If it is systematic, it may bias your results.
 - Missingness can introduce errors in your analysis if not handled properly.
+
+:::
+
 :::
 
 ---
