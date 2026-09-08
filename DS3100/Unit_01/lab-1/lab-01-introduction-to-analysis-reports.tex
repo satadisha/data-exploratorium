@@ -1,0 +1,451 @@
+\documentclass[11pt,letterpaper]{article}
+
+% -----------------------------------------------------------------------------
+% Page geometry: tuned to approximate the supplied PDF's narrow main text block
+% with a generous right margin used for side notes.
+% -----------------------------------------------------------------------------
+\usepackage[
+  letterpaper,
+  left=72pt,
+  right=140pt,
+  top=72pt,
+  bottom=66pt,
+  marginparwidth=118pt,
+  marginparsep=18pt
+]{geometry}
+
+\usepackage{iftex}
+\ifXeTeX
+  \usepackage{fontspec}
+  \setmainfont{TeXGyrePagella}
+  \setsansfont{Inter}
+  \setmonofont{DejaVu Sans Mono}
+\else
+  \usepackage[T1]{fontenc}
+  \usepackage{mathpazo}
+  \usepackage[scaled=0.92]{helvet}
+  \usepackage{inconsolata}
+\fi
+
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{marginnote}
+\usepackage[most]{tcolorbox}
+\usepackage{hyperref}
+\usepackage{setspace}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{ragged2e}
+
+\definecolor{accent}{HTML}{2E6DB4}
+\definecolor{lightblue}{HTML}{EEF4F9}
+\definecolor{lightpurple}{HTML}{F3EEFA}
+\definecolor{softorange}{HTML}{FFF5ED}
+\definecolor{muted}{HTML}{7A8793}
+\definecolor{rulegray}{HTML}{222222}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=accent,
+  urlcolor=accent,
+  citecolor=accent,
+  pdftitle={Lab 1: Introduction to Analysis Reports},
+  pdfauthor={Dr. Simon Lilburn}
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\setstretch{1.08}
+
+\titleformat{\section}
+  {\sffamily\bfseries\fontsize{16}{19}\selectfont}
+  {}{0pt}{}
+\titlespacing*{\section}{0pt}{20pt}{8pt}
+
+\titleformat{\subsection}
+  {\itshape\fontsize{11.5}{14}\selectfont}
+  {}{0pt}{}
+\titlespacing*{\subsection}{0pt}{12pt}{4pt}
+
+\titleformat{\subsubsection}
+  {\sffamily\bfseries\fontsize{10.7}{13}\selectfont}
+  {}{0pt}{}
+\titlespacing*{\subsubsection}{0pt}{8pt}{3pt}
+
+\newcommand{\coursehead}{%
+  {\sffamily\fontsize{7.5}{9}\selectfont\MakeUppercase{DS 3100: FUNDAMENTALS OF DATA SCIENCE}}%
+}
+
+\newcommand{\smallcaps}[1]{{\sffamily\fontsize{7.5}{9}\selectfont\MakeUppercase{#1}}}
+
+\newcommand{\sidecaption}[1]{%
+  \marginpar{%
+    \vspace*{0pt}%
+    \parbox[t]{60pt}{%
+      \raggedright
+      \scriptsize
+      #1%
+    }%
+  }%
+}
+
+\newtcolorbox{callout}[2][]{%
+  enhanced,
+  breakable,
+  frame hidden,
+  colback=#2!10!white,
+  borderline west={1.5pt}{0pt}{#2},
+  arc=0pt,
+  boxsep=0pt,
+  left=10pt,
+  right=8pt,
+  top=7pt,
+  bottom=7pt,
+  before skip=8pt,
+  after skip=10pt,
+  fontupper=\fontsize{10.3}{13}\selectfont,
+  #1
+}
+
+\newcommand{\warningbox}[1]{%
+  \begin{callout}[title={\sffamily\fontsize{7.5}{9}\selectfont\color{accent}\MakeUppercase{WARNING}}]{orange}
+  #1
+  \end{callout}%
+}
+
+\newcommand{\hintbox}[1]{%
+  \begin{callout}[title={\sffamily\fontsize{7.5}{9}\selectfont\color{purple}\MakeUppercase{HINT}}]{purple}
+  #1
+  \end{callout}%
+}
+
+\newcommand{\checkbox}{\(\square\)}
+\newcommand{\code}[1]{\texttt{#1}}
+
+\begin{document}
+
+% -----------------------------------------------------------------------------
+% PAGE 1
+% -----------------------------------------------------------------------------
+\thispagestyle{empty}
+\coursehead
+
+\vspace{16pt}
+{\fontsize{18}{22}\selectfont Lab 1: Introduction to Analysis Reports\par}
+\vspace{3pt}
+{\itshape\fontsize{11.5}{14}\selectfont
+What an analysis report is, how one is put together, and a dataset card for its
+Data section\par}
+\vspace{13pt}
+{\sffamily\fontsize{7.5}{9}\selectfont DR. SATADISHA SAHA BHOWMICK · FALL 2026 · WEEK 03 — WEEK OF 2026-09-07 (AT HOME)\par}
+
+\vspace{18pt}\hrule height 0.45pt
+\vspace{38pt}
+
+\begin{callout}[colback=lightblue,colframe=accent,title={\sffamily\fontsize{7.5}{9}\selectfont\color{accent}DELIVERABLES --- DUE SUNDAY 13 SEPTEMBER, 11:59 PM, ON BRIGHTSPACE}]{accent}
+\begin{itemize}[leftmargin=16pt,itemsep=5pt,topsep=2pt]
+  \item \checkbox\quad \code{Lab-1\_FIRSTNAME\_LASTNAME.Rmd}/\code{Lab-1\_FIRSTNAME\_LASTNAME.qmd}: the starter sheet, renamed, with all three parts completed and the generative AI disclosure filled in
+  \item \checkbox\quad \code{Lab-1\_FIRSTNAME\_LASTNAME.pdf}: the same sheet, knitted to PDF
+\end{itemize}
+\end{callout}
+
+This lab is done at home. Monday 7 September is Labor Day, so the lab sections do not meet, and this is the one lab of the term that you work through on your own. It has two halves. The first is this handout, which goes through what the three analysis reports in this course are and how one is put together. The second is a starter .qmd with three parts: some Markdown practice, a few questions about this handout, and a \emph{dataset card} for a small real dataset.\\ 
+\textcolor{blue}{The card is the form the Data section of every report takes from here on}.
+
+\begin{center}
+about 15 minutes to read, and about two hours in total
+\end{center}
+
+\subsection*{What to download and where to put it}
+Three files are on Brightspace for this lab:
+\begin{itemize}[leftmargin=17pt,itemsep=2pt]
+  \item this handout;
+  \item the starter sheet, \code{lab-01-introduction-to-analysis-reports.Rmd} \textbf{OR}\\ \code{lab-01-introduction-to-analysis-reports.qmd};
+  \item a data file, \code{penguins.csv}.
+\end{itemize}
+
+\sidecaption{The markdown file and the data/ folder must be saved together. Otherwise, the CSV file cannot be opened using a relative path.}
+
+Please make a folder for the lab inside your course folder (\code{labs/lab-01/} for instance), put the .qmd/.Rmd in it, and put the CSV in a \code{data/} folder beside the markdown file. From your markdown file, the path to the data is then \code{data/penguins.csv}, exactly as it was explained in class.
+
+
+\newpage
+
+% -----------------------------------------------------------------------------
+% PAGE 2
+% -----------------------------------------------------------------------------
+\coursehead
+
+\subsection*{What to hand in, and when}
+Rename the starter to \code{Lab-1\_FIRSTNAME\_LASTNAME.qmd} (\textit{or, if you choose to work with RMarkdown \code{Lab-1\_FIRSTNAME\_LASTNAME.Rmd}}). This is the naming convention in the syllabus, and it is how every lab and report must be handed in. Work through it, knit it to PDF, and submit both files on Brightspace by the due date in the box above, which is the night before Lab 2 is released.\\
+
+\begin{callout}[title={\sffamily\fontsize{7.5}{9}\selectfont\color{muted}NOTE --- HOW THIS LAB IS GRADED}]{muted}
+Labs are out of 5 points. The syllabus rubric gives one point for arriving on time and one for a TA checking your progress at the end, and neither exists for a lab done at home. For Lab 1 all five points come from the submission: the sheet completed, both files uploaded, on time. A sheet with sections left blank is a partial submission and is marked as one.
+\end{callout}
+
+\hintbox{The syllabus's fallback applies: knit to HTML, convert the HTML to a PDF as shown in class, or with an online converter such as \url{https://www.sejda.com/html-to-pdf}, and submit that. Please also say in your submission that you had to, so that we can sort out your LaTeX install before Lab 2.}
+
+\section{Part 1: What an analysis report is}
+
+Analysis reports are where you show what you have learned in this course. They are written to mimic the reports you would compile in a data science job, and they can go in your portfolio if you apply for one. There is a bare minimum (each section below has to be there) and beyond that you have complete freedom in what you write.
+
+\subsection*{Premise and purpose}
+Your objective in each report is a concise document that answers one or more research questions you have generated yourself. What matters most is that a client, colleague, supervisor, or stakeholder can sit down with your report and come away knowing what you did, why you did it, and what they should take from it.
+
+\sidecaption{Communicating results clearly is a core skill in data science, and it is the one most often reported on to people who do not share your training.}
+
+Understanding what you are doing and putting your findings into plain language is fundamental. You will more often report results to people who do not know much about data, statistics, and programming than to people who do.
+
+\clearpage
+
+% -----------------------------------------------------------------------------
+% PAGE 3
+% -----------------------------------------------------------------------------
+\coursehead
+\section*{The three reports}
+
+Each report has a theme, given by its title, and is worth 10 points. The theme says which method must appear; the question, and any further analysis that helps answer it, is yours to devise.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{p{0.08\textwidth} p{0.47\textwidth} p{0.14\textwidth} p{0.14\textwidth}}
+\toprule
+Report & Theme & Set & Due\\
+\midrule
+1 & Exploratory data analysis and visualisation & 22 Sep & 9 Oct\\
+2 & Linear regression & 13 Oct & 6 Nov\\
+3 & Logistic regression & 9 Nov & 11 Dec\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The question and the analysis plan will be entirely your ideas. That said, there are analyses you must perform (a linear regression in Report 2, for instance) to complete the objective of the report, and there may be others that support them.\\
+
+\warningbox{Please do not do analyses for the sake of analysis. You might know more complicated methods (unsupervised learning, random forests, neural networks) and that is great, but they are not what this course teaches and they are usually unnecessary. Ask any senior data scientist and they will tell you they always start with the basics: understanding the data, feature engineering, a linear or logistic regression and proper interpretation of results. Concentrate on mastering the fundamentals.}
+
+\subsection*{Skills you are building}
+\begin{enumerate}[leftmargin=18pt,itemsep=3pt]
+  \item Application of statistical concepts and models.
+  \item Familiarity and fluency in R or Python programming.
+  \item Experience in exploring, analysing, and synthesizing results.
+  \item Professional skills, namely conveying an analysis and its results.
+\end{enumerate}
+
+The last two are the emphasis of the reports. One day, perhaps soon, you will be the expert in the room, and people will turn to you to answer their questions with data they have collected or have yet to collect. Your job will be to decide how best to answer, and often there is no best answer. The dataset you have constrains the questions you can ask and the models you can use, and the goal of the reports is to learn which features of a dataset lend themselves to which analysis plans.
+
+\clearpage
+
+% -----------------------------------------------------------------------------
+% PAGE 4
+% -----------------------------------------------------------------------------
+\coursehead
+
+People choose different ways to answer the same question, and there is rarely one right way. Here is a clear example:
+
+{\sffamily\fontsize{7.5}{9}\selectfont\color{muted}READING}\par
+\vspace{3pt}
+Silberzahn, R., Uhlmann, E. L., Martin, D. P., Anselmi, P., Aust, F., Awtrey, E., \ldots\ \& Nosek, B. A. (2018). \emph{Many analysts, one data set: Making transparent how variations in analytic choices affect results}. \emph{Advances in Methods and Practices in Psychological Science}, 1(3), 337--356. doi:10.1177/2515245917747646
+
+The paper is open access. Twenty-nine teams of professional analysts, statisticians among them, were given the same dataset and the same question, and made different modelling decisions that led to different answers. Should that ambiguity produce analysis paralysis? No. But it is a good example of the ambiguity everyone faces when analysing data.
+
+\subsection*{Generative AI}
+Considerate generative AI use is allowed and encouraged in this course, on labs and on the reports. There is nothing stopping you from completing this course with generative AI, and I will not dock points for minor use. Two things from the syllabus apply to every report:
+
+\textbf{Disclose it.} Briefly note which tools you used and what for, at the end of the report (``Used ChatGPT to debug a ggplot error in the Visualization section'' is enough). Transparency is, and will continue to be, a virtue. The starter sheet has a line for this, and so should every report.
+
+\textbf{Be able to explain it.} If I suspect substantial generative AI use on a report, I will ask you to walk me through it in person. If you cannot explain your code, logic, or interpretations without assistance, I may deduct points.
+
+\sidecaption{\textbf{The general philosophy}: learn to do the thing first, before automating it. You learn to add and subtract before you use a calculator. Know what output to expect even when you do not know the answer, and know how to verify it. No expert in data science vibe codes.}
+
+I will also give you, on each report, a subjective impression that does not count for points: how the report reads to a senior data scientist looking to hire you, including a feeling for how much of it a model wrote. Job interviews are subjective no matter how much we wish they were not, and this is one data point on how your work lands with an outsider.
+
+\subsection*{Pre-grading}
+We will not be supporting this. Questions like '\textit{How does it look?}' or '\textit{Is this OK?}', '\textit{Am I going in the right direction?}' will all be met with the same response: I will not pre-grade. These are good questions. They are a sign that you are doing something new and demonstrating thought towards your work. But they are not questions for me or the TAs. Ask your class and lab mates. Talk. Compare. Learn from your peers.
+
+\clearpage
+
+% -----------------------------------------------------------------------------
+% PAGE 5
+% -----------------------------------------------------------------------------
+\coursehead
+
+\subsection*{The reflective practitioner}
+The real world contains ambiguity. Experts deliver conflicting recommendations, and professionally designed solutions have unanticipated consequences. Your job as a professional is not to eliminate uncertainty (that is impossible) but to reflect on it, during and after your work. Donald Sch\"on, in \emph{The Reflective Practitioner} (1983), describes the practitioner who “allows himself to experience surprise, puzzlement, or confusion in a situation which he finds uncertain or unique,” reflects on it, and carries out an experiment that generates both a new understanding and a change in the situation. When something in an analysis surprises you (a strange pattern, a failed assumption, a result that does not match your intuition), pause. Reflect on what you expected and why. Then proceed, informed by that reflection.
+
+\section{Part 2: The shape of a report}
+
+A report should roughly follow this order, unless there are good reasons to change that order, and the result should be an analysis that flows from the one section to the next. It makes no sense to give the analysis before the data, the question, and the variables have been introduced. On the whole, try to make the report concise, and check the knitted PDF for how clean it looks.
+
+\subsection*{What not to print}
+Checking your data is necessary, and none of the checks belong in the document. You do not need to print \code{head()}, \code{str()}, \code{summary()}, \code{names()}, \code{dim()}, \code{glimpse()}, lists of NAs, or any of the other intermediate output checks. If some of that information matters to the reader, put it in the variable descriptions (a mean and a standard deviation, say) or make a table. Most wrangling output is messy and has nothing of value for a reader. Please keep in mind that when putting forward your report, presentation is key.\\
+
+\warningbox{\textbf{Do not print out your entire dataset.}\\
+\textbf{Do not print out your entire dataset.}\\
+\textbf{Do not print out your entire dataset.}\\
+Reports are not expected to be 20 or 30 pages, and they probably should not be 1 or 2. The page count does not affect the grade. How you build the report to answer the question does.}
+
+\clearpage
+
+% -----------------------------------------------------------------------------
+% PAGE 6
+% -----------------------------------------------------------------------------
+\coursehead
+
+\subsection*{The sections}
+\textbf{Data.} The “who” and “what” of the dataset, and the “where” and “why” when they are available: who collected it, for what purpose, what one row is, and what the variables are. In this course the Data section is written as a dataset card, which is Part 3 of this handout.
+
+\textbf{Research question.} At minimum, a statement of what the report sets out to do. Better, an open-ended question about how variables are related or could be meaningfully summarised, with a little background on why it is interesting. It helps to frame it as a null and an alternative hypothesis.
+
+\begin{callout}[title={\sffamily\fontsize{7.5}{9}\selectfont\color{muted}NOTE --- EXAMPLE}]{muted}
+Research question: Is the median price of a house in Nashville related to the number of houses available, the median number of days houses are on the market, the number of houses with price changes, and the number of houses pending listing?
+
+\textbf{Hypotheses}:
+\[
+H_0:\; \text{The median price is not related to these variables}
+\]
+\[
+H_A:\; \text{The median price is related to at least one of them}
+\]
+\end{callout}
+
+
+\sidecaption{HARKing (Hypothesising After the Results are Known) is bad practice and bad science.}
+
+Try to be specific, and please have the question set before you run any analysis. It is often the case that we do not find what we expect, and that is fine. The analysis is the fun part, where you see whether your intuitions were right.
+
+\textbf{Variables of interest.} Each variable you use, with some specificity: what it represents, its type (binary, nominal, ordinal, continuous), its units, and its range. The name of the column in the dataset, with a description if the name is not already clear. This section covers only the variables you use. The broad overview of what was available belongs in the Data section.
+
+\textbf{Data wrangling.} Whether this is its own section depends on the state of the data. Many open datasets are clean, and the wrangling happens implicitly, but data are rarely in a form that goes straight through to analysis without a tweak. If you reach the end of a report with no wrangling at all, try to think of a second angle on the question that needs some.
+
+\textbf{Visualisation.} Visualisations should convey something the analysis does not. A correlation is significant; a scatterplot shows whether it is adequately linear or an artefact of a strange nonlinear relationship, or of both variables maxing out at 10. Please do not add a plot just because.
+
+\hintbox{Use \code{facet\_wrap()} and \code{facet\_grid()} for plots that share an axis. Ten plots that could have been one lose the reader.}
+
+\clearpage
+
+% -----------------------------------------------------------------------------
+% PAGE 7
+% -----------------------------------------------------------------------------
+\coursehead
+
+\textbf{Analysis.} The analyses that directly answer the question, partially answer it or provide information needed to answer it, or test the assumptions of the analyses that do.
+
+\textbf{Interpretation and discussion.} What the results mean for the question, in plain language, and what they do not settle. If the research question is seated in a little context at the start, the discussion is the other half of that arc: what have we learned?
+
+\subsection*{Code and comments}
+Any code that does something in the report should be visible: the figures, the models, the key results, and the steps of the wrangling. A reader who is fluent in R should be able to follow the logic from start to finish. If code or a comment runs off the page, the reader cannot know what you did. There are several ways to stop that happening, and the starter sheet tries one.
+
+\sidecaption{What is q\_1723, anyway? Name things after what they hold.}
+
+The code should also be readable. Can the person reading it tell what the data represent, what was done to them, and what analysis was run? You may assume the reader is fluent in R but not good at reading code that is mushed together or named cryptically. And when in doubt, comment.
+
+Comments are as much for you as for the reader. I comment to absurdity: I start writing code by detailing the steps in comments and then add the code that implements each one. It may seem excessive, but I know what all my code does, even years later.
+
+\subsection*{Files, naming, and the data}
+Turn in the data with the report whenever it is not in a package. Without the data there is no way for a reader to reproduce anything, check for errors, or see why a plot looks the way it does. Name the files as the syllabus says:\\ 
+\code{Analysis-Report-1\_FIRSTNAME\_LASTNAME.Rmd} \textit{or} .qmd \textit{and} .pdf\\
+and keep the report and the data it reads in one folder. Naming conventions are a common language between you and your collaborators, which is to say they are about being a considerate colleague.
+
+\section{Part 3: The dataset card}
+
+The weakest Data sections in past reports said, in full, “This data is from Kaggle.” A reader cannot do anything with that. They cannot judge whether the data can bear the question, cannot find the data, and cannot tell whether a strange pattern is a discovery or a recording artefact. The fix is not more enthusiasm but a fixed set of headings that cannot be skipped, which is what a dataset card is.
+
+\clearpage
+
+% -----------------------------------------------------------------------------
+% PAGE 8
+% -----------------------------------------------------------------------------
+\coursehead
+\begin{callout}[title={\sffamily\fontsize{7.5}{9}\selectfont\color{muted}READING}]{muted}
+Gebru, T., Morgenstern, J., Vecchione, B., Vaughan, J. W., Wallach, H., Daumé III, H., \& Crawford, K. (2021). \emph{Datasheets for datasets}. Communications of the ACM, 64(12), 86--92. doi:10.1145/3458723
+\end{callout}
+
+Gebru and colleagues proposed that every dataset ship with a “datasheet” answering a standard list of questions about its motivation, composition, collection, and recommended uses, the way an electronic component ships with a datasheet of its operating characteristics. Ours is shorter, and it is written by the analyst rather than the collector, but the idea is the same: the answers are what a reader needs before they can trust what is being said.
+
+\subsection*{The nine fields}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{>{\bfseries}p{0.30\textwidth} p{0.61\textwidth}}
+\toprule
+Field & What it answers\\
+\midrule
+1. Name and source & What the dataset is called, where you obtained it (a readable link), who posted it there, and the date you downloaded it.\\
+2. Collector and purpose & Who originally collected the data and why. Often not the same as who posted it.\\
+3. Collection & How, when, and where the data were gathered, and what one row represents (the unit of observation: a person, a country, a penguin, a year).\\
+4. Licence and permissions & What you are allowed to do with the data. If the source says nothing, say that.\\
+5. Structure & Rows and columns, and a table of the variables: name, meaning, the type R stored it as, units, and range or levels.\\
+6. Missing values & How missingness is coded in the file, how many values are missing, in which columns, and whether there is a pattern.\\
+7. Known issues & Caveats the documentation gives, and anything you found yourself that a reader should know.\\
+8. Changes you made & Renamed columns, removed rows, converted types. Nothing, if nothing.\\
+9. Citation & How the source asks to be cited, and the citation itself.\\
+\bottomrule
+\end{tabular}
+
+\clearpage
+
+% -----------------------------------------------------------------------------
+% PAGE 9
+% -----------------------------------------------------------------------------
+\coursehead
+
+Fields 1–4, 7, and 9 come from the documentation: the page you downloaded from, a README, a paper, a package help page. Fields 5, 6, and 8 come from R (you can use inline R blocks for them), and everything you need for them you met on Thursday, plus four functions the starter sheet glosses as it goes:
+
+\begin{itemize}[leftmargin=17pt,itemsep=2pt]
+  \item \code{str()}, \code{nrow()}, \code{ncol()}, and \code{names()} for the structure, and \code{range()} (with \code{na.rm = TRUE}) for the extent of a numeric column.
+  \item \code{unique()} for the distinct values of a column, and \code{table()} for how many rows take each value.
+  \item \code{is.na()} for a vector of TRUE where a value is missing, and \code{colSums()} to count those per column. This is Thursday's “logicals count” again: TRUE is 1 when you add it.
+\end{itemize}
+
+\sidecaption{Where the type R chose and the type the documentation describes disagree, the card says so. That is a finding, not an error in your card.}
+
+\subsection*{This lab's dataset}
+\code{penguins.csv} holds 344 adult penguins of three species, measured on three islands of the Palmer Archipelago, Antarctica, between 2007 and 2009, as part of the Palmer Station Long Term Ecological Research (LTER) programme. It is well documented in three places, and the three do not entirely agree, which is why it makes a good first card:
+
+\begin{itemize}[leftmargin=17pt,itemsep=2pt]
+  \item R's own help page. In R 4.5 or newer, \code{?penguins} in the Console describes the version R ships in its \code{datasets} package, with the source records and the papers.
+  \item The \code{palmerpenguins} package website that can be found at \url{https://allisonhorst.github.io/palmerpenguins/}, which is where the data became widely known, and which states the licence.
+  \item The three original data records on the Environmental Data Initiative repository, one per species, whose DOIs are on the help page.
+\end{itemize}
+
+The column names differ between the CSV, R's \code{datasets} copy, and \code{palmerpenguins}, and the types of some columns differ too. A card says which version you have in front of you.\\
+
+\warningbox{Where the type R chose and the type the documentation describes disagree, the card says so. That is a finding, not an error in your card.}
+
+\clearpage
+
+% -----------------------------------------------------------------------------
+% PAGE 10
+% -----------------------------------------------------------------------------
+\coursehead
+
+\begin{callout}[title={\sffamily\fontsize{7.5}{9}\selectfont\color{accent}TASK 1 --- COMPLETE THE CARD}]{accent}
+Part 3 of the starter sheet is the nine fields, with the R chunks for fields 5, 6, and 8 handed to you commented out. Please read the documentation, run the chunks, and fill every field. Where a field cannot be answered from the documentation, say so in the field rather than leaving it blank: “the source does not state a licence” is an answer.
+\end{callout}
+~\\
+
+\begin{callout}[title={\sffamily\fontsize{7.5}{9}\selectfont\color{muted}NOTE --- WHAT HAPPENS TO THE CARD}]{muted}
+In Lab 2, on 14 September, you choose the dataset for Report 1 and write its card. The card then becomes the Data section of the report, and the Variables of interest section is the subset of field 5 that the question uses. So this is not a one-off exercise. It is the first draft of a section that will appear (in its own way) in each of the three reports.
+\end{callout}
+~\\
+
+\begin{callout}[title={\sffamily\fontsize{7.5}{9}\selectfont\color{muted}READING --- REFERENCE}]{muted}
+\begin{itemize}[leftmargin=16pt,itemsep=3pt]
+  \item The R Markdown cheatsheet, which Part 1 of the starter refers to: \url{https://rstudio.github.io/cheatsheets/rmarkdown.pdf}
+  \item LaTeX mathematics, for the equations exercise: \url{https://www.overleaf.com/learn/latex/Mathematical_expressions}
+\end{itemize}
+\end{callout}
+
+\vspace{16pt}
+\begin{callout}[title={\sffamily\fontsize{7.5}{9}\selectfont\color{rulegray}SUBMISSION}]{rulegray}
+\begin{itemize}[leftmargin=16pt,itemsep=6pt]
+  \item \checkbox\quad Knit your document to PDF
+  \item \checkbox\quad Check that all code is visible (not running off the page)
+  \item \checkbox\quad Check that all output displays correctly
+  \item \checkbox\quad Submit both your .qmd/.Rmd and .pdf files
+\end{itemize}
+\end{callout}
+
+\end{document}

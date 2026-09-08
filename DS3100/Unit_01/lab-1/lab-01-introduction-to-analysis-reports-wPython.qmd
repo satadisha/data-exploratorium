@@ -1,0 +1,481 @@
+---
+title: "Lab 1: Introduction to Analysis Reports"
+author: "FIRSTNAME LASTNAME"
+date: "`r format(Sys.time(), 'Compiled %X on %A, %B %d, %Y')`"
+format: html
+jupyter: python3
+
+execute:
+  echo: true
+  warning: true
+  error: false
+  cache: false
+---
+
+<!--
+
+This is a comment in Quarto Markdown. Nothing between the arrow markers
+above and below this text reaches the rendered document, so this is
+where the instructions for each step live. You can delete a comment
+once you have done what it says, or leave it; either is fine.
+
+Before you start: rename this file Lab-1_FIRSTNAME_LASTNAME.qmd, put
+your name in the YAML header above (keep the quotation marks), and
+make sure data/penguins.csv is in a data/ folder beside this file.
+
+The Quarto Markdown cheatsheet, which Part 1 refers to:
+https://quarto.org/docs/authoring/markdown-basics.html
+
+-->
+
+# Part 1: Quarto Markdown
+
+## Rendering, and rendering errors
+
+Quarto Markdown is a notebook-like tool for writing text and code in one
+document. The output can take many forms (the two most common are
+HTML and PDF). In this class we produce an HTML report that can then be
+converted to PDF.
+
+The Quarto Markdown way to write a link is square brackets for the text the
+reader sees, then parentheses for the address:
+
+[TEXT HERE](URL HERE)
+
+> **1.** Please make the line above a working link to Vanderbilt's
+> Data Science Institute (https://www.vanderbilt.edu/datascience/)
+> with the text reading "Vanderbilt Data Science".
+
+Quarto also lets you use simple HTML styling when you want to change
+the appearance of text.
+
+For example:
+
+<span style="color: blue;">TEXT HERE</span>
+
+> **2.** Please make the words "Vanderbilt Data Science" appear in blue
+> using the HTML form above, and make the link to the same URL.
+
+<!-- YOUR MARKDOWN CODE HERE -->
+
+Now a case where rendering fails because Python does not recognize a package.
+The code below uses `markdown()`, a function from the **`markdown`** package,
+to convert Markdown text to HTML. Assume that the package has **not been
+installed**.
+
+> **3.** Copy the code below into an executable Python code cell and render
+> the document. What did rendering stop with? Please paste the error message
+> into the comment below.
+
+```python
+from markdown import markdown
+
+markdown("# This is a heading")
+```
+
+<!-- YOUR ERROR MESSAGE HERE -->
+
+The error should tell you that Python cannot find the `markdown` package.
+
+One way to fix this is to install the package. In a terminal, run:
+
+```text
+python3 -m pip install markdown
+```
+
+Then recompile the Quarto document again.
+
+> **What changed? Why did installing `markdown` fix the problem?**
+
+The error message identified the package that Python could not find. Installing
+that package makes the `markdown()` function available to the Python environment
+used by Quarto.
+
+Copying and pasting into Quarto Markdown is another way a render can fail. Many
+of these failures are characters that look ordinary and are not. The equation in
+the code block below was pasted from a chat with Claude.
+
+<!-- Move the next code block into a Python code cell and render the document.
+
+```python
+MAE = (1/n) × Σ|yi - ŷi|
+```
+
+-->
+
+> **4.** What is the error this time, specifically? Please paste it
+> into the comment below, then put the equation back in its comment.
+
+<!-- YOUR ERROR MESSAGE HERE -->
+
+> **5.** Drop the same error message into a generative AI of your
+> choice and ask what it means. In two or three sentences below, say
+> what it told you and whether that matched what you had already
+> worked out from the message itself.
+
+*Your answer here.*
+
+As a general guideline, render often. It is better to run into a
+problem early than to find six at the end. Debugging is part of
+programming, and Quarto Markdown is a program you are writing.
+
+<!--
+
+                 ^   ^   ^   ^   ^
+                /|\ /|\ /|\ /|\ /|\
+               / | X | X | X | X | \
+              |__|___|___|___|___|__|
+              |                     |
+              |_____________________|
+
+                    KEEP CALM
+
+                      AND
+
+             READ THE ERROR MESSAGE
+
+-->
+
+## Code cells
+
+Python code and its output sit in line with the text through executable code cells
+like the one below.
+
+```{python}
+print("This is a Python code cell. You can tell by the python label.")
+```
+
+Each cell can be run from the notebook interface. Later cells can depend on
+objects created by earlier cells, so execution order matters.
+
+### Cell options
+
+Quarto cell options control what a cell does and what the reader sees. The options
+below are examples of the kinds of controls you can use.
+
+```{python}
+#| echo: true
+#| eval: true
+#| output: true
+#| warning: true
+#| error: false
+
+print("Default Python cell options")
+```
+
+The Quarto documentation explains these options. Please change the options
+on the next four cells so that each does what its instruction says.
+
+> **6.** Make this cell *run* but *not show* its code.
+
+```{python}
+print("You can't see me -- John Cena")
+```
+
+> **7.** Make this cell *show* its code but *not run*.
+
+```{python}
+print("I'm here... but I'm not there")
+```
+
+> **8.** Make the output from this cell disappear while leaving the 
+> Python code itself visible
+
+```{python}
+print("This output should be hidden")
+```
+
+> **9.** Make this figure 5 inches **wide** and 3 inches **tall**,
+> **centred** on the page, with the caption
+> "Histogram of 100 random numbers from 1 to 10".
+>
+> **Hint:** You do not need to change the plotting code itself. Quarto
+> provides figure options for controlling a figure's **width, height,
+> alignment, and caption**. Look for `fig-width`, `fig-height`,
+> `fig-align`, and `fig-cap`.
+>
+> Quarto cell options are placed at the beginning of a code cell and
+> start with `#|`.
+
+```{python}
+import matplotlib.pyplot as plt
+import numpy as np
+
+x = np.random.choice(np.arange(1, 11), size=100, replace=True)
+plt.hist(x)
+plt.title("Histogram!")
+plt.xlabel("RaNdOm NuMbErS")
+plt.show()
+```
+
+The two cells below demonstrate a Python warning. The first shows the warning;
+the second uses a cell option to suppress the warning from the rendered output.
+
+```{python}
+import warnings
+
+print("This cell is so fresh and so clean")
+warnings.warn("Warning! A warning is not an error; the code still ran.")
+```
+
+```{python}
+#| warning: false
+
+import warnings
+
+print("This cell is so fresh and so clean")
+warnings.warn("Warning! You won't be able to see this warning, though.")
+```
+
+> **10.** Render, and compare the two. What happened to the warning from
+> the second cell, and when would you want that in a report?
+
+*Your answer here.*
+
+### Code that runs off the page
+
+A long line of code is printed as one long line, and a PDF page has
+an edge. The cell below is intentionally written as one long line.
+
+```{python}
+average_body_mass_by_species = {"Adelie": 3700.66, "Chinstrap": 3733.09, "Gentoo": 5076.02} 
+print(average_body_mass_by_species)
+```
+
+> **11.** Please rewrite the cell so that no line is longer than
+> about 70 characters and the result is the same. One way is to break
+> the dictionary across lines after commas; another is to put the
+> assignment and the printing on separate lines.
+
+## Equations
+
+Dollar signs produce mathematics. One pair keeps it in the line, like
+$x$, and two pairs put it on its own line:
+
+$$x$$
+
+Formal hypotheses are written this way:
+
+$$
+H_0: \mu = 0
+$$
+
+$$
+H_A: \mu \neq 0
+$$
+
+We can also align multiple equations inside the same display using
+the `aligned` environment:
+
+$$
+\begin{aligned}
+H_0 &: \mu = 0 \\
+H_A &: \mu \neq 0
+\end{aligned}
+$$
+
+For the notation, see
+https://www.overleaf.com/learn/latex/Mathematical_expressions
+and, for the symbols,
+https://oeis.org/wiki/List_of_LaTeX_mathematical_symbols.
+
+> **12.** The mean of $n$ values $x_1, x_2, \ldots, x_n$ is their sum
+> divided by $n$. Please write it as an equation, with a bar over the
+> $x$ on the left, a fraction, and a summation sign with its limits
+> ($i = 1$ underneath, $n$ on top).
+
+$$
+YOUR \\ EQUATION \\ HERE
+$$
+
+# Part 2: Introduction to analysis reports
+
+<!-- These questions are about the handout. A sentence or two each,
+     in your own words, is what is wanted. -->
+
+> **1.** In your own words, what is the purpose of the analysis
+> reports?
+
+*Your answer here.*
+
+> **2.** What are the four skills the reports are building, and which
+> two are the emphasis?
+
+*Your answer here.*
+
+> **3.** There is a subjective impression given on every report that
+> does not count for points. Who gives it, from what perspective, and
+> why bother?
+
+*Your answer here.*
+
+> **4.** The syllabus gives a two-part philosophy on generative AI. Do
+> you agree or disagree with it, and why?
+
+*Your answer here.*
+
+> **5.** Which functions print output that you should *not* leave in
+> an analysis report?
+
+*Your answer here.*
+
+> **6.** You have 10 plots with the same $x$-axis. What functions turn
+> them into a single figure?
+
+*Your answer here.*
+
+> **7.** What is the class's stance on pre-grading?
+
+*Your answer here.*
+
+# Part 3: A dataset card for `penguins.csv`
+
+<!-- The nine fields are those in Part 3 of the handout. The Python cells
+     for fields 5, 6, and 8 are handed to you commented out; remove
+     the # characters when the CSV is in place. Fields 1 to 4, 7,
+     and 9 come from the documentation:
+
+       the palmerpenguins documentation
+       https://allisonhorst.github.io/palmerpenguins/
+       the three Environmental Data Initiative records whose DOIs are
+       given in the documentation
+
+     Where a field cannot be answered from the documentation, say so
+     in the field. "The source does not state a licence" is an
+     answer; a blank is not. -->
+
+First read the file and look at what Python made of it.
+
+```{python read-penguins}
+# import pandas as pd
+# penguins = pd.read_csv("data/penguins.csv")
+# print(penguins.dtypes)
+```
+
+## 1. Name and source
+
+*What the dataset is called, where you obtained it (a readable link,
+not a bare URL), who posted it there, and the date you downloaded it.
+For this lab the CSV came from Brightspace. Say both.*
+
+*Your answer here.*
+
+## 2. Collector and purpose
+
+*Who originally collected the data, and what for. The documentation
+and the palmerpenguins website both name the study.*
+
+*Your answer here.*
+
+## 3. Collection
+
+*How, when, and where the penguins were measured, and what one row of
+the file represents.*
+
+*Your answer here.*
+
+## 4. Licence and permissions
+
+*What the source says you may do with the data. Look on the
+palmerpenguins website and on the Environmental Data Initiative
+record.*
+
+*Your answer here.*
+
+## 5. Structure
+
+The size of the table and the names of its columns:
+
+```{python size}
+# print(penguins.shape[0])
+# print(penguins.shape[1])
+# print(penguins.columns.tolist())
+```
+
+`unique()` gives the distinct values in a column, and `value_counts()`
+counts how many rows take each value. `min()` and `max()` give the
+smallest and largest value of a numeric column; when missing values are
+present, use `skipna=True` or drop the missing values first.
+
+```{python levels-and-ranges}
+# print(penguins["species"].unique())
+# print(penguins["island"].value_counts())
+# print(penguins["sex"].value_counts(dropna=False))
+# print(penguins["bill_length_mm"].min(skipna=True))
+# print(penguins["bill_length_mm"].max(skipna=True))
+# print(penguins["body_mass_g"].min(skipna=True))
+# print(penguins["body_mass_g"].max(skipna=True))
+# print(penguins["year"].min(skipna=True))
+# print(penguins["year"].max(skipna=True))
+```
+
+Please complete the table. The first two rows are done. "Stored as"
+is what `dtypes` reported, not what the documentation says the column
+is; where the two differ, the last column of the table is the place to
+say so.
+
+| Column              | Meaning                              | Stored as | Units | Range or levels                    |
+|:--------------------|:-------------------------------------|:----------|:------|:-----------------------------------|
+| `species`           | Penguin species                      | object    |       | Adelie, Chinstrap, Gentoo          |
+| `island`            | Island in the Palmer Archipelago     | object    |       | Biscoe, Dream, Torgersen            |
+| `bill_length_mm`    |                                      |           |       |                                   |
+| `bill_depth_mm`     |                                      |           |       |                                   |
+| `flipper_length_mm` |                                      |           |       |                                   |
+| `body_mass_g`       |                                      |           |       |                                   |
+| `sex`               |                                      |           |       |                                   |
+| `year`              |                                      |           |       |                                   |
+
+> The documentation describes `species`, `island`, and `sex` as categorical
+> variables. What data types does pandas report? Why might the two descriptions
+> differ, and which one describes the file you actually have?
+
+*Your answer here.*
+
+## 6. Missing values
+
+`isna()` returns `True` wherever a value is missing. Adding up `True`
+values counts them, and `.sum()` does that one column at a time.
+
+```{python missing}
+# print(penguins.isna().sum())
+# print(penguins[penguins["sex"].isna()])
+```
+
+*How is a missing value written in the CSV file itself (open it in a
+text editor and look)? How many are there, in which columns, and is
+there a pattern to which rows they fall in?*
+
+*Your answer here.*
+
+## 7. Known issues
+
+*Caveats from the documentation, and anything you noticed yourself
+that a reader should know before trusting a figure drawn from this
+file.*
+
+*Your answer here.*
+
+## 8. Changes you made
+
+*Anything you did to the data between the source and here. If you
+made no changes, say so. If you did make one, the code for it belongs
+here too.*
+
+```{python changes}
+# Any changes to the data go in this cell, so the reader can see them.
+```
+
+*Your answer here.*
+
+## 9. Citation
+
+*How the source asks to be cited, and the citation itself, formatted
+as in the handout's reading boxes.*
+
+*Your answer here.*
+
+# Generative AI disclosure
+
+*Which tools you used on this lab and what for, or "none".*
+
+*Your answer here.*

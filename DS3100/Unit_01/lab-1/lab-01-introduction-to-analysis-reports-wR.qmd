@@ -1,0 +1,468 @@
+---
+title: "Lab 1: Introduction to Analysis Reports"
+author: "FIRSTNAME LASTNAME"
+date: "`r format(Sys.time(), 'Compiled %X on %A, %B %d, %Y')`"
+format: html
+# if you are writing code in Python, change the engine to `jupyter: python` below
+engine: knitr
+
+execute:
+     echo: true
+     warning: true
+     error: false
+     message: true
+     cache: false
+---
+
+<!--
+
+This is a comment in Quarto Markdown. Nothing between the arrow markers
+above and below this text reaches the knitted document, so this is
+where the instructions for each step live. You can delete a comment
+once you have done what it says, or leave it; either is fine.
+
+Before you start: rename this file Lab-1_FIRSTNAME_LASTNAME.qmd, put
+your name in the YAML header above (keep the quotation marks), and
+make sure data/penguins.csv is in a data/ folder beside this file.
+
+The Quarto Markdown cheatsheet, which Part 1 refers to:
+https://quarto.org/docs/authoring/markdown-basics.html
+
+-->
+
+# Part 1: Quarto Markdown
+
+## Knitting, and knitting errors
+
+Quarto Markdown is a notebook-like tool for writing text and code in one
+document. The output can take many forms (the two most common are
+HTML and PDF). In this class we produce an html report that can then be 
+converted to PDF. Two of those come pre-loaded and let us write links.
+
+The Quarto Markdown way to write a link is square brackets for the text the
+reader sees, then parentheses for the address:
+
+[TEXT HERE](URL HERE)
+
+> **1.** Please make the line above a working link to Vanderbilt's
+> Data Science Institute (https://www.vanderbilt.edu/datascience/)
+> with the text reading "Vanderbilt Data Science".
+
+Quarto also lets you use simple HTML styling when you want to change
+the appearance of text.
+
+For example:
+
+<span style="color: blue;">TEXT HERE</span>
+
+> **2.** Please make the words "Vanderbilt Data Science" appear in blue 
+> using the HTML form above, and make the link to the same URL. 
+> (The LaTeX form is `<a href="URL HERE" style="color: blue;">TEXT HERE</a>`.)
+
+<!-- YOUR MARKDOWN CODE HERE -->
+
+Now a case where rendering fails because R does not recognize a function. R includes a built-in dataset called `mtcars`. The code below first loads the data explicitly and then uses `kable()`, a function from the **`knitr`** package, to display the first few rows of `mtcars` as a formatted table. Assume that `knitr` is installed, but has **not been loaded**.
+
+<!-- Move the next code out of this comment and into an R code chunk,
+     then render the document.
+
+```r
+data(mtcars)
+kable(head(mtcars))
+```
+
+-->
+
+> **3.** What did rendering stop with? Please paste the error message
+> into the comment below.
+
+<!-- YOUR ERROR MESSAGE HERE -->
+
+The error should tell you that R cannot find the function `kable()`.
+
+One way to fix this is to load the package that provides the function. Add the following code block near the beginning of your document:
+
+<!--
+```{r}
+library(knitr)
+```
+-->
+
+Now render the document again.
+
+> **What changed? Why did loading `knitr` fix the problem?**
+
+The error message identified the function that R did not recognize. Loading `knitr` makes the functions provided by that package, including `kable()`, available for us to use.
+
+Copying and pasting into Quarto Markdown is another way a knit fails. Many
+of these failures are characters that look ordinary and are not. The
+equation in the comment below was pasted from a chat with Claude.
+
+<!-- Move the next line out of this comment, then knit to PDF.
+
+MAE = (1/n) × Σ|yi - ŷi|
+
+-->
+
+> **4.** What is the error this time, specifically? Please paste it
+> into the comment below, then put the equation back in its comment.
+
+<!-- YOUR ERROR MESSAGE HERE -->
+
+> **5.** Drop the same error message into a generative AI of your
+> choice and ask what it means. In two or three sentences below, say
+> what it told you and whether that matched what you had already
+> worked out from the message itself.
+
+*Your answer here.*
+
+As a general guideline, knit often. It is better to run into a
+problem early than to find six at the end. Debugging is part of
+programming, and Quarto Markdown is a program you are writing.
+
+<!--
+
+                 ^   ^   ^   ^   ^
+                /|\ /|\ /|\ /|\ /|\
+               / | X | X | X | X | \
+              |__|___|___|___|___|__|
+              |                     |
+              |_____________________|
+
+                    KEEP CALM
+
+                      AND
+
+             READ THE ERROR MESSAGE
+
+-->
+
+## Code chunks
+
+Code and its output sit in line with the text through code chunks
+like the one below.
+
+```{r}
+cat("This is an R code chunk. You can tell by the ```r")
+```
+
+Each chunk has two buttons at its top right. The green arrow runs
+this chunk. The grey arrow-to-bar runs every chunk above it first,
+which you need when this chunk depends on an object an earlier chunk
+made. Try the green arrow on the chunk above now.
+
+### Chunk options
+
+The options after the `r` inside the braces control what a chunk
+does and what the reader sees. The chunk below spells out every
+option at its default value.
+
+```{r, eval = TRUE, echo = TRUE, warning = TRUE, error = FALSE, message = TRUE, tidy = FALSE, results = "markup", cache = FALSE, comment = "##"}
+cat("Default R code chunk options")
+```
+
+The cheatsheet says what each one means. Please change the options
+on the next four chunks so that each does what its instruction says.
+
+> **6.** Make this chunk *run* but *not show* its code.
+
+```{r, eval = TRUE, echo = TRUE, warning = TRUE, error = FALSE, message = TRUE, tidy = FALSE, results = "markup", cache = FALSE, comment = "##"}
+cat("You can't see me -- John Cena")
+```
+
+> **7.** Make this chunk *show* its code but *not run*.
+
+```{r, eval = TRUE, echo = TRUE, warning = TRUE, error = FALSE, message = TRUE, tidy = FALSE, results = "markup", cache = FALSE, comment = "##"}
+cat("I'm here... but I'm not there")
+```
+
+> **8.** Make the output appear without the `##` in front of it (the
+> value to use is `NA`).
+
+```{r, eval = TRUE, echo = TRUE, warning = TRUE, error = FALSE, message = TRUE, tidy = FALSE, results = "markup", cache = FALSE, comment = "##"}
+cat("When \"no comment\" shows up, it's usually because the truth is too busy laughing\n -- GPT-4o\n")
+```
+
+> **9.** Make this figure 5 inches **wide** and 3 inches **tall**,
+> **centred** on the page, with the caption
+> "Histogram of 100 random numbers from 1 to 10".
+>
+> **Hint:** You do not need to change the plotting code itself. Quarto
+> provides figure options for controlling a figure's **width, height,
+> alignment, and caption**. Look for `fig-width`, `fig-height`,
+> `fig-align`, and `fig-cap`.
+>
+> Quarto cell options are placed at the beginning of a code cell and
+> start with `#|`.
+
+```{r}
+hist(sample(x = 1:10, size = 100, replace = TRUE),
+     main = "Histogram!", xlab = "RaNdOm NuMbErS")
+```
+
+The two chunks below are set up for you. The first shows its warning
+and its message; the second has `warning = FALSE` and
+`message = FALSE`.
+
+```{r, warning = TRUE, message = TRUE}
+cat("This chunk is so fresh and so clean")
+warning("Warning! A warning is not an error; the code still ran.")
+message("Message in a bottle.")
+```
+
+```{r, warning = FALSE, message = FALSE}
+cat("This chunk is so fresh and so clean")
+warning("Warning! You won't be able to see this warning, though.")
+message("Message in a bottle... that won't be received")
+```
+
+> **10.** Knit, and compare the two. What happened to the output of
+> the second chunk, and when would you want that in a report?
+
+*Your answer here.*
+
+### Code that runs off the page
+
+A long line of code is printed as one long line, and a PDF page has
+an edge. The chunk below is one line.
+
+```{r}
+average_body_mass_by_species <- c(Adelie = 3700.66, Chinstrap = 3733.09, Gentoo = 5076.02); average_body_mass_by_species
+```
+
+> **11.** Please rewrite the chunk so that no line is longer than
+> about 70 characters and the result is the same. (RStudio draws a
+> faint vertical line at 80 characters in the editor; staying left of
+> it is the habit.) One way is to break the vector across lines after
+> a comma; another is to put the assignment and the printing on
+> separate lines.
+
+## Equations
+
+Dollar signs produce mathematics. One pair keeps it in the line, like
+$x$, and two pairs put it on its own line:
+
+$$x$$
+
+Formal hypotheses are written this way:
+
+$$
+H_0: \mu = 0
+$$
+
+$$
+H_A: \mu \neq 0
+$$
+
+A LaTeX chunk does the same with the `aligned` environment:
+
+$$
+\begin{aligned}
+H_0: \mu = 0 \\
+H_A: \mu \neq 0
+\end{aligned}
+$$
+
+For the notation, see
+https://www.overleaf.com/learn/latex/Mathematical_expressions
+and, for the symbols,
+https://oeis.org/wiki/List_of_LaTeX_mathematical_symbols.
+
+> **12.** The mean of $n$ values $x_1, x_2, \ldots, x_n$ is their sum
+> divided by $n$. Please write it as an equation, with a bar over the
+> $x$ on the left, a fraction, and a summation sign with its limits
+> ($i = 1$ underneath, $n$ on top).
+
+$$
+YOUR \ EQUATION \ HERE
+$$
+
+# Part 2: Introduction to analysis reports
+
+<!-- These questions are about the handout. A sentence or two each,
+     in your own words, is what is wanted. -->
+
+> **1.** In your own words, what is the purpose of the analysis
+> reports?
+
+*Your answer here.*
+
+> **2.** What are the four skills the reports are building, and which
+> two are the emphasis?
+
+*Your answer here.*
+
+> **3.** There is a subjective impression given on every report that
+> does not count for points. Who gives it, from what perspective, and
+> why bother?
+
+*Your answer here.*
+
+> **4.** The syllabus gives a two-part philosophy on generative AI. Do
+> you agree or disagree with it, and why?
+
+*Your answer here.*
+
+> **5.** Which functions print output that you should *not* leave in
+> an analysis report?
+
+*Your answer here.*
+
+> **6.** You have 10 plots with the same $x$-axis. What functions turn
+> them into a single figure?
+
+*Your answer here.*
+
+> **7.** What is the class's stance on pre-grading?
+
+*Your answer here.*
+
+# Part 3: A dataset card for `penguins.csv`
+
+<!-- The nine fields are those in Part 3 of the handout. The R chunks
+     for fields 5, 6, and 8 are handed to you commented out; remove
+     the hash characters when the CSV is in place. Fields 1 to 4, 7,
+     and 9 come from the documentation:
+
+       ?penguins in the R Console (R 4.5 or newer)
+       https://allisonhorst.github.io/palmerpenguins/
+       the three Environmental Data Initiative records whose DOIs are
+       on the help page
+
+     Where a field cannot be answered from the documentation, say so
+     in the field. "The source does not state a licence" is an
+     answer; a blank is not. -->
+
+First read the file and look at what R made of it.
+
+```{r read-penguins}
+#penguins <- read.csv("data/penguins.csv")
+#str(penguins)
+```
+
+## 1. Name and source
+
+*What the dataset is called, where you obtained it (a readable link,
+not a bare URL), who posted it there, and the date you downloaded it.
+For this lab the CSV came from Brightspace, and I wrote it out of the
+copy that ships with R. Say both.*
+
+*Your answer here.*
+
+## 2. Collector and purpose
+
+*Who originally collected the data, and what for. The help page's
+References section and the palmerpenguins website both name the
+study.*
+
+*Your answer here.*
+
+## 3. Collection
+
+*How, when, and where the penguins were measured, and what one row of
+the file represents.*
+
+*Your answer here.*
+
+## 4. Licence and permissions
+
+*What the source says you may do with the data. Look on the
+palmerpenguins website and on the Environmental Data Initiative
+record.*
+
+*Your answer here.*
+
+## 5. Structure
+
+The size of the table and the names of its columns:
+
+```{r size}
+#nrow(penguins)
+#ncol(penguins)
+#names(penguins)
+```
+
+`unique()` gives the distinct values in a column, and `table()`
+counts how many rows take each value. `range()` gives the smallest
+and largest value of a numeric column, and needs `na.rm = TRUE` for
+the same reason `mean()` did on Thursday.
+
+```{r levels-and-ranges}
+#unique(penguins$species)
+#table(penguins$island)
+#table(penguins$sex)
+#range(penguins$bill_length_mm, na.rm = TRUE)
+#range(penguins$body_mass_g, na.rm = TRUE)
+#range(penguins$year)
+```
+
+Please complete the table. The first two rows are done. "Stored as"
+is what `str()` reported, not what the documentation says the column
+is; where the two differ, the last column of the table is the place
+to say so.
+
+| Column              | Meaning                              | Stored as | Units | Range or levels                    |
+|:----------------------------|:--------------------------------|:---------|:------|:------------------------------------|
+| `species`           | Penguin species                      | chr       |       | Adelie, Chinstrap, Gentoo          |
+| `island`            | Island in the Palmer Archipelago     | chr       |       | Biscoe, Dream, Torgersen           |
+| `bill_length_mm`    |                                      |           |       |                                    |
+| `bill_depth_mm`     |                                      |           |       |                                    |
+| `flipper_length_mm` |                                      |           |       |                                    |
+| `body_mass_g`       |                                      |           |       |                                    |
+| `sex`               |                                      |           |       |                                    |
+| `year`              |                                      |           |       |                                    |
+
+> The documentation says `species`, `island`, and `sex` are factors.
+> `str()` says something else. Why do they differ, and which one is
+> right about the file you have?
+
+*Your answer here.*
+
+## 6. Missing values
+
+`is.na()` returns `TRUE` wherever a value is missing. Adding up
+`TRUE`s counts them, and `colSums()` does that one column at a time.
+
+```{r missing}
+#colSums(is.na(penguins))
+#penguins[is.na(penguins$sex), ]
+```
+
+*How is a missing value written in the CSV file itself (open it in a
+text editor and look)? How many are there, in which columns, and is
+there a pattern to which rows they fall in?*
+
+*Your answer here.*
+
+## 7. Known issues
+
+*Caveats from the documentation, and anything you noticed yourself
+that a reader should know before trusting a figure drawn from this
+file.*
+
+*Your answer here.*
+
+## 8. Changes you made
+
+*Anything you did to the data between the source and here. If you
+made no changes, say so. If you did make one, the code for it belongs
+here too.*
+
+```{r changes}
+# Any changes to the data go in this chunk, so the reader can see them.
+```
+
+*Your answer here.*
+
+## 9. Citation
+
+*How the source asks to be cited, and the citation itself, formatted
+as in the handout's reading boxes.*
+
+*Your answer here.*
+
+# Generative AI disclosure
+
+*Which tools you used on this lab and what for, or "none".*
+
+*Your answer here.*

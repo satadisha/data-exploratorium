@@ -1617,48 +1617,6 @@ Before analysis, ask:
 
 ---
 
-## Activity: Tennessee education data
-
-::: {.callout-important style="font-size:0.75em;"}
-### 💻 Your turn
-
-Using **R or Python**, read `tenn2018.csv` into a data frame called `ten`. Use what you have learned about **data frames, objects, and indexing** to answer the following:
-
-1. Print the first seven observations in `ten`.
-
-2. Determine the **number of rows and columns** in the data frame.
-
-3. Print the **column names**. How many different variables are available? How many do you think are categorical?
-
-4. Access and print the `overall_subject` column.
-
-5. In the `pandas` documentation, look up `.loc[]` and `.iloc[]`. What is the difference between these two methods?
-
-    In R, the equivalent task can be performed using the `[row, column]` operator and R's 1-based indexing. Now answer the following:
-
-    - Access the value of `district_name` for the **first observation**.
-    - Access the value of `percent_below` for the **first observation**.
-
-6. **Bonus**: How many columns in this dataset have **missing values**? List all of them.
-
-:::
-
-::: {.callout-tip style="font-size:0.75em;"}
-
-### 📚 Need a reference?
-If you get stuck, consult the documentation for your language:
-
-- **R:** [R Documentation — Data Frames](https://search.r-project.org/R/refmans/base/html/data.frame.html)
-- **R indexing:** [R Documentation — Select Parts of a Data Frame](https://www.r-bloggers.com/2024/04/mastering-rows-selecting-by-index-in-r/)
-- **Python / pandas:** [pandas — Intro to Data Structures](https://pandas.pydata.org/docs/user_guide/dsintro.html)
-- **pandas indexing:** [pandas — Indexing and Selecting Data](https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html)
-
-**Part of the activity is learning how to find what you need in documentation.**
-
-:::
-
----
-
 # Part 5
 
 <span style="color:#1565C0; font-size:1.8em; font-weight:600;"> Data wrangling</span>
@@ -1695,21 +1653,127 @@ A tidy dataset therefore has a consistent structure in which **columns represent
 
 ---
 
+## A look at Tidyverse
+
+::: {.columns .v-center}
+
+::: {.column width="45%" style="font-size:0.75em;"}
+
+The **tidyverse** is a collection of R packages designed to facilitate common operations in data analysis.
+
+For this course, the most important pieces are:
+
+| Package | What we use it for |
+|---|---|
+| `readr` | importing rectangular data |
+| `dplyr` | manipulating and summarizing data |
+| `tidyr` | restructuring data into tidy form |
+| `ggplot2` | visualization |
+| `tibble` | modern tabular data in R |
+| `forcats` | categorical variables / factors |
+
+:::
+
+::: {.column width="50%" style="text-align:center;"}
+
+![](images/tidyverse.png){width=90%}
+
+:::
+
+:::
+
+
+```{r}
+library(tidyverse)
+```
+
+---
+
 ## Core wrangling operations
 
-We will practice:
+We will look into several wrangling operations and tie them to specific `tidyverse` verbs. There are conceptually similar functions available in Python to answer analytical questions.
 
-::: {style="font-size:0.8em;"}
-1. **Subsetting / filtering** rows
-2. **Selecting** columns
-3. **Renaming** variables
-4. **Creating** variables
-5. **Handling missing values**
-6. **Appending** observations
-7. **Joining** tables
+::: {.columns}
+
+::: {.column width="45%" style="font-size:0.75em;"}
+| Analytical question | `dplyr` verb |
+|---|---|
+| Selecting a subset of rows | `filter()` |
+| Selecting columns | `select()` |
+| Ordering observations | `arrange()` |
+| Renaming variables | `rename()` |
+| Creating/changing variables | `mutate()` |
+| Creating summaries | `summarize()` |
+| Creating groups | `group_by()` |
+| Merging information from separate datasets | `*_join()` |
+:::
+
+::: {.column width="45%" style="font-size:0.75em;"}
+
+```text
+tidyverse
+    │
+    ├── dplyr
+    │     ├── filter()
+    │     ├── select()
+    │     ├── mutate()
+    │     ├── summarize()
+    │     └── joins
+    │
+    ├── tidyr
+    ├── ggplot2
+    ├── readr
+    └── ...
+```
+
+:::
+
 :::
 
 These operations are conceptually the same in R and Python.
+
+---
+
+## Activity: Tennessee Education Data
+
+::: {.callout-important style="font-size:0.75em;"}
+### 💻 Your turn
+
+Most data analyses roughly follow the workflow below.
+
+1. **Define your research question.** Here we ask: <span style="color:#1565C0;">*How do educational achievement outcomes vary across school districts in Tennessee?*</span>
+
+2. **Familiarize yourself with the dataset.** Understanding the **provenance and structure of the data** is essential before beginning an analysis.
+
+3. **Investigate missingness** and how it might impact downstream calculations.
+
+4. Define the **analysis population.**
+
+5. **Create or transform variables as needed.**
+
+6. Generate appropriate **summary statistics.**
+
+7. **Ask whether one dataset is enough.** An analytical question may require information that is not contained in the  original table. In such cases, strategically combining multiple data sources may be necessary.
+
+8. **Explore the analysis-ready data.** *(We will return to this during EDA.)* Summary statistics rarely tell the whole story. We need to find the patterns behind numbers.
+
+9. **Visualize important patterns** that is difficult to see from summary statistics alone. *(We will return to this during visualization.)*
+
+10. **Interpret and communicate** your findings.
+
+:::
+
+::: {.callout-tip style="font-size:0.75em;"}
+
+### 📚 Need a reference?
+If you get stuck, consult the documentation for your language:
+
+- **R:** [R Documentation — Data Frames](https://search.r-project.org/R/refmans/base/html/data.frame.html)
+- **Python / pandas:** [pandas — Intro to Data Structures](https://pandas.pydata.org/docs/user_guide/dsintro.html)
+
+**Part of the activity is learning how to find what you need in documentation.**
+
+:::
 
 ---
 
@@ -1719,7 +1783,7 @@ These operations are conceptually the same in R and Python.
 The `filter()` function asks *which rows satisfy the condition I specify*?</small>
 
 ```{r}
-library(dplyr)
+library(tidyverse)
 df <- data.frame(
   school = c("A", "B", "C", "D"),
   overall_subject = c("ELA", "Math", "ELA", "Math"),
@@ -1762,7 +1826,7 @@ filtered
 ::: {style="font-size:0.8em;"}
 
 1. `df` → start with the data frame.
-2. `%>%` → pass that data frame to the next operation.
+2. `%>%` → pass that data frame to the next operation (*value of the left-hand side of the operator becomes the first argument to the right-hand side*).
 3. `is.na(percent_below_cap)` → asks whether each value of `percent_below_cap` is missing.
 4. `!` → means **NOT**, so `!is.na(...)` identifies values that are **not missing**.
 5. `filter()` → keeps only rows for which that condition is `TRUE`.
@@ -2313,12 +2377,11 @@ Make sure you can:
 - open a `.qmd` or `.ipynb` file in VS Code;
 - run a simple **Python** notebook;
 - run a simple **R** notebook;
-- identify the first element of a sequence in each language;
-- create a simple vector/list;
-- read a CSV file;
-- explain the difference between a **row**, **column**, and **value**;
-- explain what a **data frame / DataFrame** is;
-- filter a table using one condition.
+- load your data;
+- understand your data and its sources and find more information if needed;
+- set a research question
+- lay out an analysis workflow;
+- carry out necessary wrangling operations.
 
 :::
 
