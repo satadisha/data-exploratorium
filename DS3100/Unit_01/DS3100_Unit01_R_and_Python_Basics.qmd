@@ -756,9 +756,18 @@ Python typically uses explicit labels (<span style="color: #1565C0;">*for its ro
 
 ## Tabular Data
 
-::: {style="font-size:0.75em;"}
-A data frame is a **2-D table** in which rows represent observations, columns represent variables, and columns may have different types.
+::: {style="font-size:0.72em;"}
+A data frame is a data structure designed to deal with **2-D tabular data**. Here rows represent observations, columns represent variables, and columns may have different types.<br>
+
+- In R, data frames can be though of a special type of list where elements are vectors, each representing a column of the resulting data frame. Hence all column vectors at the time of creating a data frame should ideally have the same number of elements.
+
+- In Python, dataframes are a custom object built using `NumPy` arrays.
+
 :::
+
+::: {.columns}
+
+::: {.column width="45%"}
 
 #### R `data.frame`
 
@@ -769,7 +778,12 @@ df <- data.frame(
   subject = c("Math", NA)
 )
 df
+typeof(df)
 ```
+
+:::
+
+::: {.column width="45%"}
 
 #### Python `pandas` DataFrame
 
@@ -782,11 +796,10 @@ df = pd.DataFrame({
     "subject": ["Math", np.nan]
 })
 df
+type(df)
 ```
 
-::: {style="font-size:0.75em;"}
-
-Both are designed to deal with tabular data.
+:::
 
 :::
 
