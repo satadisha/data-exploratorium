@@ -1,0 +1,594 @@
+---
+title: "Unit 2 | Data Visualization"
+author: "FIRSTNAME LASTNAME"
+date: "`r format(Sys.time(), 'Compiled %X on %A, %B %d, %Y')`"
+output: pdf_document
+---
+
+# Create a good plot and the worst plot ever
+
+Come up with a survey question to ask the class and add it to our Microsoft Forms: https://forms.office.com/Pages/DesignPageV2.aspx?subpage=design&FormId=OX9aur7js0q0UGf6gPrsrT_5kjO3ittLkBAIvlszyF5UNkpLR1pORThGTEJDQTVZMzBBQVJEQkxYQy4u&Token=04b2d16ec09f4b1e9ca2a7f4488d538c
+
+# \{ggplot2\}
+
+## Load \{ggplot2\} and `PluckData.RData`
+
+```{r load ggplot2, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Load packages
+library(ggplot2); library(tidyverse); library(GGally)
+
+# Load .RData
+load("./Unit_02/data/PluckData.RData")
+
+```
+
+# Univariate
+
+## Histogram
+
+```{r str example, echo = FALSE, eval = FALSE, comment = NA, warning = FALSE, message = FALSE}
+# Base R
+str(dataset)
+```
+
+```{r base R histogram, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Base R
+hist(dataset$GPA, breaks = 10)
+```
+
+Something is very wrong here... Figure out what's wrong and re-plot it
+
+```{r base R histogram fixed, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+summary(dataset$GPA)
+range(dataset$GPA, na.rm = TRUE)
+```
+
+<!--- update to `dataset_clean` --->
+
+```{r base R histogram fixed, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+dataset_clean <- dataset
+
+dataset_clean$GPA[
+  dataset_clean$GPA > 5
+] <- NA
+
+range(dataset_clean$GPA, na.rm = TRUE)
+```
+
+## Customize
+
+```{r base R color, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Customized
+hist(
+  dataset_clean$GPA, 
+  col = "hotpink", # color
+  xlab = "GPA", # x-axis label
+  main = "Distribution of GPA", # title
+  breaks = 10, # number of bars
+  xlim = c(0, 4) # restricting range to all possible values
+)
+```
+
+## Boxplot
+
+```{r base R boxplot, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Customized
+boxplot(
+  dataset_clean$GPA, 
+  col = "gold", # color
+  xlab = "GPA", # x-axis label
+  main = "Boxplot of GPA", # title
+  ylim = c(0, 4) # restricted range of possible values
+)
+```
+
+Let's do multiple
+
+```{r base R boxplot multiple, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Customized
+boxplot(
+  dataset_clean[,7:8], 
+  col = c("orange", "gold"), # color
+  xlab = "Personality", # x-axis label
+  main = "Boxplot of Personality Traits", # title
+  horizontal = TRUE # flip to make along y-axis
+)
+```
+
+## Descriptives
+
+```{r base R barplot descriptives, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Customized
+barplot(
+  table(dataset_clean$Sex), 
+  col = c("lightblue", "lightpink"),
+  xlab = "Sex"
+)
+```
+
+# \{ggplot2\}
+
+Base R plots aren't the most aesthetically pleasing but they're quick and good for checking your data before jumping into more time-intensive plotting like \{ggplot2\}
+
+```{r ggplot2 histogram, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# {ggplot2}
+ggplot( # base function
+  data = dataset_clean, # data to be used *across* all layers
+  aes( # sets the "looks" of the plot
+    x = GPA # put GPA on the x-axis
+  )
+) + # "add" a layer
+  geom_histogram( # add histogram graphic
+    bins = 10 # set number of "bins" to 10
+  )
+```
+
+Let's "re-create" base R's plot with \{ggplot2\}
+
+```{r ggplot2-to-base histogram, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# {ggplot2}
+ggplot( # base function
+  data = dataset_clean, # data to be used *across* all layers
+  aes( # sets the "looks" of the plot
+    x = GPA # put GPA on the x-axis
+  )
+) + # "add" a layer
+  geom_histogram( # add histogram graphic
+    color = "black", # color of the *outline* of the bars
+    fill = "lightgrey", # color of the inside of the bars
+    bins = 10 # set number of "bins" to 10
+  ) + # "add" a layer
+  labs( # change labels
+    y = "Frequency", title = "Histogram"
+  ) + # "add" a layer
+  theme( # the "style" of your plot
+    panel.background = element_blank(), # takes away ALL of the background
+    axis.line = element_line(linewidth = 0.50, lineend = "square"), # adds axis line
+    axis.text = element_text(size = 10), # changes size
+    axis.title = element_text(size = 12), # changes size (should usually be larger than text)
+    plot.title = element_text(
+      size = 14, hjust = 0.50 # adjusts horizontal position
+    )
+  )
+```
+
+Whoa... that's a lot just to match base R. The benefit of \{ggplot2\} is the flexibility and professional-looking plots. You can also store parts of plots as objects. For example, I use the above `theme` a lot. Let's store it as `my_theme`
+
+```{r my_theme2, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Store theme
+my_theme <- theme( # the "style" of your plot
+  panel.background = element_blank(), # takes away ALL of the background
+  axis.line = element_line(linewidth = 0.50, lineend = "square"), # adds axis line
+  axis.text = element_text(size = 10), # changes size
+  axis.title = element_text(size = 12), # changes size (should usually be larger than text)
+  plot.title = element_text(
+    size = 14, hjust = 0.50 # adjusts horizontal position
+  )
+)
+```
+
+## Aesthetics
+
+### Fill
+
+```{r my_theme, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# {ggplot2}
+ggplot( # base function
+  data = dataset_clean, # data to be used *across* all layers
+  aes( # sets the "looks" of the plot
+    x = GPA # put GPA on the x-axis
+  )
+) + # "add" a layer
+  geom_histogram( # add histogram graphic
+    color = "black", # color of the *outline* of the bars
+    fill = "hotpink", # color of the inside of the bars
+    bins = 10 # set number of "bins" to 10
+  ) + # "add" a layer
+  labs( # change labels
+    y = "Frequency", title = "Histogram"
+  ) + my_theme
+```
+
+### Color
+
+```{r my_theme4, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# {ggplot2}
+ggplot( # base function
+  data = dataset_clean, # data to be used *across* all layers
+  aes( # sets the "looks" of the plot
+    x = GPA # put GPA on the x-axis
+  )
+) + # "add" a layer
+  geom_histogram( # add histogram graphic
+    color = "lightgray", # color of the *outline* of the bars
+    fill = "#FFBF69", # color of the inside of the bars
+    bins = 10 # set number of "bins" to 10
+  ) + # "add" a layer
+  labs( # change labels
+    y = "Frequency", title = "Histogram"
+  ) + my_theme
+```
+
+### Color
+
+```{r my_theme3, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# {ggplot2}
+ggplot( # base function
+  data = dataset_clean, # data to be used *across* all layers
+  aes( # sets the "looks" of the plot
+    x = GPA # put GPA on the x-axis
+  )
+) + # "add" a layer
+  geom_histogram( # add histogram graphic
+    color = "black", # color of the *outline* of the bars
+    fill = "lightgray", # color of the inside of the bars
+    bins = 4 # set number of "bins" to 10
+  ) + # "add" a layer
+  labs( # change labels
+    y = "Frequency", title = "Histogram"
+  ) + my_theme
+```
+
+## Density
+
+Now, let's do a density plot with and without `my_theme`. First, let's store the plot *without* the theme as `my_density`
+
+```{r density without theme, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# {ggplot2}
+my_density <- ggplot( # base function
+  data = dataset_clean, # data to be used *across* all layers
+  aes( # sets the "looks" of the plot
+    x = GPA # put GPA on the x-axis
+  )
+) + # "add" a layer
+  geom_density(
+    color = "black", # color of the *outline*
+    fill = "lightgrey", # color of the underneath area
+  ) +
+  geom_boxplot(width = 0.05,  fill = "lightgrey", aes(y = -0.05)) +
+  my_theme +
+  labs(y = "Density")
+
+# Plot it
+my_density
+```
+
+Add the `my_theme` layer to `my_density`
+
+```{r density with theme, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# {ggplot2}
+
+```
+
+Let's also change the `limits` of the plot to plot the full range of possible GPAs
+
+```{r density limits, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# {ggplot2}
+my_density +
+  scale_x_continuous(limits = c(0.00, 4.00))
+```
+
+We can also add `breaks` to align with different letter grades
+
+```{r density breaks, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# {ggplot2}
+my_density +
+  scale_x_continuous(
+    name = "Letter Grade",
+    limits = c(0.00, 4.00), breaks = round(
+      seq(0.333, 4.00, 1/3), 3
+      # sequence and round to get appropriate breaks
+    ),
+    labels = c("F", "D-", "D", "D+", "C-", "C", "C+", "B-", "B", "B+", "A-", "A")
+  ) +
+  # theme_minimal() +
+  theme(
+    axis.text = element_text(size = 16),
+    # axis.text.x = element_text(angle = 45, hjust = 1),
+    axis.title = element_text(size = 18)
+  )
+```
+
+## Layering
+
+```{r layered one, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Create x-axis object
+x_axis <- scale_x_continuous(
+    limits = c(0.00, 4.00), breaks = round(seq(0.00, 4.00, 1/3), 3)
+  )
+
+# Create histogram as *first* layer
+ggplot(data = dataset, aes(x = GPA)) +
+  geom_histogram( # first layer
+    color = "black", fill = "lightgrey", bins = 10 
+  ) +
+  geom_boxplot( # second layer
+    color = "black", fill = "lightgrey"
+  ) + x_axis + my_theme
+
+# Hmm... we need to move the boxplot
+```
+
+
+```{r lower boxplot, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Create histogram as *first* layer
+ggplot(data = dataset, aes(x = GPA)) +
+  geom_histogram( # first layer
+    color = "black", fill = "lightgrey", bins = 10 
+  ) +
+  geom_boxplot( # second layer
+    color = "black", fill = "lightgrey",
+    aes(y = -6)
+  ) + x_axis + my_theme
+```
+
+Use `?geom_boxplot` and find how to make the boxplot *wider* (set the value to 6)
+
+```{r wider boxplot, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+ggplot(data = dataset, aes(x = GPA)) +
+  geom_histogram( # first layer
+    color = "black", fill = "lightgrey", bins = 10 
+  ) +
+  geom_boxplot( # second layer
+    color = "black", fill = "lightgrey",
+    aes(y = -6),
+    width = 6
+  ) + x_axis + my_theme
+```
+
+Now, we'll add points 
+
+```{r points, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+x_axis <- scale_x_continuous(
+    name = "Letter Grade",
+    limits = c(0.00, 4.00), breaks = round(
+      seq(0.333, 4.00, 1/3), 3
+      # sequence and round to get appropriate breaks
+    ),
+    labels = c("F", "D-", "D", "D+", "C-", "C", "C+", "B-", "B", "B+", "A-", "A")
+  )
+
+my_theme <- theme(
+    axis.text = element_text(size = 16),
+    # axis.text.x = element_text(angle = 45, hjust = 1),
+    axis.title = element_text(size = 18)
+  )
+
+
+# Create histogram as *first* layer
+ggplot(data = dataset, aes(x = GPA)) +
+  geom_histogram( # first layer
+    color = "black", fill = "lightgrey", bins = 10 
+  ) +
+  geom_boxplot( # second layer
+    color = "black", fill = "lightgrey",
+    aes(y = -4), width = 3
+  ) + 
+  geom_point( # third layer
+    aes(y = -4), color = "black" # notice we used `color` rather than `fill`
+  ) + x_axis + my_theme +
+  labs(y = "Frequency", title = "Letter Grade Distribution") +
+  theme(
+    plot.title = element_text(
+      size = 20, hjust = 0.50
+    )
+  )
+```
+
+Notice how the dots are in front of the boxplot? Let's put them behind the boxplot (hint: think about the order of the `geom_`)
+
+```{r points behind, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+ggplot(data = dataset, aes(x = GPA)) +
+  geom_histogram( # first layer
+    color = "black", fill = "lightgrey", bins = 10 
+  ) +
+  geom_point( # third layer
+    aes(y = -4), color = "black" # notice we used `color` rather than `fill`
+  ) +
+  geom_boxplot( # second layer
+    color = "black", fill = "lightgrey",
+    aes(y = -4), width = 3
+  ) + x_axis + my_theme +
+  labs(y = "Frequency", title = "Letter Grade Distribution") +
+  theme(
+    plot.title = element_text(
+      size = 20, hjust = 0.50
+    )
+  )
+```
+
+To get fancy, ask generative AI to help you do the following:
+
++   Set the fill of `geom_boxplot` to be transparent
+
++   Remove the outliers from `geom_boxplot` so that they do not appear on the plot
+
++   Increase the spread of `geom_point` so that it acts as a "fill" of `geom_boxplot`
+
++   Change `geom_histogram` to `geom_density`
+
++   Change the `fill` of `geom_density` to `"#8CC7A1"`
+
++   Also, change the `color` of `geom_point` to the same color
+
++   Change the y-axis label to "Density"
+
++   Change `y` for both `geom_boxplot` and `geom_point` to `-0.10` and adjust settings for these `geom_*` as necessary
+
+```{r raincloud plot, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+ggplot(data = dataset, aes(x = GPA)) +
+  geom_density( # first layer
+    color = "black", fill = "#8CC7A1", bins = 10 
+  ) +
+  geom_point( # third layer
+    aes(y = -0.05), color = "#8CC7A1", # notice we used `color` rather than `fill`
+    position = position_jitter(height = 0.05)
+  ) +
+  geom_boxplot( # second layer
+    color = "black", fill = NA,
+    aes(y = -0.05), width = 0.10, outlier.shape = NA
+  ) + x_axis + my_theme +
+  labs(y = "Frequency", title = "Letter Grade Distribution") +
+  theme(
+    plot.title = element_text(
+      size = 20, hjust = 0.50
+    )
+  )
+```
+
+## Multiple Plots in One
+
+```{r multiple plots, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Plot multiple based on grouping variable
+ggplot(data = dataset_clean, aes(x = GPA)) +
+  facet_wrap(~Sex) + # plot *by* group
+  geom_boxplot() + x_axis + my_theme
+```
+
+```{r multiple plots fixed, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Subsetting missing data out
+ggplot(data = dataset_clean, aes(x = GPA)) +
+  facet_wrap(~Sex) +
+  geom_boxplot(fill = c("lightblue", "lightpink")) + x_axis + my_theme + 
+  coord_flip() + # flip x- and y-axis
+  theme( # remove x-axis text and ticks
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank()
+  )
+
+```
+
+# Bivariate
+
+Rather than splitting by a variable, we'll instead plot two (or more) variables together on the same plot
+
+```{r two density, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Set data
+ggplot(data = dataset_clean) + # notice there is no `aes`
+  geom_density(aes(x = Extraversion), fill = "#FF99C9", color = "#FF99C9") +
+  geom_density(aes(x = Neurotocism), fill = "#A2C7E5", color = "#A2C7E5") +
+  my_theme
+```
+
+
+Hmm... the fill and colors did not abide by my selection. Let's try to fix that...
+
+```{r two density colors, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Set data
+ggplot(data = dataset) + # notice there is no `aes`
+  geom_density(aes(x = Extraversion) , fill = "#478978", color = "#478978") +
+  geom_density(aes(x = Neurotocism) , fill = "#A2C7E5", color = "#A2C7E5") +
+  my_theme
+```
+
+Colors are working but we can't see the full `Extraversion` density
+
+```{r two density colors2, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Set data
+ggplot(data = dataset) + # notice there is no `aes`
+  geom_density(aes(x = Extraversion) , fill = "#478978", color = "#478978", alpha = 0.50) +
+  geom_density(aes(x = Neurotocism) , fill = "#A2C7E5", color = "#A2C7E5", alpha = 0.50) +
+  my_theme
+```
+
+Looking good, for the most part, but it would look a lot better if we had a legend. For that, we'll need to do some data wrangling:
+
++   Use `pivot_longer`
+
+    +   Get `cols = c("Extraversion", "Neurotocism")`
+    
+    +   Set `names_to = "Personality"`
+    
+    +   Set `values_to = "Values"`
+    
++   Store as `dataset_long`
+    
+```{r two density wrangling, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+
+```
+
+Now, use these new variables to plot:
+
++   You'll only need *one* `geom_density` (set its `alpha = 0.50`)
+
++   You can set: `aes(x = Values, color = Personality, fill = Personality)`
+
++   Add the following: `scale_fill_manual(values = c("#478978", "#A2C7E5"))`
+
+```{r two density plot, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+
+```
+
+Let's also take a look at boxplots:
+
++   You'll only need *one* `geom_boxplot`
+
++   Keep: `scale_fill_manual(values = c("#478978", "#A2C7E5"))`
+
+```{r two boxplots, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+
+```
+
+## Scatterplot
+
+Boxplots and density plots allow for the overlap of two distributions to be compared but don't tell us much about the *relationship* between two variables. For that, we can use a scatterplot
+
+```{r base R scatter, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+plot(
+  dataset$Extraversion, dataset$Neurotocism, pch = 19, # changes the type of point
+  xlab = "Extraversion", ylab = "Neurotocism", main = "Personality",
+  xlim = c(0, 25), ylim = c(0, 25) # changes the range of the axes
+)
+```
+
+Re-creating in \{ggplot2\}
+
+```{r ggplot2 scatter, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+ggplot(
+  data = dataset, aes(x = Extraversion, y = Neurotocism)
+) +
+  geom_point() + my_theme +
+  scale_x_continuous(limits = c(0, 25)) +
+  scale_y_continuous(limits = c(0, 25))
+```
+
+Let's add a line to visualize the slope (direction) of the relationship
+
+```{r ggplot2 line, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+ggplot(
+  data = dataset, aes(x = Extraversion, y = Neurotocism)
+) +
+  geom_point() + my_theme +
+  scale_x_continuous(limits = c(0, 25)) +
+  scale_y_continuous(limits = c(0, 25)) +
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+Check to see whether there is a different relationship (slope) for `Sex` (hint: plot using a single plot)
+
+```{r ggplot2 line2, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+ggplot(
+  data = dataset[!is.na(dataset$Sex),], aes(x = Extraversion, y = Neurotocism)
+) +
+  geom_point() + my_theme +
+  scale_x_continuous(limits = c(0, 25)) +
+  scale_y_continuous(limits = c(0, 25)) +
+  geom_smooth(method = "lm", se = FALSE) +
+  facet_wrap(~Sex)
+```
+
+## `ggpairs`
+
+The \{GGally\} package has an amazing function called `ggpairs` that will streamline all of these visuals into a single plot (only use numeric variables!)
+
+```{r ggpairs, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+ggpairs(dataset[,c(3, 5:8)])
+```
+
+# Create a good plot and the worst plot ever
+
+1.    With your table, come up with a research question, based on the survey questions from across the class, to visualize
+
+2.    Create your own good plot and the worst plot ever to answer the research question
+
+3.    Submit to Brightspace

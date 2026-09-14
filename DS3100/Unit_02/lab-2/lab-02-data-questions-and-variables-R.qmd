@@ -1,0 +1,278 @@
+---
+title: "Lab 2: Data, Questions, and Variables"
+author: "FIRSTNAME LASTNAME"
+date: "`r format(Sys.time(), 'Compiled %X on %A, %B %d, %Y')`"
+format: html
+# if you are writing code in Python, change the engine to `jupyter: python` below
+engine: knitr
+
+execute:
+     echo: true
+     warning: true
+     error: false
+     message: true
+     cache: false
+---
+
+<!--
+
+Nothing inside these arrow markers reaches the knitted document, so
+this is where the instructions for each part live. Delete a comment
+once you have done what it says, or leave it; either is fine.
+
+This lab is done at home; the completed sheet and its PDF go into
+the Lab 2 folder on Brightspace by Sunday 20 September, 11:59 pm.
+
+Before you start: rename this file Lab-2_FIRSTNAME_LASTNAME.Rmd, put
+your name in the YAML header above (keep the quotation marks), and put
+your data file in a data/ folder beside this file. The R chunks are
+handed to you commented out; remove the hash characters once the file
+is in place, and change YOUR-FILE.csv to the name of your file.
+
+The four parts follow the handout. Part 1 chooses the dataset, Part 2
+writes its card, Part 3 the research question, and Part 4 the
+variables of interest.
+
+-->
+
+```{r setup, include = FALSE}
+library(tidyverse)
+```
+
+# Part 1: The dataset
+
+## Which dataset, and why
+
+*The dataset's name, which site you found it on, a readable link to
+its page (square brackets for the text, parentheses for the address, as
+in Lab 1), and one or two sentences on why you chose it. Not
+`PluckData`, and nothing that ships with R.*
+
+*Your answer here.*
+
+## A first look
+
+`read_csv()` reads the file into a tibble and reports the type it
+chose for every column as it goes.
+
+```{r read-data}
+#d <- read_csv("data/YOUR-FILE.csv")
+```
+
+Five functions for exploring a dataset. `count()` takes the name of one
+categorical column; please replace `YOUR_COLUMN` with one of yours.
+
+```{r five-commands}
+#dim(d)
+#names(d)
+#glimpse(d)
+#summary(d)
+#count(d, YOUR_COLUMN)
+```
+
+## The checklist
+
+<!-- One line each, from the table in Part 1 of the handout. -->
+
+> **1.** How many rows, and is that a few hundred or more?
+
+*Your answer here.*
+
+> **2.** Which columns are numeric, and which categorical? Name at
+> least two of the first kind and one of the second.
+
+*Your answer here.*
+
+> **3.** One row is one what?
+
+*Your answer here.*
+
+> **4.** Where is the documentation (the page, a README, a paper), and
+> does it say who collected the data?
+
+*Your answer here.*
+
+> **5.** What does the page say about the licence (Kaggle has a
+> panel for it; other sites say it in words, or not at all)?
+
+*Your answer here.*
+
+> **6.** How large is the file, and did it open without trouble?
+
+*Your answer here.*
+
+# Part 2: The dataset card for `YOUR-FILE.csv`
+
+<!-- The nine fields are those in Part 2 of the handout. Fields 1 to
+     4, 7, and 9 come from the dataset's page and anything it links to;
+     fields 5, 6, and 8 come from R. Where the page does not answer a
+     field, say so in the field. "The page does not say who collected
+     the data" is an answer; a blank is not. -->
+
+The chunk below is set `include = FALSE`: it runs when the sheet is
+knitted and prints nothing, which is how a report's Data section
+checks the data without showing the checks. Run it with the green
+arrow to see the output in RStudio.
+
+```{r look, include = FALSE}
+#str(d)
+#summary(d)
+#colSums(is.na(d))
+#sum(duplicated(d))
+```
+
+The numbers from that chunk go into your sentences with inline R,
+which is a backtick, the letter `r`, a space, an expression, and a
+closing backtick, written in the text rather than in a chunk. The
+chunk below is not run; it only shows the form. Please copy the
+sentence out of it into field 5 and delete the hash.
+
+```{r inline-example, eval = FALSE}
+# The file has `r nrow(d)` rows and `r ncol(d)` columns.
+```
+
+Keep each inline expression on one line. A line break inside the
+backticks stops it being evaluated, and the reader sees the code.
+
+## 1. Name and source
+
+*What the dataset is called, which site and page you obtained it from
+(a readable link), who posted it there, the version or "last updated"
+date the page shows, and the date you downloaded it.*
+
+*Your answer here.*
+
+## 2. Collector and purpose
+
+*Who originally collected the data, and what for. Read the poster's
+description for the origin: a scraped website, an API, a publication,
+a paper. If the page says the data are synthetic, say so here, and please
+consider a different dataset.*
+
+*Your answer here.*
+
+## 3. Collection
+
+*How, when, and where the data were gathered, and what one row
+represents. If a row is a pairing, a repeat, or a snapshot, say which.*
+
+*Your answer here.*
+
+## 4. Licence and permissions
+
+*What the page says about the licence, in its own words, and what
+that lets you do. "Unknown" is an answer, and so is "the page does not
+say".*
+
+*Your answer here.*
+
+## 5. Structure
+
+*The size of the table, as a sentence with inline R, then the variable
+table. Fill a row for every column the question might use, and cover
+the rest in one sentence. "Stored as" is what `read_csv()` reported
+(`dbl`, `chr`, `lgl`, `date`), not what the documentation says the
+column is. "Range or levels" is the smallest and largest value for a
+number, or the distinct values for a category. "Notes" is for anything
+a reader should know about that column, and in particular where the
+stored type and the documentation disagree; leave it blank where there
+is nothing to say.*
+
+*Your sentence here.*
+
+| Column         | Meaning                    | Stored as | Units | Range or levels           | Notes                    |
+|:---------------|:---------------------------|:----------|:------|:--------------------------|:-------------------------|
+| `COLUMN_ONE`   | *what it represents*       | *dbl*     |       | *smallest to largest*     |                          |
+| `COLUMN_TWO`   | *what it represents*       | *chr*     |       | *the levels, with counts* | *documented as a number* |
+| `COLUMN_THREE` |                            |           |       |                           |                          |
+| `COLUMN_FOUR`  |                            |           |       |                           |                          |
+| *and so on*    |                            |           |       |                           |                          |
+
+## 6. Missing values
+
+*How a missing value is written in the file itself (open the CSV in a
+text editor and look), how many there are and in which columns, and
+whether there is a pattern. Then the values `is.na()` cannot see: run
+`summary()` and look at the minimum and maximum of every numeric column
+for a value that cannot be true (-1, 0, 99, 999, a year of 1900). A
+column that should be numeric and arrived as `chr` is the other sign.*
+
+*Your answer here.*
+
+## 7. Known issues
+
+*Caveats from the page and its Discussion tab, then your own:
+duplicated rows, an unnamed first column, numbers stored as text, a
+column with one value throughout, dates stored as text.*
+
+*Your answer here.*
+
+## 8. Changes you made
+
+*Anything you did to the data between the file and here. If nothing,
+say so. If you replaced a sentinel value with `NA`, the code belongs in
+this chunk and the sentence belongs here.*
+
+```{r changes}
+# Any changes to the data go in this chunk, so the reader can see them.
+```
+
+*Your answer here.*
+
+## 9. Citation
+
+*How the page asks to be cited, or, if it does not say: the poster or
+agency (year). Title. The site. URL. Accessed date. If field 2 named an
+original source, cite that too.*
+
+*Your answer here.*
+
+# Part 3: The research question
+
+## Background
+
+*Two or three sentences: why the question is interesting, and what a
+reader would learn from an answer.*
+
+*Your answer here.*
+
+## The question
+
+*It ends in a question mark, names the variables in their units, asks
+about a distribution, a difference between groups, a relationship, or
+a change over time, and can be answered from the columns in field 5.*
+
+*Your question here.*
+
+## Hypotheses (optional)
+
+*In Lab 1's form, if they help you state the question sharply.*
+
+$$
+H_0: \text{YOUR NULL HYPOTHESIS HERE}
+$$
+
+$$
+H_A: \text{YOUR ALTERNATIVE HYPOTHESIS HERE}
+$$
+
+# Part 4: The variables of interest
+
+*One entry per variable the question uses, and only those: the column
+name in code font, its type (binary, nominal, ordinal, or continuous,
+and what it is stored as), what it represents, its units, its range or
+levels, and, if it helps, a median or a mean. Use inline R for the
+numbers where you can.*
+
+- `COLUMN_ONE` (type, stored as): what it represents, in what units;
+  observed range, centre.
+- `COLUMN_TWO` (type, stored as): what it represents, in what units;
+  observed range, centre.
+- `COLUMN_THREE` (type, stored as): what it represents; its levels, and
+  how many rows take each.
+
+# Generative AI disclosure
+
+*Which tools you used on this lab and what for, or "none".*
+
+*Your answer here.*

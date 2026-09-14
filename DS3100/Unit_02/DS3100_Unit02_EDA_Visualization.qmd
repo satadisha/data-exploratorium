@@ -121,29 +121,58 @@ Tukey, *Exploratory Data Analysis* (1977); Tufte, *The Visual Display of Quantit
 
 ## What is EDA?
 
-<span style="color:#1565C0;">**Exploratory Data Analysis**</span> (EDA) is a collection of analytical and graphical techniques for **determining and describing characteristics of data**.
+::: {style="font-size:0.75em;"}
 
-EDA asks questions such as:
+<span style="color:#1565C0;">**Exploratory Data Analysis (EDA)**</span> is a way of using **summaries and visualizations to understand the data we have** and decide what is worth investigating.
 
-- Which values are most common?
-- Which values are rare?
-- Are there unusual (wildshot) observations?
-- Are there clusters within the data? What separates those clusters?
-- Do relationships look linear, nonlinear, or absent? <span style="color:#1565C0;">Note: </span> *this is not the same as finding causality!*
-- Do all the data behave as we expected?
+For example, recall the clinic dataset containing data on fictional outpatient visits. It included each patient’s clinic, age, waiting time, and visit status. Some questions that the dataset initially reveal:
+
+- What does the distribution of **waiting times** look like?
+- Are there unusually long waits?
+- Do Cardiology and Primary Care appear to have different waiting times?
+- Does waiting time appear to vary with **age**?
+- Are there patterns we did **not expect**?
+
+> **EDA is about discovering and describing patterns — not deciding whether those patterns are statistically significant or causal.**
+
+:::
+
+::: {.callout-tip style="font-size:0.75em;"}
+
+**EDA reveals:** *what is going on in our observed data.* Our central question beyond that remains what patterns or unusual features deserve further investigation.
+
+:::
 
 ---
 
-## EDA is not inference
+## EDA vs. Confirmatory Data Analysis
 
-| Exploratory | Inferential |
+::: {style="font-size:0.75em;"}
+
+<span style="color:#1565C0;">**Confirmatory Data Analysis (CDA)**</span> uses **pre-specified questions, statistical models, and inference** to evaluate whether the evidence supports a particular claim or hypothesis and to quantify uncertainty.
+
+The distinction becomes clearer when we flesh out the questions we ask at two different stages.
+
+| **Exploratory** | **Confirmatory / Inferential** |
 |---|---|
-| What does the observed data look like? | What can we conclude beyond the observed data? |
-| What patterns deserve investigation? | Is there evidence for a hypothesized effect? |
-| What should we examine next? | How uncertain is our conclusion? |
+| *In our clinic data, Cardiology patients appear to wait longer than Primary Care patients.* | *Is there evidence that average waiting times differ between Cardiology and Primary Care patients?* |
+| *How large is the difference we observe?* | *What is the estimated difference in the population?* |
+| *Are there unusual patients or clinics that might be driving the pattern?* | *How uncertain is our estimate?* |
+| *Does the relationship between age and blood pressure look roughly linear, nonlinear, or absent?* | *Is age associated with blood pressure in the population?* |
+| *What patterns deserve further investigation?* | *What conclusions are supported by the analysis, and how uncertain are they?* |
 
-::: {.callout-note}
-EDA can **motivate** formal analysis. It does not by itself establish causality or generalize beyond the data without appropriate inferential reasoning.
+:::
+
+::: {.callout-note style="font-size:0.75em;"}
+
+**A useful progression:**
+
+**Explore → formulate a question → analyze → quantify uncertainty**
+
+EDA can **motivate** a formal analysis, but the exploratory pattern itself is not the inference.
+
+For example, a plot may suggest that Cardiology patients wait longer. A formal analysis might estimate the difference and report a **confidence interval** to quantify uncertainty around that estimate.
+
 :::
 
 ---
@@ -203,28 +232,6 @@ There is no universally “best” plot. The **question determines the job** of 
 Good visualization is not decoration added after analysis. It is part of how we reason about the data and communicate what we learned.
 
 :::
-
----
-
-## 🗺️ A quick return to Tennessee
-
-Our Tennessee education dataset contains achievement information across districts, schools, subjects, and student subgroups. We had already conducted some wrangling to better understand the data.
-
-::: {.callout-tip}
-
-### What more can be done?
-
-1. Examine individual variables. *What does the distribution of `percent_below` look like across districts? Does any observation look out of place?*
-2. Compare different groups. *How does `percent_below` differ between ELA and Math? How does it vary across `district_size` categories?*
-3. Examine **change over time**. *What does the distribution of `change_below` look like? For this we may need data across several years*
-4. Examine a relationship between two variables. *Is district size related to achievement outcomes?*
-5. Look for patterns you might otherwise miss. *Are there particular districts, subjects, or groups that stand out?*
-
-:::
-
-Choose a visualization that helps answer a specific question about the data.
-
-> The goal is *not* to make a plot for every variable, the visualizations are part of a logical argumentation process.
 
 ---
 
@@ -435,20 +442,30 @@ The conceptual structure remains:
 
 ## First thoughts
 
+::: {style="font-size:0.72em;"}
+
+When we examine **one variable at a time**, our first goal is to understand
+how its values are distributed.
+
+For example, for a patient's **waiting time**:
+
+- Where are most observations?
+- How much do the values vary?
+- Is the distribution symmetric or skewed?
+- Are there gaps or multiple clusters?
+- Are there unusually large or small observations?
+
+:::
+
+::: {.callout-tip style="font-size:0.72em;"}
+
+### First question
+
 > **What does the distribution of this variable look like?**
 
-Look for:
+To answer this, we must know what kind of plot is required. A histogram, density plot, or boxplot would probably be our visual starting point.
 
-- center
-- spread
-- skewness
-- gaps
-- clusters
-- outliers
-
-What makes it even easier to work with?
-
-> Can we match it to known statistical distributions?
+:::
 
 ---
 
@@ -565,6 +582,72 @@ Try several reasonable bin widths before deciding what the distribution looks li
 
 ---
 
+### Histogram : Extreme Values
+
+::: {style="font-size:0.72em;"}
+Suppose we have some data on students in a class that contains their GPA. Our GPA variable is expected to range from **0 to 4**.
+:::
+
+::: {.columns}
+
+::: {.column width="48%" style="font-size:0.72em;"}
+
+#### R / `ggplot2`
+
+```r
+load("./Unit_02/data/PluckData.RData")
+hist(
+  dataset$GPA,
+  breaks = 10,
+  main = "GPA with an improbable value",
+  xlab = "GPA"
+)
+```
+
+#### Python/Matplotlib
+
+```python
+plt.hist(
+    dataset["GPA"].dropna(),
+    bins=10
+)
+
+plt.title("GPA with an improbable value")
+plt.xlabel("GPA")
+plt.ylabel("Frequency")
+plt.show()
+```
+::: {.callout-warning style="font-size:0.72em;"}
+
+### What went wrong?
+
+The histogram uses the full observed range, from about 2 to `999`. Almost all legitimate GPAs are squeezed into the first bin, while the value 999, which is probably an encoding for a missing value, occupies the far end of the range.
+
+> The problem is not the number of bins but that an implausible value has distorted the range being binned.
+
+:::
+
+:::
+
+::: {.column width="48%" style="font-size:0.72em;"}
+
+<img src="images/extreme-values-hist.png" style="width: 100%; height: 400px; object-fit: contain;">
+
+:::
+
+:::
+
+::: {.callout-tip style="font-size:0.72em;"}
+
+#### EDA lesson
+
+An unexpected visualization should prompt us to inspect the underlying data **before interpreting the distribution**. Here you can eliminate all values outside of the expected range `(0,4)` and encode them as missing/`NA`/`NaN` to filter them out.
+
+:::
+
+
+---
+
 ## Density plot
 
 ::: {style="font-size:0.72em;"}
@@ -642,29 +725,139 @@ Smoothing is itself a choice. A density plot is not the raw data; it is a repres
 
 ---
 
-## Boxplot
-
-::: {style="font-size:0.72em;"}
-
-A boxplot is especially useful for **comparing distributions across groups**. It summarizes a numeric distribution using:
-
-1. median
-2. first and third quartiles
-3. interquartile range (IQR)
-4. potential outliers
-
-:::
+### Customizations in GGPlot
 
 ::: {.columns}
 
 ::: {.column width="48%" style="font-size:0.72em;"}
 
+```r
+my_theme <- theme(
+  panel.background = element_blank(),
+  axis.line = element_line(
+    linewidth = 0.50,
+    lineend = "square"
+  ),
+  axis.text = element_text(size = 10),
+  axis.title = element_text(size = 12),
+  plot.title = element_text(
+    size = 14,
+    hjust = 0.50
+  )
+)
+
+ggplot(
+  ten_plot,
+  aes(
+    x = percent_below
+  )
+) +
+  geom_density(
+    color = "#1565C0",
+    fill = "#90CAF9",
+    alpha = 0.5
+  ) +
+  labs(
+    title = "Distribution of Percent Below",
+    x = "Percent Below",
+    y = "Density"
+  ) +
+  my_theme
+```
+:::
+
+::: {.column width="48%" style="font-size:0.72em;"}
+
+<div style="position: relative; width: 100%; height: 420px;">
+
+<div class="fragment fade-in"
+     style="position: absolute; top: 0; left: 0; width: 100%; z-index: 1;">
+
+<img src="images/custom-density.png" style="width: 100%; height: 400px; object-fit: contain;">
+
+</div>
+
+<div class="fragment fade-in"
+     style="
+       position: absolute;
+       top: 65%;
+       left: 5%;
+       width: 100%;
+       z-index: 5;
+     ">
+
+::: {.callout-note style="font-size:0.82em; background-color:#f4f8fc !important;"}
+
+#### <span style="color:#1565C0;">What are we controlling?</span>
+
+1. **`color`** controls the outline of the density curve.
+
+2. **`fill`** controls the area underneath the curve.
+
+3. **`alpha`** controls the transparency of the fill.
+
+4. **`my_theme`** stores reusable plot-wide styling choices such as fonts of axes, legends and title appearance.
+
+In `ggplot2`, parts of a plot can be stored as objects and reused:
+
+```r
+plot1 + my_theme
+plot2 + my_theme
+plot3 + my_theme
+```
+
+Here, `color` and `fill` are fixed properties of the plot because we assign them specific values outside `aes()`. If instead we place `color` or `fill` inside `aes()`, they become **aesthetic mappings**.<br>
+ggplot uses color to visually encode the values of a variable, such as different categories (*more on this later*).
+
+:::
+
+</div> 
+
+</div>
+
+:::
+
+:::
+
+
+---
+
+### Boxplot
+
+::: {style="font-size:0.72em;"}
+
+A boxplot is especially useful for **comparing distributions across groups**. It summarizes a numeric distribution using:
+
+::: {.columns}
+
+::: {.column width="10%"}
+**1. Median**
+:::
+
+::: {.column width="25%"}
+**2. First and third quartiles**
+:::
+
+::: {.column width="25%"}
+**3. Interquartile range (IQR)**
+:::
+
+::: {.column width="25%"}
+**4. Potential outliers**
+:::
+
+:::
+
+:::
+
+::: {.columns}
+
+::: {.column width="48%" style="font-size:0.68em;"}
+
 #### R
 
 ```r
-ten_plot <- ten %>%
-  filter(!is.na(percent_below))
-
+ten_plot <- ten %>%filter(!is.na(percent_below))
 ggplot(
   ten_plot,
   aes(
@@ -672,25 +865,45 @@ ggplot(
     y = percent_below
   )
 ) +
-  geom_boxplot()
+  geom_boxplot(
+    width = 0.4,
+    color = "black",
+    fill = "lightblue"
+  )+
+  labs(
+    title = "Distribution of Percent Below",
+    x = NULL,
+    y = "Percent Below"
+  )
 ```
 
 #### Python
 
+::: {.scroll-code}
+
 ```python
-ten_plot = ten["percent_below"].dropna()
-
 plt.figure(figsize=(4, 6))
-
 plt.boxplot(
     ten_plot,
-    vert=True
+    vert=True,
+    widths=0.4,
+    # Box
+    boxprops={
+        "facecolor": "white",
+        "edgecolor": "black"
+    },
+    # Median
+    medianprops={
+        "color": "orange"
+    },
 )
 ```
 
 :::
 
-::: {.column width="52%" style="font-size:0.72em;"}
+:::
+
+::: {.column width="52%" style="font-size:0.68em;"}
 
 <div style="position: relative; width: 100%; height: 420px;"> 
 
@@ -766,22 +979,57 @@ The exact definition of “outlier” depends on the plotting convention; in a s
 
 ---
 
-## Skewness
+## Reading distribution shape
 
-The mean and median can sit in different places when a distribution is skewed.
+::: {style="font-size:0.82em;"}
 
-1. **Negative skew**: Longer tail to the left.
+Histograms and Boxplots are key to understanding not just the standout summary numbers but also the shape of a distribution and where most of the data points are gathered.
 
-> `mean < median`
+:::
 
-2. **Symmetric**: Mean and median are similar.
+::: {.columns}
 
-3. **Positive skew**: Longer tail to the right.
+::: {.column width="55%" style="font-size:0.72em;"}
 
-> `mean > median`
+### Skewness
 
-::: {.callout-tip}
-Compare a numerical summary with the distribution that produced it. **Mean and median tell you different things.**
+Checks if one tail longer than the other?
+
+**Negative / left skew**: longer tail toward smaller values; $mean < median$
+
+**Approximately symmetric**: left and right sides are broadly balanced; mean and median are roughly similar
+
+**Positive / right skew**: longer tail toward larger values; $mean > median$
+
+:::
+
+::: {.column width="45%" style="font-size:0.72em;"}
+
+### Kurtosis
+
+Kurtosis describes the **relative heaviness of the tails and concentration
+around the center** of a distribution.
+
+- **Higher kurtosis** → relatively heavier tails and more extreme observations
+- **Lower kurtosis** → relatively light, thin tails and fewer extreme outliers
+
+:::
+
+:::
+
+::: {.callout-note style="font-size:0.72em;"}
+
+### Takeaways
+
+In a **histogram**, look for a longer tail on one side.
+
+In a **boxplot**, compare the lengths of the whiskers and the position of the
+median within the box.
+
+A histogram helps you **see** the shape. The mean and median in a boxplot help you **summarize** where the data are centered.
+
+> **Use both: ask what the distribution looks like, then check whether the numerical summaries tell the same story.**
+
 :::
 
 ---
@@ -1340,11 +1588,11 @@ ggplot(data = dataset, aes(x = GPA)) +
 
 <div style="position: relative; width: 100%; height: 420px;"> 
 
-<div class="fragment fade-in" style="position: absolute; top: 0; left: 0; width: 100%;">
+<div class="fragment fade-in" style="position: absolute; top: -5; left: 0; width: 100%;">
 
 <img src="images/layering-ggplot.png" style="width: 100%; height: 400px; object-fit: contain;">
 
-<div class="fragment fade-in" style="position: absolute; top: 10%; left: 5%; width: 88%; background: white; padding: 18px 22px; border-left: 4px solid #1565C0; box-shadow: 0 3px 12px rgba(0,0,0,0.20); font-size: 0.70em; z-index: 10;">
+<div class="fragment fade-in" style="position: absolute; top: 0%; left: 5%; width: 88%; background: white; padding: 18px 22px; border-left: 4px solid #1565C0; box-shadow: 0 3px 12px rgba(0,0,0,0.20); font-size: 0.70em; z-index: 10;">
 
 Here, we build the visualization in **layers**:
 
@@ -1354,11 +1602,15 @@ Here, we build the visualization in **layers**:
 
 Because each layer represents the **same variable (`GPA`) in a different way**, combining them lets us see the overall distribution, the summary numbers and the observations that produced it.
 
-> **The order of the `geom_*()` functions matters:** later layers are drawn on top of earlier layers.
+**The order of the `geom_*()` functions matters:** later layers are drawn on top of earlier layers. <span style="color:#1565C0;"> *If the dots had to appear behind the boxplot, how will you change the code?*</span>
 
-### About `scale_x_continuous()`
+#### About `aes(y = -4)`
 
-The `scale_x_continuous()` code is **not part of the layering itself**. Here it is used to customize the x-axis by translating numeric GPA values into familiar letter-grade labels displayed as `F`, `D-`, `D`, ..., `A`.
+The negative positioning of the box-plot (and the scatterplot) on the y axis ensures that both appear underneath the histogram.
+
+#### About `scale_x_continuous()`
+
+The `scale_x_continuous()` code is **not part of the layering itself**. Here it is used to customize the x-axis by first segmenting the GPA scale with desired breaks and then translating numeric GPA values into familiar letter-grade labels displayed as `F`, `D-`, `D`, ..., `A`.
 
 </div>
 
@@ -1787,7 +2039,9 @@ Potential non-data-ink includes:
 - repeated labels
 
 ::: {.callout-note}
+
 “Remove chartjunk” does **not** mean “remove everything that is not data.” Supporting elements can improve reading. The test is whether they help the quantitative message.
+
 :::
 
 ---
@@ -1821,7 +2075,9 @@ Tufte's “lie factor” compares the scale/magnitude of the apparent effect sho
 A value near **1** represents faithful graphical representation.
 
 ::: {.callout-tip}
+
 For bar charts, a zero baseline is generally important because bar **length/area encodes magnitude directly**. But this isn't a universal rule, just more adhering to Tufte's principles.
+
 :::
 
 ---
@@ -1849,7 +2105,9 @@ A chart starting at 90 can make the same difference look enormous.
 :::
 
 ::: {.callout-warning}
+
 Ask: **Is the visual design amplifying the difference beyond what the numbers justify?**
+
 :::
 
 ---
@@ -1869,7 +2127,7 @@ This is why **small multiples** can be powerful: repeated structure allows the e
 
 ---
 
-## Activity: Good plot/Bad plot
+## 🖼️ Activity: Good plot/Bad plot
 
 ::: {.callout-tip style="font-size:0.72em;"}
 
@@ -1902,11 +2160,39 @@ Critique both visualization by:
 
 ---
 
-## Activity: EDA with Tennessee data
+## 🗺️ A quick return to Tennessee
 
-Return to the **analysis-ready Tennessee data** from the wrangling exercise.
+Our Tennessee education dataset contains achievement information across districts, schools, subjects, and student subgroups. We had already conducted some wrangling to better understand the data.
 
-Explore:
+::: {.callout-tip style="font-size:0.82em;"}
+
+### What more can be done?
+
+1. Examine individual variables. *What does the distribution of `percent_below` look like across districts? Does any observation look out of place?*
+2. Compare different groups. *How does `percent_below` differ between ELA and Math? How does it vary across `district_size` categories?*
+3. Examine **change over time**. *What does the distribution of `change_below` look like? For this we may need data across several years*
+4. Examine a relationship between two variables. *Is district size related to achievement outcomes?*
+5. Look for patterns you might otherwise miss. *Are there particular districts, subjects, or groups that stand out?*
+
+:::
+
+#### 📊 Choose a visualization that helps answer a specific question about the data.
+
+::: {style="font-size:0.82em;"}
+
+> The goal is *not* to make a plot for every variable, the visualizations are part of a logical argumentation process.
+
+:::
+
+---
+
+## 💻 Activity: EDA with Tennessee data
+
+Return to the **analysis-ready Tennessee data** from the wrangling exercise for some further analysis. This time through plots!
+
+::: {.callout-important style="font-size:0.82em;"}
+
+### Explore
 
 - the distribution of `percent_below`;
 - differences between ELA and Math;
@@ -1914,10 +2200,17 @@ Explore:
 - differences across district-size categories;
 - unusual observations or patterns.
 
-Do not begin by choosing a chart.
+:::
+
+
+#### 📉 Do not begin by choosing a chart.
+
+::: {style="font-size:0.82em;"}
 
 > Start by writing the research question you want the visualization to help answer.
 > Explain briefly what value the visualization adds to your analysis.
+
+:::
 
 ---
 
@@ -1936,8 +2229,10 @@ Do not begin by choosing a chart.
 
 - Tukey, J. W. (1977). *Exploratory Data Analysis*. Addison-Wesley.
 - Tufte, E. R. (1983). *The Visual Display of Quantitative Information*. Graphics Press.
-- Wilkinson, L. (2005). *The Grammar of Graphics*. Springer. [Book](https://link.springer.com/book/9780387245447)
-- Wickham, H. et al. *ggplot2: Elegant Graphics for Data Analysis*. [ggplot2 book](https://ggplot2-book.org/introduction)
+- Wilkinson, L. (2005). *The Grammar of Graphics*. Springer.
+  [Book](https://link.springer.com/book/9780387245447)
+- Wickham, H. et al. *ggplot2: Elegant Graphics for Data Analysis*.
+  [ggplot2 book](https://ggplot2-book.org/introduction)
 - [From Data to Viz](https://www.data-to-viz.com/)
 
 :::
