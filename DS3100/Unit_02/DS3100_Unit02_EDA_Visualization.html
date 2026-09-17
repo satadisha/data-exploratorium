@@ -1096,6 +1096,82 @@ Dr.&nbsp;Satadisha Saha Bhowmick
 </div>
 </div>
 </section>
+<section id="the-five-numbers-arent-everything" class="slide level2">
+<h2>The five numbers aren’t everything</h2>
+<div style="font-size:0.62em;">
+<p>While the five numbers on your boxplot are important they only say where each quarter of your data ends. What the boxplot hides is how the points lie in between them. Here we have some fictional data drawn from two very different distributions (<code>A</code> and <code>B</code>) stored within a dataframe along with the distribution they are sampled from.<br> Plotting the boxplots side by side reveal the exact same values for the five numbers we care about across both distributions.</p>
+</div>
+<div class="columns">
+<div class="column" style="font-size:0.62em;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="" aria-label="1"></a>A <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb15-2"><a href="" aria-label="2"></a>  <span class="fu">seq</span>(<span class="dv">0</span>, <span class="fl">2.5</span>, <span class="at">length.out =</span> <span class="dv">25</span>),</span>
+<span id="cb15-3"><a href="" aria-label="3"></a>  <span class="fu">seq</span>(<span class="fl">2.5</span>, <span class="dv">5</span>, <span class="at">length.out =</span> <span class="dv">25</span>), </span>
+<span id="cb15-4"><a href="" aria-label="4"></a>  <span class="dv">5</span>,</span>
+<span id="cb15-5"><a href="" aria-label="5"></a>  <span class="fu">seq</span>(<span class="dv">5</span>, <span class="fl">7.5</span>, <span class="at">length.out =</span> <span class="dv">25</span>),</span>
+<span id="cb15-6"><a href="" aria-label="6"></a>  <span class="fu">seq</span>(<span class="fl">7.5</span>, <span class="dv">10</span>, <span class="at">length.out =</span> <span class="dv">25</span>)</span>
+<span id="cb15-7"><a href="" aria-label="7"></a>)</span>
+<span id="cb15-8"><a href="" aria-label="8"></a></span>
+<span id="cb15-9"><a href="" aria-label="9"></a>B <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb15-10"><a href="" aria-label="10"></a>  <span class="dv">0</span>, <span class="fu">rep</span>(<span class="fl">2.5</span>, <span class="dv">49</span>), <span class="dv">5</span>,</span>
+<span id="cb15-11"><a href="" aria-label="11"></a>  <span class="fu">rep</span>(<span class="fl">7.5</span>, <span class="dv">49</span>), <span class="dv">10</span></span>
+<span id="cb15-12"><a href="" aria-label="12"></a>)</span>
+<span id="cb15-13"><a href="" aria-label="13"></a></span>
+<span id="cb15-14"><a href="" aria-label="14"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb15-15"><a href="" aria-label="15"></a>  <span class="at">value =</span> <span class="fu">c</span>(A, B),</span>
+<span id="cb15-16"><a href="" aria-label="16"></a>  <span class="at">distribution =</span> <span class="fu">c</span>(</span>
+<span id="cb15-17"><a href="" aria-label="17"></a>    <span class="fu">rep</span>(<span class="st">"Distribution A"</span>,<span class="fu">length</span>(A)),</span>
+<span id="cb15-18"><a href="" aria-label="18"></a>    <span class="fu">rep</span>(<span class="st">"Distribution B"</span>,<span class="fu">length</span>(B))</span>
+<span id="cb15-19"><a href="" aria-label="19"></a>  )</span>
+<span id="cb15-20"><a href="" aria-label="20"></a>)</span>
+<span id="cb15-21"><a href="" aria-label="21"></a></span>
+<span id="cb15-22"><a href="" aria-label="22"></a><span class="fu">ggplot</span>(</span>
+<span id="cb15-23"><a href="" aria-label="23"></a>  df,</span>
+<span id="cb15-24"><a href="" aria-label="24"></a>  <span class="fu">aes</span>(<span class="at">x =</span> distribution, <span class="at">y =</span> value)</span>
+<span id="cb15-25"><a href="" aria-label="25"></a>) <span class="sc">+</span></span>
+<span id="cb15-26"><a href="" aria-label="26"></a>  <span class="fu">geom_boxplot</span>(</span>
+<span id="cb15-27"><a href="" aria-label="27"></a>    <span class="at">fill =</span> <span class="st">"lightgrey"</span>,</span>
+<span id="cb15-28"><a href="" aria-label="28"></a>    <span class="at">color =</span> <span class="st">"black"</span>,</span>
+<span id="cb15-29"><a href="" aria-label="29"></a>    <span class="at">width =</span> <span class="fl">0.5</span></span>
+<span id="cb15-30"><a href="" aria-label="30"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="font-size:0.62em;">
+<div style="position: relative; width: 100%; height: 420px;">
+<p><img src="images/same-boxplots.png" style="width: 100%; height: 400px; object-fit: contain;"></p>
+</div>
+</div></div>
+</section>
+<section id="the-five-numbers-arent-everything-1" class="slide level2">
+<h2>The five numbers aren’t everything</h2>
+<div class="columns">
+<div class="column" style="font-size:0.62em;">
+<p>But plotting the actual data reveal very different shapes.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="" aria-label="1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb16-2"><a href="" aria-label="2"></a>  df,</span>
+<span id="cb16-3"><a href="" aria-label="3"></a>  <span class="fu">aes</span>(</span>
+<span id="cb16-4"><a href="" aria-label="4"></a>    <span class="at">x =</span> value,</span>
+<span id="cb16-5"><a href="" aria-label="5"></a>    <span class="at">fill =</span> distribution,</span>
+<span id="cb16-6"><a href="" aria-label="6"></a>    <span class="at">color =</span> distribution</span>
+<span id="cb16-7"><a href="" aria-label="7"></a>  )</span>
+<span id="cb16-8"><a href="" aria-label="8"></a>) <span class="sc">+</span></span>
+<span id="cb16-9"><a href="" aria-label="9"></a>  <span class="fu">geom_density</span>(</span>
+<span id="cb16-10"><a href="" aria-label="10"></a>    <span class="at">alpha =</span> <span class="fl">0.3</span>,</span>
+<span id="cb16-11"><a href="" aria-label="11"></a>    <span class="at">linewidth =</span> <span class="dv">1</span></span>
+<span id="cb16-12"><a href="" aria-label="12"></a>  ) <span class="sc">+</span></span>
+<span id="cb16-13"><a href="" aria-label="13"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> distribution, </span>
+<span id="cb16-14"><a href="" aria-label="14"></a>  <span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb16-15"><a href="" aria-label="15"></a>  <span class="fu">labs</span>(</span>
+<span id="cb16-16"><a href="" aria-label="16"></a>    <span class="at">x =</span> <span class="st">"Value"</span>,</span>
+<span id="cb16-17"><a href="" aria-label="17"></a>    <span class="at">y =</span> <span class="st">"Density"</span>,</span>
+<span id="cb16-18"><a href="" aria-label="18"></a>    <span class="at">title =</span> <span class="st">"But the Distributional Shapes Are Very Different"</span></span>
+<span id="cb16-19"><a href="" aria-label="19"></a>  ) <span class="sc">+</span></span>
+<span id="cb16-20"><a href="" aria-label="20"></a>  <span class="fu">theme</span>(</span>
+<span id="cb16-21"><a href="" aria-label="21"></a>    <span class="at">legend.position =</span> <span class="st">"none"</span></span>
+<span id="cb16-22"><a href="" aria-label="22"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="font-size:0.62em;">
+<div style="position: relative; width: 100%; height: 420px;">
+<p><img src="images/diff-densities.png" style="width: 100%; height: 400px; object-fit: contain;"></p>
+</div>
+</div></div>
+</section>
 <section id="reading-distribution-shape" class="slide level2">
 <h2>Reading distribution shape</h2>
 <div style="font-size:0.82em;">
@@ -1145,31 +1221,31 @@ Dr.&nbsp;Satadisha Saha Bhowmick
 <div class="columns">
 <div class="column" style="font-size:0.72em;">
 <h4 id="r-2">R</h4>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="" aria-label="1"></a>ten_subject <span class="ot">&lt;-</span> ten <span class="sc">%&gt;%</span></span>
-<span id="cb15-2"><a href="" aria-label="2"></a>  <span class="fu">filter</span>(</span>
-<span id="cb15-3"><a href="" aria-label="3"></a>    <span class="sc">!</span><span class="fu">is.na</span>(overall_subject),</span>
-<span id="cb15-4"><a href="" aria-label="4"></a>    <span class="fu">trimws</span>(overall_subject) <span class="sc">!=</span> <span class="st">""</span></span>
-<span id="cb15-5"><a href="" aria-label="5"></a>  )</span>
-<span id="cb15-6"><a href="" aria-label="6"></a></span>
-<span id="cb15-7"><a href="" aria-label="7"></a><span class="fu">ggplot</span>(</span>
-<span id="cb15-8"><a href="" aria-label="8"></a>  ten_subject,</span>
-<span id="cb15-9"><a href="" aria-label="9"></a>  <span class="fu">aes</span>(<span class="at">x =</span> overall_subject)</span>
-<span id="cb15-10"><a href="" aria-label="10"></a>) <span class="sc">+</span></span>
-<span id="cb15-11"><a href="" aria-label="11"></a>  <span class="fu">geom_bar</span>(</span>
-<span id="cb15-12"><a href="" aria-label="12"></a>    <span class="at">fill =</span> <span class="st">"blue"</span></span>
-<span id="cb15-13"><a href="" aria-label="13"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="" aria-label="1"></a>ten_subject <span class="ot">&lt;-</span> ten <span class="sc">%&gt;%</span></span>
+<span id="cb17-2"><a href="" aria-label="2"></a>  <span class="fu">filter</span>(</span>
+<span id="cb17-3"><a href="" aria-label="3"></a>    <span class="sc">!</span><span class="fu">is.na</span>(overall_subject),</span>
+<span id="cb17-4"><a href="" aria-label="4"></a>    <span class="fu">trimws</span>(overall_subject) <span class="sc">!=</span> <span class="st">""</span></span>
+<span id="cb17-5"><a href="" aria-label="5"></a>  )</span>
+<span id="cb17-6"><a href="" aria-label="6"></a></span>
+<span id="cb17-7"><a href="" aria-label="7"></a><span class="fu">ggplot</span>(</span>
+<span id="cb17-8"><a href="" aria-label="8"></a>  ten_subject,</span>
+<span id="cb17-9"><a href="" aria-label="9"></a>  <span class="fu">aes</span>(<span class="at">x =</span> overall_subject)</span>
+<span id="cb17-10"><a href="" aria-label="10"></a>) <span class="sc">+</span></span>
+<span id="cb17-11"><a href="" aria-label="11"></a>  <span class="fu">geom_bar</span>(</span>
+<span id="cb17-12"><a href="" aria-label="12"></a>    <span class="at">fill =</span> <span class="st">"blue"</span></span>
+<span id="cb17-13"><a href="" aria-label="13"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <h4 id="python-2">Python</h4>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="" aria-label="1"></a>ten_subject <span class="op">=</span> ten[<span class="st">"overall_subject"</span>].dropna()</span>
-<span id="cb16-2"><a href="" aria-label="2"></a>ten_subject <span class="op">=</span> ten_subject[</span>
-<span id="cb16-3"><a href="" aria-label="3"></a>    ten_subject.<span class="bu">str</span>.strip() <span class="op">!=</span> <span class="st">""</span></span>
-<span id="cb16-4"><a href="" aria-label="4"></a>]</span>
-<span id="cb16-5"><a href="" aria-label="5"></a></span>
-<span id="cb16-6"><a href="" aria-label="6"></a>subject_counts <span class="op">=</span> ten_subject.value_counts()</span>
-<span id="cb16-7"><a href="" aria-label="7"></a></span>
-<span id="cb16-8"><a href="" aria-label="8"></a>plt.bar(</span>
-<span id="cb16-9"><a href="" aria-label="9"></a>    subject_counts.index,</span>
-<span id="cb16-10"><a href="" aria-label="10"></a>    subject_counts.values</span>
-<span id="cb16-11"><a href="" aria-label="11"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="" aria-label="1"></a>ten_subject <span class="op">=</span> ten[<span class="st">"overall_subject"</span>].dropna()</span>
+<span id="cb18-2"><a href="" aria-label="2"></a>ten_subject <span class="op">=</span> ten_subject[</span>
+<span id="cb18-3"><a href="" aria-label="3"></a>    ten_subject.<span class="bu">str</span>.strip() <span class="op">!=</span> <span class="st">""</span></span>
+<span id="cb18-4"><a href="" aria-label="4"></a>]</span>
+<span id="cb18-5"><a href="" aria-label="5"></a></span>
+<span id="cb18-6"><a href="" aria-label="6"></a>subject_counts <span class="op">=</span> ten_subject.value_counts()</span>
+<span id="cb18-7"><a href="" aria-label="7"></a></span>
+<span id="cb18-8"><a href="" aria-label="8"></a>plt.bar(</span>
+<span id="cb18-9"><a href="" aria-label="9"></a>    subject_counts.index,</span>
+<span id="cb18-10"><a href="" aria-label="10"></a>    subject_counts.values</span>
+<span id="cb18-11"><a href="" aria-label="11"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column" style="font-size:0.72em;">
 <div style="position: relative; width: 100%; height: 420px;">
 <div class="fragment fade-in" style="position: absolute; top: 0; left: 0; width: 100%;">
@@ -1217,34 +1293,34 @@ Dr.&nbsp;Satadisha Saha Bhowmick
 <div class="columns">
 <div class="column" style="font-size:0.72em;">
 <h4 id="r-3">R</h4>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="" aria-label="1"></a>ten_scatter <span class="ot">&lt;-</span> ten <span class="sc">%&gt;%</span></span>
-<span id="cb17-2"><a href="" aria-label="2"></a>  <span class="fu">filter</span>(</span>
-<span id="cb17-3"><a href="" aria-label="3"></a>    <span class="sc">!</span><span class="fu">is.na</span>(percent_below),</span>
-<span id="cb17-4"><a href="" aria-label="4"></a>    <span class="sc">!</span><span class="fu">is.na</span>(percent_on_mastered)</span>
-<span id="cb17-5"><a href="" aria-label="5"></a>  )</span>
-<span id="cb17-6"><a href="" aria-label="6"></a></span>
-<span id="cb17-7"><a href="" aria-label="7"></a><span class="fu">ggplot</span>(</span>
-<span id="cb17-8"><a href="" aria-label="8"></a>  ten_scatter,</span>
-<span id="cb17-9"><a href="" aria-label="9"></a>  <span class="fu">aes</span>(</span>
-<span id="cb17-10"><a href="" aria-label="10"></a>    <span class="at">x =</span> percent_below,</span>
-<span id="cb17-11"><a href="" aria-label="11"></a>    <span class="at">y =</span> percent_on_mastered</span>
-<span id="cb17-12"><a href="" aria-label="12"></a>  )</span>
-<span id="cb17-13"><a href="" aria-label="13"></a>) <span class="sc">+</span></span>
-<span id="cb17-14"><a href="" aria-label="14"></a>  <span class="fu">geom_point</span>(</span>
-<span id="cb17-15"><a href="" aria-label="15"></a>    <span class="at">color =</span> <span class="st">"blue"</span></span>
-<span id="cb17-16"><a href="" aria-label="16"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="" aria-label="1"></a>ten_scatter <span class="ot">&lt;-</span> ten <span class="sc">%&gt;%</span></span>
+<span id="cb19-2"><a href="" aria-label="2"></a>  <span class="fu">filter</span>(</span>
+<span id="cb19-3"><a href="" aria-label="3"></a>    <span class="sc">!</span><span class="fu">is.na</span>(percent_below),</span>
+<span id="cb19-4"><a href="" aria-label="4"></a>    <span class="sc">!</span><span class="fu">is.na</span>(percent_on_mastered)</span>
+<span id="cb19-5"><a href="" aria-label="5"></a>  )</span>
+<span id="cb19-6"><a href="" aria-label="6"></a></span>
+<span id="cb19-7"><a href="" aria-label="7"></a><span class="fu">ggplot</span>(</span>
+<span id="cb19-8"><a href="" aria-label="8"></a>  ten_scatter,</span>
+<span id="cb19-9"><a href="" aria-label="9"></a>  <span class="fu">aes</span>(</span>
+<span id="cb19-10"><a href="" aria-label="10"></a>    <span class="at">x =</span> percent_below,</span>
+<span id="cb19-11"><a href="" aria-label="11"></a>    <span class="at">y =</span> percent_on_mastered</span>
+<span id="cb19-12"><a href="" aria-label="12"></a>  )</span>
+<span id="cb19-13"><a href="" aria-label="13"></a>) <span class="sc">+</span></span>
+<span id="cb19-14"><a href="" aria-label="14"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb19-15"><a href="" aria-label="15"></a>    <span class="at">color =</span> <span class="st">"blue"</span></span>
+<span id="cb19-16"><a href="" aria-label="16"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <h4 id="python-3">Python</h4>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="" aria-label="1"></a>ten_scatter <span class="op">=</span> ten[</span>
-<span id="cb18-2"><a href="" aria-label="2"></a>    ten[<span class="st">"percent_below"</span>].notna() <span class="op">&amp;</span></span>
-<span id="cb18-3"><a href="" aria-label="3"></a>    ten[<span class="st">"percent_on_mastered"</span>].notna()</span>
-<span id="cb18-4"><a href="" aria-label="4"></a>]</span>
-<span id="cb18-5"><a href="" aria-label="5"></a></span>
-<span id="cb18-6"><a href="" aria-label="6"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
-<span id="cb18-7"><a href="" aria-label="7"></a>plt.scatter(</span>
-<span id="cb18-8"><a href="" aria-label="8"></a>    ten_scatter[<span class="st">"percent_below"</span>],</span>
-<span id="cb18-9"><a href="" aria-label="9"></a>    ten_scatter[<span class="st">"percent_on_mastered"</span>],</span>
-<span id="cb18-10"><a href="" aria-label="10"></a>    c <span class="op">=</span> <span class="st">"blue"</span></span>
-<span id="cb18-11"><a href="" aria-label="11"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="" aria-label="1"></a>ten_scatter <span class="op">=</span> ten[</span>
+<span id="cb20-2"><a href="" aria-label="2"></a>    ten[<span class="st">"percent_below"</span>].notna() <span class="op">&amp;</span></span>
+<span id="cb20-3"><a href="" aria-label="3"></a>    ten[<span class="st">"percent_on_mastered"</span>].notna()</span>
+<span id="cb20-4"><a href="" aria-label="4"></a>]</span>
+<span id="cb20-5"><a href="" aria-label="5"></a></span>
+<span id="cb20-6"><a href="" aria-label="6"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
+<span id="cb20-7"><a href="" aria-label="7"></a>plt.scatter(</span>
+<span id="cb20-8"><a href="" aria-label="8"></a>    ten_scatter[<span class="st">"percent_below"</span>],</span>
+<span id="cb20-9"><a href="" aria-label="9"></a>    ten_scatter[<span class="st">"percent_on_mastered"</span>],</span>
+<span id="cb20-10"><a href="" aria-label="10"></a>    c <span class="op">=</span> <span class="st">"blue"</span></span>
+<span id="cb20-11"><a href="" aria-label="11"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column" style="font-size:0.72em;">
 <div style="position: relative; width: 100%; height: 420px;">
 <div class="fragment fade-in" style="position: absolute; top: 0; left: 0; width: 100%;">
@@ -1286,40 +1362,40 @@ Dr.&nbsp;Satadisha Saha Bhowmick
 <div class="columns">
 <div class="column" style="font-size:0.72em;">
 <h4 id="r-4">R</h4>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="" aria-label="1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb19-2"><a href="" aria-label="2"></a>  ten_scatter,</span>
-<span id="cb19-3"><a href="" aria-label="3"></a>  <span class="fu">aes</span>(</span>
-<span id="cb19-4"><a href="" aria-label="4"></a>    <span class="at">x =</span> percent_below,</span>
-<span id="cb19-5"><a href="" aria-label="5"></a>    <span class="at">y =</span> percent_on_mastered</span>
-<span id="cb19-6"><a href="" aria-label="6"></a>  )</span>
-<span id="cb19-7"><a href="" aria-label="7"></a>) <span class="sc">+</span></span>
-<span id="cb19-8"><a href="" aria-label="8"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb19-9"><a href="" aria-label="9"></a>  <span class="fu">geom_smooth</span>(</span>
-<span id="cb19-10"><a href="" aria-label="10"></a>    <span class="at">method =</span> <span class="st">"lm"</span>,</span>
-<span id="cb19-11"><a href="" aria-label="11"></a>    <span class="at">se =</span> <span class="cn">FALSE</span></span>
-<span id="cb19-12"><a href="" aria-label="12"></a>  ) <span class="sc">+</span></span>
-<span id="cb19-13"><a href="" aria-label="13"></a>  <span class="fu">labs</span>(</span>
-<span id="cb19-14"><a href="" aria-label="14"></a>    <span class="at">title =</span> <span class="st">"Percent Below vs. Percent On Track or Mastered"</span>,</span>
-<span id="cb19-15"><a href="" aria-label="15"></a>    <span class="at">x =</span> <span class="st">"Percent Below"</span>,</span>
-<span id="cb19-16"><a href="" aria-label="16"></a>    <span class="at">y =</span> <span class="st">"Percent On Track or Mastered"</span></span>
-<span id="cb19-17"><a href="" aria-label="17"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="" aria-label="1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb21-2"><a href="" aria-label="2"></a>  ten_scatter,</span>
+<span id="cb21-3"><a href="" aria-label="3"></a>  <span class="fu">aes</span>(</span>
+<span id="cb21-4"><a href="" aria-label="4"></a>    <span class="at">x =</span> percent_below,</span>
+<span id="cb21-5"><a href="" aria-label="5"></a>    <span class="at">y =</span> percent_on_mastered</span>
+<span id="cb21-6"><a href="" aria-label="6"></a>  )</span>
+<span id="cb21-7"><a href="" aria-label="7"></a>) <span class="sc">+</span></span>
+<span id="cb21-8"><a href="" aria-label="8"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb21-9"><a href="" aria-label="9"></a>  <span class="fu">geom_smooth</span>(</span>
+<span id="cb21-10"><a href="" aria-label="10"></a>    <span class="at">method =</span> <span class="st">"lm"</span>,</span>
+<span id="cb21-11"><a href="" aria-label="11"></a>    <span class="at">se =</span> <span class="cn">FALSE</span></span>
+<span id="cb21-12"><a href="" aria-label="12"></a>  ) <span class="sc">+</span></span>
+<span id="cb21-13"><a href="" aria-label="13"></a>  <span class="fu">labs</span>(</span>
+<span id="cb21-14"><a href="" aria-label="14"></a>    <span class="at">title =</span> <span class="st">"Percent Below vs. Percent On Track or Mastered"</span>,</span>
+<span id="cb21-15"><a href="" aria-label="15"></a>    <span class="at">x =</span> <span class="st">"Percent Below"</span>,</span>
+<span id="cb21-16"><a href="" aria-label="16"></a>    <span class="at">y =</span> <span class="st">"Percent On Track or Mastered"</span></span>
+<span id="cb21-17"><a href="" aria-label="17"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <h4 id="python-4">Python</h4>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="" aria-label="1"></a>x <span class="op">=</span> ten_scatter[<span class="st">"percent_below"</span>]</span>
-<span id="cb20-2"><a href="" aria-label="2"></a>y <span class="op">=</span> ten_scatter[<span class="st">"percent_on_mastered"</span>]</span>
-<span id="cb20-3"><a href="" aria-label="3"></a></span>
-<span id="cb20-4"><a href="" aria-label="4"></a><span class="co"># Fit a straight line</span></span>
-<span id="cb20-5"><a href="" aria-label="5"></a>slope, intercept <span class="op">=</span> np.polyfit(x, y, <span class="dv">1</span>)</span>
-<span id="cb20-6"><a href="" aria-label="6"></a></span>
-<span id="cb20-7"><a href="" aria-label="7"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
-<span id="cb20-8"><a href="" aria-label="8"></a>plt.scatter(x, y)</span>
-<span id="cb20-9"><a href="" aria-label="9"></a>plt.plot(</span>
-<span id="cb20-10"><a href="" aria-label="10"></a>    x,</span>
-<span id="cb20-11"><a href="" aria-label="11"></a>    slope <span class="op">*</span> x <span class="op">+</span> intercept</span>
-<span id="cb20-12"><a href="" aria-label="12"></a>)</span>
-<span id="cb20-13"><a href="" aria-label="13"></a></span>
-<span id="cb20-14"><a href="" aria-label="14"></a>plt.title(<span class="st">"Percent Below vs. Percent On Track or Mastered"</span>)</span>
-<span id="cb20-15"><a href="" aria-label="15"></a>plt.xlabel(<span class="st">"Percent Below"</span>)</span>
-<span id="cb20-16"><a href="" aria-label="16"></a>plt.ylabel(<span class="st">"Percent On Track or Mastered"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="" aria-label="1"></a>x <span class="op">=</span> ten_scatter[<span class="st">"percent_below"</span>]</span>
+<span id="cb22-2"><a href="" aria-label="2"></a>y <span class="op">=</span> ten_scatter[<span class="st">"percent_on_mastered"</span>]</span>
+<span id="cb22-3"><a href="" aria-label="3"></a></span>
+<span id="cb22-4"><a href="" aria-label="4"></a><span class="co"># Fit a straight line</span></span>
+<span id="cb22-5"><a href="" aria-label="5"></a>slope, intercept <span class="op">=</span> np.polyfit(x, y, <span class="dv">1</span>)</span>
+<span id="cb22-6"><a href="" aria-label="6"></a></span>
+<span id="cb22-7"><a href="" aria-label="7"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
+<span id="cb22-8"><a href="" aria-label="8"></a>plt.scatter(x, y)</span>
+<span id="cb22-9"><a href="" aria-label="9"></a>plt.plot(</span>
+<span id="cb22-10"><a href="" aria-label="10"></a>    x,</span>
+<span id="cb22-11"><a href="" aria-label="11"></a>    slope <span class="op">*</span> x <span class="op">+</span> intercept</span>
+<span id="cb22-12"><a href="" aria-label="12"></a>)</span>
+<span id="cb22-13"><a href="" aria-label="13"></a></span>
+<span id="cb22-14"><a href="" aria-label="14"></a>plt.title(<span class="st">"Percent Below vs. Percent On Track or Mastered"</span>)</span>
+<span id="cb22-15"><a href="" aria-label="15"></a>plt.xlabel(<span class="st">"Percent Below"</span>)</span>
+<span id="cb22-16"><a href="" aria-label="16"></a>plt.ylabel(<span class="st">"Percent On Track or Mastered"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column" style="font-size:0.72em;">
 <div style="position: relative; width: 100%; height: 420px;">
 <div class="fragment fade-in" style="position: absolute; top: 0; left: 0; width: 100%;">
@@ -1345,26 +1421,26 @@ Dr.&nbsp;Satadisha Saha Bhowmick
 <div class="columns">
 <div class="column" style="font-size:0.72em;">
 <h4 id="r-5">R</h4>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="" aria-label="1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb21-2"><a href="" aria-label="2"></a>  ten_scatter,</span>
-<span id="cb21-3"><a href="" aria-label="3"></a>  <span class="fu">aes</span>(</span>
-<span id="cb21-4"><a href="" aria-label="4"></a>    <span class="at">x =</span> percent_below,</span>
-<span id="cb21-5"><a href="" aria-label="5"></a>    <span class="at">y =</span> percent_on_mastered,</span>
-<span id="cb21-6"><a href="" aria-label="6"></a>    <span class="at">color =</span> overall_subject</span>
-<span id="cb21-7"><a href="" aria-label="7"></a>  )</span>
-<span id="cb21-8"><a href="" aria-label="8"></a>) <span class="sc">+</span></span>
-<span id="cb21-9"><a href="" aria-label="9"></a>  <span class="fu">geom_point</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="" aria-label="1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb23-2"><a href="" aria-label="2"></a>  ten_scatter,</span>
+<span id="cb23-3"><a href="" aria-label="3"></a>  <span class="fu">aes</span>(</span>
+<span id="cb23-4"><a href="" aria-label="4"></a>    <span class="at">x =</span> percent_below,</span>
+<span id="cb23-5"><a href="" aria-label="5"></a>    <span class="at">y =</span> percent_on_mastered,</span>
+<span id="cb23-6"><a href="" aria-label="6"></a>    <span class="at">color =</span> overall_subject</span>
+<span id="cb23-7"><a href="" aria-label="7"></a>  )</span>
+<span id="cb23-8"><a href="" aria-label="8"></a>) <span class="sc">+</span></span>
+<span id="cb23-9"><a href="" aria-label="9"></a>  <span class="fu">geom_point</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <h4 id="python-5">Python</h4>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="" aria-label="1"></a><span class="cf">for</span> subject <span class="kw">in</span> ten_scatter[<span class="st">"overall_subject"</span>].unique():</span>
-<span id="cb22-2"><a href="" aria-label="2"></a>    subject_data <span class="op">=</span> ten_scatter[</span>
-<span id="cb22-3"><a href="" aria-label="3"></a>        ten_scatter[<span class="st">"overall_subject"</span>] <span class="op">==</span> subject</span>
-<span id="cb22-4"><a href="" aria-label="4"></a>    ]</span>
-<span id="cb22-5"><a href="" aria-label="5"></a></span>
-<span id="cb22-6"><a href="" aria-label="6"></a>    plt.scatter(</span>
-<span id="cb22-7"><a href="" aria-label="7"></a>        subject_data[<span class="st">"percent_below"</span>],</span>
-<span id="cb22-8"><a href="" aria-label="8"></a>        subject_data[<span class="st">"percent_on_mastered"</span>],</span>
-<span id="cb22-9"><a href="" aria-label="9"></a>        label<span class="op">=</span>subject</span>
-<span id="cb22-10"><a href="" aria-label="10"></a>    )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="" aria-label="1"></a><span class="cf">for</span> subject <span class="kw">in</span> ten_scatter[<span class="st">"overall_subject"</span>].unique():</span>
+<span id="cb24-2"><a href="" aria-label="2"></a>    subject_data <span class="op">=</span> ten_scatter[</span>
+<span id="cb24-3"><a href="" aria-label="3"></a>        ten_scatter[<span class="st">"overall_subject"</span>] <span class="op">==</span> subject</span>
+<span id="cb24-4"><a href="" aria-label="4"></a>    ]</span>
+<span id="cb24-5"><a href="" aria-label="5"></a></span>
+<span id="cb24-6"><a href="" aria-label="6"></a>    plt.scatter(</span>
+<span id="cb24-7"><a href="" aria-label="7"></a>        subject_data[<span class="st">"percent_below"</span>],</span>
+<span id="cb24-8"><a href="" aria-label="8"></a>        subject_data[<span class="st">"percent_on_mastered"</span>],</span>
+<span id="cb24-9"><a href="" aria-label="9"></a>        label<span class="op">=</span>subject</span>
+<span id="cb24-10"><a href="" aria-label="10"></a>    )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column" style="font-size:0.72em;">
 <div style="position: relative; width: 100%; height: 420px;">
 <div class="fragment fade-in" style="position: absolute; top: 0; left: 0; width: 100%;">
@@ -1433,29 +1509,29 @@ Dr.&nbsp;Satadisha Saha Bhowmick
 <h2>Faceting in R</h2>
 <div class="columns">
 <div class="column" style="font-size:0.72em;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="" aria-label="1"></a></span>
-<span id="cb23-2"><a href="" aria-label="2"></a>ten_facet <span class="ot">&lt;-</span> ten <span class="sc">%&gt;%</span></span>
-<span id="cb23-3"><a href="" aria-label="3"></a>  <span class="fu">filter</span>(</span>
-<span id="cb23-4"><a href="" aria-label="4"></a>    <span class="sc">!</span><span class="fu">is.na</span>(percent_below),</span>
-<span id="cb23-5"><a href="" aria-label="5"></a>    <span class="sc">!</span><span class="fu">is.na</span>(percent_on_mastered),</span>
-<span id="cb23-6"><a href="" aria-label="6"></a>    <span class="sc">!</span><span class="fu">is.na</span>(overall_subject),</span>
-<span id="cb23-7"><a href="" aria-label="7"></a>    <span class="fu">trimws</span>(overall_subject) <span class="sc">!=</span> <span class="st">""</span></span>
-<span id="cb23-8"><a href="" aria-label="8"></a>  )</span>
-<span id="cb23-9"><a href="" aria-label="9"></a></span>
-<span id="cb23-10"><a href="" aria-label="10"></a><span class="fu">ggplot</span>(</span>
-<span id="cb23-11"><a href="" aria-label="11"></a>  ten_facet,</span>
-<span id="cb23-12"><a href="" aria-label="12"></a>  <span class="fu">aes</span>(</span>
-<span id="cb23-13"><a href="" aria-label="13"></a>    <span class="at">x =</span> percent_below,</span>
-<span id="cb23-14"><a href="" aria-label="14"></a>    <span class="at">y =</span> percent_on_mastered</span>
-<span id="cb23-15"><a href="" aria-label="15"></a>  )</span>
-<span id="cb23-16"><a href="" aria-label="16"></a>) <span class="sc">+</span></span>
-<span id="cb23-17"><a href="" aria-label="17"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb23-18"><a href="" aria-label="18"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>overall_subject) <span class="sc">+</span></span>
-<span id="cb23-19"><a href="" aria-label="19"></a>  <span class="fu">labs</span>(</span>
-<span id="cb23-20"><a href="" aria-label="20"></a>    <span class="at">title =</span> <span class="st">"Achievement Outcomes by Subject"</span>,</span>
-<span id="cb23-21"><a href="" aria-label="21"></a>    <span class="at">x =</span> <span class="st">"Percent Below"</span>,</span>
-<span id="cb23-22"><a href="" aria-label="22"></a>    <span class="at">y =</span> <span class="st">"Percent On Track or Mastered"</span></span>
-<span id="cb23-23"><a href="" aria-label="23"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="" aria-label="1"></a></span>
+<span id="cb25-2"><a href="" aria-label="2"></a>ten_facet <span class="ot">&lt;-</span> ten <span class="sc">%&gt;%</span></span>
+<span id="cb25-3"><a href="" aria-label="3"></a>  <span class="fu">filter</span>(</span>
+<span id="cb25-4"><a href="" aria-label="4"></a>    <span class="sc">!</span><span class="fu">is.na</span>(percent_below),</span>
+<span id="cb25-5"><a href="" aria-label="5"></a>    <span class="sc">!</span><span class="fu">is.na</span>(percent_on_mastered),</span>
+<span id="cb25-6"><a href="" aria-label="6"></a>    <span class="sc">!</span><span class="fu">is.na</span>(overall_subject),</span>
+<span id="cb25-7"><a href="" aria-label="7"></a>    <span class="fu">trimws</span>(overall_subject) <span class="sc">!=</span> <span class="st">""</span></span>
+<span id="cb25-8"><a href="" aria-label="8"></a>  )</span>
+<span id="cb25-9"><a href="" aria-label="9"></a></span>
+<span id="cb25-10"><a href="" aria-label="10"></a><span class="fu">ggplot</span>(</span>
+<span id="cb25-11"><a href="" aria-label="11"></a>  ten_facet,</span>
+<span id="cb25-12"><a href="" aria-label="12"></a>  <span class="fu">aes</span>(</span>
+<span id="cb25-13"><a href="" aria-label="13"></a>    <span class="at">x =</span> percent_below,</span>
+<span id="cb25-14"><a href="" aria-label="14"></a>    <span class="at">y =</span> percent_on_mastered</span>
+<span id="cb25-15"><a href="" aria-label="15"></a>  )</span>
+<span id="cb25-16"><a href="" aria-label="16"></a>) <span class="sc">+</span></span>
+<span id="cb25-17"><a href="" aria-label="17"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb25-18"><a href="" aria-label="18"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>overall_subject) <span class="sc">+</span></span>
+<span id="cb25-19"><a href="" aria-label="19"></a>  <span class="fu">labs</span>(</span>
+<span id="cb25-20"><a href="" aria-label="20"></a>    <span class="at">title =</span> <span class="st">"Achievement Outcomes by Subject"</span>,</span>
+<span id="cb25-21"><a href="" aria-label="21"></a>    <span class="at">x =</span> <span class="st">"Percent Below"</span>,</span>
+<span id="cb25-22"><a href="" aria-label="22"></a>    <span class="at">y =</span> <span class="st">"Percent On Track or Mastered"</span></span>
+<span id="cb25-23"><a href="" aria-label="23"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column" style="font-size:0.72em;">
 <div style="height:400px; display:flex; align-items:center; justify-content:center;">
 <p><img src="images/facet-R.png" style="width: 100%; height: 400px; object-fit: contain;"></p>
@@ -1482,44 +1558,44 @@ Dr.&nbsp;Satadisha Saha Bhowmick
 <h2>Subplot Implementation in <code>matplotlib</code></h2>
 <div class="columns">
 <div class="column" style="font-size:0.72em;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="" aria-label="1"></a></span>
-<span id="cb24-2"><a href="" aria-label="2"></a>ten_facet <span class="op">=</span> ten[</span>
-<span id="cb24-3"><a href="" aria-label="3"></a>    ten[<span class="st">"percent_below"</span>].notna() <span class="op">&amp;</span></span>
-<span id="cb24-4"><a href="" aria-label="4"></a>    ten[<span class="st">"percent_on_mastered"</span>].notna() <span class="op">&amp;</span></span>
-<span id="cb24-5"><a href="" aria-label="5"></a>    ten[<span class="st">"overall_subject"</span>].notna() <span class="op">&amp;</span></span>
-<span id="cb24-6"><a href="" aria-label="6"></a>    (ten[<span class="st">"overall_subject"</span>].<span class="bu">str</span>.strip() <span class="op">!=</span> <span class="st">""</span>)</span>
-<span id="cb24-7"><a href="" aria-label="7"></a>]</span>
-<span id="cb24-8"><a href="" aria-label="8"></a>subjects <span class="op">=</span> ten_facet[<span class="st">"overall_subject"</span>].unique()</span>
-<span id="cb24-9"><a href="" aria-label="9"></a></span>
-<span id="cb24-10"><a href="" aria-label="10"></a>fig, axes <span class="op">=</span> plt.subplots(</span>
-<span id="cb24-11"><a href="" aria-label="11"></a>    <span class="dv">2</span>,</span>
-<span id="cb24-12"><a href="" aria-label="12"></a>    <span class="dv">2</span>,</span>
-<span id="cb24-13"><a href="" aria-label="13"></a>    figsize<span class="op">=</span>(<span class="dv">5</span> <span class="op">*</span> <span class="bu">len</span>(subjects), <span class="dv">4</span>),</span>
-<span id="cb24-14"><a href="" aria-label="14"></a>    sharex<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb24-15"><a href="" aria-label="15"></a>    sharey<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb24-16"><a href="" aria-label="16"></a>    gridspec_kw<span class="op">=</span>{</span>
-<span id="cb24-17"><a href="" aria-label="17"></a>        <span class="st">"wspace"</span>: <span class="fl">0.4</span>,</span>
-<span id="cb24-18"><a href="" aria-label="18"></a>        <span class="st">"hspace"</span>: <span class="fl">0.5</span></span>
-<span id="cb24-19"><a href="" aria-label="19"></a>    }</span>
-<span id="cb24-20"><a href="" aria-label="20"></a>)</span>
-<span id="cb24-21"><a href="" aria-label="21"></a>axes <span class="op">=</span> axes.flatten()</span>
-<span id="cb24-22"><a href="" aria-label="22"></a></span>
-<span id="cb24-23"><a href="" aria-label="23"></a><span class="cf">for</span> ax, subject <span class="kw">in</span> <span class="bu">zip</span>(axes, subjects):</span>
-<span id="cb24-24"><a href="" aria-label="24"></a></span>
-<span id="cb24-25"><a href="" aria-label="25"></a>    subject_data <span class="op">=</span> ten_facet[</span>
-<span id="cb24-26"><a href="" aria-label="26"></a>        ten_facet[<span class="st">"overall_subject"</span>] <span class="op">==</span> subject</span>
-<span id="cb24-27"><a href="" aria-label="27"></a>    ]</span>
-<span id="cb24-28"><a href="" aria-label="28"></a></span>
-<span id="cb24-29"><a href="" aria-label="29"></a>    ax.scatter(</span>
-<span id="cb24-30"><a href="" aria-label="30"></a>        subject_data[<span class="st">"percent_below"</span>],</span>
-<span id="cb24-31"><a href="" aria-label="31"></a>        subject_data[<span class="st">"percent_on_mastered"</span>]</span>
-<span id="cb24-32"><a href="" aria-label="32"></a>    )</span>
-<span id="cb24-33"><a href="" aria-label="33"></a></span>
-<span id="cb24-34"><a href="" aria-label="34"></a>    ax.set_title(subject)</span>
-<span id="cb24-35"><a href="" aria-label="35"></a>    ax.set_xlabel(<span class="st">"% Below"</span>)</span>
-<span id="cb24-36"><a href="" aria-label="36"></a>    ax.set_ylabel(<span class="st">"% On-Track/Mastered"</span>)</span>
-<span id="cb24-37"><a href="" aria-label="37"></a></span>
-<span id="cb24-38"><a href="" aria-label="38"></a>fig.suptitle(<span class="st">"Achievement Outcomes by Subject"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="" aria-label="1"></a></span>
+<span id="cb26-2"><a href="" aria-label="2"></a>ten_facet <span class="op">=</span> ten[</span>
+<span id="cb26-3"><a href="" aria-label="3"></a>    ten[<span class="st">"percent_below"</span>].notna() <span class="op">&amp;</span></span>
+<span id="cb26-4"><a href="" aria-label="4"></a>    ten[<span class="st">"percent_on_mastered"</span>].notna() <span class="op">&amp;</span></span>
+<span id="cb26-5"><a href="" aria-label="5"></a>    ten[<span class="st">"overall_subject"</span>].notna() <span class="op">&amp;</span></span>
+<span id="cb26-6"><a href="" aria-label="6"></a>    (ten[<span class="st">"overall_subject"</span>].<span class="bu">str</span>.strip() <span class="op">!=</span> <span class="st">""</span>)</span>
+<span id="cb26-7"><a href="" aria-label="7"></a>]</span>
+<span id="cb26-8"><a href="" aria-label="8"></a>subjects <span class="op">=</span> ten_facet[<span class="st">"overall_subject"</span>].unique()</span>
+<span id="cb26-9"><a href="" aria-label="9"></a></span>
+<span id="cb26-10"><a href="" aria-label="10"></a>fig, axes <span class="op">=</span> plt.subplots(</span>
+<span id="cb26-11"><a href="" aria-label="11"></a>    <span class="dv">2</span>,</span>
+<span id="cb26-12"><a href="" aria-label="12"></a>    <span class="dv">2</span>,</span>
+<span id="cb26-13"><a href="" aria-label="13"></a>    figsize<span class="op">=</span>(<span class="dv">5</span> <span class="op">*</span> <span class="bu">len</span>(subjects), <span class="dv">4</span>),</span>
+<span id="cb26-14"><a href="" aria-label="14"></a>    sharex<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb26-15"><a href="" aria-label="15"></a>    sharey<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb26-16"><a href="" aria-label="16"></a>    gridspec_kw<span class="op">=</span>{</span>
+<span id="cb26-17"><a href="" aria-label="17"></a>        <span class="st">"wspace"</span>: <span class="fl">0.4</span>,</span>
+<span id="cb26-18"><a href="" aria-label="18"></a>        <span class="st">"hspace"</span>: <span class="fl">0.5</span></span>
+<span id="cb26-19"><a href="" aria-label="19"></a>    }</span>
+<span id="cb26-20"><a href="" aria-label="20"></a>)</span>
+<span id="cb26-21"><a href="" aria-label="21"></a>axes <span class="op">=</span> axes.flatten()</span>
+<span id="cb26-22"><a href="" aria-label="22"></a></span>
+<span id="cb26-23"><a href="" aria-label="23"></a><span class="cf">for</span> ax, subject <span class="kw">in</span> <span class="bu">zip</span>(axes, subjects):</span>
+<span id="cb26-24"><a href="" aria-label="24"></a></span>
+<span id="cb26-25"><a href="" aria-label="25"></a>    subject_data <span class="op">=</span> ten_facet[</span>
+<span id="cb26-26"><a href="" aria-label="26"></a>        ten_facet[<span class="st">"overall_subject"</span>] <span class="op">==</span> subject</span>
+<span id="cb26-27"><a href="" aria-label="27"></a>    ]</span>
+<span id="cb26-28"><a href="" aria-label="28"></a></span>
+<span id="cb26-29"><a href="" aria-label="29"></a>    ax.scatter(</span>
+<span id="cb26-30"><a href="" aria-label="30"></a>        subject_data[<span class="st">"percent_below"</span>],</span>
+<span id="cb26-31"><a href="" aria-label="31"></a>        subject_data[<span class="st">"percent_on_mastered"</span>]</span>
+<span id="cb26-32"><a href="" aria-label="32"></a>    )</span>
+<span id="cb26-33"><a href="" aria-label="33"></a></span>
+<span id="cb26-34"><a href="" aria-label="34"></a>    ax.set_title(subject)</span>
+<span id="cb26-35"><a href="" aria-label="35"></a>    ax.set_xlabel(<span class="st">"% Below"</span>)</span>
+<span id="cb26-36"><a href="" aria-label="36"></a>    ax.set_ylabel(<span class="st">"% On-Track/Mastered"</span>)</span>
+<span id="cb26-37"><a href="" aria-label="37"></a></span>
+<span id="cb26-38"><a href="" aria-label="38"></a>fig.suptitle(<span class="st">"Achievement Outcomes by Subject"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column" style="font-size:0.72em;">
 <div style="height:400px; display:flex; align-items:center; justify-content:center;">
 <p><img src="images/facet-Python.png" style="width: 100%; height: 1200px; object-fit: contain;"></p>
@@ -1534,43 +1610,43 @@ Dr.&nbsp;Satadisha Saha Bhowmick
 </div>
 <div class="columns">
 <div class="column" style="font-size:0.72em;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="" aria-label="1"></a><span class="fu">load</span>(<span class="st">"data/PluckData.RData"</span>)</span>
-<span id="cb25-2"><a href="" aria-label="2"></a></span>
-<span id="cb25-3"><a href="" aria-label="3"></a><span class="co"># let's make a custom scale with breaks that align with our letter grade encoding</span></span>
-<span id="cb25-4"><a href="" aria-label="4"></a><span class="co"># sequence and round to get appropriate breaks</span></span>
-<span id="cb25-5"><a href="" aria-label="5"></a>grade_breaks <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">seq</span>(<span class="fl">0.33</span>, <span class="fl">4.00</span>, <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>), <span class="dv">3</span>)</span>
-<span id="cb25-6"><a href="" aria-label="6"></a>x_axis <span class="ot">&lt;-</span> <span class="fu">scale_x_continuous</span>(</span>
-<span id="cb25-7"><a href="" aria-label="7"></a>    <span class="at">name =</span> <span class="st">"Letter Grade"</span>,</span>
-<span id="cb25-8"><a href="" aria-label="8"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="fl">0.00</span>, <span class="fl">4.00</span>), </span>
-<span id="cb25-9"><a href="" aria-label="9"></a>    <span class="at">breaks =</span> grade_breaks,</span>
-<span id="cb25-10"><a href="" aria-label="10"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"F"</span>, <span class="st">"D-"</span>, <span class="st">"D"</span>, <span class="st">"D+"</span>, <span class="st">"C-"</span>, <span class="st">"C"</span>, <span class="st">"C+"</span>, <span class="st">"B-"</span>, <span class="st">"B"</span>, <span class="st">"B+"</span>, <span class="st">"A-"</span>, <span class="st">"A"</span>)</span>
-<span id="cb25-11"><a href="" aria-label="11"></a>  )</span>
-<span id="cb25-12"><a href="" aria-label="12"></a></span>
-<span id="cb25-13"><a href="" aria-label="13"></a><span class="co"># theme customizes the non-data components of your plot</span></span>
-<span id="cb25-14"><a href="" aria-label="14"></a>my_theme <span class="ot">&lt;-</span> <span class="fu">theme</span>(</span>
-<span id="cb25-15"><a href="" aria-label="15"></a>    <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>),</span>
-<span id="cb25-16"><a href="" aria-label="16"></a>    <span class="co"># axis.text.x = element_text(angle = 45, hjust = 1),</span></span>
-<span id="cb25-17"><a href="" aria-label="17"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">18</span>),</span>
-<span id="cb25-18"><a href="" aria-label="18"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(</span>
-<span id="cb25-19"><a href="" aria-label="19"></a>    <span class="at">size =</span> <span class="dv">20</span>,</span>
-<span id="cb25-20"><a href="" aria-label="20"></a>    <span class="at">hjust =</span> <span class="fl">0.50</span></span>
-<span id="cb25-21"><a href="" aria-label="21"></a>    )</span>
-<span id="cb25-22"><a href="" aria-label="22"></a>  )</span>
-<span id="cb25-23"><a href="" aria-label="23"></a></span>
-<span id="cb25-24"><a href="" aria-label="24"></a><span class="co"># Create histogram as *first* layer</span></span>
-<span id="cb25-25"><a href="" aria-label="25"></a><span class="fu">ggplot</span>(<span class="at">data =</span> dataset, <span class="fu">aes</span>(<span class="at">x =</span> GPA)) <span class="sc">+</span></span>
-<span id="cb25-26"><a href="" aria-label="26"></a>  <span class="fu">geom_histogram</span>( <span class="co"># first layer</span></span>
-<span id="cb25-27"><a href="" aria-label="27"></a>    <span class="at">breaks =</span> grade_breaks,</span>
-<span id="cb25-28"><a href="" aria-label="28"></a>    <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"lightgrey"</span></span>
-<span id="cb25-29"><a href="" aria-label="29"></a>  )<span class="sc">+</span></span>
-<span id="cb25-30"><a href="" aria-label="30"></a>  <span class="fu">geom_boxplot</span>( <span class="co"># second layer</span></span>
-<span id="cb25-31"><a href="" aria-label="31"></a>    <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"lightgrey"</span>,</span>
-<span id="cb25-32"><a href="" aria-label="32"></a>    <span class="fu">aes</span>(<span class="at">y =</span> <span class="sc">-</span><span class="dv">4</span>), <span class="at">width =</span> <span class="dv">3</span></span>
-<span id="cb25-33"><a href="" aria-label="33"></a>  )<span class="sc">+</span> </span>
-<span id="cb25-34"><a href="" aria-label="34"></a>  <span class="fu">geom_point</span>( <span class="co"># third layer</span></span>
-<span id="cb25-35"><a href="" aria-label="35"></a>    <span class="fu">aes</span>(<span class="at">y =</span> <span class="sc">-</span><span class="dv">4</span>), <span class="at">color =</span> <span class="st">"black"</span> <span class="co"># notice we used `color` rather than `fill`</span></span>
-<span id="cb25-36"><a href="" aria-label="36"></a>  ) <span class="sc">+</span> x_axis <span class="sc">+</span> my_theme <span class="sc">+</span></span>
-<span id="cb25-37"><a href="" aria-label="37"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Frequency"</span>, <span class="at">title =</span> <span class="st">"Letter Grade Distribution"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="" aria-label="1"></a><span class="fu">load</span>(<span class="st">"data/PluckData.RData"</span>)</span>
+<span id="cb27-2"><a href="" aria-label="2"></a></span>
+<span id="cb27-3"><a href="" aria-label="3"></a><span class="co"># let's make a custom scale with breaks that align with our letter grade encoding</span></span>
+<span id="cb27-4"><a href="" aria-label="4"></a><span class="co"># sequence and round to get appropriate breaks</span></span>
+<span id="cb27-5"><a href="" aria-label="5"></a>grade_breaks <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">seq</span>(<span class="fl">0.33</span>, <span class="fl">4.00</span>, <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>), <span class="dv">3</span>)</span>
+<span id="cb27-6"><a href="" aria-label="6"></a>x_axis <span class="ot">&lt;-</span> <span class="fu">scale_x_continuous</span>(</span>
+<span id="cb27-7"><a href="" aria-label="7"></a>    <span class="at">name =</span> <span class="st">"Letter Grade"</span>,</span>
+<span id="cb27-8"><a href="" aria-label="8"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="fl">0.00</span>, <span class="fl">4.00</span>), </span>
+<span id="cb27-9"><a href="" aria-label="9"></a>    <span class="at">breaks =</span> grade_breaks,</span>
+<span id="cb27-10"><a href="" aria-label="10"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"F"</span>, <span class="st">"D-"</span>, <span class="st">"D"</span>, <span class="st">"D+"</span>, <span class="st">"C-"</span>, <span class="st">"C"</span>, <span class="st">"C+"</span>, <span class="st">"B-"</span>, <span class="st">"B"</span>, <span class="st">"B+"</span>, <span class="st">"A-"</span>, <span class="st">"A"</span>)</span>
+<span id="cb27-11"><a href="" aria-label="11"></a>  )</span>
+<span id="cb27-12"><a href="" aria-label="12"></a></span>
+<span id="cb27-13"><a href="" aria-label="13"></a><span class="co"># theme customizes the non-data components of your plot</span></span>
+<span id="cb27-14"><a href="" aria-label="14"></a>my_theme <span class="ot">&lt;-</span> <span class="fu">theme</span>(</span>
+<span id="cb27-15"><a href="" aria-label="15"></a>    <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>),</span>
+<span id="cb27-16"><a href="" aria-label="16"></a>    <span class="co"># axis.text.x = element_text(angle = 45, hjust = 1),</span></span>
+<span id="cb27-17"><a href="" aria-label="17"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">18</span>),</span>
+<span id="cb27-18"><a href="" aria-label="18"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(</span>
+<span id="cb27-19"><a href="" aria-label="19"></a>    <span class="at">size =</span> <span class="dv">20</span>,</span>
+<span id="cb27-20"><a href="" aria-label="20"></a>    <span class="at">hjust =</span> <span class="fl">0.50</span></span>
+<span id="cb27-21"><a href="" aria-label="21"></a>    )</span>
+<span id="cb27-22"><a href="" aria-label="22"></a>  )</span>
+<span id="cb27-23"><a href="" aria-label="23"></a></span>
+<span id="cb27-24"><a href="" aria-label="24"></a><span class="co"># Create histogram as *first* layer</span></span>
+<span id="cb27-25"><a href="" aria-label="25"></a><span class="fu">ggplot</span>(<span class="at">data =</span> dataset, <span class="fu">aes</span>(<span class="at">x =</span> GPA)) <span class="sc">+</span></span>
+<span id="cb27-26"><a href="" aria-label="26"></a>  <span class="fu">geom_histogram</span>( <span class="co"># first layer</span></span>
+<span id="cb27-27"><a href="" aria-label="27"></a>    <span class="at">breaks =</span> grade_breaks,</span>
+<span id="cb27-28"><a href="" aria-label="28"></a>    <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"lightgrey"</span></span>
+<span id="cb27-29"><a href="" aria-label="29"></a>  )<span class="sc">+</span></span>
+<span id="cb27-30"><a href="" aria-label="30"></a>  <span class="fu">geom_boxplot</span>( <span class="co"># second layer</span></span>
+<span id="cb27-31"><a href="" aria-label="31"></a>    <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"lightgrey"</span>,</span>
+<span id="cb27-32"><a href="" aria-label="32"></a>    <span class="fu">aes</span>(<span class="at">y =</span> <span class="sc">-</span><span class="dv">4</span>), <span class="at">width =</span> <span class="dv">3</span></span>
+<span id="cb27-33"><a href="" aria-label="33"></a>  )<span class="sc">+</span> </span>
+<span id="cb27-34"><a href="" aria-label="34"></a>  <span class="fu">geom_point</span>( <span class="co"># third layer</span></span>
+<span id="cb27-35"><a href="" aria-label="35"></a>    <span class="fu">aes</span>(<span class="at">y =</span> <span class="sc">-</span><span class="dv">4</span>), <span class="at">color =</span> <span class="st">"black"</span> <span class="co"># notice we used `color` rather than `fill`</span></span>
+<span id="cb27-36"><a href="" aria-label="36"></a>  ) <span class="sc">+</span> x_axis <span class="sc">+</span> my_theme <span class="sc">+</span></span>
+<span id="cb27-37"><a href="" aria-label="37"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Frequency"</span>, <span class="at">title =</span> <span class="st">"Letter Grade Distribution"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column" style="font-size:0.72em;">
 <div style="position: relative; width: 100%; height: 420px;">
 <div class="fragment fade-in" style="position: absolute; top: -5; left: 0; width: 100%;">
@@ -1597,103 +1673,120 @@ Dr.&nbsp;Satadisha Saha Bhowmick
 <h2>Layering in Matplotlib</h2>
 <div class="columns">
 <div class="column" style="font-size:0.72em;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="" aria-label="1"></a><span class="im">from</span> matplotlib.ticker <span class="im">import</span> FixedLocator</span>
-<span id="cb26-2"><a href="" aria-label="2"></a></span>
-<span id="cb26-3"><a href="" aria-label="3"></a>dataset <span class="op">=</span> pd.read_csv(<span class="st">"data/pluckclean_2.csv"</span>)</span>
-<span id="cb26-4"><a href="" aria-label="4"></a><span class="co"># Remove missing GPA values explicitly</span></span>
-<span id="cb26-5"><a href="" aria-label="5"></a>gpa <span class="op">=</span> dataset[<span class="st">"GPA"</span>].dropna()</span>
-<span id="cb26-6"><a href="" aria-label="6"></a></span>
-<span id="cb26-7"><a href="" aria-label="7"></a><span class="co"># Set up figure</span></span>
-<span id="cb26-8"><a href="" aria-label="8"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb26-9"><a href="" aria-label="9"></a></span>
-<span id="cb26-10"><a href="" aria-label="10"></a><span class="co"># Letter-grade axis</span></span>
-<span id="cb26-11"><a href="" aria-label="11"></a>grade_breaks <span class="op">=</span> np.<span class="bu">round</span>(</span>
-<span id="cb26-12"><a href="" aria-label="12"></a>    np.arange(<span class="fl">0.333</span>, <span class="fl">4.001</span>, <span class="dv">1</span> <span class="op">/</span> <span class="dv">3</span>),</span>
-<span id="cb26-13"><a href="" aria-label="13"></a>    <span class="dv">3</span></span>
-<span id="cb26-14"><a href="" aria-label="14"></a>)</span>
-<span id="cb26-15"><a href="" aria-label="15"></a>grade_labels <span class="op">=</span> [</span>
-<span id="cb26-16"><a href="" aria-label="16"></a>    <span class="st">"F"</span>, <span class="st">"D-"</span>, <span class="st">"D"</span>, <span class="st">"D+"</span>, <span class="st">"C-"</span>, <span class="st">"C"</span>,</span>
-<span id="cb26-17"><a href="" aria-label="17"></a>    <span class="st">"C+"</span>, <span class="st">"B-"</span>, <span class="st">"B"</span>, <span class="st">"B+"</span>, <span class="st">"A-"</span>, <span class="st">"A"</span></span>
-<span id="cb26-18"><a href="" aria-label="18"></a>]</span>
-<span id="cb26-19"><a href="" aria-label="19"></a></span>
-<span id="cb26-20"><a href="" aria-label="20"></a><span class="co"># Layer 1: Histogram across full GPA range</span></span>
-<span id="cb26-21"><a href="" aria-label="21"></a>hist_bins <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">4</span>, <span class="dv">11</span>)</span>
-<span id="cb26-22"><a href="" aria-label="22"></a>counts, _, _ <span class="op">=</span> ax.hist(</span>
-<span id="cb26-23"><a href="" aria-label="23"></a>    gpa,</span>
-<span id="cb26-24"><a href="" aria-label="24"></a>    bins<span class="op">=</span>hist_bins,</span>
-<span id="cb26-25"><a href="" aria-label="25"></a>    color<span class="op">=</span><span class="st">"lightgrey"</span>,</span>
-<span id="cb26-26"><a href="" aria-label="26"></a>    edgecolor<span class="op">=</span><span class="st">"black"</span></span>
-<span id="cb26-27"><a href="" aria-label="27"></a>)</span>
-<span id="cb26-28"><a href="" aria-label="28"></a></span>
-<span id="cb26-29"><a href="" aria-label="29"></a><span class="co"># Position boxplot below histogram</span></span>
-<span id="cb26-30"><a href="" aria-label="30"></a>max_count <span class="op">=</span> <span class="bu">int</span>(<span class="bu">max</span>(counts))</span>
-<span id="cb26-31"><a href="" aria-label="31"></a>box_y <span class="op">=</span> <span class="op">-</span><span class="fl">0.12</span> <span class="op">*</span> max_count</span>
-<span id="cb26-32"><a href="" aria-label="32"></a></span>
-<span id="cb26-33"><a href="" aria-label="33"></a><span class="co"># Layer 2: Boxplot</span></span>
-<span id="cb26-34"><a href="" aria-label="34"></a>ax.boxplot(</span>
-<span id="cb26-35"><a href="" aria-label="35"></a>    gpa,</span>
-<span id="cb26-36"><a href="" aria-label="36"></a>    vert<span class="op">=</span><span class="va">False</span>,</span>
-<span id="cb26-37"><a href="" aria-label="37"></a>    positions<span class="op">=</span>[box_y],</span>
-<span id="cb26-38"><a href="" aria-label="38"></a>    widths<span class="op">=</span>max_count <span class="op">*</span> <span class="fl">0.08</span>,</span>
-<span id="cb26-39"><a href="" aria-label="39"></a>    patch_artist<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb26-40"><a href="" aria-label="40"></a>    boxprops<span class="op">=</span>{</span>
-<span id="cb26-41"><a href="" aria-label="41"></a>        <span class="st">"facecolor"</span>: <span class="st">"lightgrey"</span>,</span>
-<span id="cb26-42"><a href="" aria-label="42"></a>        <span class="st">"edgecolor"</span>: <span class="st">"black"</span></span>
-<span id="cb26-43"><a href="" aria-label="43"></a>    },</span>
-<span id="cb26-44"><a href="" aria-label="44"></a>    medianprops<span class="op">=</span>{</span>
-<span id="cb26-45"><a href="" aria-label="45"></a>        <span class="st">"color"</span>: <span class="st">"black"</span></span>
-<span id="cb26-46"><a href="" aria-label="46"></a>    }</span>
-<span id="cb26-47"><a href="" aria-label="47"></a>)</span>
-<span id="cb26-48"><a href="" aria-label="48"></a></span>
-<span id="cb26-49"><a href="" aria-label="49"></a><span class="co"># Layer 3: Individual observations</span></span>
-<span id="cb26-50"><a href="" aria-label="50"></a>ax.plot(</span>
-<span id="cb26-51"><a href="" aria-label="51"></a>    gpa,</span>
-<span id="cb26-52"><a href="" aria-label="52"></a>    np.full(<span class="bu">len</span>(gpa), box_y),</span>
-<span id="cb26-53"><a href="" aria-label="53"></a>    <span class="st">"o"</span>,</span>
-<span id="cb26-54"><a href="" aria-label="54"></a>    color<span class="op">=</span><span class="st">"black"</span>,</span>
-<span id="cb26-55"><a href="" aria-label="55"></a>    markersize<span class="op">=</span><span class="dv">3</span></span>
-<span id="cb26-56"><a href="" aria-label="56"></a>)</span>
-<span id="cb26-57"><a href="" aria-label="57"></a></span>
-<span id="cb26-58"><a href="" aria-label="58"></a><span class="co"># X-axis</span></span>
-<span id="cb26-59"><a href="" aria-label="59"></a>ax.set_xlim(<span class="dv">0</span>, <span class="dv">5</span>)</span>
-<span id="cb26-60"><a href="" aria-label="60"></a>ax.set_xticks(grade_breaks)</span>
-<span id="cb26-61"><a href="" aria-label="61"></a>ax.set_xticklabels(grade_labels)</span>
-<span id="cb26-62"><a href="" aria-label="62"></a></span>
-<span id="cb26-63"><a href="" aria-label="63"></a><span class="co"># Y-axis limits: allow room for boxplot</span></span>
-<span id="cb26-64"><a href="" aria-label="64"></a>ax.set_ylim(</span>
-<span id="cb26-65"><a href="" aria-label="65"></a>    box_y <span class="op">-</span> max_count <span class="op">*</span> <span class="fl">0.08</span>,</span>
-<span id="cb26-66"><a href="" aria-label="66"></a>    max_count <span class="op">*</span> <span class="fl">1.08</span></span>
-<span id="cb26-67"><a href="" aria-label="67"></a>)</span>
-<span id="cb26-68"><a href="" aria-label="68"></a></span>
-<span id="cb26-69"><a href="" aria-label="69"></a><span class="co"># Explicitly define ONLY non-negative frequency ticks</span></span>
-<span id="cb26-70"><a href="" aria-label="70"></a>y_ticks <span class="op">=</span> np.arange(<span class="dv">0</span>, max_count <span class="op">+</span> <span class="dv">5</span>, <span class="dv">5</span>)</span>
-<span id="cb26-71"><a href="" aria-label="71"></a>ax.yaxis.set_major_locator(</span>
-<span id="cb26-72"><a href="" aria-label="72"></a>    FixedLocator(y_ticks)</span>
-<span id="cb26-73"><a href="" aria-label="73"></a>)</span>
-<span id="cb26-74"><a href="" aria-label="74"></a>ax.set_yticklabels(</span>
-<span id="cb26-75"><a href="" aria-label="75"></a>    [<span class="bu">str</span>(<span class="bu">int</span>(x)) <span class="cf">for</span> x <span class="kw">in</span> y_ticks]</span>
-<span id="cb26-76"><a href="" aria-label="76"></a>)</span>
-<span id="cb26-77"><a href="" aria-label="77"></a></span>
-<span id="cb26-78"><a href="" aria-label="78"></a><span class="co"># Labels and title</span></span>
-<span id="cb26-79"><a href="" aria-label="79"></a>ax.set_xlabel(</span>
-<span id="cb26-80"><a href="" aria-label="80"></a>    <span class="st">"Letter Grade"</span>,</span>
-<span id="cb26-81"><a href="" aria-label="81"></a>    fontsize<span class="op">=</span><span class="dv">18</span></span>
-<span id="cb26-82"><a href="" aria-label="82"></a>)</span>
-<span id="cb26-83"><a href="" aria-label="83"></a>ax.set_ylabel(</span>
-<span id="cb26-84"><a href="" aria-label="84"></a>    <span class="st">"Frequency"</span>,</span>
-<span id="cb26-85"><a href="" aria-label="85"></a>    fontsize<span class="op">=</span><span class="dv">18</span></span>
-<span id="cb26-86"><a href="" aria-label="86"></a>)</span>
-<span id="cb26-87"><a href="" aria-label="87"></a>ax.set_title(</span>
-<span id="cb26-88"><a href="" aria-label="88"></a>    <span class="st">"Letter Grade Distribution"</span>,</span>
-<span id="cb26-89"><a href="" aria-label="89"></a>    fontsize<span class="op">=</span><span class="dv">20</span></span>
-<span id="cb26-90"><a href="" aria-label="90"></a>)</span>
-<span id="cb26-91"><a href="" aria-label="91"></a>ax.tick_params(</span>
-<span id="cb26-92"><a href="" aria-label="92"></a>    axis<span class="op">=</span><span class="st">"both"</span>,</span>
-<span id="cb26-93"><a href="" aria-label="93"></a>    labelsize<span class="op">=</span><span class="dv">16</span></span>
-<span id="cb26-94"><a href="" aria-label="94"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="" aria-label="1"></a><span class="im">from</span> matplotlib.ticker <span class="im">import</span> FixedLocator</span>
+<span id="cb28-2"><a href="" aria-label="2"></a></span>
+<span id="cb28-3"><a href="" aria-label="3"></a>dataset <span class="op">=</span> pd.read_csv(<span class="st">"data/pluckclean_2.csv"</span>)</span>
+<span id="cb28-4"><a href="" aria-label="4"></a><span class="co"># Remove missing GPA values explicitly</span></span>
+<span id="cb28-5"><a href="" aria-label="5"></a>gpa <span class="op">=</span> dataset[<span class="st">"GPA"</span>].dropna()</span>
+<span id="cb28-6"><a href="" aria-label="6"></a></span>
+<span id="cb28-7"><a href="" aria-label="7"></a><span class="co"># Set up figure</span></span>
+<span id="cb28-8"><a href="" aria-label="8"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb28-9"><a href="" aria-label="9"></a></span>
+<span id="cb28-10"><a href="" aria-label="10"></a><span class="co"># Letter-grade axis</span></span>
+<span id="cb28-11"><a href="" aria-label="11"></a>grade_breaks <span class="op">=</span> np.<span class="bu">round</span>(</span>
+<span id="cb28-12"><a href="" aria-label="12"></a>    np.arange(<span class="fl">0.333</span>, <span class="fl">4.001</span>, <span class="dv">1</span> <span class="op">/</span> <span class="dv">3</span>),</span>
+<span id="cb28-13"><a href="" aria-label="13"></a>    <span class="dv">3</span></span>
+<span id="cb28-14"><a href="" aria-label="14"></a>)</span>
+<span id="cb28-15"><a href="" aria-label="15"></a>grade_labels <span class="op">=</span> [</span>
+<span id="cb28-16"><a href="" aria-label="16"></a>    <span class="st">"F"</span>, <span class="st">"D-"</span>, <span class="st">"D"</span>, <span class="st">"D+"</span>, <span class="st">"C-"</span>, <span class="st">"C"</span>,</span>
+<span id="cb28-17"><a href="" aria-label="17"></a>    <span class="st">"C+"</span>, <span class="st">"B-"</span>, <span class="st">"B"</span>, <span class="st">"B+"</span>, <span class="st">"A-"</span>, <span class="st">"A"</span></span>
+<span id="cb28-18"><a href="" aria-label="18"></a>]</span>
+<span id="cb28-19"><a href="" aria-label="19"></a></span>
+<span id="cb28-20"><a href="" aria-label="20"></a><span class="co"># Layer 1: Histogram across full GPA range</span></span>
+<span id="cb28-21"><a href="" aria-label="21"></a>hist_bins <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">4</span>, <span class="dv">11</span>)</span>
+<span id="cb28-22"><a href="" aria-label="22"></a>counts, _, _ <span class="op">=</span> ax.hist(</span>
+<span id="cb28-23"><a href="" aria-label="23"></a>    gpa,</span>
+<span id="cb28-24"><a href="" aria-label="24"></a>    bins<span class="op">=</span>hist_bins,</span>
+<span id="cb28-25"><a href="" aria-label="25"></a>    color<span class="op">=</span><span class="st">"lightgrey"</span>,</span>
+<span id="cb28-26"><a href="" aria-label="26"></a>    edgecolor<span class="op">=</span><span class="st">"black"</span></span>
+<span id="cb28-27"><a href="" aria-label="27"></a>)</span>
+<span id="cb28-28"><a href="" aria-label="28"></a></span>
+<span id="cb28-29"><a href="" aria-label="29"></a><span class="co"># Position boxplot below histogram</span></span>
+<span id="cb28-30"><a href="" aria-label="30"></a>max_count <span class="op">=</span> <span class="bu">int</span>(<span class="bu">max</span>(counts))</span>
+<span id="cb28-31"><a href="" aria-label="31"></a>box_y <span class="op">=</span> <span class="op">-</span><span class="fl">0.12</span> <span class="op">*</span> max_count</span>
+<span id="cb28-32"><a href="" aria-label="32"></a></span>
+<span id="cb28-33"><a href="" aria-label="33"></a><span class="co"># Layer 2: Boxplot</span></span>
+<span id="cb28-34"><a href="" aria-label="34"></a>ax.boxplot(</span>
+<span id="cb28-35"><a href="" aria-label="35"></a>    gpa,</span>
+<span id="cb28-36"><a href="" aria-label="36"></a>    vert<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb28-37"><a href="" aria-label="37"></a>    positions<span class="op">=</span>[box_y],</span>
+<span id="cb28-38"><a href="" aria-label="38"></a>    widths<span class="op">=</span>max_count <span class="op">*</span> <span class="fl">0.08</span>,</span>
+<span id="cb28-39"><a href="" aria-label="39"></a>    patch_artist<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb28-40"><a href="" aria-label="40"></a>    boxprops<span class="op">=</span>{</span>
+<span id="cb28-41"><a href="" aria-label="41"></a>        <span class="st">"facecolor"</span>: <span class="st">"lightgrey"</span>,</span>
+<span id="cb28-42"><a href="" aria-label="42"></a>        <span class="st">"edgecolor"</span>: <span class="st">"black"</span></span>
+<span id="cb28-43"><a href="" aria-label="43"></a>    },</span>
+<span id="cb28-44"><a href="" aria-label="44"></a>    medianprops<span class="op">=</span>{</span>
+<span id="cb28-45"><a href="" aria-label="45"></a>        <span class="st">"color"</span>: <span class="st">"black"</span></span>
+<span id="cb28-46"><a href="" aria-label="46"></a>    }</span>
+<span id="cb28-47"><a href="" aria-label="47"></a>)</span>
+<span id="cb28-48"><a href="" aria-label="48"></a></span>
+<span id="cb28-49"><a href="" aria-label="49"></a><span class="co"># Layer 3: Individual observations</span></span>
+<span id="cb28-50"><a href="" aria-label="50"></a>ax.plot(</span>
+<span id="cb28-51"><a href="" aria-label="51"></a>    gpa,</span>
+<span id="cb28-52"><a href="" aria-label="52"></a>    np.full(<span class="bu">len</span>(gpa), box_y),</span>
+<span id="cb28-53"><a href="" aria-label="53"></a>    <span class="st">"o"</span>,</span>
+<span id="cb28-54"><a href="" aria-label="54"></a>    color<span class="op">=</span><span class="st">"black"</span>,</span>
+<span id="cb28-55"><a href="" aria-label="55"></a>    markersize<span class="op">=</span><span class="dv">3</span></span>
+<span id="cb28-56"><a href="" aria-label="56"></a>)</span>
+<span id="cb28-57"><a href="" aria-label="57"></a></span>
+<span id="cb28-58"><a href="" aria-label="58"></a><span class="co"># X-axis</span></span>
+<span id="cb28-59"><a href="" aria-label="59"></a>ax.set_xlim(<span class="dv">0</span>, <span class="dv">5</span>)</span>
+<span id="cb28-60"><a href="" aria-label="60"></a>ax.set_xticks(grade_breaks)</span>
+<span id="cb28-61"><a href="" aria-label="61"></a>ax.set_xticklabels(grade_labels)</span>
+<span id="cb28-62"><a href="" aria-label="62"></a></span>
+<span id="cb28-63"><a href="" aria-label="63"></a><span class="co"># Y-axis limits: allow room for boxplot</span></span>
+<span id="cb28-64"><a href="" aria-label="64"></a>ax.set_ylim(</span>
+<span id="cb28-65"><a href="" aria-label="65"></a>    box_y <span class="op">-</span> max_count <span class="op">*</span> <span class="fl">0.08</span>,</span>
+<span id="cb28-66"><a href="" aria-label="66"></a>    max_count <span class="op">*</span> <span class="fl">1.08</span></span>
+<span id="cb28-67"><a href="" aria-label="67"></a>)</span>
+<span id="cb28-68"><a href="" aria-label="68"></a></span>
+<span id="cb28-69"><a href="" aria-label="69"></a><span class="co"># Explicitly define ONLY non-negative frequency ticks</span></span>
+<span id="cb28-70"><a href="" aria-label="70"></a>y_ticks <span class="op">=</span> np.arange(<span class="dv">0</span>, max_count <span class="op">+</span> <span class="dv">5</span>, <span class="dv">5</span>)</span>
+<span id="cb28-71"><a href="" aria-label="71"></a>ax.yaxis.set_major_locator(</span>
+<span id="cb28-72"><a href="" aria-label="72"></a>    FixedLocator(y_ticks)</span>
+<span id="cb28-73"><a href="" aria-label="73"></a>)</span>
+<span id="cb28-74"><a href="" aria-label="74"></a>ax.set_yticklabels(</span>
+<span id="cb28-75"><a href="" aria-label="75"></a>    [<span class="bu">str</span>(<span class="bu">int</span>(x)) <span class="cf">for</span> x <span class="kw">in</span> y_ticks]</span>
+<span id="cb28-76"><a href="" aria-label="76"></a>)</span>
+<span id="cb28-77"><a href="" aria-label="77"></a></span>
+<span id="cb28-78"><a href="" aria-label="78"></a><span class="co"># Labels and title</span></span>
+<span id="cb28-79"><a href="" aria-label="79"></a>ax.set_xlabel(</span>
+<span id="cb28-80"><a href="" aria-label="80"></a>    <span class="st">"Letter Grade"</span>,</span>
+<span id="cb28-81"><a href="" aria-label="81"></a>    fontsize<span class="op">=</span><span class="dv">18</span></span>
+<span id="cb28-82"><a href="" aria-label="82"></a>)</span>
+<span id="cb28-83"><a href="" aria-label="83"></a>ax.set_ylabel(</span>
+<span id="cb28-84"><a href="" aria-label="84"></a>    <span class="st">"Frequency"</span>,</span>
+<span id="cb28-85"><a href="" aria-label="85"></a>    fontsize<span class="op">=</span><span class="dv">18</span></span>
+<span id="cb28-86"><a href="" aria-label="86"></a>)</span>
+<span id="cb28-87"><a href="" aria-label="87"></a>ax.set_title(</span>
+<span id="cb28-88"><a href="" aria-label="88"></a>    <span class="st">"Letter Grade Distribution"</span>,</span>
+<span id="cb28-89"><a href="" aria-label="89"></a>    fontsize<span class="op">=</span><span class="dv">20</span></span>
+<span id="cb28-90"><a href="" aria-label="90"></a>)</span>
+<span id="cb28-91"><a href="" aria-label="91"></a>ax.tick_params(</span>
+<span id="cb28-92"><a href="" aria-label="92"></a>    axis<span class="op">=</span><span class="st">"both"</span>,</span>
+<span id="cb28-93"><a href="" aria-label="93"></a>    labelsize<span class="op">=</span><span class="dv">16</span></span>
+<span id="cb28-94"><a href="" aria-label="94"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column" style="font-size:0.72em;">
 <div style="position: relative; width: 100%; height: 420px;">
+<div class="fragment fade-in" style="position: absolute; top: -5; left: 0; width: 100%;">
 <p><img src="images/layering-python.png" style="width: 100%; height: 400px; object-fit: contain;"></p>
+<div class="fragment fade-in" style="position: absolute; top: 0%; left: 5%; width: 88%; background: white; padding: 18px 22px; border-left: 4px solid #1565C0; box-shadow: 0 3px 12px rgba(0,0,0,0.20); font-size: 0.70em; z-index: 10;">
+<p>Here, we build the visualization in <strong>layers</strong>:</p>
+<ul>
+<li><code>ax.hist</code> shows the overall <strong>shape and frequency</strong> of GPA values.</li>
+<li><code>ax.boxplot</code> adds a compact summary of the <strong>median, quartiles, and potential outliers</strong>.</li>
+<li><code>ax.plot</code> shows the <strong>individual observations</strong> behind those summaries. We want them to appear on the whisker line.</li>
+</ul>
+<p>Because each layer represents the <strong>same variable (<code>GPA</code>) in a different way</strong>, combining them lets us see the overall distribution, the summary numbers and the observations that produced it.</p>
+<p><strong>The order of the plot functions matters:</strong> later layers are drawn on top of earlier layers. <span style="color:#1565C0;"> <em>If the dots had to appear behind the boxplot, how will you change the code?</em></span></p>
+<ul>
+<li><strong>Custom scale:</strong> GPA stays numeric; letter grades customize the displayed tick labels for readability.</li>
+<li><strong>Position the boxplot:</strong> <code>box_y</code> is set to a small negative value and this way we place the boxplot below the histogram.</li>
+<li><strong>Align the observations:</strong> <code>np.full(len(gpa), box_y)</code> gives every point in the scatterplot the same y-coordinate, placing the observations on top of the boxplot’s center line for better visibility.</li>
+</ul>
+</div>
+</div>
 </div>
 </div></div>
 </section>
@@ -1702,23 +1795,23 @@ Dr.&nbsp;Satadisha Saha Bhowmick
 <div style="font-size:0.72em;">
 <p>Good visualization often depends on good data structure.</p>
 <p>Sometimes the data are not organized in a convenient form for the plot you want. Suppose we want to compare the distributions of <strong>two variables</strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb27-1"><a href="" aria-label="1"></a>Extraversion     Neurotocism</span>
-<span id="cb27-2"><a href="" aria-label="2"></a>     17               11</span>
-<span id="cb27-3"><a href="" aria-label="3"></a>     19               15</span>
-<span id="cb27-4"><a href="" aria-label="4"></a>     14               12</span>
-<span id="cb27-5"><a href="" aria-label="5"></a>     21               18</span>
-<span id="cb27-6"><a href="" aria-label="6"></a>     ...              ...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb29-1"><a href="" aria-label="1"></a>Extraversion     Neurotocism</span>
+<span id="cb29-2"><a href="" aria-label="2"></a>     17               11</span>
+<span id="cb29-3"><a href="" aria-label="3"></a>     19               15</span>
+<span id="cb29-4"><a href="" aria-label="4"></a>     14               12</span>
+<span id="cb29-5"><a href="" aria-label="5"></a>     21               18</span>
+<span id="cb29-6"><a href="" aria-label="6"></a>     ...              ...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The data are in wide form: each variable has its own column. But we want to use one plotting specification for both distributions, with the variable name determining the color.</p>
 <p>For this we need the variables to be in long form: one column identifies the variable, and another contains its values.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb28-1"><a href="" aria-label="1"></a>Value        Variable</span>
-<span id="cb28-2"><a href="" aria-label="2"></a></span>
-<span id="cb28-3"><a href="" aria-label="3"></a>17           Extraversion</span>
-<span id="cb28-4"><a href="" aria-label="4"></a>11           Neurotocism</span>
-<span id="cb28-5"><a href="" aria-label="5"></a>19           Extraversion</span>
-<span id="cb28-6"><a href="" aria-label="6"></a>15           Neurotocism</span>
-<span id="cb28-7"><a href="" aria-label="7"></a>14           Extraversion</span>
-<span id="cb28-8"><a href="" aria-label="8"></a>12           Neurotocism</span>
-<span id="cb28-9"><a href="" aria-label="9"></a>      ...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb30-1"><a href="" aria-label="1"></a>Value        Variable</span>
+<span id="cb30-2"><a href="" aria-label="2"></a></span>
+<span id="cb30-3"><a href="" aria-label="3"></a>17           Extraversion</span>
+<span id="cb30-4"><a href="" aria-label="4"></a>11           Neurotocism</span>
+<span id="cb30-5"><a href="" aria-label="5"></a>19           Extraversion</span>
+<span id="cb30-6"><a href="" aria-label="6"></a>15           Neurotocism</span>
+<span id="cb30-7"><a href="" aria-label="7"></a>14           Extraversion</span>
+<span id="cb30-8"><a href="" aria-label="8"></a>12           Neurotocism</span>
+<span id="cb30-9"><a href="" aria-label="9"></a>      ...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div style="font-size:0.72em;">
 <div class="callout callout-tip callout-titled callout-style-default">
@@ -1746,33 +1839,33 @@ Dr.&nbsp;Satadisha Saha Bhowmick
 <div class="column" style="font-size:0.72em;">
 <h4 id="r-6">R</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="" aria-label="1"></a>ten_long <span class="ot">&lt;-</span> ten <span class="sc">%&gt;%</span></span>
-<span id="cb29-2"><a href="" aria-label="2"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb29-3"><a href="" aria-label="3"></a>    <span class="at">cols =</span> <span class="fu">c</span>(</span>
-<span id="cb29-4"><a href="" aria-label="4"></a>      percent_below,</span>
-<span id="cb29-5"><a href="" aria-label="5"></a>      percent_on_mastered</span>
-<span id="cb29-6"><a href="" aria-label="6"></a>    ),</span>
-<span id="cb29-7"><a href="" aria-label="7"></a>    <span class="at">names_to =</span> <span class="st">"measure"</span>,</span>
-<span id="cb29-8"><a href="" aria-label="8"></a>    <span class="at">values_to =</span> <span class="st">"value"</span></span>
-<span id="cb29-9"><a href="" aria-label="9"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb29-10"><a href="" aria-label="10"></a>  <span class="fu">select</span>(</span>
-<span id="cb29-11"><a href="" aria-label="11"></a>    district_name,</span>
-<span id="cb29-12"><a href="" aria-label="12"></a>    school_name,</span>
-<span id="cb29-13"><a href="" aria-label="13"></a>    measure,</span>
-<span id="cb29-14"><a href="" aria-label="14"></a>    value</span>
-<span id="cb29-15"><a href="" aria-label="15"></a>  )</span>
-<span id="cb29-16"><a href="" aria-label="16"></a></span>
-<span id="cb29-17"><a href="" aria-label="17"></a>ten_long</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="" aria-label="1"></a>ten_long <span class="ot">&lt;-</span> ten <span class="sc">%&gt;%</span></span>
+<span id="cb31-2"><a href="" aria-label="2"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb31-3"><a href="" aria-label="3"></a>    <span class="at">cols =</span> <span class="fu">c</span>(</span>
+<span id="cb31-4"><a href="" aria-label="4"></a>      percent_below,</span>
+<span id="cb31-5"><a href="" aria-label="5"></a>      percent_on_mastered</span>
+<span id="cb31-6"><a href="" aria-label="6"></a>    ),</span>
+<span id="cb31-7"><a href="" aria-label="7"></a>    <span class="at">names_to =</span> <span class="st">"measure"</span>,</span>
+<span id="cb31-8"><a href="" aria-label="8"></a>    <span class="at">values_to =</span> <span class="st">"value"</span></span>
+<span id="cb31-9"><a href="" aria-label="9"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb31-10"><a href="" aria-label="10"></a>  <span class="fu">select</span>(</span>
+<span id="cb31-11"><a href="" aria-label="11"></a>    district_name,</span>
+<span id="cb31-12"><a href="" aria-label="12"></a>    school_name,</span>
+<span id="cb31-13"><a href="" aria-label="13"></a>    measure,</span>
+<span id="cb31-14"><a href="" aria-label="14"></a>    value</span>
+<span id="cb31-15"><a href="" aria-label="15"></a>  )</span>
+<span id="cb31-16"><a href="" aria-label="16"></a></span>
+<span id="cb31-17"><a href="" aria-label="17"></a>ten_long</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <h4 id="python-6">Python</h4>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="" aria-label="1"></a>ten_long <span class="op">=</span> ten.melt(</span>
-<span id="cb30-2"><a href="" aria-label="2"></a>    value_vars<span class="op">=</span>[</span>
-<span id="cb30-3"><a href="" aria-label="3"></a>        <span class="st">"percent_below"</span>,</span>
-<span id="cb30-4"><a href="" aria-label="4"></a>        <span class="st">"percent_on_mastered"</span></span>
-<span id="cb30-5"><a href="" aria-label="5"></a>    ],</span>
-<span id="cb30-6"><a href="" aria-label="6"></a>    var_name<span class="op">=</span><span class="st">"measure"</span>,</span>
-<span id="cb30-7"><a href="" aria-label="7"></a>    value_name<span class="op">=</span><span class="st">"value"</span></span>
-<span id="cb30-8"><a href="" aria-label="8"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="" aria-label="1"></a>ten_long <span class="op">=</span> ten.melt(</span>
+<span id="cb32-2"><a href="" aria-label="2"></a>    value_vars<span class="op">=</span>[</span>
+<span id="cb32-3"><a href="" aria-label="3"></a>        <span class="st">"percent_below"</span>,</span>
+<span id="cb32-4"><a href="" aria-label="4"></a>        <span class="st">"percent_on_mastered"</span></span>
+<span id="cb32-5"><a href="" aria-label="5"></a>    ],</span>
+<span id="cb32-6"><a href="" aria-label="6"></a>    var_name<span class="op">=</span><span class="st">"measure"</span>,</span>
+<span id="cb32-7"><a href="" aria-label="7"></a>    value_name<span class="op">=</span><span class="st">"value"</span></span>
+<span id="cb32-8"><a href="" aria-label="8"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column" style="font-size:0.72em;">
 <p><img src="images/tibble_before.png" style="width:90%; margin-bottom:20px;"></p>
 <h4 id="after-transformation">After transformation</h4>
@@ -1785,20 +1878,20 @@ Dr.&nbsp;Satadisha Saha Bhowmick
 <div class="columns v-center">
 <div class="column" style="font-size:0.72em;">
 <h4 id="r-7">R</h4>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="" aria-label="1"></a><span class="fu">ggplot</span>(ten_long,</span>
-<span id="cb31-2"><a href="" aria-label="2"></a>       <span class="fu">aes</span>(<span class="at">x =</span> value,</span>
-<span id="cb31-3"><a href="" aria-label="3"></a>           <span class="at">color =</span> measure,</span>
-<span id="cb31-4"><a href="" aria-label="4"></a>           <span class="at">fill =</span> measure)) <span class="sc">+</span></span>
-<span id="cb31-5"><a href="" aria-label="5"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="" aria-label="1"></a><span class="fu">ggplot</span>(ten_long,</span>
+<span id="cb33-2"><a href="" aria-label="2"></a>       <span class="fu">aes</span>(<span class="at">x =</span> value,</span>
+<span id="cb33-3"><a href="" aria-label="3"></a>           <span class="at">color =</span> measure,</span>
+<span id="cb33-4"><a href="" aria-label="4"></a>           <span class="at">fill =</span> measure)) <span class="sc">+</span></span>
+<span id="cb33-5"><a href="" aria-label="5"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <h4 id="python-7">Python</h4>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="" aria-label="1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb32-2"><a href="" aria-label="2"></a>sns.kdeplot(</span>
-<span id="cb32-3"><a href="" aria-label="3"></a>    data<span class="op">=</span>ten_long,</span>
-<span id="cb32-4"><a href="" aria-label="4"></a>    x<span class="op">=</span><span class="st">"value"</span>,</span>
-<span id="cb32-5"><a href="" aria-label="5"></a>    hue<span class="op">=</span><span class="st">"measure"</span>,</span>
-<span id="cb32-6"><a href="" aria-label="6"></a>    fill<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb32-7"><a href="" aria-label="7"></a>    alpha<span class="op">=</span><span class="fl">0.4</span></span>
-<span id="cb32-8"><a href="" aria-label="8"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="" aria-label="1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb34-2"><a href="" aria-label="2"></a>sns.kdeplot(</span>
+<span id="cb34-3"><a href="" aria-label="3"></a>    data<span class="op">=</span>ten_long,</span>
+<span id="cb34-4"><a href="" aria-label="4"></a>    x<span class="op">=</span><span class="st">"value"</span>,</span>
+<span id="cb34-5"><a href="" aria-label="5"></a>    hue<span class="op">=</span><span class="st">"measure"</span>,</span>
+<span id="cb34-6"><a href="" aria-label="6"></a>    fill<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb34-7"><a href="" aria-label="7"></a>    alpha<span class="op">=</span><span class="fl">0.4</span></span>
+<span id="cb34-8"><a href="" aria-label="8"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This is a useful example of why <strong>wrangling and visualization are connected</strong>.</p>
 <p>Note how we use both <code>color</code> and <code>fill</code> here as aesthetic mappings (to the variable <code>measure</code>). That is sufficient to get two density plots one per <code>measure</code> type.</p>
 </div><div class="column" style="font-size:0.72em;">
@@ -1813,21 +1906,21 @@ Dr.&nbsp;Satadisha Saha Bhowmick
 <div class="columns v-center">
 <div class="column" style="font-size:0.72em;">
 <h4 id="r-ggally">R / <code>GGally</code></h4>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="" aria-label="1"></a><span class="fu">ggpairs</span>(</span>
-<span id="cb33-2"><a href="" aria-label="2"></a>  ten[, <span class="fu">c</span>(<span class="st">"percent_below"</span>,</span>
-<span id="cb33-3"><a href="" aria-label="3"></a>          <span class="st">"percent_on_mastered"</span>,</span>
-<span id="cb33-4"><a href="" aria-label="4"></a>          <span class="st">"percent_below_previous"</span>,</span>
-<span id="cb33-5"><a href="" aria-label="5"></a>          <span class="st">"percent_on_mastered_previous"</span>)]</span>
-<span id="cb33-6"><a href="" aria-label="6"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="" aria-label="1"></a><span class="fu">ggpairs</span>(</span>
+<span id="cb35-2"><a href="" aria-label="2"></a>  ten[, <span class="fu">c</span>(<span class="st">"percent_below"</span>,</span>
+<span id="cb35-3"><a href="" aria-label="3"></a>          <span class="st">"percent_on_mastered"</span>,</span>
+<span id="cb35-4"><a href="" aria-label="4"></a>          <span class="st">"percent_below_previous"</span>,</span>
+<span id="cb35-5"><a href="" aria-label="5"></a>          <span class="st">"percent_on_mastered_previous"</span>)]</span>
+<span id="cb35-6"><a href="" aria-label="6"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <h4 id="python-seaborn">Python / <code>seaborn</code></h4>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="" aria-label="1"></a>sns.pairplot(</span>
-<span id="cb34-2"><a href="" aria-label="2"></a>    ten[[</span>
-<span id="cb34-3"><a href="" aria-label="3"></a>        <span class="st">"percent_below"</span>,</span>
-<span id="cb34-4"><a href="" aria-label="4"></a>        <span class="st">"percent_on_mastered"</span>,</span>
-<span id="cb34-5"><a href="" aria-label="5"></a>        <span class="st">"percent_below_previous"</span>,</span>
-<span id="cb34-6"><a href="" aria-label="6"></a>        <span class="st">"percent_on_mastered_previous"</span></span>
-<span id="cb34-7"><a href="" aria-label="7"></a>    ]]</span>
-<span id="cb34-8"><a href="" aria-label="8"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="" aria-label="1"></a>sns.pairplot(</span>
+<span id="cb36-2"><a href="" aria-label="2"></a>    ten[[</span>
+<span id="cb36-3"><a href="" aria-label="3"></a>        <span class="st">"percent_below"</span>,</span>
+<span id="cb36-4"><a href="" aria-label="4"></a>        <span class="st">"percent_on_mastered"</span>,</span>
+<span id="cb36-5"><a href="" aria-label="5"></a>        <span class="st">"percent_below_previous"</span>,</span>
+<span id="cb36-6"><a href="" aria-label="6"></a>        <span class="st">"percent_on_mastered_previous"</span></span>
+<span id="cb36-7"><a href="" aria-label="7"></a>    ]]</span>
+<span id="cb36-8"><a href="" aria-label="8"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-warning callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">

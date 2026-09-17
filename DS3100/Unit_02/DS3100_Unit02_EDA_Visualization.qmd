@@ -979,6 +979,115 @@ While boxplots are good for highlight summary numbers and possible outliers, the
 
 :::
 
+## The five numbers aren't everything
+
+::: {style="font-size:0.62em;"}
+
+While the five numbers on your boxplot are important they only say where each quarter of your data ends. What the boxplot hides is how the points lie in between them. Here we have some fictional data drawn from two very different distributions (`A` and `B`) stored within a dataframe along with the distribution they are sampled from.<br>
+Plotting the boxplots side by side reveal the exact same values for the five numbers we care about across both distributions.
+
+:::
+
+::: {.columns}
+
+::: {.column width="55%" style="font-size:0.62em;"}
+
+```r
+A <- c(
+  seq(0, 2.5, length.out = 25),
+  seq(2.5, 5, length.out = 25), 
+  5,
+  seq(5, 7.5, length.out = 25),
+  seq(7.5, 10, length.out = 25)
+)
+
+B <- c(
+  0, rep(2.5, 49), 5,
+  rep(7.5, 49), 10
+)
+
+df <- data.frame(
+  value = c(A, B),
+  distribution = c(
+    rep("Distribution A",length(A)),
+    rep("Distribution B",length(B))
+  )
+)
+
+ggplot(
+  df,
+  aes(x = distribution, y = value)
+) +
+  geom_boxplot(
+    fill = "lightgrey",
+    color = "black",
+    width = 0.5
+  )
+```
+
+:::
+
+::: {.column width="45%" style="font-size:0.62em;"}
+
+<div style="position: relative; width: 100%; height: 420px;"> 
+
+<img src="images/same-boxplots.png" style="width: 100%; height: 400px; object-fit: contain;">
+
+</div>
+
+:::
+
+:::
+
+## The five numbers aren't everything
+
+::: {.columns}
+
+::: {.column width="55%" style="font-size:0.62em;"}
+
+But plotting the actual data reveal very different shapes.
+
+```r
+ggplot(
+  df,
+  aes(
+    x = value,
+    fill = distribution,
+    color = distribution
+  )
+) +
+  geom_density(
+    alpha = 0.3,
+    linewidth = 1
+  ) +
+  facet_wrap(~ distribution, 
+  ncol = 2) +
+  labs(
+    x = "Value",
+    y = "Density",
+    title = "But the Distributional Shapes Are Very Different"
+  ) +
+  theme(
+    legend.position = "none"
+  )
+```
+
+:::
+
+::: {.column width="45%" style="font-size:0.62em;"}
+
+<div style="position: relative; width: 100%; height: 420px;"> 
+
+<img src="images/diff-densities.png" style="width: 100%; height: 400px; object-fit: contain;">
+
+
+</div>
+
+:::
+
+:::
+
+
 ---
 
 ## Reading distribution shape
@@ -1736,8 +1845,33 @@ ax.tick_params(
 ::: {.column width="55%" style="font-size:0.72em;"}
 
 <div style="position: relative; width: 100%; height: 420px;"> 
+
+<div class="fragment fade-in" style="position: absolute; top: -5; left: 0; width: 100%;">
+
 <img src="images/layering-python.png" style="width: 100%; height: 400px; object-fit: contain;">
+
+<div class="fragment fade-in" style="position: absolute; top: 0%; left: 5%; width: 88%; background: white; padding: 18px 22px; border-left: 4px solid #1565C0; box-shadow: 0 3px 12px rgba(0,0,0,0.20); font-size: 0.70em; z-index: 10;">
+
+Here, we build the visualization in **layers**:
+
+- `ax.hist` shows the overall **shape and frequency** of GPA values.
+- `ax.boxplot` adds a compact summary of the **median, quartiles, and potential outliers**.
+- `ax.plot` shows the **individual observations** behind those summaries. We want them to appear on the whisker line.
+
+Because each layer represents the **same variable (`GPA`) in a different way**, combining them lets us see the overall distribution, the summary numbers and the observations that produced it.
+
+**The order of the plot functions matters:** later layers are drawn on top of earlier layers. <span style="color:#1565C0;"> *If the dots had to appear behind the boxplot, how will you change the code?*</span>
+
+- **Custom scale:** GPA stays numeric; letter grades customize the displayed tick labels for readability.
+- **Position the boxplot:** `box_y` is set to a small negative value and this way we place the boxplot below the histogram.
+- **Align the observations:** `np.full(len(gpa), box_y)` gives every point in the scatterplot the same y-coordinate, placing the observations on top of the boxplot's center line for better visibility.
+
 </div>
+
+</div> 
+
+</div>
+
 
 :::
 
