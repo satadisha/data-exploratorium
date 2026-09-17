@@ -973,6 +973,8 @@ The upper and lower whiskers typically extend from the upper and lower quartiles
 
 The exact definition of “outlier” depends on the plotting convention; in a standard Tukey boxplot, points beyond 1.5 × IQR are flagged.
 
+While boxplots are good for highlight summary numbers and possible outliers, they hide the shape of the distribution. Often very different looking distributions can have the same boxplots. (*That itself could be insufficient during EDA*). **Do not make conclusions about data just by looking at boxplots**.
+
 :::
 
 :::
