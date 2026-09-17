@@ -937,7 +937,7 @@ Dr.&nbsp;Satadisha Saha Bhowmick
 <span id="cb10-20"><a href="" aria-label="20"></a>) <span class="sc">+</span></span>
 <span id="cb10-21"><a href="" aria-label="21"></a>  <span class="fu">geom_density</span>(</span>
 <span id="cb10-22"><a href="" aria-label="22"></a>    <span class="at">color =</span> <span class="st">"#1565C0"</span>,</span>
-<span id="cb10-23"><a href="" aria-label="23"></a>    <span class="at">fill =</span> <span class="st">"#90CAF9"</span>,</span>
+<span id="cb10-23"><a href="" aria-label="23"></a>    <span class="at">fill =</span> <span class="st">"#6292b9"</span>,</span>
 <span id="cb10-24"><a href="" aria-label="24"></a>    <span class="at">alpha =</span> <span class="fl">0.5</span></span>
 <span id="cb10-25"><a href="" aria-label="25"></a>  ) <span class="sc">+</span></span>
 <span id="cb10-26"><a href="" aria-label="26"></a>  <span class="fu">labs</span>(</span>
@@ -1535,39 +1535,41 @@ Dr.&nbsp;Satadisha Saha Bhowmick
 <div class="column" style="font-size:0.72em;">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="" aria-label="1"></a><span class="fu">load</span>(<span class="st">"data/PluckData.RData"</span>)</span>
 <span id="cb25-2"><a href="" aria-label="2"></a></span>
-<span id="cb25-3"><a href="" aria-label="3"></a>x_axis <span class="ot">&lt;-</span> <span class="fu">scale_x_continuous</span>(</span>
-<span id="cb25-4"><a href="" aria-label="4"></a>    <span class="at">name =</span> <span class="st">"Letter Grade"</span>,</span>
-<span id="cb25-5"><a href="" aria-label="5"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="fl">0.00</span>, <span class="fl">4.00</span>), <span class="at">breaks =</span> <span class="fu">round</span>(</span>
-<span id="cb25-6"><a href="" aria-label="6"></a>      <span class="fu">seq</span>(<span class="fl">0.333</span>, <span class="fl">4.00</span>, <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>), <span class="dv">3</span></span>
-<span id="cb25-7"><a href="" aria-label="7"></a>      <span class="co"># sequence and round to get appropriate breaks</span></span>
-<span id="cb25-8"><a href="" aria-label="8"></a>    ),</span>
-<span id="cb25-9"><a href="" aria-label="9"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"F"</span>, <span class="st">"D-"</span>, <span class="st">"D"</span>, <span class="st">"D+"</span>, <span class="st">"C-"</span>, <span class="st">"C"</span>, <span class="st">"C+"</span>, <span class="st">"B-"</span>, <span class="st">"B"</span>, <span class="st">"B+"</span>, <span class="st">"A-"</span>, <span class="st">"A"</span>)</span>
-<span id="cb25-10"><a href="" aria-label="10"></a>  )</span>
-<span id="cb25-11"><a href="" aria-label="11"></a></span>
-<span id="cb25-12"><a href="" aria-label="12"></a><span class="co"># theme customizes the non-data components of your plot</span></span>
-<span id="cb25-13"><a href="" aria-label="13"></a>my_theme <span class="ot">&lt;-</span> <span class="fu">theme</span>(</span>
-<span id="cb25-14"><a href="" aria-label="14"></a>    <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>),</span>
-<span id="cb25-15"><a href="" aria-label="15"></a>    <span class="co"># axis.text.x = element_text(angle = 45, hjust = 1),</span></span>
-<span id="cb25-16"><a href="" aria-label="16"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">18</span>),</span>
-<span id="cb25-17"><a href="" aria-label="17"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(</span>
-<span id="cb25-18"><a href="" aria-label="18"></a>    <span class="at">size =</span> <span class="dv">20</span>,</span>
-<span id="cb25-19"><a href="" aria-label="19"></a>    <span class="at">hjust =</span> <span class="fl">0.50</span></span>
-<span id="cb25-20"><a href="" aria-label="20"></a>    )</span>
-<span id="cb25-21"><a href="" aria-label="21"></a>  )</span>
-<span id="cb25-22"><a href="" aria-label="22"></a></span>
-<span id="cb25-23"><a href="" aria-label="23"></a><span class="co"># Create histogram as *first* layer</span></span>
-<span id="cb25-24"><a href="" aria-label="24"></a><span class="fu">ggplot</span>(<span class="at">data =</span> dataset, <span class="fu">aes</span>(<span class="at">x =</span> GPA)) <span class="sc">+</span></span>
-<span id="cb25-25"><a href="" aria-label="25"></a>  <span class="fu">geom_histogram</span>( <span class="co"># first layer</span></span>
-<span id="cb25-26"><a href="" aria-label="26"></a>    <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"lightgrey"</span>, <span class="at">bins =</span> <span class="dv">10</span> </span>
-<span id="cb25-27"><a href="" aria-label="27"></a>  )<span class="sc">+</span></span>
-<span id="cb25-28"><a href="" aria-label="28"></a>  <span class="fu">geom_boxplot</span>( <span class="co"># second layer</span></span>
-<span id="cb25-29"><a href="" aria-label="29"></a>    <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"lightgrey"</span>,</span>
-<span id="cb25-30"><a href="" aria-label="30"></a>    <span class="fu">aes</span>(<span class="at">y =</span> <span class="sc">-</span><span class="dv">4</span>), <span class="at">width =</span> <span class="dv">3</span></span>
-<span id="cb25-31"><a href="" aria-label="31"></a>  )<span class="sc">+</span> </span>
-<span id="cb25-32"><a href="" aria-label="32"></a>  <span class="fu">geom_point</span>( <span class="co"># third layer</span></span>
-<span id="cb25-33"><a href="" aria-label="33"></a>    <span class="fu">aes</span>(<span class="at">y =</span> <span class="sc">-</span><span class="dv">4</span>), <span class="at">color =</span> <span class="st">"black"</span> <span class="co"># notice we used `color` rather than `fill`</span></span>
-<span id="cb25-34"><a href="" aria-label="34"></a>  ) <span class="sc">+</span> x_axis <span class="sc">+</span> my_theme <span class="sc">+</span></span>
-<span id="cb25-35"><a href="" aria-label="35"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Frequency"</span>, <span class="at">title =</span> <span class="st">"Letter Grade Distribution"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb25-3"><a href="" aria-label="3"></a><span class="co"># let's make a custom scale with breaks that align with our letter grade encoding</span></span>
+<span id="cb25-4"><a href="" aria-label="4"></a><span class="co"># sequence and round to get appropriate breaks</span></span>
+<span id="cb25-5"><a href="" aria-label="5"></a>grade_breaks <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">seq</span>(<span class="fl">0.33</span>, <span class="fl">4.00</span>, <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>), <span class="dv">3</span>)</span>
+<span id="cb25-6"><a href="" aria-label="6"></a>x_axis <span class="ot">&lt;-</span> <span class="fu">scale_x_continuous</span>(</span>
+<span id="cb25-7"><a href="" aria-label="7"></a>    <span class="at">name =</span> <span class="st">"Letter Grade"</span>,</span>
+<span id="cb25-8"><a href="" aria-label="8"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="fl">0.00</span>, <span class="fl">4.00</span>), </span>
+<span id="cb25-9"><a href="" aria-label="9"></a>    <span class="at">breaks =</span> grade_breaks,</span>
+<span id="cb25-10"><a href="" aria-label="10"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"F"</span>, <span class="st">"D-"</span>, <span class="st">"D"</span>, <span class="st">"D+"</span>, <span class="st">"C-"</span>, <span class="st">"C"</span>, <span class="st">"C+"</span>, <span class="st">"B-"</span>, <span class="st">"B"</span>, <span class="st">"B+"</span>, <span class="st">"A-"</span>, <span class="st">"A"</span>)</span>
+<span id="cb25-11"><a href="" aria-label="11"></a>  )</span>
+<span id="cb25-12"><a href="" aria-label="12"></a></span>
+<span id="cb25-13"><a href="" aria-label="13"></a><span class="co"># theme customizes the non-data components of your plot</span></span>
+<span id="cb25-14"><a href="" aria-label="14"></a>my_theme <span class="ot">&lt;-</span> <span class="fu">theme</span>(</span>
+<span id="cb25-15"><a href="" aria-label="15"></a>    <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>),</span>
+<span id="cb25-16"><a href="" aria-label="16"></a>    <span class="co"># axis.text.x = element_text(angle = 45, hjust = 1),</span></span>
+<span id="cb25-17"><a href="" aria-label="17"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">18</span>),</span>
+<span id="cb25-18"><a href="" aria-label="18"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(</span>
+<span id="cb25-19"><a href="" aria-label="19"></a>    <span class="at">size =</span> <span class="dv">20</span>,</span>
+<span id="cb25-20"><a href="" aria-label="20"></a>    <span class="at">hjust =</span> <span class="fl">0.50</span></span>
+<span id="cb25-21"><a href="" aria-label="21"></a>    )</span>
+<span id="cb25-22"><a href="" aria-label="22"></a>  )</span>
+<span id="cb25-23"><a href="" aria-label="23"></a></span>
+<span id="cb25-24"><a href="" aria-label="24"></a><span class="co"># Create histogram as *first* layer</span></span>
+<span id="cb25-25"><a href="" aria-label="25"></a><span class="fu">ggplot</span>(<span class="at">data =</span> dataset, <span class="fu">aes</span>(<span class="at">x =</span> GPA)) <span class="sc">+</span></span>
+<span id="cb25-26"><a href="" aria-label="26"></a>  <span class="fu">geom_histogram</span>( <span class="co"># first layer</span></span>
+<span id="cb25-27"><a href="" aria-label="27"></a>    <span class="at">breaks =</span> grade_breaks,</span>
+<span id="cb25-28"><a href="" aria-label="28"></a>    <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"lightgrey"</span></span>
+<span id="cb25-29"><a href="" aria-label="29"></a>  )<span class="sc">+</span></span>
+<span id="cb25-30"><a href="" aria-label="30"></a>  <span class="fu">geom_boxplot</span>( <span class="co"># second layer</span></span>
+<span id="cb25-31"><a href="" aria-label="31"></a>    <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"lightgrey"</span>,</span>
+<span id="cb25-32"><a href="" aria-label="32"></a>    <span class="fu">aes</span>(<span class="at">y =</span> <span class="sc">-</span><span class="dv">4</span>), <span class="at">width =</span> <span class="dv">3</span></span>
+<span id="cb25-33"><a href="" aria-label="33"></a>  )<span class="sc">+</span> </span>
+<span id="cb25-34"><a href="" aria-label="34"></a>  <span class="fu">geom_point</span>( <span class="co"># third layer</span></span>
+<span id="cb25-35"><a href="" aria-label="35"></a>    <span class="fu">aes</span>(<span class="at">y =</span> <span class="sc">-</span><span class="dv">4</span>), <span class="at">color =</span> <span class="st">"black"</span> <span class="co"># notice we used `color` rather than `fill`</span></span>
+<span id="cb25-36"><a href="" aria-label="36"></a>  ) <span class="sc">+</span> x_axis <span class="sc">+</span> my_theme <span class="sc">+</span></span>
+<span id="cb25-37"><a href="" aria-label="37"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Frequency"</span>, <span class="at">title =</span> <span class="st">"Letter Grade Distribution"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column" style="font-size:0.72em;">
 <div style="position: relative; width: 100%; height: 420px;">
 <div class="fragment fade-in" style="position: absolute; top: -5; left: 0; width: 100%;">

@@ -754,7 +754,7 @@ ggplot(
 ) +
   geom_density(
     color = "#1565C0",
-    fill = "#90CAF9",
+    fill = "#6292b9",
     alpha = 0.5
   ) +
   labs(
@@ -1547,12 +1547,13 @@ Modern graphics systems let us **layer multiple summaries** in the same coordina
 ```r
 load("data/PluckData.RData")
 
+# let's make a custom scale with breaks that align with our letter grade encoding
+# sequence and round to get appropriate breaks
+grade_breaks <- round(seq(0.33, 4.00, 1/3), 3)
 x_axis <- scale_x_continuous(
     name = "Letter Grade",
-    limits = c(0.00, 4.00), breaks = round(
-      seq(0.333, 4.00, 1/3), 3
-      # sequence and round to get appropriate breaks
-    ),
+    limits = c(0.00, 4.00), 
+    breaks = grade_breaks,
     labels = c("F", "D-", "D", "D+", "C-", "C", "C+", "B-", "B", "B+", "A-", "A")
   )
 
@@ -1570,7 +1571,8 @@ my_theme <- theme(
 # Create histogram as *first* layer
 ggplot(data = dataset, aes(x = GPA)) +
   geom_histogram( # first layer
-    color = "black", fill = "lightgrey", bins = 10 
+    breaks = grade_breaks,
+    color = "black", fill = "lightgrey"
   )+
   geom_boxplot( # second layer
     color = "black", fill = "lightgrey",
