@@ -1894,6 +1894,8 @@ sns.kdeplot(
 ```
 This is a useful example of why **wrangling and visualization are connected**.
 
+Note how we use both `color` and `fill` here as aesthetic mappings (to the variable `measure`). That is sufficient to get two density plots one per `measure` type.
+
 :::
 
 ::: {.column width="55%" style="font-size:0.72em;"}
