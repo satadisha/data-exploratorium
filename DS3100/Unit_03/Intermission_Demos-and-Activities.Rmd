@@ -1,0 +1,227 @@
+---
+title: "Stats Intermission"
+author: "FIRSTNAME LASTNAME"
+date: "`r format(Sys.time(), 'Compiled %X on %A, %B %d, %Y')`"
+output: pdf_document
+---
+
+# Load packages
+
+```{r, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Load packages
+library(pwr); library(MASS); library(psych)
+```
+
+Effect size
+
++   small: $r = 0.10$
+
++   moderate: $r = 0.30$
+
++   large: $r = 0.50$
+
++   very large: $r = 0.70$
+
+
+# Power, Effect Size, and Significance
+
+```{r, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Test up to one hundred thousand
+sample_sizes <- c(100, 1000, 10000, 100000)
+
+# Initialize data frame
+result <- data.frame(
+  N = sample_sizes,
+  effect = numeric(length(sample_sizes)),
+  p_value = numeric(length(sample_sizes))
+)
+
+# Populate data frame
+for(i in seq_along(sample_sizes)){
+  
+  # Re-set seed (for reproducibility)
+  set.seed(43)
+  
+  # Generate data
+  data <- mvrnorm(
+    n = sample_sizes[i], mu = c(0, 0), 
+    Sigma = matrix(c(1, 0.01, 0.01, 1), nrow = 2)
+  ) 
+
+  
+  # Get correlation
+  r <- cor.test(data[,1], data[,2])
+  
+  # Populate data frame
+  result$effect[i] <- r$estimate
+  result$p_value[i] <- r$p.value
+  
+}
+
+# Print
+print(result, digits = 3)
+```
+
+# Starting with Hypotheses
+
+## Formal Notation
+
+$$
+H_0: \rho_{x, y} = 0
+$$
+
+<!--
+
+LaTeX math notation
+
+single dollar signs "$ formula $" = in line equation
+
+double dollar signs "$$ formula $$" = new paragraph equation
+
+"_" = creates a subscript
+
+"{}" = include "everything" in whatever you're doing, so "_{x, y}" creates a subscript with x comma y
+
+Resource: https://en.wikibooks.org/wiki/LaTeX/Mathematics
+
+-->
+
+$$
+H_A: \rho_{x, y} \neq 0
+$$
+
+<!--
+
+LaTeX math symbols
+
+"\neq" = does not equal symbol
+
+"\alpha" = lowercase greek letter "a"
+
+The "\" backslash denotes a special behavior for the text -- rather than writing the text it tells LaTeX to do something different
+
+Resource: https://www.cmor-faculty.rice.edu/~heinken/latex/symbols.pdf
+
+-->
+
+## Interpretation of formal notation
+
+$H_0: \rho_{x,y} = 0$: The null hypothesis is that the correlation between variable $x$ and $y$ equals zero
+
+$H_A: \rho_{x,y} \neq 0$: The alternative hypothesis is that the correlation between variable $x$ and $y$ does *not* equal zero
+
+## Two mean comparison
+
+What about for the difference between two means?
+
+Null hypothesis: The difference of the mean of variables $x$ and $y$ equals zero
+
+$$
+H_0: \mu_x - \mu_y = 0
+$$
+
+Alternative hypothesis: The difference of the mean of variables $x$ and $y$ does *not* equal zero
+
+$$
+H_A: \mu_x - \mu_y \neq 0
+$$
+## Statistical Significance
+
+$$
+\alpha = 0.05
+$$
+
+Statistical significance threshold
+
+$$
+p < 0.05
+$$
+
+This value means we win at science, right?
+
+<!--
+
+Definition of p-value: The probability of obtaining a test statistic as extreme or more extreme given the null hypothesis is true
+
+-->
+
+## Your Turn: run this code
+
+```{r, comment = NA, warning = FALSE, message = FALSE, echo = TRUE, eval = FALSE}
+# Perform a correlation test
+cor.test(rnorm(100), rnorm(100))
+```
+
+> Write down your p-value: 
+
+> Send your p-value into Top Hat so we can compare as a class
+
+## Demonstrating false positive rates
+
+```{r, comment = NA, warning = FALSE, message = FALSE, echo = TRUE, eval = TRUE}
+set.seed(986098)
+# Perform 1000 correlation tests and save out p-values
+pvals <- data.frame() #create an empty dataframe to store p-values
+
+for(i in 1:100){
+  pvals[i,1] <- cor.test(rnorm(100), rnorm(100))$p.value #save out p-values
+  pvals[i, 2] <- ifelse(pvals[i,1] < .05, 1, 0) #keep track of significant results
+}
+
+describe(pvals)
+```
+
+# The Interaction between Power
+
+## Finding Power
+
+Using the \{pwr\} package, compute power for the correlation of effect size of 0.01 at sample sizes of 10, 100, 1000, and 100000
+
+```{r correlation power, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# N = 10
+pwr.r.test(n = 10, r = 0.50)
+
+# N = 100
+pwr.r.test(n = 100, r = 0.50)
+
+# N = 1000
+pwr.r.test(n = 1000, r = 0.50)
+
+# N = 100000
+pwr.r.test(n = 100000, r = 0.50)
+
+```
+
+> What happens to power as sample size increases?
+
+## Finding Sample Size
+
+Now, rather than finding the power, find the sample size needed for a power of 0.80 and correlation effect size of 0.01
+
+```{r correlation sample size, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Power of 0.80 
+pwr.r.test(
+  n = NULL, # sample size
+  r = 0.10, # effect size
+  power = 0.80, # statistical power
+  sig.level = 0.05 # statistical significance
+)
+# You should *always* leave the metric you want missing (NULL)!!
+```
+
+## Finding Effect Size
+
+Finally, what effect size do you have the power for when power is 0.80 and sample size is 10, 100, 1000, and 100000?
+
+```{r correlation effect size, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# N = 10
+
+# N = 100
+
+# N = 1000
+
+# N = 100000
+
+```
+
+> Reflection: Based on our correlation example from before, how does power relate to our findings?
