@@ -1,0 +1,414 @@
+---
+title: "Lab 3: Visualization"
+author: "FIRSTNAME LASTNAME"
+date: today
+date-format: "MMMM D, YYYY"
+
+format: html
+jupyter: python3
+
+execute:
+  echo: true
+  warning: true
+  error: false
+  cache: false
+---
+
+<!--
+
+Nothing inside these arrow markers reaches the rendered document, so this is
+where the instructions for each part live. Delete a comment once you have done
+what it says, or leave it; either is fine.
+
+This lab runs in section. The completed sheet, its PDF/HTML, the data file it
+reads, and any images it includes go into the Lab 3 folder on Brightspace before
+you leave.
+
+Before you start: rename this file Lab-3_FIRSTNAME_LASTNAME.qmd, put your name
+in the YAML header above (keep the quotation marks), and put your data file in a
+data/ folder beside this file. The Python cells are handed to you commented
+out; remove the hash characters once the file is in place, and change
+YOUR-FILE.csv and the column names to yours.
+
+The three parts follow the handout. Part 1 reads three figures other people
+made, Part 2 explores your own data, and Part 3 finishes the small set of
+figures that come closest to answering your question.
+
+-->
+
+```{python setup}
+#| include: false
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import gaussian_kde
+```
+
+# Part 1: Reading a figure
+
+<!-- Three figures: a bad one from r/dataisugly, a bad one from
+     r/dataisbeautiful, and a good one from r/dataisbeautiful. Three
+     different figures. For each, a link to the post, or the image
+     saved in a figures/ folder beside this file and included with the
+     line shown; then the six questions from the handout, one
+     line each; then what is wrong or what works; then your own
+     attempt to say what the figure shows. -->
+
+## Figure A: a bad figure from `r/dataisugly`
+
+*A readable link to the post (square brackets for the text, parentheses for
+the address), or the image itself. To include a saved image, put it in a
+`figures/` folder beside this file and remove the hash from the line below.*
+
+<!-- ![Figure A](figures/figure-a.png) -->
+
+*Link or image here.*
+
+> **1. One mark is one what?**
+
+*Your answer here.*
+
+> **2. What is on each axis, in what units, and where is zero?**
+
+*Your answer here.*
+
+> **3. What else is encoded (color, size, shape, panels), and is there a legend?**
+
+*Your answer here.*
+
+> **4. What is the comparison?**
+
+*Your answer here.*
+
+> **5. What is the claim, in one sentence, and is it visible in the marks?**
+
+*Your answer here.*
+
+> **6. What is missing?**
+
+*Your answer here.*
+
+**What is wrong with it.** *Your answer here, naming the question it fails.*
+
+**What it shows, as far as you can read it.** *Your attempt here.*
+
+## Figure B: a bad figure from `r/dataisbeautiful`
+
+<!-- ![Figure B](figures/figure-b.png) -->
+
+*Link or image here.*
+
+> **1. One mark is one what?**
+
+*Your answer here.*
+
+> **2. What is on each axis, in what units, and where is zero?**
+
+*Your answer here.*
+
+> **3. What else is encoded, and is there a legend?**
+
+*Your answer here.*
+
+> **4. What is the comparison?**
+
+*Your answer here.*
+
+> **5. What is the claim, and is it visible in the marks?**
+
+*Your answer here.*
+
+> **6. What is missing?**
+
+*Your answer here.*
+
+**What is wrong with it.** *Your answer here.*
+
+**What it shows, as far as you can read it.** *Your attempt here.*
+
+## Figure C: a good figure from `r/dataisbeautiful`
+
+<!-- ![Figure C](figures/figure-c.png) -->
+
+*Link or image here.*
+
+> **1. One mark is one what?**
+
+*Your answer here.*
+
+> **2. What is on each axis, in what units, and where is zero?**
+
+*Your answer here.*
+
+> **3. What else is encoded, and is there a legend?**
+
+*Your answer here.*
+
+> **4. What is the comparison?**
+
+*Your answer here.*
+
+> **5. What is the claim, and is it visible in the marks?**
+
+*Your answer here.*
+
+> **6. What is missing?**
+
+*Your answer here.*
+
+**What works.** *Your answer here.*
+
+**What it shows.** *Your reading here.*
+
+# Part 2: Exploring your own data
+
+<!-- Any dataset you wish; the default is the one from Lab 2, or
+     PluckData if you have none today. Exploratory figures need no
+     labels or captions; the sentence under each is what matters. -->
+
+## The data
+
+`pd.read_csv()` reads the file into a DataFrame. If Lab 2 found a value that
+had to be treated as missing (a 999, a -1), the change goes in this cell too,
+as it did in field 8 of the card.
+
+```{python read-data}
+# d = pd.read_csv("data/YOUR-FILE.csv")
+```
+
+*One sentence: which dataset, and which columns are the variables of interest
+from Lab 2, Part 4.*
+
+## The shape of each variable of interest
+
+Please draw each numeric variable of interest at two widths: two bin sizes for
+a histogram, or two bandwidths for a density curve. One cell per variable;
+please copy the cell for a third.
+
+```{python shape-one}
+# df = d.copy()
+# x = df["COLUMN_ONE"].dropna()
+#
+# plt.hist(x, bins=10, edgecolor="black")
+# plt.xlabel("COLUMN_ONE")
+# plt.ylabel("Count")
+# plt.show()
+#
+# plt.hist(x, bins=40, edgecolor="black")
+# plt.xlabel("COLUMN_ONE")
+# plt.ylabel("Count")
+# plt.show()
+```
+
+*What you saw, in one or two sentences: the shape, and anything you did not
+expect.*
+
+```{python shape-two}
+# x = df["COLUMN_TWO"].dropna()
+#
+# plt.hist(x, bins=10, edgecolor="black")
+# plt.xlabel("COLUMN_TWO")
+# plt.ylabel("Count")
+# plt.show()
+#
+# plt.hist(x, bins=40, edgecolor="black")
+# plt.xlabel("COLUMN_TWO")
+# plt.ylabel("Count")
+# plt.show()
+```
+
+*What you saw.*
+
+## The comparison or relationship the question names
+
+Please keep the call from the handout's table that fits your question and
+delete the others.
+
+```{python question-figure}
+# A numeric variable across the levels of a categorical one:
+# groups = [g["COLUMN_ONE"].dropna() for _, g in df.groupby("GROUP_COLUMN")]
+# labels = [str(k) for k, _ in df.groupby("GROUP_COLUMN")]
+
+# # Boxplots
+# plt.boxplot(groups, tick_labels=labels)
+
+# # Add jittered observations
+# for i, values in enumerate(groups, start=1):
+#     x_jitter = np.random.normal(
+#         loc=i,       # center points on box position
+#         scale=0.05,  # amount of horizontal jitter
+#         size=len(values)
+#     )
+#     plt.scatter(x_jitter,values,alpha=0.5)
+
+# plt.xlabel("GROUP_COLUMN")
+# plt.ylabel("COLUMN_ONE")
+# plt.show()
+
+# Two numeric variables together:
+# plt.scatter(df["COLUMN_ONE"], df["COLUMN_TWO"])
+# plt.xlabel("COLUMN_ONE")
+# plt.ylabel("COLUMN_TWO")
+# plt.show()
+
+# Two shapes on one axis:
+# for group, g in df.dropna(subset=["COLUMN_ONE", "GROUP_COLUMN"]).groupby("GROUP_COLUMN"):
+#     x = g["COLUMN_ONE"]
+#     x = x.to_numpy()
+#     # A simple KDE using numpy + scipy can be used if scipy is available.
+#     kde = gaussian_kde(x)
+#     grid = np.linspace(x.min(), x.max(), 200)
+#     plt.plot(grid, kde(grid), label=str(group))
+# plt.xlabel("COLUMN_ONE")
+# plt.ylabel("Density")
+# plt.legend()
+# plt.show()
+```
+
+*What you saw: does it point toward an answer, and what did you not expect?*
+
+## One figure the question does not name
+
+Your research question names some of the columns in the dataset and leaves the
+rest out. Please draw one figure that brings in a column the question leaves
+out. There are two ways to do that. The first is to put one of your variables
+of interest on one axis and a column the question does not mention on the other.
+The second is to draw the comparison from the previous section again, but
+separately for each level of a categorical column (each major, each year, each
+region), with one Matplotlib axes per group. Either way, the question to answer
+under the figure is whether the pattern you saw holds once this other column is
+taken into account.
+
+```{python extra-figure}
+# The first way: a variable of interest against a column the question leaves out.
+# plt.scatter(df["OTHER_COLUMN"], df["COLUMN_ONE"])
+# plt.xlabel("OTHER_COLUMN")
+# plt.ylabel("COLUMN_ONE")
+# plt.show()
+
+# The second way: the previous section's comparison, once per level of a group.
+# groups = df.dropna(subset=["COLUMN_ONE", "COLUMN_TWO", "GROUP_COLUMN"])
+# levels = groups["GROUP_COLUMN"].unique()
+# fig, axes = plt.subplots(1, len(levels), figsize=(4 * len(levels), 4), sharex=True, sharey=True)
+# axes = np.atleast_1d(axes)
+# for ax, level in zip(axes, levels):
+#     g = groups[groups["GROUP_COLUMN"] == level]
+#     ax.scatter(g["COLUMN_ONE"], g["COLUMN_TWO"])
+#     ax.set_title(str(level))
+#     ax.set_xlabel("COLUMN_ONE")
+#     ax.set_ylabel("COLUMN_TWO")
+# plt.tight_layout()
+# plt.show()
+```
+
+*What you saw, and whether it changes anything about the question.*
+
+# Part 3: The final figures
+
+<!-- The figures from Part 2 that come closest to answering the question and
+     build on one another, one cell each, redrawn with labels and appropriate
+     captions. At least one of the three is split into panels or puts a third
+     variable on color. The paragraph under each cell introduces the figure,
+     directs the reader to the feature that matters, and interprets it. Please
+     name each figure by its number in its paragraph, and finish the first
+     figure before starting the second; a cell you do not reach in section is
+     there for the report. -->
+
+## What each figure answers
+
+<!-- Before choosing the final figures: the question each exploratory figure
+     from Part 2 answers on its own, one sentence ending in a question mark,
+     then a question for each of two pairs that neither figure answers alone.
+     The handout has an example of each. -->
+
+Each figure in Part 2 answers some question by itself. Please write one
+question for each of the figures in Part 2: one sentence, ending in a question
+mark, that a reader could answer by looking at the figure and nothing else.
+
+**The shape of each variable of interest answers:** *Your question here.*
+
+**The comparison or relationship the question names answers:** *Your question here.*
+
+**The figure the question does not name answers:** *Your question here.*
+
+A pair of figures can answer a question that neither answers alone. That
+happens when the second adds a variable the first does not have, or a view of
+the same variables that the first does not give. Please write two such
+questions, each for a different pair of the figures above, and say what the
+second figure of the pair adds.
+
+**Pair one (the ... figure and the ... figure) answers:** *Your question here,
+and what the second figure adds.*
+
+**Pair two (the ... figure and the ... figure) answers:** *Your question here,
+and what the second figure adds.*
+
+*If no pair of your figures answers a question that one figure alone cannot,
+please say so here, and which of the handout's two fixes you will take before
+Tuesday: another figure, or another question.*
+
+## The first figure
+
+```{python figure-one}
+#| fig-cap: "YOUR CAPTION: what is plotted, what one mark is, and the main pattern."
+# x = d["COLUMN_ONE"].dropna()
+# plt.hist(x, bins=20, edgecolor="black")
+# plt.xlabel("What column one is (its units)")
+# plt.ylabel("Number of rows")
+# plt.show()
+```
+
+*Introduce: Figure 1 shows ... and it addresses ... of the question.*
+
+*Direct: the feature to look at is ...*
+
+*Interpret: which means, for the question, ... and does not settle ...*
+
+## The second figure
+
+```{python figure-two}
+#| fig-cap: "YOUR CAPTION."
+# plt.scatter(d["COLUMN_ONE"], d["COLUMN_TWO"])
+# plt.xlabel("What column one is (its units)")
+# plt.ylabel("What column two is (its units)")
+# plt.show()
+```
+
+*Introduce: Figure 2 builds on Figure 1 by ...*
+
+*Direct: ...*
+
+*Interpret: ...*
+
+## The third figure
+
+Separate Matplotlib axes can be used to create one panel per level of the group;
+use the same x/y scales where direct comparison is important.
+
+```{python figure-three}
+#| fig-cap: "YOUR CAPTION."
+# groups = d.dropna(subset=["COLUMN_ONE", "COLUMN_TWO", "GROUP_COLUMN"])
+# levels = groups["GROUP_COLUMN"].unique()
+# fig, axes = plt.subplots(1, len(levels), figsize=(4 * len(levels), 4), sharex=True, sharey=True)
+# axes = np.atleast_1d(axes)
+# for ax, level in zip(axes, levels):
+#     g = groups[groups["GROUP_COLUMN"] == level]
+#     ax.scatter(g["COLUMN_ONE"], g["COLUMN_TWO"])
+#     ax.set_title(str(level))
+#     ax.set_xlabel("What column one is (its units)")
+#     ax.set_ylabel("What column two is (its units)")
+# plt.tight_layout()
+# plt.show()
+```
+
+*Introduce: Figure 3 ...*
+
+*Direct: ...*
+
+*Interpret: ... and, read with Figures 1 and 2, the answer to the question is ...*
+
+# Generative AI disclosure
+
+*Which tools you used on this lab and what for, or "none".*
+
+*Your answer here.*

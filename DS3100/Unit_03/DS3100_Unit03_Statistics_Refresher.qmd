@@ -24,6 +24,15 @@ execute:
 
 ---
 
+<style>
+.reveal blockquote {
+  margin-top: 0.2em;
+  margin-bottom: 0.2em;
+  padding-top: 0.1em;
+  padding-bottom: 0.1em;
+}
+</style>
+
 ::: {style="height: 80vh; display: flex; align-items: center;"}
 
 ::: {.columns .v-center}
@@ -410,7 +419,7 @@ Choosing $\alpha = 0.05$ means that, **if the null hypothesis were true**, we ac
 
 ::: {style="font-size:0.62em;"}
 
-Note that we deliberately set aside the **most extreme $5\%$ of results** within the null distribution to trigger the rejection of $H_0$.<br>
+Note that we deliberately set aside the **most extreme $5\%$ of results** within the null distribution to trigger the rejection of $H_0$.
 
 :::
 
@@ -423,7 +432,7 @@ Note that we deliberately set aside the **most extreme $5\%$ of results** within
   top:0; 
   left:0; 
   width:100%; 
-  z-index:5; 
+  z-index:6; 
   background-color:white; 
   padding:10px 0; 
 ">
@@ -453,11 +462,18 @@ $$
 
 ## $\alpha <->$ $p$-value
 
-- $\alpha$ highlights **the threshold for what is unusual enough**.
+- $\alpha$ highlights **the threshold for how unusual must a result be** to reject $H_0$.
 
 - $p$-value tells us **how unusual our observed result actually is** under $H_0$.
 
+$p < \alpha \implies$ The probability of obtaining our observed result or something more extreme under $H_0$ is smaller than the probability threshold we decided was sufficiently unusual to reject $H_0$.
+
+Comparing $p$ with $\alpha$ simply asks:
+
+> **Is our observed statistic far enough into the tail to lie inside the rejection region whose false-positive probability we limited to $\alpha$?**
+
 :::
+
 </div> 
 
 </div>
@@ -816,13 +832,13 @@ for n in [25, 100, 400]:
 | $H_0$ false | Fail to reject $H_0$ | <span style="color:#1565C0;">Type II error</span> |
 
 
-The significance level is tied to Type I error:
+<br>The significance level is tied to <span style="color:#1565C0;">Type I error rate</span>:
 
 $$
 \alpha=P(\text{reject }H_0\mid H_0\text{ true})
 $$
 
-Power is related to Type II error rate ($\beta$):
+Power is related to <span style="color:#1565C0;">Type II error rate</span> ($\beta$):
 
 $$
 \text{Power}=1-\beta
@@ -847,7 +863,7 @@ To calculate that probability, we need to know:
 
 > **What results would be expected if the null hypothesis were true?**
 
-Imagine repeating the sampling process many times while the null hypothesis remains true. Each sample would produce a somewhat different **sample statistic** —for example, a different mean waiting time.
+Imagine repeating the sampling process many times while the null hypothesis remains true. Each sample would produce a somewhat different **sample statistic** —for example, a different mean waiting time for each sample we study.
 
 ```text
 sample 1  -> mean
@@ -869,19 +885,26 @@ This gives us the reference distribution we need to determine *how extreme our o
 
 ::: {style="font-size:0.62em;"}
 
-For many settings, as sample size grows, the distribution of the **sample mean** becomes approximately normal.
+For many experimental settings, as your sample size grows, the distribution of the **sample mean** becomes approximately normal even for non-normal population distributions.
 
-$$\bar{X}\approx N\left(\mu,\frac{\sigma^2}{n}\right)$$
+$$\bar{X}\approx N\left(\mu,\frac{\sigma^2}{n}\right);$$
 
-The exact assumptions matter, but the intuition is simple:
+- μ = population mean. The sampling distribution of $\bar X$ is centered at the population mean.
+- $\sigma$ = population standard deviation, describes how much individual observations vary in the population.
+- $\sigma^2$ = population variance.
+- $n$ = sample size.
 
-> **Repeated sample means tend to form an approximately bell-shaped distribution.**
+In other words, upon standardization $\frac{\bar{X}-\mu}{\frac{\sigma}{\sqrt{n}}} \approx N\left(0,1\right)$
+
+#### 💡 The exact assumptions matter, but the following remains valid:
+
+> **Even if your data is heavily skewed, binary, or completely uniform, the average of those values tend to form an approximately bell-shaped distribution if you collect enough samples.**
 
 :::
 
 ---
 
-## Why the normal curve appears in so much inference
+## Why the normal curve appears so much in inferential processes
 
 ::: {style="font-size:0.62em;"}
 
@@ -893,7 +916,7 @@ The reference distribution lets us ask:
                  reference distribution
                          |
             -------------+-------------
-          common values             extreme values
+        common values               extreme values
                                 -> smaller tail area
                                    -> smaller p-value
 ```
@@ -901,45 +924,70 @@ The reference distribution lets us ask:
 :::
 
 ::: {.callout-tip style="font-size:0.62em;"}
-The normal curve is often a model for the **sampling distribution of a statistic**, not necessarily for the raw data themselves.
+Since many inferential questions concern sample means not necessarily for the raw data themselves, we see the normal curve quite often thnaks to the guarantees of the CLT.
 :::
 
 ---
+```{python}
+#| label: setup
+#| include: false
+import numpy as np
+import matplotlib.pyplot as plt
+```
 
-## Central Limit Theorem: a simulation
+## Central Limit Theorem: A Simulation
+
+::: {style="font-size:0.62em;"}
+
+We start with a strongly **right-skewed population**, repeatedly draw samples of $n=30$, and calculate the mean of each sample. The histogram shows the *sampling distribution of the 5,000 sample means*.
+
+::: {.columns}
+
+::: {.column width="48%"}
 
 #### R
 
-```r
+```{r}
+# Generate a right-skewed population
 population <- rexp(100000)
 
+# Take 5,000 samples of size 30
+# and calculate each sample mean
 sample_means <- replicate(
   5000,
   mean(sample(population, 30))
 )
 
-hist(sample_means, breaks = 30)
+# Sampling distribution of the mean
+hist(sample_means,breaks = 30)
 ```
+
+:::
+
+::: {.column width="52%"}
 
 #### Python
 
-```python
-import numpy as np
-import matplotlib.pyplot as plt
+```{python}
+# Generate a right-skewed population
+population = np.random.exponential(size=100000)
 
-population = np.random.exponential(100000)
-
+# Take 5,000 samples of size 30
+# and calculate each sample mean
 sample_means = [
     np.mean(np.random.choice(population, 30))
     for _ in range(5000)
 ]
 
-plt.hist(sample_means, bins=30)
+# Sampling distribution of the mean
+plt.hist(sample_means,bins=30)
 plt.show()
 ```
 
-::: {.callout-warning style="font-size:0.62em;"}
-The code is for intuition: the population can be non-normal even though the distribution of repeated sample means becomes approximately normal.
+:::
+
+:::
+
 :::
 
 ---
@@ -950,19 +998,40 @@ The code is for intuition: the population can be non-normal even though the dist
 
 ---
 
-## Standardizing a sample mean: the z statistic
+## Standardizing a sample statistic
 
 ::: {style="font-size:0.62em;"}
 
-When the population standard deviation $\sigma$ is known:
+In general, a **test statistic** tells us how far an observed sample statistic is from the value expected by $H_0$ in terms of standard errors, relative to its expected sampling variation.
 
-$$z=\frac{\bar{x}-\mu_0}{\sigma/\sqrt{n}}$$
+$$
+\text{test statistic}
+=
+\frac{
+\text{observed sample statistic} -
+\text{value specified by }H_0
+}{
+\text{standard error}
+}
+$$
+
+#### Example: the $z$ statistic for a sample mean
+
+When the statistic of interest is the **sample mean** and the population standard deviation $\sigma$ is known:
+
+$$
+z =
+\frac{\bar{x}-\mu_0}
+{\sigma/\sqrt{n}}
+$$
 
 Interpretation:
 
-> **How many standard errors is the observed sample mean from the hypothesized mean?**
+> **How many standard errors is the observed sample mean from the mean
+> specified by the null hypothesis?**
 
-Under the null model, the statistic follows a **standard normal distribution** when the relevant assumptions are met.
+Under $H_0$, $z$ follows a <span style="color:#1565C0;">**standard normal distribution**</span> when the relevant
+assumptions are satisfied.
 
 :::
 
@@ -976,31 +1045,47 @@ Usually we do not know the population standard deviation ($\sigma$). We estimate
 
 $$t=\frac{\bar{x}-\mu_0}{s/\sqrt{n}}$$
 
-Because the standard deviation is estimated, there is additional uncertainty. The reference distribution becomes the **Student's t distribution**.
+Because the standard deviation is estimated, there is additional uncertainty. 
+
+Our reference distribution therefore becomes the <span style="color:#1565C0;">**Student's t distribution**</span>.
 
 :::
 
 ---
 
-## The t distribution
+## The Student's $t$ distribution
 
 ::: {style="font-size:0.62em;"}
 
-The Student's t distribution:
+::: {.columns}
 
-- is centered at 0;
-- has heavier tails than the standard normal;
-- depends on **degrees of freedom**;
-- approaches the normal distribution as degrees of freedom increase.
+::: {.column width="48%"}
 
-For a one-sample mean test:
+- Is centered at 0.
+- Unlike the standard normal distribution —which is fixed and never changes— the $t$-distribution is actually a family of curves. Its exact shape is determined entirely by its <span style="color:#1565C0;">**degrees of freedom**</span> ($df$).
+- For small samples the $t$ distribution has heavier tails than the standard normal to account for higher uncertainty.
+- It approaches the normal distribution as degrees of freedom increase.
 
-$$df=n-1$$
+:::
+
+::: {.column width="48%"}
+
+For a one-sample mean test: $df=n-1$
+
+![](images/t-dist.webp){width=100%}
+
+:::
+
+:::
 
 :::
 
 ::: {.callout-tip style="font-size:0.62em;"}
-Smaller degrees of freedom -> heavier tails -> a more cautious reference distribution.
+
+**Smaller $df$ → more probability in the tails → extreme $t$-values are less unusual.**
+
+For example, if we observe $\lvert t \rvert =2$, with a standard normal reference distribution, values beyond approximately $\pm 2$ are relatively rare. With a low-df $t$ distribution, values that far from zero are more common because more probability lies in the tails. So the same observed test statistic is less compelling evidence against $H_0$ when degrees of freedom are small, giving way to a 'more cautious' reference distribution.
+
 :::
 
 ---
@@ -1020,7 +1105,7 @@ Smaller degrees of freedom -> heavier tails -> a more cautious reference distrib
 :::
 
 ::: {.callout-note style="font-size:0.62em;"}
-Do not memorize a universal rule such as "n < 30 means t." The deeper distinction is whether the population SD is known or estimated, together with the assumptions of the test.
+Do not memorize a universal rule such as "n < 30 means use the t-test." The deeper distinction is whether the population SD is known or estimated, together with the assumptions of the test.
 :::
 
 ---
@@ -1059,57 +1144,32 @@ Before reading a t table, determine **the number of tails, $\alpha$, and degrees
 
 ---
 
-## What does a tail mean?
+### What statistical test fits your research question?
 
 ::: {style="font-size:0.62em;"}
 
-**Two-tailed**
+**Two-tailed Tests**: $H_A:\mu\neq\mu_0$
 
-> Unusually large **or** unusually small values matter.
+> Unusually different values matter. These tests are *non-directional* meaning both significantly large *or* significantly small values need to be considered.
 
-$$H_A:\mu\neq\mu_0$$
+- **Question:** Does Cardiology have a different average waiting time from Primary Care?
+  $H_A:\mu_C-\mu_P\neq0$
 
-**One-tailed**
+**One-tailed Tests**: $H_A:\mu>\mu_0 \qquad\text{or}\qquad H_A:\mu<\mu_0$
 
-> One direction is specified in advance.
+> Here we test relationships in *one direction* specified in advance. We need to check if a sample value is significantly greater than **or** less than a population value.
 
-$$
-H_A:\mu>\mu_0
-\qquad\text{or}\qquad
-H_A:\mu<\mu_0
-$$
-
-:::
-
----
-
-## Which test fits the research question?
-
-::: {style="font-size:0.62em;"}
-
-**Question:** Does Cardiology have a different average waiting time from Primary Care?
-
-$$
-H_A:\mu_C-\mu_P\neq0
-$$
-
--> **Two-tailed**
-
-**Question:** Does a new scheduling system reduce average waiting time?
-
-$$
-H_A:\mu_{new}-\mu_{old}<0
-$$
-
--> **One-tailed**
+- **Question:** Does a new scheduling system reduce average waiting time?
+  $H_A:\mu_{\text{new}}-\mu_{\text{old}}<0$
 
 :::
 
 ::: {.callout-warning style="font-size:0.62em;"}
-Choose the tail from the research question **before examining the result**. Do not switch to one tail because the observed effect points in a convenient direction.
+Choose the tail from the research question **before examining the results**. Do not switch to one tail because the observed effect points in a specific and convenient direction.
 :::
 
 ---
+
 
 ## How tails affect p-values
 
@@ -1122,15 +1182,21 @@ A one-tailed test counts extreme outcomes in **one pre-specified direction**.
 ```text
 Two-tailed:
 <--- extreme ---> | central | <--- extreme --->
-                  0
+                       0
 
 One-tailed:
                   | central | <--- extreme --->
                                  direction
 ```
 
-The tail choice changes the reference region and therefore the p-value.
+The tail choice changes the reference region and therefore the p-value.<br>
 
+:::
+
+::: {.callout-note style="font-size:0.62em;"}
+Typically, for the same significance level, it is easier to obtain a statistically significant result with a one-tailed test than with a two-tailed test, provided the observed effect is in the pre-specified direction. 
+
+This is because for the one-tailed case the entire rejection region is concentrated to one tail of the bell-curve as opposed to the two-tailed case where the rejection region is split equally between both tails. So your observed test statistics need to land farther out from the center to enter the rejection region in a two-tailed test.
 :::
 
 ---
@@ -1190,8 +1256,6 @@ The p-value is **one part of the argument**, not the entire argument.
 
 :::
 
----
-
-## 📚 References
+### 📚 References
 
 - [Student's t-distribution table](https://www.tdistributiontable.com/)

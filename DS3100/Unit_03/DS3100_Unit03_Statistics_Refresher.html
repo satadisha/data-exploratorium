@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Dr.&nbsp;Satadisha Saha Bhowmick">
-  <meta name="dcterms.date" content="2026-09-16">
+  <meta name="dcterms.date" content="2026-09-21">
   <title>DS 3100 | Statistics Refresher</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -211,10 +211,18 @@ Dr.&nbsp;Satadisha Saha Bhowmick
 </div>
 </div>
 
-  <p class="date">2026-09-16</p>
+  <p class="date">2026-09-21</p>
 </section>
 <section class="slide level2">
 
+<style>
+.reveal blockquote {
+  margin-top: 0.2em;
+  margin-bottom: 0.2em;
+  padding-top: 0.1em;
+  padding-bottom: 0.1em;
+}
+</style>
 <div style="height: 80vh; display: flex; align-items: center;">
 <div class="columns v-center">
 <div class="column" style="width:48%;">
@@ -554,7 +562,7 @@ Dr.&nbsp;Satadisha Saha Bhowmick
 <p><img data-src="images/p-value.jpeg" style="width:90.0%"></p>
 </div></div>
 <div style="font-size:0.62em;">
-<p>Note that we deliberately set aside the <strong>most extreme <span class="math inline">\(5\%\)</span> of results</strong> within the null distribution to trigger the rejection of <span class="math inline">\(H_0\)</span>.<br></p>
+<p>Note that we deliberately set aside the <strong>most extreme <span class="math inline">\(5\%\)</span> of results</strong> within the null distribution to trigger the rejection of <span class="math inline">\(H_0\)</span>.</p>
 </div>
 </div>
 <!-- Overlay layer -->
@@ -563,7 +571,7 @@ Dr.&nbsp;Satadisha Saha Bhowmick
   top:0; 
   left:0; 
   width:100%; 
-  z-index:5; 
+  z-index:6; 
   background-color:white; 
   padding:10px 0; 
 ">
@@ -593,9 +601,14 @@ p \geq \alpha
 </div>
 <div class="callout-content">
 <ul>
-<li><p><span class="math inline">\(\alpha\)</span> highlights <strong>the threshold for what is unusual enough</strong>.</p></li>
+<li><p><span class="math inline">\(\alpha\)</span> highlights <strong>the threshold for how unusual must a result be</strong> to reject <span class="math inline">\(H_0\)</span>.</p></li>
 <li><p><span class="math inline">\(p\)</span>-value tells us <strong>how unusual our observed result actually is</strong> under <span class="math inline">\(H_0\)</span>.</p></li>
 </ul>
+<p><span class="math inline">\(p &lt; \alpha \implies\)</span> The probability of obtaining our observed result or something more extreme under <span class="math inline">\(H_0\)</span> is smaller than the probability threshold we decided was sufficiently unusual to reject <span class="math inline">\(H_0\)</span>.</p>
+<p>Comparing <span class="math inline">\(p\)</span> with <span class="math inline">\(\alpha\)</span> simply asks:</p>
+<blockquote>
+<p><strong>Is our observed statistic far enough into the tail to lie inside the rejection region whose false-positive probability we limited to <span class="math inline">\(\alpha\)</span>?</strong></p>
+</blockquote>
 </div>
 </div>
 </div>
@@ -986,11 +999,11 @@ Sample Size: 400       Statistical Power: 0.991</code></pre>
 </tr>
 </tbody>
 </table>
-<p>The significance level is tied to Type I error:</p>
+<p><br>The significance level is tied to <span style="color:#1565C0;">Type I error rate</span>:</p>
 <p><span class="math display">\[
 \alpha=P(\text{reject }H_0\mid H_0\text{ true})
 \]</span></p>
-<p>Power is related to Type II error rate (<span class="math inline">\(\beta\)</span>):</p>
+<p>Power is related to <span style="color:#1565C0;">Type II error rate</span> (<span class="math inline">\(\beta\)</span>):</p>
 <p><span class="math display">\[
 \text{Power}=1-\beta
 \]</span></p>
@@ -1011,7 +1024,7 @@ Sample Size: 400       Statistical Power: 0.991</code></pre>
 <blockquote>
 <p><strong>What results would be expected if the null hypothesis were true?</strong></p>
 </blockquote>
-<p>Imagine repeating the sampling process many times while the null hypothesis remains true. Each sample would produce a somewhat different <strong>sample statistic</strong> —for example, a different mean waiting time.</p>
+<p>Imagine repeating the sampling process many times while the null hypothesis remains true. Each sample would produce a somewhat different <strong>sample statistic</strong> —for example, a different mean waiting time for each sample we study.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb10-1"><a href="" aria-label="1"></a>sample 1  -&gt; mean</span>
 <span id="cb10-2"><a href="" aria-label="2"></a>sample 2  -&gt; mean</span>
 <span id="cb10-3"><a href="" aria-label="3"></a>sample 3  -&gt; mean</span>
@@ -1024,16 +1037,23 @@ Sample Size: 400       Statistical Power: 0.991</code></pre>
 <section id="the-central-limit-theorem" class="slide level2">
 <h2>The Central Limit Theorem</h2>
 <div style="font-size:0.62em;">
-<p>For many settings, as sample size grows, the distribution of the <strong>sample mean</strong> becomes approximately normal.</p>
-<p><span class="math display">\[\bar{X}\approx N\left(\mu,\frac{\sigma^2}{n}\right)\]</span></p>
-<p>The exact assumptions matter, but the intuition is simple:</p>
+<p>For many experimental settings, as your sample size grows, the distribution of the <strong>sample mean</strong> becomes approximately normal even for non-normal population distributions.</p>
+<p><span class="math display">\[\bar{X}\approx N\left(\mu,\frac{\sigma^2}{n}\right);\]</span></p>
+<ul>
+<li>μ = population mean. The sampling distribution of <span class="math inline">\(\bar X\)</span> is centered at the population mean.</li>
+<li><span class="math inline">\(\sigma\)</span> = population standard deviation, describes how much individual observations vary in the population.</li>
+<li><span class="math inline">\(\sigma^2\)</span> = population variance.</li>
+<li><span class="math inline">\(n\)</span> = sample size.</li>
+</ul>
+<p>In other words, upon standardization <span class="math inline">\(\frac{\bar{X}-\mu}{\frac{\sigma}{\sqrt{n}}} \approx N\left(0,1\right)\)</span></p>
+<h4 id="the-exact-assumptions-matter-but-the-following-remains-valid">💡 The exact assumptions matter, but the following remains valid:</h4>
 <blockquote>
-<p><strong>Repeated sample means tend to form an approximately bell-shaped distribution.</strong></p>
+<p><strong>Even if your data is heavily skewed, binary, or completely uniform, the average of those values tend to form an approximately bell-shaped distribution if you collect enough samples.</strong></p>
 </blockquote>
 </div>
 </section>
-<section id="why-the-normal-curve-appears-in-so-much-inference" class="slide level2">
-<h2>Why the normal curve appears in so much inference</h2>
+<section id="why-the-normal-curve-appears-so-much-in-inferential-processes" class="slide level2">
+<h2>Why the normal curve appears so much in inferential processes</h2>
 <div style="font-size:0.62em;">
 <p>The reference distribution lets us ask:</p>
 <blockquote>
@@ -1042,7 +1062,7 @@ Sample Size: 400       Statistical Power: 0.991</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb11-1"><a href="" aria-label="1"></a>                 reference distribution</span>
 <span id="cb11-2"><a href="" aria-label="2"></a>                         |</span>
 <span id="cb11-3"><a href="" aria-label="3"></a>            -------------+-------------</span>
-<span id="cb11-4"><a href="" aria-label="4"></a>          common values             extreme values</span>
+<span id="cb11-4"><a href="" aria-label="4"></a>        common values               extreme values</span>
 <span id="cb11-5"><a href="" aria-label="5"></a>                                -&gt; smaller tail area</span>
 <span id="cb11-6"><a href="" aria-label="6"></a>                                   -&gt; smaller p-value</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -1056,50 +1076,65 @@ Sample Size: 400       Statistical Power: 0.991</code></pre>
 <p><strong>Tip</strong></p>
 </div>
 <div class="callout-content">
-<p>The normal curve is often a model for the <strong>sampling distribution of a statistic</strong>, not necessarily for the raw data themselves.</p>
+<p>Since many inferential questions concern sample means not necessarily for the raw data themselves, we see the normal curve quite often thnaks to the guarantees of the CLT.</p>
 </div>
 </div>
 </div>
 </div>
 </section>
 <section id="central-limit-theorem-a-simulation" class="slide level2">
-<h2>Central Limit Theorem: a simulation</h2>
+<h2>Central Limit Theorem: A Simulation</h2>
+<div style="font-size:0.62em;">
+<p>We start with a strongly <strong>right-skewed population</strong>, repeatedly draw samples of <span class="math inline">\(n=30\)</span>, and calculate the mean of each sample. The histogram shows the <em>sampling distribution of the 5,000 sample means</em>.</p>
+<div class="columns">
+<div class="column" style="width:48%;">
 <h4 id="r-2">R</h4>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="" aria-label="1"></a>population <span class="ot">&lt;-</span> <span class="fu">rexp</span>(<span class="dv">100000</span>)</span>
-<span id="cb12-2"><a href="" aria-label="2"></a></span>
-<span id="cb12-3"><a href="" aria-label="3"></a>sample_means <span class="ot">&lt;-</span> <span class="fu">replicate</span>(</span>
-<span id="cb12-4"><a href="" aria-label="4"></a>  <span class="dv">5000</span>,</span>
-<span id="cb12-5"><a href="" aria-label="5"></a>  <span class="fu">mean</span>(<span class="fu">sample</span>(population, <span class="dv">30</span>))</span>
-<span id="cb12-6"><a href="" aria-label="6"></a>)</span>
-<span id="cb12-7"><a href="" aria-label="7"></a></span>
-<span id="cb12-8"><a href="" aria-label="8"></a><span class="fu">hist</span>(sample_means, <span class="at">breaks =</span> <span class="dv">30</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="" aria-label="1"></a><span class="co"># Generate a right-skewed population</span></span>
+<span id="cb12-2"><a href="" aria-label="2"></a>population <span class="ot">&lt;-</span> <span class="fu">rexp</span>(<span class="dv">100000</span>)</span>
+<span id="cb12-3"><a href="" aria-label="3"></a></span>
+<span id="cb12-4"><a href="" aria-label="4"></a><span class="co"># Take 5,000 samples of size 30</span></span>
+<span id="cb12-5"><a href="" aria-label="5"></a><span class="co"># and calculate each sample mean</span></span>
+<span id="cb12-6"><a href="" aria-label="6"></a>sample_means <span class="ot">&lt;-</span> <span class="fu">replicate</span>(</span>
+<span id="cb12-7"><a href="" aria-label="7"></a>  <span class="dv">5000</span>,</span>
+<span id="cb12-8"><a href="" aria-label="8"></a>  <span class="fu">mean</span>(<span class="fu">sample</span>(population, <span class="dv">30</span>))</span>
+<span id="cb12-9"><a href="" aria-label="9"></a>)</span>
+<span id="cb12-10"><a href="" aria-label="10"></a></span>
+<span id="cb12-11"><a href="" aria-label="11"></a><span class="co"># Sampling distribution of the mean</span></span>
+<span id="cb12-12"><a href="" aria-label="12"></a><span class="fu">hist</span>(sample_means,<span class="at">breaks =</span> <span class="dv">30</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="DS3100_Unit03_Statistics_Refresher_files/figure-revealjs/unnamed-chunk-5-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:52%;">
 <h4 id="python-2">Python</h4>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="" aria-label="1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb13-2"><a href="" aria-label="2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="" aria-label="1"></a><span class="co"># Generate a right-skewed population</span></span>
+<span id="cb13-2"><a href="" aria-label="2"></a>population <span class="op">=</span> np.random.exponential(size<span class="op">=</span><span class="dv">100000</span>)</span>
 <span id="cb13-3"><a href="" aria-label="3"></a></span>
-<span id="cb13-4"><a href="" aria-label="4"></a>population <span class="op">=</span> np.random.exponential(<span class="dv">100000</span>)</span>
-<span id="cb13-5"><a href="" aria-label="5"></a></span>
+<span id="cb13-4"><a href="" aria-label="4"></a><span class="co"># Take 5,000 samples of size 30</span></span>
+<span id="cb13-5"><a href="" aria-label="5"></a><span class="co"># and calculate each sample mean</span></span>
 <span id="cb13-6"><a href="" aria-label="6"></a>sample_means <span class="op">=</span> [</span>
 <span id="cb13-7"><a href="" aria-label="7"></a>    np.mean(np.random.choice(population, <span class="dv">30</span>))</span>
 <span id="cb13-8"><a href="" aria-label="8"></a>    <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5000</span>)</span>
 <span id="cb13-9"><a href="" aria-label="9"></a>]</span>
 <span id="cb13-10"><a href="" aria-label="10"></a></span>
-<span id="cb13-11"><a href="" aria-label="11"></a>plt.hist(sample_means, bins<span class="op">=</span><span class="dv">30</span>)</span>
-<span id="cb13-12"><a href="" aria-label="12"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div style="font-size:0.62em;">
-<div class="callout callout-warning callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Warning</strong></p>
-</div>
-<div class="callout-content">
-<p>The code is for intuition: the population can be non-normal even though the distribution of repeated sample means becomes approximately normal.</p>
+<span id="cb13-11"><a href="" aria-label="11"></a><span class="co"># Sampling distribution of the mean</span></span>
+<span id="cb13-12"><a href="" aria-label="12"></a>plt.hist(sample_means,bins<span class="op">=</span><span class="dv">30</span>)</span>
+<span id="cb13-13"><a href="" aria-label="13"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="DS3100_Unit03_Statistics_Refresher_files/figure-revealjs/unnamed-chunk-6-1.png" width="960"></p>
+</figure>
 </div>
 </div>
 </div>
+</div></div>
 </div>
 </section>
 <section class="slide level2">
@@ -1110,16 +1145,32 @@ Sample Size: 400       Statistical Power: 0.991</code></pre>
 <h1>Part 5</h1>
 <p><span style="color:#1565C0; font-size:1.8em; font-weight:600;"> <span class="math inline">\(z\)</span> and <span class="math inline">\(t\)</span> statistics </span></p>
 </section>
-<section id="standardizing-a-sample-mean-the-z-statistic" class="slide level2">
-<h2>Standardizing a sample mean: the z statistic</h2>
+<section id="standardizing-a-sample-statistic" class="slide level2">
+<h2>Standardizing a sample statistic</h2>
 <div style="font-size:0.62em;">
-<p>When the population standard deviation <span class="math inline">\(\sigma\)</span> is known:</p>
-<p><span class="math display">\[z=\frac{\bar{x}-\mu_0}{\sigma/\sqrt{n}}\]</span></p>
+<p>In general, a <strong>test statistic</strong> tells us how far an observed sample statistic is from the value expected by <span class="math inline">\(H_0\)</span> in terms of standard errors, relative to its expected sampling variation.</p>
+<p><span class="math display">\[
+\text{test statistic}
+=
+\frac{
+\text{observed sample statistic} -
+\text{value specified by }H_0
+}{
+\text{standard error}
+}
+\]</span></p>
+<h4 id="example-the-z-statistic-for-a-sample-mean">Example: the <span class="math inline">\(z\)</span> statistic for a sample mean</h4>
+<p>When the statistic of interest is the <strong>sample mean</strong> and the population standard deviation <span class="math inline">\(\sigma\)</span> is known:</p>
+<p><span class="math display">\[
+z =
+\frac{\bar{x}-\mu_0}
+{\sigma/\sqrt{n}}
+\]</span></p>
 <p>Interpretation:</p>
 <blockquote>
-<p><strong>How many standard errors is the observed sample mean from the hypothesized mean?</strong></p>
+<p><strong>How many standard errors is the observed sample mean from the mean specified by the null hypothesis?</strong></p>
 </blockquote>
-<p>Under the null model, the statistic follows a <strong>standard normal distribution</strong> when the relevant assumptions are met.</p>
+<p>Under <span class="math inline">\(H_0\)</span>, <span class="math inline">\(z\)</span> follows a <span style="color:#1565C0;"><strong>standard normal distribution</strong></span> when the relevant assumptions are satisfied.</p>
 </div>
 </section>
 <section id="what-changes-when-sigma-is-unknown" class="slide level2">
@@ -1127,21 +1178,25 @@ Sample Size: 400       Statistical Power: 0.991</code></pre>
 <div style="font-size:0.62em;">
 <p>Usually we do not know the population standard deviation (<span class="math inline">\(\sigma\)</span>). We estimate it from the sample (<span class="math inline">\(s\)</span>). Then:</p>
 <p><span class="math display">\[t=\frac{\bar{x}-\mu_0}{s/\sqrt{n}}\]</span></p>
-<p>Because the standard deviation is estimated, there is additional uncertainty. The reference distribution becomes the <strong>Student’s t distribution</strong>.</p>
+<p>Because the standard deviation is estimated, there is additional uncertainty.</p>
+<p>Our reference distribution therefore becomes the <span style="color:#1565C0;"><strong>Student’s t distribution</strong></span>.</p>
 </div>
 </section>
-<section id="the-t-distribution" class="slide level2">
-<h2>The t distribution</h2>
+<section id="the-students-t-distribution" class="slide level2">
+<h2>The Student’s <span class="math inline">\(t\)</span> distribution</h2>
 <div style="font-size:0.62em;">
-<p>The Student’s t distribution:</p>
+<div class="columns">
+<div class="column" style="width:48%;">
 <ul>
-<li>is centered at 0;</li>
-<li>has heavier tails than the standard normal;</li>
-<li>depends on <strong>degrees of freedom</strong>;</li>
-<li>approaches the normal distribution as degrees of freedom increase.</li>
+<li>Is centered at 0.</li>
+<li>Unlike the standard normal distribution —which is fixed and never changes— the <span class="math inline">\(t\)</span>-distribution is actually a family of curves. Its exact shape is determined entirely by its <span style="color:#1565C0;"><strong>degrees of freedom</strong></span> (<span class="math inline">\(df\)</span>).</li>
+<li>For small samples the <span class="math inline">\(t\)</span> distribution has heavier tails than the standard normal to account for higher uncertainty.</li>
+<li>It approaches the normal distribution as degrees of freedom increase.</li>
 </ul>
-<p>For a one-sample mean test:</p>
-<p><span class="math display">\[df=n-1\]</span></p>
+</div><div class="column" style="width:48%;">
+<p>For a one-sample mean test: <span class="math inline">\(df=n-1\)</span></p>
+<p><img data-src="images/t-dist.webp" style="width:100.0%"></p>
+</div></div>
 </div>
 <div style="font-size:0.62em;">
 <div class="callout callout-tip callout-titled callout-style-default">
@@ -1153,7 +1208,8 @@ Sample Size: 400       Statistical Power: 0.991</code></pre>
 <p><strong>Tip</strong></p>
 </div>
 <div class="callout-content">
-<p>Smaller degrees of freedom -&gt; heavier tails -&gt; a more cautious reference distribution.</p>
+<p><strong>Smaller <span class="math inline">\(df\)</span> → more probability in the tails → extreme <span class="math inline">\(t\)</span>-values are less unusual.</strong></p>
+<p>For example, if we observe <span class="math inline">\(\lvert t \rvert =2\)</span>, with a standard normal reference distribution, values beyond approximately <span class="math inline">\(\pm 2\)</span> are relatively rare. With a low-df <span class="math inline">\(t\)</span> distribution, values that far from zero are more common because more probability lies in the tails. So the same observed test statistic is less compelling evidence against <span class="math inline">\(H_0\)</span> when degrees of freedom are small, giving way to a ‘more cautious’ reference distribution.</p>
 </div>
 </div>
 </div>
@@ -1214,7 +1270,7 @@ Sample Size: 400       Statistical Power: 0.991</code></pre>
 <p><strong>Note</strong></p>
 </div>
 <div class="callout-content">
-<p>Do not memorize a universal rule such as “n &lt; 30 means t.” The deeper distinction is whether the population SD is known or estimated, together with the assumptions of the test.</p>
+<p>Do not memorize a universal rule such as “n &lt; 30 means use the t-test.” The deeper distinction is whether the population SD is known or estimated, together with the assumptions of the test.</p>
 </div>
 </div>
 </div>
@@ -1259,38 +1315,24 @@ Sample Size: 400       Statistical Power: 0.991</code></pre>
 <h1>Part 6</h1>
 <p><span style="color:#1565C0; font-size:1.8em; font-weight:600;"> One-tailed vs.&nbsp;two-tailed tests </span></p>
 </section>
-<section id="what-does-a-tail-mean" class="slide level2">
-<h2>What does a tail mean?</h2>
+<section class="slide level2">
+
+<h3 id="what-statistical-test-fits-your-research-question">What statistical test fits your research question?</h3>
 <div style="font-size:0.62em;">
-<p><strong>Two-tailed</strong></p>
+<p><strong>Two-tailed Tests</strong>: <span class="math inline">\(H_A:\mu\neq\mu_0\)</span></p>
 <blockquote>
-<p>Unusually large <strong>or</strong> unusually small values matter.</p>
+<p>Unusually different values matter. These tests are <em>non-directional</em> meaning both significantly large <em>or</em> significantly small values need to be considered.</p>
 </blockquote>
-<p><span class="math display">\[H_A:\mu\neq\mu_0\]</span></p>
-<p><strong>One-tailed</strong></p>
+<ul>
+<li><strong>Question:</strong> Does Cardiology have a different average waiting time from Primary Care? <span class="math inline">\(H_A:\mu_C-\mu_P\neq0\)</span></li>
+</ul>
+<p><strong>One-tailed Tests</strong>: <span class="math inline">\(H_A:\mu&gt;\mu_0 \qquad\text{or}\qquad H_A:\mu&lt;\mu_0\)</span></p>
 <blockquote>
-<p>One direction is specified in advance.</p>
+<p>Here we test relationships in <em>one direction</em> specified in advance. We need to check if a sample value is significantly greater than <strong>or</strong> less than a population value.</p>
 </blockquote>
-<p><span class="math display">\[
-H_A:\mu&gt;\mu_0
-\qquad\text{or}\qquad
-H_A:\mu&lt;\mu_0
-\]</span></p>
-</div>
-</section>
-<section id="which-test-fits-the-research-question" class="slide level2">
-<h2>Which test fits the research question?</h2>
-<div style="font-size:0.62em;">
-<p><strong>Question:</strong> Does Cardiology have a different average waiting time from Primary Care?</p>
-<p><span class="math display">\[
-H_A:\mu_C-\mu_P\neq0
-\]</span></p>
-<p>-&gt; <strong>Two-tailed</strong></p>
-<p><strong>Question:</strong> Does a new scheduling system reduce average waiting time?</p>
-<p><span class="math display">\[
-H_A:\mu_{new}-\mu_{old}&lt;0
-\]</span></p>
-<p>-&gt; <strong>One-tailed</strong></p>
+<ul>
+<li><strong>Question:</strong> Does a new scheduling system reduce average waiting time? <span class="math inline">\(H_A:\mu_{\text{new}}-\mu_{\text{old}}&lt;0\)</span></li>
+</ul>
 </div>
 <div style="font-size:0.62em;">
 <div class="callout callout-warning callout-titled callout-style-default">
@@ -1302,7 +1344,7 @@ H_A:\mu_{new}-\mu_{old}&lt;0
 <p><strong>Warning</strong></p>
 </div>
 <div class="callout-content">
-<p>Choose the tail from the research question <strong>before examining the result</strong>. Do not switch to one tail because the observed effect points in a convenient direction.</p>
+<p>Choose the tail from the research question <strong>before examining the results</strong>. Do not switch to one tail because the observed effect points in a specific and convenient direction.</p>
 </div>
 </div>
 </div>
@@ -1315,12 +1357,28 @@ H_A:\mu_{new}-\mu_{old}&lt;0
 <p>A one-tailed test counts extreme outcomes in <strong>one pre-specified direction</strong>.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb14-1"><a href="" aria-label="1"></a>Two-tailed:</span>
 <span id="cb14-2"><a href="" aria-label="2"></a>&lt;--- extreme ---&gt; | central | &lt;--- extreme ---&gt;</span>
-<span id="cb14-3"><a href="" aria-label="3"></a>                  0</span>
+<span id="cb14-3"><a href="" aria-label="3"></a>                       0</span>
 <span id="cb14-4"><a href="" aria-label="4"></a></span>
 <span id="cb14-5"><a href="" aria-label="5"></a>One-tailed:</span>
 <span id="cb14-6"><a href="" aria-label="6"></a>                  | central | &lt;--- extreme ---&gt;</span>
 <span id="cb14-7"><a href="" aria-label="7"></a>                                 direction</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The tail choice changes the reference region and therefore the p-value.</p>
+<p>The tail choice changes the reference region and therefore the p-value.<br></p>
+</div>
+<div style="font-size:0.62em;">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>Typically, for the same significance level, it is easier to obtain a statistically significant result with a one-tailed test than with a two-tailed test, provided the observed effect is in the pre-specified direction.</p>
+<p>This is because for the one-tailed case the entire rejection region is concentrated to one tail of the bell-curve as opposed to the two-tailed case where the rejection region is split equally between both tails. So your observed test statistics need to land farther out from the center to enter the rejection region in a two-tailed test.</p>
+</div>
+</div>
+</div>
 </div>
 </section>
 <section id="putting-it-all-together" class="slide level2">
@@ -1369,9 +1427,7 @@ H_A:\mu_{new}-\mu_{old}&lt;0
 <li><strong>Significance, effect size, power, and uncertainty answer different questions.</strong></li>
 </ol>
 </div>
-</section>
-<section id="references" class="slide level2">
-<h2>📚 References</h2>
+<h3 id="references">📚 References</h3>
 <ul>
 <li><a href="https://www.tdistributiontable.com/">Student’s t-distribution table</a></li>
 </ul>
