@@ -831,18 +831,31 @@ for n in [25, 100, 400]:
 | $H_0$ true | Reject $H_0$ | <span style="color:#1565C0;">Type I error</span>  |
 | $H_0$ false | Fail to reject $H_0$ | <span style="color:#1565C0;">Type II error</span> |
 
+:::
 
-<br>The significance level is tied to <span style="color:#1565C0;">Type I error rate</span>:
+::: {.columns .v-center}
 
-$$
-\alpha=P(\text{reject }H_0\mid H_0\text{ true})
-$$
+::: {.column width="52%" style="font-size:0.58em;"}
 
-Power is related to <span style="color:#1565C0;">Type II error rate</span> ($\beta$):
+Think of two distributions: the null (where $H_0$ true) and an alternative (where $H_A$ is specified).
 
-$$
-\text{Power}=1-\beta
-$$
+- $H_0$ distribution sets the rejection cutoff
+- $H_A$ distribution asks how often we cross that cutoff
+
+The significance level is tied to <span style="color:#1565C0;">Type I error rate</span>. It is area of the null distribution inside the rejection region. 
+$\alpha=P(\text{reject }H_0\mid H_0\text{ true})$
+
+Power is related to <span style="color:#1565C0;">Type II error rate</span> ($\beta$). It is the area of the alternative distribution inside that same rejection region. $\text{Power}=1-\beta$
+
+*The rejection cutoff is determined using the null distribution, whereas power is the probability of landing in that same rejection region under the alternative distribution.*
+
+:::
+
+::: {.column width="48%" style="font-size:0.58em;"}
+
+![](images/statistical-power.png){width=100%}
+
+:::
 
 :::
 
@@ -1102,7 +1115,7 @@ For example, if we observe $\lvert t \rvert =2$, with a standard normal referenc
 | | z statistic | t statistic |
 |---|---|---|
 | Population SD | known | unknown / estimated |
-| Reference distribution | standard normal | Student's t |
+| Reference distribution | standard (*upon standardization*) normal | Student's t |
 | Degrees of freedom | no | yes |
 | Small samples | possible when assumptions are met | especially important |
 | Large samples | normal reference | t becomes close to normal |
@@ -1110,7 +1123,10 @@ For example, if we observe $\lvert t \rvert =2$, with a standard normal referenc
 :::
 
 ::: {.callout-note style="font-size:0.62em;"}
-Do not memorize a universal rule such as "n < 30 means use the t-test." The deeper distinction is whether the population SD is known or estimated, together with the assumptions of the test.
+Do not memorize a universal rule such as "n > 30 means use the z-test." The deeper distinction is (under the assumptions of the test): 
+
+- the population SD is known or estimated
+- sampling distribution of the statistic itself must be normal (centered around the true parameter with its specific standard error)
 :::
 
 ---

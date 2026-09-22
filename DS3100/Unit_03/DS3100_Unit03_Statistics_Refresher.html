@@ -999,15 +999,20 @@ Sample Size: 400       Statistical Power: 0.991</code></pre>
 </tr>
 </tbody>
 </table>
-<p><br>The significance level is tied to <span style="color:#1565C0;">Type I error rate</span>:</p>
-<p><span class="math display">\[
-\alpha=P(\text{reject }H_0\mid H_0\text{ true})
-\]</span></p>
-<p>Power is related to <span style="color:#1565C0;">Type II error rate</span> (<span class="math inline">\(\beta\)</span>):</p>
-<p><span class="math display">\[
-\text{Power}=1-\beta
-\]</span></p>
 </div>
+<div class="columns v-center">
+<div class="column" style="font-size:0.58em;">
+<p>Think of two distributions: the null (where <span class="math inline">\(H_0\)</span> true) and an alternative (where <span class="math inline">\(H_A\)</span> is specified).</p>
+<ul>
+<li><span class="math inline">\(H_0\)</span> distribution sets the rejection cutoff</li>
+<li><span class="math inline">\(H_A\)</span> distribution asks how often we cross that cutoff</li>
+</ul>
+<p>The significance level is tied to <span style="color:#1565C0;">Type I error rate</span>. It is area of the null distribution inside the rejection region. <span class="math inline">\(\alpha=P(\text{reject }H_0\mid H_0\text{ true})\)</span></p>
+<p>Power is related to <span style="color:#1565C0;">Type II error rate</span> (<span class="math inline">\(\beta\)</span>). It is the area of the alternative distribution inside that same rejection region. <span class="math inline">\(\text{Power}=1-\beta\)</span></p>
+<p><em>The rejection cutoff is determined using the null distribution, whereas power is the probability of landing in that same rejection region under the alternative distribution.</em></p>
+</div><div class="column" style="font-size:0.58em;">
+<p><img data-src="images/statistical-power.png" style="width:100.0%"></p>
+</div></div>
 </section>
 <section class="slide level2">
 
@@ -1252,7 +1257,7 @@ z =
 </tr>
 <tr class="even">
 <td>Reference distribution</td>
-<td>standard normal</td>
+<td>standard (<em>upon standardization</em>) normal</td>
 <td>Student’s t</td>
 </tr>
 <tr class="odd">
@@ -1283,7 +1288,11 @@ z =
 <p><strong>Note</strong></p>
 </div>
 <div class="callout-content">
-<p>Do not memorize a universal rule such as “n &lt; 30 means use the t-test.” The deeper distinction is whether the population SD is known or estimated, together with the assumptions of the test.</p>
+<p>Do not memorize a universal rule such as “n &gt; 30 means use the z-test.” The deeper distinction is (under the assumptions of the test):</p>
+<ul>
+<li>the population SD is known or estimated</li>
+<li>sampling distribution of the statistic itself must be normal (centered around the true parameter with its specific standard error)</li>
+</ul>
 </div>
 </div>
 </div>
