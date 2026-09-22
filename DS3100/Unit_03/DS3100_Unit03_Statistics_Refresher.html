@@ -703,7 +703,7 @@ A non-significant result may reflect a genuinely small effect, substantial varia
 <p><strong>Why?</strong></p>
 </div>
 <div class="callout-content">
-<p>We use <strong>standard error</strong> to standardize the sample statistic, producing an <strong>observed test statistic</strong> that tells us how large the observed result is relative to its expected sampling variation. (<em>More on this calculation later!</em>)<br> Larger samples generally produce <strong>smaller standard errors</strong>: <span class="math inline">\(SE = \frac{s}{\sqrt{n}}\)</span></p>
+<p>We use <strong>standard error</strong> to standardize the sample statistic, producing an <strong>observed test statistic</strong> that tells us how large the observed result is relative to its expected sampling variation. (<em>More on this calculation later!</em>)<br> Larger samples generally produce <strong>smaller standard errors</strong>: <span class="math inline">\(SE (\text{for sample mean}) = \frac{s}{\sqrt{n}}\)</span></p>
 <p>A smaller standard error could make an observed difference of a given size more extreme relative to its expected sampling variation, which can produce a smaller <span class="math inline">\(p\)</span>-value.</p>
 </div>
 </div>
@@ -1166,11 +1166,24 @@ z =
 \frac{\bar{x}-\mu_0}
 {\sigma/\sqrt{n}}
 \]</span></p>
-<p>Interpretation:</p>
-<blockquote>
-<p><strong>How many standard errors is the observed sample mean from the mean specified by the null hypothesis?</strong></p>
-</blockquote>
+<p><span style="color:#1565C0;">Interpretation</span>: <em>How many standard errors is the observed sample mean from the mean specified by the null hypothesis?</em></p>
 <p>Under <span class="math inline">\(H_0\)</span>, <span class="math inline">\(z\)</span> follows a <span style="color:#1565C0;"><strong>standard normal distribution</strong></span> when the relevant assumptions are satisfied.</p>
+</div>
+<div style="font-size:0.62em;">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p><strong>The denominator here is specific to the sample mean.</strong></p>
+<p><span class="math inline">\(\sigma/\sqrt{n}\)</span> is the <strong>standard error of the sample mean</strong>. In general, the formula for a standard error depends on the <strong>sample statistic being studied</strong>.</p>
+</div>
+</div>
+</div>
 </div>
 </section>
 <section id="what-changes-when-sigma-is-unknown" class="slide level2">
@@ -1276,8 +1289,56 @@ z =
 </div>
 </div>
 </section>
+<section id="reading-a-z-table" class="slide level2">
+<h2>Reading a <span class="math inline">\(z\)</span>-table</h2>
+<div style="font-size:0.62em;">
+<p>A <a href="https://statisticsbyjim.com/hypothesis-testing/z-table/">standard <span class="math inline">\(z\)</span>-table</a> gives the <strong>area to the left</strong> of a given <span class="math inline">\(z\)</span>-score. To find a value:</p>
+<ol type="1">
+<li>Use the <strong>row</strong> for the first two digits of <span class="math inline">\(z\)</span>.</li>
+<li>Use the <strong>column</strong> for the hundredths digit.</li>
+<li>The cell gives <span class="math inline">\(P(Z\le z)\)</span>.</li>
+</ol>
+<p><strong>Example</strong>: For <span class="math inline">\(z=1.65\)</span> look up row: <span class="math inline">\(1.6\)</span>, and, column: <span class="math inline">\(0.05\)</span>. The table gives: <span class="math inline">\(P(Z\le1.65)\approx0.9505\)</span>. So about <strong>95.05%</strong> of the standard normal distribution lies to the left of <span class="math inline">\(z=1.65\)</span>.</p>
+</div>
+<div style="position:relative; width:100%; height:430px;">
+<div style="font-size:0.62em;">
+<p><span style="color:#1565C0;"> <strong>One-tailed test</strong> </span> (<span class="math inline">\(\alpha=0.05\)</span>): Only the tail in the direction of the alternative hypothesis is looked into. So you look for an area of <span class="math inline">\(0.95\)</span> or <span class="math inline">\(0.05\)</span>, depending on which tail. Looking into the table the closest to our target <span class="math inline">\(\alpha\)</span> is <span class="math inline">\(0.04947\)</span>. This area is at the row and column intersection for the z-value of <span class="math inline">\(-1.65\)</span>. That’s our critical value! Technically our <span class="math inline">\(\alpha\)</span> falls between the z-values of <span class="math inline">\(-1.64\)</span> and <span class="math inline">\(-1.65\)</span> but let’s go with the marginally more conservative critical z-value of <span class="math inline">\(-1.65\)</span>.</p>
+<p><span style="color:#1565C0;"> <strong>Two-tailed test</strong> </span> (<span class="math inline">\(\alpha=0.05\)</span>): Because the rejection region is split between <strong>two tails</strong>, first divide the significance level by 2: <span class="math inline">\(\frac{\alpha}{2} = \frac{0.05}{2} = 0.025\)</span>. So each tail contains <strong>2.5%</strong> of the null distribution. If the table reports cumulative area to the left, look for: <span class="math inline">\(1-0.025=0.975\)</span> The corresponding critical value is approximately: <span class="math inline">\(\boxed{z^*=1.96}\)</span>. Thus the rejection regions are: <span class="math inline">\(z&lt;-1.96 \text{ or } z&gt;1.96\)</span></p>
+</div>
+<div class="fragment fade-in" style="
+      font-size:0.62em;
+      position:absolute;
+      top:100px;
+      left:0;
+      width:100%;
+      z-index:5;
+      background-color:white;
+      padding:12px 20px;
+      box-sizing:border-box;
+    ">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p><strong>To get a tail probability:</strong></p>
+<ul>
+<li><strong>Left tail:</strong> use the table value directly.</li>
+<li><strong>Right tail:</strong> <span class="math inline">\(1-\text{table value}\)</span>.</li>
+<li><strong>Two tails:</strong> calculate the appropriate tail and <strong>double it</strong> when the tails are symmetric.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
 <section id="reading-a-t-table" class="slide level2">
-<h2>Reading a t table</h2>
+<h2>Reading a <span class="math inline">\(t\)</span> table</h2>
 <div style="font-size:0.62em;">
 <p>A t table gives <strong>critical values</strong> based on:</p>
 <ul>
@@ -1429,7 +1490,8 @@ z =
 </div>
 <h3 id="references">📚 References</h3>
 <ul>
-<li><a href="https://www.tdistributiontable.com/">Student’s t-distribution table</a></li>
+<li><a href="https://www.tdistributiontable.com/">Student’s <span class="math inline">\(t\)</span>-distribution table</a></li>
+<li><a href="https://statisticsbyjim.com/hypothesis-testing/z-table/">Standard <span class="math inline">\(z\)</span>-table</a></li>
 </ul>
 
 </section></section>

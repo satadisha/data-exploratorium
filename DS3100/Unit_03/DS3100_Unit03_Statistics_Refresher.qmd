@@ -580,7 +580,7 @@ The observed effect could be **practically important**, even though it does not 
 
 #### Why? 
 We use **standard error** to standardize the sample statistic, producing an **observed test statistic** that tells us how large the observed result is relative to its expected sampling variation. (*More on this calculation later!*)<br>
-Larger samples generally produce **smaller standard errors**: $SE = \frac{s}{\sqrt{n}}$
+Larger samples generally produce **smaller standard errors**: $SE (\text{for sample mean}) = \frac{s}{\sqrt{n}}$
 
 A smaller standard error could make an observed difference of a given size more extreme relative to its expected sampling variation, which can produce a smaller $p$-value.
 
@@ -1025,13 +1025,18 @@ z =
 {\sigma/\sqrt{n}}
 $$
 
-Interpretation:
-
-> **How many standard errors is the observed sample mean from the mean
-> specified by the null hypothesis?**
+<span style="color:#1565C0;">Interpretation</span>: *How many standard errors is the observed sample mean from the mean specified by the null hypothesis?*
 
 Under $H_0$, $z$ follows a <span style="color:#1565C0;">**standard normal distribution**</span> when the relevant
 assumptions are satisfied.
+
+:::
+
+::: {.callout-note style="font-size:0.62em;"}
+
+**The denominator here is specific to the sample mean.**
+
+$\sigma/\sqrt{n}$ is the **standard error of the sample mean**. In general, the formula for a standard error depends on the **sample statistic being studied**.
 
 :::
 
@@ -1110,7 +1115,63 @@ Do not memorize a universal rule such as "n < 30 means use the t-test." The deep
 
 ---
 
-## Reading a t table
+## Reading a $z$-table
+
+::: {style="font-size:0.62em;"}
+
+A [standard $z$-table](https://statisticsbyjim.com/hypothesis-testing/z-table/) gives the **area to the left** of a given $z$-score. To find a value:
+
+1. Use the **row** for the first two digits of $z$.
+2. Use the **column** for the hundredths digit.
+3. The cell gives $P(Z\le z)$.
+
+**Example**: For $z=1.65$ look up row: $1.6$, and, column: $0.05$. 
+The table gives: $P(Z\le1.65)\approx0.9505$. So about **95.05\%** of the standard normal distribution lies to the left of $z=1.65$.
+
+:::
+
+<div style="position:relative; width:100%; height:430px;">
+
+  <div style="font-size:0.62em;">
+
+  <span style="color:#1565C0;"> **One-tailed test** </span> ($\alpha=0.05$): Only the tail in the direction of the alternative hypothesis is looked into. So you look for an area of $0.95$ or $0.05$, depending on which tail. 
+  Looking into the table the closest to our target $\alpha$ is $0.04947$. This area is at the row and column intersection for the z-value of $-1.65$. That’s our critical value! Technically our $\alpha$ falls between the z-values of $-1.64$ and $-1.65$ but let's go with the marginally more conservative critical z-value of $-1.65$.
+
+
+  <span style="color:#1565C0;"> **Two-tailed test** </span> ($\alpha=0.05$): Because the rejection region is split between **two tails**, first divide the significance level by 2: $\frac{\alpha}{2} = \frac{0.05}{2} = 0.025$. So each tail contains **2.5\%** of the null distribution. 
+  If the table reports cumulative area to the left, look for: $1-0.025=0.975$ The corresponding critical value is approximately: $\boxed{z^*=1.96}$. Thus the rejection regions are: $z<-1.96 \text{ or } z>1.96$
+
+  </div>
+
+  <div class="fragment fade-in"
+    style="
+      font-size:0.62em;
+      position:absolute;
+      top:100px;
+      left:0;
+      width:100%;
+      z-index:5;
+      background-color:white;
+      padding:12px 20px;
+      box-sizing:border-box;
+    ">
+
+::: {.callout-tip}
+
+**To get a tail probability:**
+
+- **Left tail:** use the table value directly.
+- **Right tail:** $1-\text{table value}$.
+- **Two tails:** calculate the appropriate tail and **double it** when the tails are symmetric.
+
+:::
+
+</div>
+
+</div>
+
+
+## Reading a $t$ table
 
 ::: {style="font-size:0.62em;"}
 
@@ -1258,4 +1319,5 @@ The p-value is **one part of the argument**, not the entire argument.
 
 ### 📚 References
 
-- [Student's t-distribution table](https://www.tdistributiontable.com/)
+- [Student's $t$-distribution table](https://www.tdistributiontable.com/)
+- [Standard $z$-table](https://statisticsbyjim.com/hypothesis-testing/z-table/)
