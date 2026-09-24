@@ -1,0 +1,289 @@
+---
+title: "Statistics Refresher, Part 1: The p-Value and Power"
+author: "YOUR NAME HERE"
+date: "DS 3100 --- Thursday 24 September 2026"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+
+## What you are doing
+
+On Thursday we ended the work on figures with a question. The women in
+the smartphone survey scored about 12 points higher than the men on
+problematic phone use, and the figure's title says so. That is true of
+these 121 students. Would a difference of 12 points appear in a sample
+even if there were no difference in the population? This sheet builds
+the answer (a p-value) by simulation before `t.test()` computes it from
+a formula, then asks how often a test finds a difference that is real,
+which is the test's power. **Part 1** is four sections we run in class
+with the slides. **Part 2** is three investigations to run on your own:
+each is a machine with dials, and there is no answer on the sheet.
+
+Every chunk of code is switched off with a hash character at the start
+of each line. Please remove the hashes when you reach a chunk (select
+the lines and press Ctrl+Shift+C, or Cmd+Shift+C on a Mac), run it, and
+look at the result before reading on. After each section, there is a
+question I want you to answer in your own words.
+
+The data are the smartphone survey we have used since 10 September
+(`PluckData.rds`, attached again on Brightspace and linked from the
+course website). Create a folder called `data/` beside this file and
+put the file in it.
+
+```{r load-packages}
+library(tidyverse)
+```
+
+The first chunk reads the file and makes the fix from 15 September:
+three students have a GPA of 999, a code for a missing value, which
+`na_if()` turns into `NA`. `by_sex` keeps the 121 students whose sex
+and phone-use score (`MPPUS__Total`, the Mobile Phone Problem Use
+Scale) are both recorded.
+
+```{r read-data}
+#pluck <- readRDS("data/PluckData.rds") |>
+#  mutate(GPA = na_if(GPA, 999))
+#by_sex <- pluck |> filter(!is.na(Sex), !is.na(MPPUS__Total))
+#nrow(by_sex)
+```
+
+`nrow()` should return 121.
+
+
+# Part 1: In class
+
+`set.seed()` fixes the starting point of R's random numbers, so that
+if you run the chunks of Part 1 in order, once each, your numbers match
+the ones on the slides. Every run after the first gives different
+numbers, which is the variation from sample to sample that this part
+is about.
+
+## 1. A real difference, or chance?
+
+The women's mean is about 12 points higher than the men's.
+
+```{r observed}
+#set.seed(3100)
+#observed <- mean(by_sex$MPPUS__Total[by_sex$Sex == "Female"]) -
+#            mean(by_sex$MPPUS__Total[by_sex$Sex == "Male"])
+#observed
+```
+
+Suppose sex had nothing to do with the score. Then the labels "Male"
+and "Female" might as well have been dealt out at random, and any
+dealing is as likely as the real one. `sample(by_sex$Sex)` shuffles the
+labels. `replicate()` runs the code in its braces ten thousand times
+and collects the ten thousand results: here, the difference between
+the two means after each shuffle. That is what a difference of two
+means looks like when the truth is "no difference".
+
+Before you run the next chunk, please write down how often you expect
+a shuffle to give a difference of 12 points or more.
+
+> My prediction:
+
+```{r shuffle}
+#shuffled <- replicate(10000, {
+#  s <- sample(by_sex$Sex)
+#  mean(by_sex$MPPUS__Total[s == "Female"]) - mean(by_sex$MPPUS__Total[s == "Male"])
+#})
+#hist(shuffled, breaks = 40)
+#abline(v = c(-observed, observed), col = "red", lwd = 2)
+#mean(abs(shuffled) >= abs(observed))
+```
+
+The last line is a p-value: the proportion of the shuffles in which
+chance alone produced a difference at least as large as the real one,
+in either direction. `t.test()` computes the same thing from a formula
+instead of from shuffling. Please compare its `p-value` with yours.
+
+```{r t-test}
+#t.test(MPPUS__Total ~ Sex, data = by_sex)
+```
+
+Please write, in one sentence, what your p-value means. Then write one
+thing it does *not* mean.
+
+> Answer:
+
+
+## 2. The false-positive machine
+
+`rnorm(30)` draws thirty values from a normal population with mean 0
+and standard deviation 1. It is a machine that makes data, and we know
+exactly what it is doing, which is never true of real data. Here two
+samples of thirty are drawn from the *same* population, so there is no
+difference to find, and a t-test is run on them. `$p.value` takes the
+p-value out of the test's output. The chunk does this a thousand times
+and keeps the thousand p-values.
+
+Before you run it, please write down how many of the thousand tests
+you expect to come out below 0.05.
+
+> My prediction:
+
+```{r false-positives}
+#p_null <- replicate(1000, t.test(rnorm(30), rnorm(30))$p.value)
+#hist(p_null, breaks = 20)
+#sum(p_null < 0.05)
+#mean(p_null < 0.05)
+```
+
+What shape does the histogram of p-values have when there is nothing
+to find? What does a single result of p = 0.03 tell you on its own?
+
+> Answer:
+
+
+## 3. Power: how often a real difference is found
+
+Now the machine is given a real difference. `rnorm(n, 0.5)` has mean
+0.5 and `rnorm(n)` has mean 0, so the two groups differ by half a
+standard deviation. `power_sim()` runs the test two thousand times and
+returns the proportion of tests that found the difference (p below
+0.05). That proportion is the test's **power** at that sample size.
+
+```{r power}
+#power_sim <- function(n, d, reps = 2000) {
+#  mean(replicate(reps, t.test(rnorm(n, d), rnorm(n))$p.value < 0.05))
+#}
+#power_sim(10, 0.5)
+#power_sim(30, 0.5)
+#power_sim(64, 0.5)
+#power_sim(100, 0.5)
+```
+
+`power.t.test()` does the same calculation from a formula, and it can
+answer the question the other way round: how many people per group
+for a power of 80 percent?
+
+```{r power-formula}
+#power.t.test(n = 10, delta = 0.5, sd = 1)
+#power.t.test(delta = 0.5, sd = 1, power = 0.8)
+```
+
+A study with ten people per group reports "no significant difference".
+Is that evidence that there is no difference? Please explain using the
+numbers you got.
+
+> Answer:
+
+
+## 4. Power for our own question
+
+Suppose the true difference in the population were exactly the one in
+the survey, about 12 points, with the spread the survey shows. What
+power did the survey have to find it? `power.t.test()` assumes two
+groups of the same size, and the survey has 51 men and 70 women; two
+groups of 59 give about the same precision (59 is the harmonic mean,
+`2 / (1/51 + 1/70)`). It uses `by_sex` and `observed` from the start of
+section 1, so in a new session please run the chunks from the top first.
+
+```{r room-power}
+#spread <- sd(by_sex$MPPUS__Total)
+#spread
+#power.t.test(n = 59, delta = observed, sd = spread)
+#power.t.test(delta = observed, sd = spread, power = 0.8)
+```
+
+What power did the survey have, and how many people per group would
+it take to reach 80 percent? What does that tell you about the p-value
+from section 1?
+
+> Answer:
+
+# Part 2: On your own
+
+Part 2 is for after class. Each investigation is a machine with dials,
+and there is no answer on the sheet. Please turn the dials, watch what
+happens, and write in two or three sentences what you concluded and
+what you saw that made you conclude it. Please bring your conclusions
+to Tuesday.
+
+
+## Investigation 1: the shape of a thousand p-values
+
+Section 2 drew the histogram of p-values when there was nothing to
+find. This machine adds a real difference of size `d` (in standard
+deviations) and draws the histogram again. Please try `d` at 0, 0.2,
+0.5, and 1, and `n` at 20 and 100.
+
+```{r investigation-1}
+#p_hist <- function(n, d, reps = 1000) {
+#  p <- replicate(reps, t.test(rnorm(n, d), rnorm(n))$p.value)
+#  hist(p, breaks = 20, main = paste("n =", n, "  d =", d))
+#  mean(p < 0.05)
+#}
+#p_hist(20, 0)
+#p_hist(20, 0.5)
+```
+
+If someone handed you a histogram of the p-values from a thousand
+studies of one question, what could you tell about whether the effect
+is real, and about how big it is?
+
+> Conclusion:
+
+
+## Investigation 2: how many discoveries are false?
+
+Statement 5 from class said that after rejecting the null hypothesis
+we know the probability that we are wrong. This machine shows what
+that probability depends on. Imagine ten thousand hypotheses being
+tested across a field. A fraction `prior` of them are actually true. A
+test of a true hypothesis comes out significant with probability
+`power`, and a test of a false one comes out significant with
+probability 0.05 (the false-positive rate from section 2). The machine
+counts, among the significant results, the proportion that were true.
+
+```{r investigation-2}
+#discoveries <- function(prior, power, n_tests = 10000, alpha = 0.05) {
+#  is_true <- rbinom(n_tests, 1, prior) == 1
+#  significant <- ifelse(is_true, rbinom(n_tests, 1, power), rbinom(n_tests, 1, alpha)) == 1
+#  sum(is_true & significant) / sum(significant)
+#}
+#discoveries(prior = 0.1, power = 0.5)
+```
+
+Please try `prior` at 0.5, 0.1, and 0.01, and `power` at 0.8, 0.5, and
+0.2, in every combination that interests you.
+
+Under what conditions is a significant result more likely to be wrong
+than right, and what does that say about fields where most of the
+hypotheses tested are long shots?
+
+> Conclusion:
+
+
+## Investigation 3: significant, and worth nothing
+
+A real difference of 0.05 standard deviations (a twentieth of one) is
+about as small as an effect can be and still exist. The machine tests
+it with ten thousand people per group. It uses `power_sim()` from
+section 3, so please run that chunk first.
+
+```{r investigation-3}
+#power_sim(10000, 0.05, reps = 200)
+#t.test(rnorm(10000, 0.05), rnorm(10000))
+```
+
+Please compare with `power_sim(30, 0.05)`, and look at the `sample
+estimates` and the `95 percent confidence interval` lines of the
+`t.test()` output, not only the p-value.
+
+What does a p-value tell you about the *size* of an effect, and what
+part of the output would you report instead?
+
+> Conclusion:
+
+## When you have finished
+
+Knit this document (HTML is fine). If any chunk printed something you
+did not expect, please write one sentence under it saying what you
+expected instead. Please bring your conclusions from Part 2 to
+Tuesday's meeting (in Stevenson 5, Room 306), where the refresher
+continues.

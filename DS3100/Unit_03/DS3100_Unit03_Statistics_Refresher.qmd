@@ -531,7 +531,7 @@ A p-value helps us determine whether an effect observed in a sample can be used 
 
 An effect size asks:
 
-> **How large or strong is the phenomenon in the phenomenon?**
+> **How large or strong is the phenomenon we are considering?**
 
 These are different questions.<br>
 
@@ -540,9 +540,9 @@ These are different questions.<br>
 ::: {.callout-tip style="font-size:0.62em;"}
 ## A result can be **statistically significant but practically trivial**
 
-<span style="color:#1565C0;">The Physicians Health Study of Aspirin</span> : Researchers studied a sample of 22,000 subjects over 5 years and found that taking aspirin everyday can prevent heart attack. This result was “highly statistically” significant, $p < .00001$.
+<span style="color:#1565C0;">The Physicians Health Study of Aspirin</span> : Researchers studied a sample of 22,000 subjects over 5 years, separated into a *placebo* group and an *effect* group. The hypothesis that taking aspirin everyday can *reduce* the risk of heart attack was found to be “highly statistically” significant, $p < .00001$ (less than 1 in 100,000 by random chance).
 
-However, the effect size was incredibly small. Most people did not experience the benefits of aspirin. In fact, risk of side effects nearly outweighed the “positive” preventative effect of taking aspirin.
+However, the effect size, measured using $R^2$ (*measures the percentage of variance in risk explained by taking aspirin*) was incredibly small. Most people did not experience the benefits of aspirin. In fact, risk of side effects nearly outweighed the “positive” preventative effect of taking aspirin.
 
 **When effect size is small, the pros of a treatment might not outweigh the cons.**
 
@@ -580,7 +580,7 @@ The observed effect could be **practically important**, even though it does not 
 
 #### Why? 
 We use **standard error** to standardize the sample statistic, producing an **observed test statistic** that tells us how large the observed result is relative to its expected sampling variation. (*More on this calculation later!*)<br>
-Larger samples generally produce **smaller standard errors**: $SE (\text{for sample mean}) = \frac{s}{\sqrt{n}}$
+Standard error is **inversely proportional** to sample size: $\text{SE for sample mean} = \frac{s}{\sqrt{n}}$
 
 A smaller standard error could make an observed difference of a given size more extreme relative to its expected sampling variation, which can produce a smaller $p$-value.
 
@@ -638,7 +638,9 @@ Larger samples and larger effects generally make it easier to detect a real effe
 
 ::: {.callout-tip}
 
-## Think of the three concepts together
+## Three concepts matter together
+
+By relying on $p$-values alone we cannot differentiate whether a test failed to reject $H_0$ because the observed data was indeed consistent with it or because the size of the study was too small. Looking at power helps us recognize the latter.
 
 $$
 \boxed{
@@ -676,15 +678,21 @@ So although larger samples make smaller effects precise and easier to detect, th
 
 ---
 
-## Calculating power: A Coding Demo
+## Calculating Statistical Power
 
 ::: {style="font-size:0.62em;"}
 
-Suppose a new patient check-in system is introduced in the outpatient clinic. 
+Because calculating power involves complex calculus (finding area under a non-central probability distribution) we will use statistical packages
 
-The null hypothesis is $H_0:\mu=30\text{ minutes}$ but this intervention brings the waiting time down to 28 minutes.
+:::
 
-Before collecting the data, we want to know:
+::: {.callout-tip style="font-size:0.62em;"}
+
+## A Coding Demo
+
+Suppose a new patient check-in system is introduced in the outpatient clinic. The null hypothesis is $H_0:\mu=30\text{ minutes}$ but this intervention brings the waiting time down to 28 minutes. 
+
+**Before collecting the data**, we want to know:
 
 > If the population mean after the intervention really is 28 minutes, how often would our study detect that departure from the null mean of 30 minutes? 
 
@@ -751,9 +759,9 @@ analysis.solve_power(
 
 ## Function params to note
 
-- Cohen's `d`/`effect_size` standardizes the effect size: $d = \frac{\mu_1-\mu_0}{\sigma}$ in standard deviations.
-- `type = one.sample`: tells `pwr.t.test()` that this is a one-sample t-test. In our example, we have one sample of patients after the new system, compared against a fixed reference mean of 30 minutes.
-- `alternative = less`/`alternative = smaller`: specifies the direction of the alternative hypothesis. Our research question is whether the new system reduces waiting time and hence the relevant effect will be in the left tail of the distribution.
+- Cohen's `d`/`effect_size` standardizes the effect size in standard deviations: $d = \frac{\mu_1-\mu_0}{\sigma}$
+- `type = one.sample`: tells `pwr.t.test()` that this is a <span style="color:#1565C0;">**one-sample t-test**</span>. In our example, we have one sample of patients after the new system, compared against a fixed reference mean of 30 minutes.
+- `alternative = less`/`alternative = smaller`: specifies the direction of the alternative hypothesis. Our research question is whether the new system reduces waiting time and hence the relevant effect will be in the <span style="color:#1565C0;">left tail of the distribution</span>.
 
 :::
 
@@ -765,7 +773,8 @@ analysis.solve_power(
 
 ## What happens when we increase our sample size?
 
-For the same effect size, increasing the sample size makes the estimate more precise and increases the probability of detecting the effect.
+For the same effect size, increasing the sample size makes the estimates more precise and increases the probability of detecting the effect.
+$$\text{Power} \propto \frac{\text{Effect Size} \times \sqrt{\text{Sample Size}}}{\text{Significance Level } (\alpha)}$$
 
 :::
 
@@ -822,14 +831,14 @@ for n in [25, 100, 400]:
 
 ---
 
-## False positives and false negatives
+## Two ways to fail
 
 ::: {style="font-size:0.62em;"}
 
 | Reality | Decision | Error |
 |---|---|---|
-| $H_0$ true | Reject $H_0$ | <span style="color:#1565C0;">Type I error</span>  |
-| $H_0$ false | Fail to reject $H_0$ | <span style="color:#1565C0;">Type II error</span> |
+| $H_0$ true (*no effect*) | Reject $H_0$ | <span style="color:#1565C0;">Type I error</span> or False Positive |
+| $H_0$ false (*effect exists*) | Fail to reject $H_0$ | <span style="color:#1565C0;">Type II error</span> or False Negative|
 
 :::
 
@@ -842,12 +851,10 @@ Think of two distributions: the null (where $H_0$ true) and an alternative (wher
 - $H_0$ distribution sets the rejection cutoff
 - $H_A$ distribution asks how often we cross that cutoff
 
-The significance level is tied to <span style="color:#1565C0;">Type I error rate</span>. It is area of the null distribution inside the rejection region. 
+<span style="color:#1565C0;">Type I error rate</span> is tied to the significance level. It is area of the null distribution inside the rejection region. 
 $\alpha=P(\text{reject }H_0\mid H_0\text{ true})$
 
-Power is related to <span style="color:#1565C0;">Type II error rate</span> ($\beta$). It is the area of the alternative distribution inside that same rejection region. $\text{Power}=1-\beta$
-
-*The rejection cutoff is determined using the null distribution, whereas power is the probability of landing in that same rejection region under the alternative distribution.*
+<span style="color:#1565C0;">Type II error rate</span> ($\beta$) is controlled by Statistical Power. It is the area of the alternative distribution inside that same rejection region. $\beta=1-\text{Power}$
 
 :::
 
@@ -856,6 +863,12 @@ Power is related to <span style="color:#1565C0;">Type II error rate</span> ($\be
 ![](images/statistical-power.png){width=100%}
 
 :::
+
+:::
+
+::: {style="font-size:0.52em;"}
+
+*The rejection cutoff is determined using the null distribution, whereas power is the probability of landing in that same rejection region under the alternative distribution.*
 
 :::
 
@@ -894,9 +907,11 @@ This gives us the reference distribution we need to determine *how extreme our o
 
 ---
 
-## The Central Limit Theorem
+## Working with Sample Means
 
-::: {style="font-size:0.62em;"}
+::: {.callout-note style="font-size:0.62em;"}
+
+## The Central Limit Theorem
 
 For many experimental settings, as your sample size grows, the distribution of the **sample mean** becomes approximately normal even for non-normal population distributions.
 
@@ -907,11 +922,17 @@ $$\bar{X}\approx N\left(\mu,\frac{\sigma^2}{n}\right);$$
 - $\sigma^2$ = population variance.
 - $n$ = sample size.
 
-In other words, upon standardization $\frac{\bar{X}-\mu}{\frac{\sigma}{\sqrt{n}}} \approx N\left(0,1\right)$
+In other words, <span style="color:#1565C0;">upon standardization</span> $\frac{\bar{X}-\mu}{\frac{\sigma}{\sqrt{n}}} \approx N\left(0,1\right)$
 
-#### 💡 The exact assumptions matter, but the following remains valid:
+:::
 
-> **Even if your data is heavily skewed, binary, or completely uniform, the average of those values tend to form an approximately bell-shaped distribution if you collect enough samples.**
+
+::: {.callout-tip style="font-size:0.62em;"}
+
+### The exact assumptions matter, but the core idea remains valid:
+
+- Even if your data is heavily skewed, binary, or completely uniform, the average of those values tend to form an **approximately bell-shaped distribution** if you collect enough samples.
+- **Asymptotic Normality** (The Generalized CLT): Many other statistics used in inference— proportions, differences, regression coefficients, etc— have predictable sampling behavior. With sufficiently large samples, their sampling distributions can be approximated to familiar reference distributions, allowing us to calculate probabilities and $p$-values.
 
 :::
 
@@ -1013,9 +1034,10 @@ plt.show()
 
 ## Standardizing a sample statistic
 
-::: {style="font-size:0.62em;"}
+::: {style="font-size:0.60em;"}
 
-In general, a **test statistic** tells us how far an observed sample statistic is from the value expected by $H_0$ in terms of standard errors, relative to its expected sampling variation.
+*Standardization* maps your sample statistic onto a unit-less scale.<br>
+In general, the **test statistic** tells us how far an observed sample statistic is from the value expected by $H_0$ in terms of standard errors, relative to its expected sampling variation.
 
 $$
 \text{test statistic}

@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Dr.&nbsp;Satadisha Saha Bhowmick">
-  <meta name="dcterms.date" content="2026-09-21">
+  <meta name="dcterms.date" content="2026-09-23">
   <title>DS 3100 | Statistics Refresher</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -211,7 +211,7 @@ Dr.&nbsp;Satadisha Saha Bhowmick
 </div>
 </div>
 
-  <p class="date">2026-09-21</p>
+  <p class="date">2026-09-23</p>
 </section>
 <section class="slide level2">
 
@@ -661,7 +661,7 @@ A non-significant result may reflect a genuinely small effect, substantial varia
 <p>A p-value helps us determine whether an effect observed in a sample can be used to draw an inference about a similar effect in the population.</p>
 <p>An effect size asks:</p>
 <blockquote>
-<p><strong>How large or strong is the phenomenon in the phenomenon?</strong></p>
+<p><strong>How large or strong is the phenomenon we are considering?</strong></p>
 </blockquote>
 <p>These are different questions.<br></p>
 </div>
@@ -675,8 +675,8 @@ A non-significant result may reflect a genuinely small effect, substantial varia
 <p><strong>A result can be <strong>statistically significant but practically trivial</strong></strong></p>
 </div>
 <div class="callout-content">
-<p><span style="color:#1565C0;">The Physicians Health Study of Aspirin</span> : Researchers studied a sample of 22,000 subjects over 5 years and found that taking aspirin everyday can prevent heart attack. This result was “highly statistically” significant, <span class="math inline">\(p &lt; .00001\)</span>.</p>
-<p>However, the effect size was incredibly small. Most people did not experience the benefits of aspirin. In fact, risk of side effects nearly outweighed the “positive” preventative effect of taking aspirin.</p>
+<p><span style="color:#1565C0;">The Physicians Health Study of Aspirin</span> : Researchers studied a sample of 22,000 subjects over 5 years, separated into a <em>placebo</em> group and an <em>effect</em> group. The hypothesis that taking aspirin everyday can <em>reduce</em> the risk of heart attack was found to be “highly statistically” significant, <span class="math inline">\(p &lt; .00001\)</span> (less than 1 in 100,000 by random chance).</p>
+<p>However, the effect size, measured using <span class="math inline">\(R^2\)</span> (<em>measures the percentage of variance in risk explained by taking aspirin</em>) was incredibly small. Most people did not experience the benefits of aspirin. In fact, risk of side effects nearly outweighed the “positive” preventative effect of taking aspirin.</p>
 <p><strong>When effect size is small, the pros of a treatment might not outweigh the cons.</strong></p>
 </div>
 </div>
@@ -703,7 +703,7 @@ A non-significant result may reflect a genuinely small effect, substantial varia
 <p><strong>Why?</strong></p>
 </div>
 <div class="callout-content">
-<p>We use <strong>standard error</strong> to standardize the sample statistic, producing an <strong>observed test statistic</strong> that tells us how large the observed result is relative to its expected sampling variation. (<em>More on this calculation later!</em>)<br> Larger samples generally produce <strong>smaller standard errors</strong>: <span class="math inline">\(SE (\text{for sample mean}) = \frac{s}{\sqrt{n}}\)</span></p>
+<p>We use <strong>standard error</strong> to standardize the sample statistic, producing an <strong>observed test statistic</strong> that tells us how large the observed result is relative to its expected sampling variation. (<em>More on this calculation later!</em>)<br> Standard error is <strong>inversely proportional</strong> to sample size: <span class="math inline">\(\text{SE for sample mean} = \frac{s}{\sqrt{n}}\)</span></p>
 <p>A smaller standard error could make an observed difference of a given size more extreme relative to its expected sampling variation, which can produce a smaller <span class="math inline">\(p\)</span>-value.</p>
 </div>
 </div>
@@ -771,9 +771,10 @@ A non-significant result may reflect a genuinely small effect, substantial varia
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Think of the three concepts together</strong></p>
+<p><strong>Three concepts matter together</strong></p>
 </div>
 <div class="callout-content">
+<p>By relying on <span class="math inline">\(p\)</span>-values alone we cannot differentiate whether a test failed to reject <span class="math inline">\(H_0\)</span> because the observed data was indeed consistent with it or because the size of the study was too small. Looking at power helps us recognize the latter.</p>
 <p><span class="math display">\[
 \boxed{
 \text{$p$-value: evidence}
@@ -813,12 +814,23 @@ SE\downarrow
 </div>
 </div>
 </section>
-<section id="calculating-power-a-coding-demo" class="slide level2">
-<h2>Calculating power: A Coding Demo</h2>
+<section id="calculating-statistical-power" class="slide level2">
+<h2>Calculating Statistical Power</h2>
 <div style="font-size:0.62em;">
-<p>Suppose a new patient check-in system is introduced in the outpatient clinic.</p>
-<p>The null hypothesis is <span class="math inline">\(H_0:\mu=30\text{ minutes}\)</span> but this intervention brings the waiting time down to 28 minutes.</p>
-<p>Before collecting the data, we want to know:</p>
+<p>Because calculating power involves complex calculus (finding area under a non-central probability distribution) we will use statistical packages</p>
+</div>
+<div style="font-size:0.62em;">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>A Coding Demo</strong></p>
+</div>
+<div class="callout-content">
+<p>Suppose a new patient check-in system is introduced in the outpatient clinic. The null hypothesis is <span class="math inline">\(H_0:\mu=30\text{ minutes}\)</span> but this intervention brings the waiting time down to 28 minutes.</p>
+<p><strong>Before collecting the data</strong>, we want to know:</p>
 <blockquote>
 <p>If the population mean after the intervention really is 28 minutes, how often would our study detect that departure from the null mean of 30 minutes?</p>
 </blockquote>
@@ -831,8 +843,11 @@ SE\downarrow
 <li>significance level: <span class="math inline">\(\alpha=0.05\)</span>.</li>
 </ul>
 </div>
+</div>
+</div>
+</div>
 </section>
-<section id="calculating-power-a-coding-demo-1" class="slide level2">
+<section id="calculating-power-a-coding-demo" class="slide level2">
 <h2>Calculating power: A Coding Demo</h2>
 <div style="font-size:0.58em;">
 <div class="callout callout-note callout-titled callout-style-default">
@@ -894,16 +909,16 @@ SE\downarrow
 </div>
 <div class="callout-content">
 <ul>
-<li>Cohen’s <code>d</code>/<code>effect_size</code> standardizes the effect size: <span class="math inline">\(d = \frac{\mu_1-\mu_0}{\sigma}\)</span> in standard deviations.</li>
-<li><code>type = one.sample</code>: tells <code>pwr.t.test()</code> that this is a one-sample t-test. In our example, we have one sample of patients after the new system, compared against a fixed reference mean of 30 minutes.</li>
-<li><code>alternative = less</code>/<code>alternative = smaller</code>: specifies the direction of the alternative hypothesis. Our research question is whether the new system reduces waiting time and hence the relevant effect will be in the left tail of the distribution.</li>
+<li>Cohen’s <code>d</code>/<code>effect_size</code> standardizes the effect size in standard deviations: <span class="math inline">\(d = \frac{\mu_1-\mu_0}{\sigma}\)</span></li>
+<li><code>type = one.sample</code>: tells <code>pwr.t.test()</code> that this is a <span style="color:#1565C0;"><strong>one-sample t-test</strong></span>. In our example, we have one sample of patients after the new system, compared against a fixed reference mean of 30 minutes.</li>
+<li><code>alternative = less</code>/<code>alternative = smaller</code>: specifies the direction of the alternative hypothesis. Our research question is whether the new system reduces waiting time and hence the relevant effect will be in the <span style="color:#1565C0;">left tail of the distribution</span>.</li>
 </ul>
 </div>
 </div>
 </div>
 </div>
 </section>
-<section id="calculating-power-a-coding-demo-2" class="slide level2">
+<section id="calculating-power-a-coding-demo-1" class="slide level2">
 <h2>Calculating power: A Coding Demo</h2>
 <div style="font-size:0.58em;">
 <div class="callout callout-note callout-titled callout-style-default">
@@ -915,7 +930,7 @@ SE\downarrow
 <p><strong>What happens when we increase our sample size?</strong></p>
 </div>
 <div class="callout-content">
-<p>For the same effect size, increasing the sample size makes the estimate more precise and increases the probability of detecting the effect.</p>
+<p>For the same effect size, increasing the sample size makes the estimates more precise and increases the probability of detecting the effect. <span class="math display">\[\text{Power} \propto \frac{\text{Effect Size} \times \sqrt{\text{Sample Size}}}{\text{Significance Level } (\alpha)}\]</span></p>
 </div>
 </div>
 </div>
@@ -970,8 +985,8 @@ Sample Size: 400       Statistical Power: 0.991</code></pre>
 </div>
 </div></div>
 </section>
-<section id="false-positives-and-false-negatives" class="slide level2">
-<h2>False positives and false negatives</h2>
+<section id="two-ways-to-fail" class="slide level2">
+<h2>Two ways to fail</h2>
 <div style="font-size:0.62em;">
 <table class="caption-top">
 <colgroup>
@@ -988,14 +1003,14 @@ Sample Size: 400       Statistical Power: 0.991</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td><span class="math inline">\(H_0\)</span> true</td>
+<td><span class="math inline">\(H_0\)</span> true (<em>no effect</em>)</td>
 <td>Reject <span class="math inline">\(H_0\)</span></td>
-<td><span style="color:#1565C0;">Type I error</span></td>
+<td><span style="color:#1565C0;">Type I error</span> or False Positive</td>
 </tr>
 <tr class="even">
-<td><span class="math inline">\(H_0\)</span> false</td>
+<td><span class="math inline">\(H_0\)</span> false (<em>effect exists</em>)</td>
 <td>Fail to reject <span class="math inline">\(H_0\)</span></td>
-<td><span style="color:#1565C0;">Type II error</span></td>
+<td><span style="color:#1565C0;">Type II error</span> or False Negative</td>
 </tr>
 </tbody>
 </table>
@@ -1007,12 +1022,14 @@ Sample Size: 400       Statistical Power: 0.991</code></pre>
 <li><span class="math inline">\(H_0\)</span> distribution sets the rejection cutoff</li>
 <li><span class="math inline">\(H_A\)</span> distribution asks how often we cross that cutoff</li>
 </ul>
-<p>The significance level is tied to <span style="color:#1565C0;">Type I error rate</span>. It is area of the null distribution inside the rejection region. <span class="math inline">\(\alpha=P(\text{reject }H_0\mid H_0\text{ true})\)</span></p>
-<p>Power is related to <span style="color:#1565C0;">Type II error rate</span> (<span class="math inline">\(\beta\)</span>). It is the area of the alternative distribution inside that same rejection region. <span class="math inline">\(\text{Power}=1-\beta\)</span></p>
-<p><em>The rejection cutoff is determined using the null distribution, whereas power is the probability of landing in that same rejection region under the alternative distribution.</em></p>
+<p><span style="color:#1565C0;">Type I error rate</span> is tied to the significance level. It is area of the null distribution inside the rejection region. <span class="math inline">\(\alpha=P(\text{reject }H_0\mid H_0\text{ true})\)</span></p>
+<p><span style="color:#1565C0;">Type II error rate</span> (<span class="math inline">\(\beta\)</span>) is controlled by Statistical Power. It is the area of the alternative distribution inside that same rejection region. <span class="math inline">\(\beta=1-\text{Power}\)</span></p>
 </div><div class="column" style="font-size:0.58em;">
 <p><img data-src="images/statistical-power.png" style="width:100.0%"></p>
 </div></div>
+<div style="font-size:0.52em;">
+<p><em>The rejection cutoff is determined using the null distribution, whereas power is the probability of landing in that same rejection region under the alternative distribution.</em></p>
+</div>
 </section>
 <section class="slide level2">
 
@@ -1039,9 +1056,18 @@ Sample Size: 400       Statistical Power: 0.991</code></pre>
 <p>This gives us the reference distribution we need to determine <em>how extreme our observed result is</em> and ultimately calculate its <span class="math inline">\(p\)</span>-value.</p>
 </div>
 </section>
-<section id="the-central-limit-theorem" class="slide level2">
-<h2>The Central Limit Theorem</h2>
+<section id="working-with-sample-means" class="slide level2">
+<h2>Working with Sample Means</h2>
 <div style="font-size:0.62em;">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>The Central Limit Theorem</strong></p>
+</div>
+<div class="callout-content">
 <p>For many experimental settings, as your sample size grows, the distribution of the <strong>sample mean</strong> becomes approximately normal even for non-normal population distributions.</p>
 <p><span class="math display">\[\bar{X}\approx N\left(\mu,\frac{\sigma^2}{n}\right);\]</span></p>
 <ul>
@@ -1050,11 +1076,28 @@ Sample Size: 400       Statistical Power: 0.991</code></pre>
 <li><span class="math inline">\(\sigma^2\)</span> = population variance.</li>
 <li><span class="math inline">\(n\)</span> = sample size.</li>
 </ul>
-<p>In other words, upon standardization <span class="math inline">\(\frac{\bar{X}-\mu}{\frac{\sigma}{\sqrt{n}}} \approx N\left(0,1\right)\)</span></p>
-<h4 id="the-exact-assumptions-matter-but-the-following-remains-valid">💡 The exact assumptions matter, but the following remains valid:</h4>
-<blockquote>
-<p><strong>Even if your data is heavily skewed, binary, or completely uniform, the average of those values tend to form an approximately bell-shaped distribution if you collect enough samples.</strong></p>
-</blockquote>
+<p>In other words, <span style="color:#1565C0;">upon standardization</span> <span class="math inline">\(\frac{\bar{X}-\mu}{\frac{\sigma}{\sqrt{n}}} \approx N\left(0,1\right)\)</span></p>
+</div>
+</div>
+</div>
+</div>
+<div style="font-size:0.62em;">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>The exact assumptions matter, but the core idea remains valid:</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li>Even if your data is heavily skewed, binary, or completely uniform, the average of those values tend to form an <strong>approximately bell-shaped distribution</strong> if you collect enough samples.</li>
+<li><strong>Asymptotic Normality</strong> (The Generalized CLT): Many other statistics used in inference— proportions, differences, regression coefficients, etc— have predictable sampling behavior. With sufficiently large samples, their sampling distributions can be approximated to familiar reference distributions, allowing us to calculate probabilities and <span class="math inline">\(p\)</span>-values.</li>
+</ul>
+</div>
+</div>
+</div>
 </div>
 </section>
 <section id="why-the-normal-curve-appears-so-much-in-inferential-processes" class="slide level2">
@@ -1152,8 +1195,8 @@ Sample Size: 400       Statistical Power: 0.991</code></pre>
 </section>
 <section id="standardizing-a-sample-statistic" class="slide level2">
 <h2>Standardizing a sample statistic</h2>
-<div style="font-size:0.62em;">
-<p>In general, a <strong>test statistic</strong> tells us how far an observed sample statistic is from the value expected by <span class="math inline">\(H_0\)</span> in terms of standard errors, relative to its expected sampling variation.</p>
+<div style="font-size:0.60em;">
+<p><em>Standardization</em> maps your sample statistic onto a unit-less scale.<br> In general, the <strong>test statistic</strong> tells us how far an observed sample statistic is from the value expected by <span class="math inline">\(H_0\)</span> in terms of standard errors, relative to its expected sampling variation.</p>
 <p><span class="math display">\[
 \text{test statistic}
 =
