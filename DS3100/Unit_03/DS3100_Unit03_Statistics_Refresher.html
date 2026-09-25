@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Dr.&nbsp;Satadisha Saha Bhowmick">
-  <meta name="dcterms.date" content="2026-09-23">
+  <meta name="dcterms.date" content="2026-09-25">
   <title>DS 3100 | Statistics Refresher</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -211,7 +211,7 @@ Dr.&nbsp;Satadisha Saha Bhowmick
 </div>
 </div>
 
-  <p class="date">2026-09-23</p>
+  <p class="date">2026-09-25</p>
 </section>
 <section class="slide level2">
 
@@ -1299,21 +1299,26 @@ z =
 <td>unknown / estimated</td>
 </tr>
 <tr class="even">
-<td>Reference distribution</td>
-<td>standard (<em>upon standardization</em>) normal</td>
-<td>Student’s t</td>
+<td>Data distribution</td>
+<td>Must be Normally distributed (or sample must be large enough for the CLT to apply)</td>
+<td>Must be Normally distributed (critical for small samples)</td>
 </tr>
 <tr class="odd">
+<td>Reference distribution</td>
+<td>standard normal</td>
+<td>Student’s t</td>
+</tr>
+<tr class="even">
 <td>Degrees of freedom</td>
 <td>no</td>
 <td>yes</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Small samples</td>
 <td>possible when assumptions are met</td>
 <td>especially important</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Large samples</td>
 <td>normal reference</td>
 <td>t becomes close to normal</td>
@@ -1334,7 +1339,7 @@ z =
 <p>Do not memorize a universal rule such as “n &gt; 30 means use the z-test.” The deeper distinction is (under the assumptions of the test):</p>
 <ul>
 <li>the population SD is known or estimated</li>
-<li>sampling distribution of the statistic itself must be normal (centered around the true parameter with its specific standard error)</li>
+<li>normality of data, especially for small samples (students should conduct the <em>Shapiro-Wilk test</em> to verify this), larger samples relax this assumption</li>
 </ul>
 </div>
 </div>

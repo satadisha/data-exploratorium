@@ -1137,7 +1137,8 @@ For example, if we observe $\lvert t \rvert =2$, with a standard normal referenc
 | | z statistic | t statistic |
 |---|---|---|
 | Population SD | known | unknown / estimated |
-| Reference distribution | standard (*upon standardization*) normal | Student's t |
+| Data distribution | Must be Normally distributed (or sample must be large enough for the CLT to apply) | Must be Normally distributed (critical for small samples) |
+| Reference distribution | standard normal | Student's t |
 | Degrees of freedom | no | yes |
 | Small samples | possible when assumptions are met | especially important |
 | Large samples | normal reference | t becomes close to normal |
@@ -1148,7 +1149,7 @@ For example, if we observe $\lvert t \rvert =2$, with a standard normal referenc
 Do not memorize a universal rule such as "n > 30 means use the z-test." The deeper distinction is (under the assumptions of the test): 
 
 - the population SD is known or estimated
-- sampling distribution of the statistic itself must be normal (centered around the true parameter with its specific standard error)
+- normality of data, especially for small samples (students should conduct the *Shapiro-Wilk test* to verify this), larger samples relax this assumption
 :::
 
 ---
