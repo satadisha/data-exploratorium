@@ -1,0 +1,292 @@
+---
+title: "Lab 4: Interpretations and Discussion"
+author: "FIRSTNAME LASTNAME"
+date: today
+date-format: "MMMM D, YYYY"
+
+format: html
+jupyter: python3
+
+execute:
+  echo: true
+  warning: true
+  error: false
+  cache: false
+---
+
+<!--
+
+These comments contain instructions and do not appear in the rendered
+document. You may delete them after completing the steps or leave them
+in place.
+
+This is the Python version of the lab. The completed sheet, its PDF,
+and the data files it reads go into the Lab 4 folder on Brightspace
+before you leave.
+
+Before you start: rename this file Lab-4_FIRSTNAME_LASTNAME.qmd, put
+your name in the YAML header above (keep the quotation marks), and put
+your Nashville data file and your own data file in a data/ folder
+beside this file. The Python code is commented out; remove the comment
+characters once the files are in place.
+
+The three parts follow the handout. Part 1 computes the numbers behind
+two of the Nashville figures and writes their interpretations, Part 2
+writes a Discussion for the Nashville question, and Part 3 does both
+for your own report.
+
+Python uses pandas for data manipulation, matplotlib for
+figures, and NumPy for numerical summaries.
+
+-->
+
+```{python}
+#| label: setup
+#| include: false
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+```
+
+# Part 1: The numbers behind a figure
+
+<!-- The handout's research question: Are Nashville's summers getting
+     hotter, and is it the whole summer or only its hottest days? The
+     three figures are in the handout. This part redraws Figure 2 and
+     computes the numbers behind Figures 2 and 3. -->
+
+## The data and the two periods
+
+The file has one row per day at Nashville International Airport from
+1991 to 2026. `tmax_f` is the day's high in degrees Fahrenheit. The
+chunk keeps the summer days (June to August) of the two periods the
+figures compare, and splits them into two DataFrames, one per period.
+
+```{python}
+#| label: read-nashville
+# nashville = pd.read_csv("data/nashville_daily.csv")
+# summers = nashville.loc[nashville["month"].between(6, 8)].copy()
+# summers["period"] = np.select(
+#     [summers["year"] <= 2005, summers["year"] >= 2012],
+#     ["1991-2005", "2012-2026"],
+#     default=""
+# )
+# summers = summers[summers["period"] != ""]
+# early = summers.loc[summers["period"] == "1991-2005"].copy()
+# late = summers.loc[summers["period"] == "2012-2026"].copy()
+```
+
+What happens to the summers of 2006 to 2011 in this chunk, and why
+might the figures leave them out?
+
+*Your answer here.*
+
+## Figure 2: the shape of the daily highs
+
+A plainer version of the handout's Figure 2, without the arrows. The
+figure in the PDF is your own figure in Part 3; this cell is only a
+practice redraw.
+
+```{python}
+#| label: figure-2
+# No fig.cap: the report figures are numbered in Part 3.
+# for period, group in summers.groupby("period"):
+#     group["tmax_f"].plot(kind="density", label=period)
+# plt.xlabel("Daily high (degrees F)")
+# plt.ylabel("Density")
+# plt.legend(title="Period")
+# plt.show()
+```
+
+The numbers the interpretation cites: the median of each period, and
+the 10th and 90th percentiles of each.
+
+```{python}
+#| label: numbers-figure-2
+# early["tmax_f"].median()
+# late["tmax_f"].median()
+# early["tmax_f"].quantile([0.1, 0.9])
+# late["tmax_f"].quantile([0.1, 0.9])
+```
+
+Please write the interpretation of Figure 2 in your own words: the
+comparison, the numbers in their units, what they mean for the
+question, and what the figure cannot establish. In the Python version,
+copy the needed values from the output of the preceding cell into your
+written interpretation.
+
+*Your interpretation of Figure 2 here.*
+
+## Figure 3: the hottest days
+
+Figure 3 in the handout counts the days per summer at or above each
+temperature. At 95 degrees F, the count for each period is the number
+of such days divided by its fifteen summers.
+
+```{python}
+#| label: numbers-figure-3
+# early_days_95 = (early["tmax_f"] >= 95).sum() / 15
+# late_days_95 = (late["tmax_f"] >= 95).sum() / 15
+# print(early_days_95)
+# print(late_days_95)
+# How many times as common did those days become? Your line here.
+```
+
+*Two or three sentences that direct the reader to this feature of
+Figure 3 and say what it means for the question, using the numbers from
+Python output.*
+
+## Three weak sentences
+
+Each sentence below claims more than its figure shows. Please say
+which words overstate the evidence, and rewrite the sentence to match
+what the figure shows, with a number from the data where one is
+needed.
+
+> **1.** "Figure 1 proves that climate change is making Nashville's
+> summers dramatically hotter."
+
+*Your rewrite here.*
+
+> **2.** "Figure 2 shows a significant difference between the two
+> periods."
+
+*Your rewrite here.*
+
+> **3.** "Figure 3 shows that extreme heat is increasing over time."
+
+*Your rewrite here.*
+
+# Part 2: A Discussion for Nashville's summers
+
+<!-- In your own words and with your own examples, not the handout's.
+     Between 150 and 250 words in all is plenty. -->
+
+Research question: *Are Nashville's summers getting hotter, and is it
+the whole summer or only its hottest days?*
+
+**Summary.** *Two or three sentences that answer both parts of the
+question and need all three figures.*
+
+**Implications.** *One implication: who would do what differently,
+matched to what the figures show.*
+
+**Limitations.** *Two limitations specific to this dataset, different
+from the two in the handout.*
+
+**Future directions.** *One next analysis that follows from one of
+your limitations, specific enough that someone else could carry it
+out.*
+
+# Part 3: Your report
+
+<!-- Your own dataset and your figures from Lab 3, or their current
+     versions. Put each figure's Python code in its section below and
+     give it a caption in your narrative. Under each figure, a cell
+     computes the numbers the paragraph cites. Please finish the first
+     figure's paragraph before starting the second. -->
+
+## The data
+
+Please read your data file here, with the changes your Lab 2 card
+recorded in field 8 (a sentinel value set to missing, a type converted).
+
+```{python}
+#| label: read-data
+# df = pd.read_csv("data/YOUR-FILE.csv")
+```
+
+**Research question, as it stands now:** *Your question here.*
+
+## The first figure
+
+```{python}
+#| label: figure-one
+# Paste the code for your first figure here.
+# Add a short figure caption in the surrounding prose.
+```
+
+```{python}
+#| label: numbers-one
+# The numbers the paragraph cites. For a numeric variable compared
+# across groups, for instance:
+# df.groupby("GROUP_COLUMN")["COLUMN_ONE"].agg(
+#     n="size",
+#     median="median"
+# )
+```
+
+*Introduce: Figure 1 shows ... and it addresses ... of the question.*
+
+*Direct: the feature to look at is ..., and the number that shows it
+is ..., compared to ...*
+
+*Interpret: which means, for the question, ...*
+
+*What it cannot establish: ...*
+
+## The second figure
+
+```{python}
+#| label: figure-two
+# Paste the code for your second figure here.
+# Add a short figure caption in the surrounding prose.
+```
+
+```{python}
+#| label: numbers-two
+# The numbers the second paragraph cites.
+```
+
+*Introduce: Figure 2 builds on Figure 1 by ...*
+
+*Direct: ...*
+
+*Interpret: ...*
+
+*What it cannot establish: ...*
+
+## The third figure
+
+```{python}
+#| label: figure-three
+# Paste the code for your third figure here.
+# Add a short figure caption in the surrounding prose.
+```
+
+```{python}
+#| label: numbers-three
+# The numbers the third paragraph cites.
+```
+
+*Introduce: Figure 3 ...*
+
+*Direct: ...*
+
+*Interpret: ...*
+
+*What it cannot establish: ...*
+
+## Discussion
+
+<!-- Write the summary first. If it can be written from one of your
+     figures alone, consider refining the question or replacing a
+     figure so that all three contribute distinct findings. -->
+
+**Summary.** *The answer to your research question, in two or three
+sentences, needing all three figures.*
+
+**Implications.** *Who would do what differently, matched to your
+evidence.*
+
+**Limitations.** *What is specific to your data: the sample, the
+measurement, the design, the scope.*
+
+**Future directions.** *The next analysis, following from a
+limitation.*
+
+# Generative AI disclosure
+
+*Which tools you used on this lab and what for, or "none".*
+
+*Your answer here.*

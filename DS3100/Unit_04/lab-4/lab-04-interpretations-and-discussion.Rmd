@@ -1,0 +1,261 @@
+---
+title: "Lab 4: Interpretations and Discussion"
+author: "FIRSTNAME LASTNAME"
+date: "`r format(Sys.time(), 'Compiled %X on %A, %B %d, %Y')`"
+output: pdf_document
+---
+
+<!--
+
+These comments contain instructions and do not appear in the knitted
+document. You may delete them after completing the steps or leave
+them in place.
+
+This lab runs in section. The completed sheet, its PDF, and the data
+files it reads go into the Lab 4 folder on Brightspace before you
+leave.
+
+Before you start: rename this file Lab-4_FIRSTNAME_LASTNAME.Rmd, put
+your name in the YAML header above (keep the quotation marks), and put
+nashville_daily.rds and your own data file in a data/ folder beside
+this file. The R code is commented out; remove the hash characters at the
+start of code lines once the files are in place.
+
+The three parts follow the handout. Part 1 computes the numbers
+behind two of the Nashville figures and writes their interpretations,
+Part 2 writes a Discussion for the Nashville question, and Part 3 does
+both for your own report.
+
+-->
+
+```{r setup, include = FALSE}
+library(tidyverse)
+```
+
+# Part 1: The numbers behind a figure
+
+<!-- The handout's research question: Are Nashville's summers getting
+     hotter, and is it the whole summer or only its hottest days? The
+     three figures are in the handout. This part redraws Figure 2 and
+     computes the numbers behind Figures 2 and 3. -->
+
+## The data and the two periods
+
+The file has one row per day at Nashville International Airport from
+1991 to 2026. `tmax_f` is the day's high in degrees Fahrenheit. The
+chunk keeps the summer days (June to August) of the two periods the
+figures compare, and splits them into two tibbles, one per period.
+
+```{r read-nashville}
+#nashville <- readRDS("data/nashville_daily.rds")
+#summers <- nashville |>
+#  filter(month %in% 6:8) |>
+#  mutate(period = case_when(year <= 2005 ~ "1991-2005",
+#                            year >= 2012 ~ "2012-2026")) |>
+#  filter(!is.na(period))
+#early <- filter(summers, period == "1991-2005")
+#late  <- filter(summers, period == "2012-2026")
+```
+
+What happens to the summers of 2006 to 2011 in this chunk, and why
+might the figures leave them out?
+
+*Your answer here.*
+
+## Figure 2: the shape of the daily highs
+
+A plainer version of the handout's Figure 2, without the arrows. The
+chunk has no `fig.cap`, so that the knitted sheet does not number it:
+the figures numbered 1 to 3 in the PDF are your own, in Part 3.
+
+```{r figure-2, fig.height = 3.2}
+#ggplot(summers, aes(x = tmax_f, color = period)) +
+#  geom_density(adjust = 1.5) +
+#  labs(x = "Daily high (degrees F)", y = "Density", color = "Period")
+```
+
+The numbers the interpretation cites: the median of each period, and
+the 10th and 90th percentiles of each.
+
+```{r numbers-figure-2}
+#median(early$tmax_f)
+#median(late$tmax_f)
+#quantile(early$tmax_f, c(0.1, 0.9))
+#quantile(late$tmax_f, c(0.1, 0.9))
+```
+
+Please write the interpretation of Figure 2 in your own words: the
+comparison, the numbers in their units, what they mean for the
+question, and what the figure cannot establish. Every number is inline R.
+The chunk below is not run; it only shows the form. A single number
+from `quantile()` is written `quantile(late$tmax_f, 0.9)`, and the
+shift is the difference of two such numbers.
+
+```{r inline-form, eval = FALSE}
+# the median day was `r median(late$tmax_f)` degrees F,
+# against `r median(early$tmax_f)` degrees F in 1991-2005
+```
+
+*Your interpretation of Figure 2 here.*
+
+## Figure 3: the hottest days
+
+Figure 3 in the handout counts the days per summer at or above each
+temperature. At 95 degrees F, the count for each period is the number
+of such days divided by its fifteen summers.
+
+```{r numbers-figure-3}
+#sum(early$tmax_f >= 95) / 15
+#sum(late$tmax_f >= 95) / 15
+# How many times as common did those days become? Your line here.
+```
+
+*Two or three sentences that direct the reader to this feature of
+Figure 3 and say what it means for the question, with the numbers as
+inline R.*
+
+## Three weak sentences
+
+Each sentence below claims more than its figure shows. Please say
+which words overstate the evidence, and rewrite the sentence to match
+what the figure shows, with a number from the data where one is
+needed.
+
+> **1.** "Figure 1 proves that climate change is making Nashville's
+> summers dramatically hotter."
+
+*Your rewrite here.*
+
+> **2.** "Figure 2 shows a significant difference between the two
+> periods."
+
+*Your rewrite here.*
+
+> **3.** "Figure 3 shows that extreme heat is increasing over time."
+
+*Your rewrite here.*
+
+# Part 2: A Discussion for Nashville's summers
+
+<!-- In your own words and with your own examples, not the handout's.
+     Between 150 and 250 words in all is plenty. -->
+
+Research question: *Are Nashville's summers getting hotter, and is it
+the whole summer or only its hottest days?*
+
+**Summary.** *Two or three sentences that answer both parts of the
+question and need all three figures.*
+
+**Implications.** *One implication: who would do what differently,
+matched to what the figures show.*
+
+**Limitations.** *Two limitations specific to this dataset, different
+from the two in the handout.*
+
+**Future directions.** *One next analysis that follows from one of
+your limitations, specific enough that someone else could carry it
+out.*
+
+# Part 3: Your report
+
+<!-- Your own dataset and your figures from Lab 3, or their current
+     versions. Paste each figure's chunk into its section below, with
+     its fig.cap. Under each figure, a chunk computes the numbers the
+     paragraph cites, and the paragraph uses them as inline R. Please
+     finish the first figure's paragraph before starting the second. -->
+
+## The data
+
+Please read your data file here, with the changes your Lab 2 card
+recorded in field 8 (a sentinel value set to `NA` with `na_if()`, a
+type converted).
+
+```{r read-data}
+#d <- read_csv("data/YOUR-FILE.csv")
+```
+
+**Research question, as it stands now:** *Your question here.*
+
+## The first figure
+
+```{r figure-one, fig.cap = "YOUR CAPTION: what is plotted, what one mark is, and the main pattern."}
+# Paste the chunk for your first figure here.
+```
+
+```{r numbers-one}
+# The numbers the paragraph cites. For a numeric variable compared
+# across groups, for instance:
+#d |>
+#  group_by(GROUP_COLUMN) |>
+#  summarize(n = n(),
+#            median = median(COLUMN_ONE, na.rm = TRUE))
+```
+
+*Introduce: Figure 1 shows ... and it addresses ... of the question.*
+
+*Direct: the feature to look at is ..., and the number that shows it
+is ..., compared to ...*
+
+*Interpret: which means, for the question, ...*
+
+*What it cannot establish: ...*
+
+## The second figure
+
+```{r figure-two, fig.cap = "YOUR CAPTION."}
+# Paste the chunk for your second figure here.
+```
+
+```{r numbers-two}
+# The numbers the second paragraph cites.
+```
+
+*Introduce: Figure 2 builds on Figure 1 by ...*
+
+*Direct: ...*
+
+*Interpret: ...*
+
+*What it cannot establish: ...*
+
+## The third figure
+
+```{r figure-three, fig.cap = "YOUR CAPTION."}
+# Paste the chunk for your third figure here.
+```
+
+```{r numbers-three}
+# The numbers the third paragraph cites.
+```
+
+*Introduce: Figure 3 ...*
+
+*Direct: ...*
+
+*Interpret: ...*
+
+*What it cannot establish: ...*
+
+## Discussion
+
+<!-- Write the summary first. If it can be written from one of your
+     figures alone, consider refining the question or replacing a
+     figure so that all three contribute distinct findings. -->
+
+**Summary.** *The answer to your research question, in two or three
+sentences, needing all three figures.*
+
+**Implications.** *Who would do what differently, matched to your
+evidence.*
+
+**Limitations.** *What is specific to your data: the sample, the
+measurement, the design, the scope.*
+
+**Future directions.** *The next analysis, following from a
+limitation.*
+
+# Generative AI disclosure
+
+*Which tools you used on this lab and what for, or "none".*
+
+*Your answer here.*

@@ -1218,7 +1218,7 @@ A t table gives **critical values** based on:
 
 - significance level $\alpha$;
 - one or two tails;
-- degrees of freedom.
+- degrees of freedom: *the number of independent values in a calculation or dataset that are free to vary without breaking any constraints of that system.*
 
 For example, with:
 

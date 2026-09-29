@@ -1,0 +1,199 @@
+---
+title: "Unit 3 | Advanced Correlation Analysis"
+author: "FIRSTNAME LASTNAME"
+date: "`r format(Sys.time(), 'Compiled %X on %A, %B %d, %Y')`"
+output: pdf_document
+---
+
+# Load packages
+
+```{r load packages, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Load packages
+library(psych); library(polycor); library(GGally); library(ggplot2); library(ppcor)
+```
+
+# Motivating Dataset 1: CERN
+
+Research question: For particles with very little mass, can we predict their energy given momentum alone?
+
+$$
+H_0: \rho_{e, m} = 0
+$$
+
+$$
+H_A: \rho_{e, m} \neq 0
+$$
+
+## Load in the Data
+
+```{r load cern data, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Load CERN data
+cern <- read.csv("data/cern.csv")
+```
+
+## Your Turn: Wrangle the Data
+
+1.    Subset to only include `Run` 165617
+
+2.    Select variables of interest: `E1`, `px1`, `py1`, `pz1`
+
+3.    Name final object as `cern_voi` (variables of interest)
+
+```{r wrangle cern data, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+
+```
+
+## Visualize Dataset using `ggpairs`
+
+```{r ggpairs, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Visualize
+ggpairs(cern_voi)
+```
+
+## Non-graphical Correlations
+
+```{r correlation, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Correlation between two variables
+cor(cern_voi$E1, cern_voi$px1)
+
+# Correlation test between two variables
+cor.test(cern_voi$E1, cern_voi$px1)
+```
+
+> Interpret this test: Is it significant? How many cases are in the sample (hint: look at `df`)
+
+```{r correlation matrix, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Correlation matrix
+round(cor(cern_voi), 3)
+```
+
+## Your Turn: Create 3D Momentum
+
+Compute 3D momentum by taking the square root of the sum of the squares of these three variables: `px1`, `py1`, `pz1`
+
+1.    Square the variables
+
+2.    Sum the squared values
+
+3.    Take the square root of the sum
+
+This computation *can* be done in a single line of code! (*Hint*: you'll need to sum the rows!)
+
+Store the values as `p1` in your `cern_voi` data frame
+
+```{r 3D momentum, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+
+```
+
+Now, plot `E1` and `p1` as a scatterplot using \{ggplot2\}
+
+```{r 3D momentum scatter, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+
+```
+
+> What do you think the correlation value is (without performing `cor`)?
+
+# Motivating Dataset 2: Rate My Professor
+
+## Load in the Data
+
+```{r load rate my professor data, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Load rate my professor data
+rmp <- read.csv("./data/ratemyprofessor.csv")
+
+colnames(rmp)[31:50]
+```
+
+> Come up with a research question that looks at the association between two variables (write it down below)
+
+> Write down the formal hypothesis test
+
+$$
+
+$$
+
+$$
+
+$$
+
+> Predict what you think the relationship will be (small, moderate, large; positive/negative, significant/non-significant)
+
++   small $r$ = 0.10
+
++   moderate $r$ = 0.30
+
++   large $r$ = 0.50
+
+Prediction:
+
+<!---
+
+Do not advance to next step until you have a research question and formal hypothesis about the strength and direction of the effect!
+
+If you create a research question/hypothesis after knowing the results, that's extremely frowned upon!
+
+HARKing -- *H*ypothesizing *A*fter *R*esults are *K*nown
+
+--->
+
+## Perform the tetrachoric correlation
+
+```{r compute tetrachoric correlation, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Tetrachoric correlation
+output <- polycor::polychor(
+  x = , # one variable here
+  y = , # another variable here
+  std.err = TRUE # gets p-value (in parenthesis after coefficient)
+)
+```
+
+The *p*-value is not given to us automatically, so we need to compute it using the standard error.
+
+```{r compute p value, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Compute z-statistic: correlation divided by standard error
+z_stat <- output$rho / sqrt(output$var)
+
+# Compute p-value
+2 * pnorm(abs(z_stat), lower.tail = FALSE)
+```
+
+> Interpret the result (what is the correlation and *p*-value?)
+
+> Was your hypothesis correct?
+
+# Motivating Dataset 3: Life Expectancy
+
+Research question: What is the predictive impact of population levels of substance use on life expectancy *given* GDP?
+
+*"substance use" will be defined as: per-capita alcohol consumption*
+
+> Reflection: Is per-capita alcohol consumption an adequate indicator of "substance use"? Is that how *you* would define substance use?
+
+## Load in the Data
+
+```{r load life expectancy data, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Load life expectancy data
+life_expectancy <- read.csv("./data/life_expectancy.csv")
+```
+
+## Your Turn: Visualize Columns *4-13* using `ggpairs`
+
+```{r ggpairs life, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+
+```
+
+## Your Turn: Perform `pcor.test` on the necessary variables to answer the research question
+*Hint*: you'll need to remove a missing data point
+
+```{r , echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Partial correlation test
+
+```
+
+> Interpret the output
+
+> What is the correlation? Is it small, moderate, or large? Positive or negative?
+
+> What is the *p*-value? Is it significant?
+
+> If you were to tell someone about this relationship who doesn't know anything about statistics, what would you say?
