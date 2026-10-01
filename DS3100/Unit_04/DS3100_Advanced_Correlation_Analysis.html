@@ -452,35 +452,33 @@ H_A: \rho \neq 0
 <span id="cb7-5"><a href="" aria-label="5"></a>  <span class="at">method =</span> <span class="st">"pearson"</span></span>
 <span id="cb7-6"><a href="" aria-label="6"></a>)</span>
 <span id="cb7-7"><a href="" aria-label="7"></a></span>
-<span id="cb7-8"><a href="" aria-label="8"></a>r_obs</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb7-8"><a href="" aria-label="8"></a>p_value <span class="ot">&lt;-</span> <span class="fu">cor.test</span>(</span>
+<span id="cb7-9"><a href="" aria-label="9"></a>  cern_voi<span class="sc">$</span>E1,</span>
+<span id="cb7-10"><a href="" aria-label="10"></a>  cern_voi<span class="sc">$</span>px1,</span>
+<span id="cb7-11"><a href="" aria-label="11"></a>  <span class="at">method =</span> <span class="st">"pearson"</span></span>
+<span id="cb7-12"><a href="" aria-label="12"></a>)<span class="sc">$</span>p.value</span>
+<span id="cb7-13"><a href="" aria-label="13"></a></span>
+<span id="cb7-14"><a href="" aria-label="14"></a><span class="fu">cat</span>(r_obs, p_value)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] -0.006738128</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="" aria-label="1"></a><span class="fu">cor.test</span>(</span>
-<span id="cb9-2"><a href="" aria-label="2"></a>  cern_voi<span class="sc">$</span>E1,</span>
-<span id="cb9-3"><a href="" aria-label="3"></a>  cern_voi<span class="sc">$</span>px1,</span>
-<span id="cb9-4"><a href="" aria-label="4"></a>  <span class="at">method =</span> <span class="st">"pearson"</span></span>
-<span id="cb9-5"><a href="" aria-label="5"></a>)<span class="sc">$</span>p.value</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.8417019</code></pre>
+<pre><code>-0.006738128 0.8417019</code></pre>
 </div>
 </div>
 </div><div class="column" style="font-size:0.56em;">
 <h4 id="python-2">Python</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-label="1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> pearsonr</span>
-<span id="cb11-2"><a href="" aria-label="2"></a></span>
-<span id="cb11-3"><a href="" aria-label="3"></a>result <span class="op">=</span> pearsonr(</span>
-<span id="cb11-4"><a href="" aria-label="4"></a>    cern_voi[<span class="st">"E1"</span>],</span>
-<span id="cb11-5"><a href="" aria-label="5"></a>    cern_voi[<span class="st">"px1"</span>]</span>
-<span id="cb11-6"><a href="" aria-label="6"></a>)</span>
-<span id="cb11-7"><a href="" aria-label="7"></a></span>
-<span id="cb11-8"><a href="" aria-label="8"></a>r_obs <span class="op">=</span> result.statistic</span>
-<span id="cb11-9"><a href="" aria-label="9"></a>p_value <span class="op">=</span> result.pvalue</span>
-<span id="cb11-10"><a href="" aria-label="10"></a></span>
-<span id="cb11-11"><a href="" aria-label="11"></a>r_obs, p_value</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> pearsonr</span>
+<span id="cb9-2"><a href="" aria-label="2"></a></span>
+<span id="cb9-3"><a href="" aria-label="3"></a>result <span class="op">=</span> pearsonr(</span>
+<span id="cb9-4"><a href="" aria-label="4"></a>    cern_voi[<span class="st">"E1"</span>],</span>
+<span id="cb9-5"><a href="" aria-label="5"></a>    cern_voi[<span class="st">"px1"</span>]</span>
+<span id="cb9-6"><a href="" aria-label="6"></a>)</span>
+<span id="cb9-7"><a href="" aria-label="7"></a></span>
+<span id="cb9-8"><a href="" aria-label="8"></a>r_obs <span class="op">=</span> result.statistic</span>
+<span id="cb9-9"><a href="" aria-label="9"></a>p_value <span class="op">=</span> result.pvalue</span>
+<span id="cb9-10"><a href="" aria-label="10"></a></span>
+<span id="cb9-11"><a href="" aria-label="11"></a><span class="bu">print</span>(r_obs, p_value)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>(np.float64(-0.00673812785665244), np.float64(0.8417018952952918))</code></pre>
+<pre><code>-0.00673812785665244 0.8417018952952918</code></pre>
 </div>
 </div>
 </div></div>
@@ -579,23 +577,23 @@ E^2 = p^2c^2+(mc^2)^2; \qquad p^2 = p_x^2+p_y^2+p_z^2
 <div class="columns">
 <div class="column" style="font-size:0.56em;">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="" aria-label="1"></a><span class="fu">set.seed</span>(<span class="dv">3100</span>)</span>
-<span id="cb13-2"><a href="" aria-label="2"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>, <span class="at">length.out =</span> <span class="dv">150</span>)</span>
-<span id="cb13-3"><a href="" aria-label="3"></a>r_obs <span class="ot">&lt;-</span> <span class="fu">cor</span>(x, x<span class="sc">^</span><span class="dv">2</span>,</span>
-<span id="cb13-4"><a href="" aria-label="4"></a>  <span class="at">method =</span> <span class="st">"pearson"</span></span>
-<span id="cb13-5"><a href="" aria-label="5"></a>)</span>
-<span id="cb13-6"><a href="" aria-label="6"></a><span class="fu">round</span>(r_obs, <span class="dv">14</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="" aria-label="1"></a><span class="fu">set.seed</span>(<span class="dv">3100</span>)</span>
+<span id="cb11-2"><a href="" aria-label="2"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>, <span class="at">length.out =</span> <span class="dv">150</span>)</span>
+<span id="cb11-3"><a href="" aria-label="3"></a>r_obs <span class="ot">&lt;-</span> <span class="fu">cor</span>(x, x<span class="sc">^</span><span class="dv">2</span>,</span>
+<span id="cb11-4"><a href="" aria-label="4"></a>  <span class="at">method =</span> <span class="st">"pearson"</span></span>
+<span id="cb11-5"><a href="" aria-label="5"></a>)</span>
+<span id="cb11-6"><a href="" aria-label="6"></a><span class="fu">round</span>(r_obs, <span class="dv">14</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="" aria-label="1"></a><span class="fu">plot</span>(</span>
-<span id="cb15-2"><a href="" aria-label="2"></a>  x, x<span class="sc">^</span><span class="dv">2</span>,</span>
-<span id="cb15-3"><a href="" aria-label="3"></a>  <span class="at">pch =</span> <span class="dv">16</span>,</span>
-<span id="cb15-4"><a href="" aria-label="4"></a>  <span class="at">col =</span> <span class="st">"grey30"</span>,</span>
-<span id="cb15-5"><a href="" aria-label="5"></a>  <span class="at">xlab =</span> <span class="st">"X"</span>,</span>
-<span id="cb15-6"><a href="" aria-label="6"></a>  <span class="at">ylab =</span> <span class="st">"Y"</span>,</span>
-<span id="cb15-7"><a href="" aria-label="7"></a>  <span class="at">main =</span> <span class="st">"A nonlinear relationship can have r close to 0"</span></span>
-<span id="cb15-8"><a href="" aria-label="8"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="" aria-label="1"></a><span class="fu">plot</span>(</span>
+<span id="cb13-2"><a href="" aria-label="2"></a>  x, x<span class="sc">^</span><span class="dv">2</span>,</span>
+<span id="cb13-3"><a href="" aria-label="3"></a>  <span class="at">pch =</span> <span class="dv">16</span>,</span>
+<span id="cb13-4"><a href="" aria-label="4"></a>  <span class="at">col =</span> <span class="st">"grey30"</span>,</span>
+<span id="cb13-5"><a href="" aria-label="5"></a>  <span class="at">xlab =</span> <span class="st">"X"</span>,</span>
+<span id="cb13-6"><a href="" aria-label="6"></a>  <span class="at">ylab =</span> <span class="st">"Y"</span>,</span>
+<span id="cb13-7"><a href="" aria-label="7"></a>  <span class="at">main =</span> <span class="st">"A nonlinear relationship can have r close to 0"</span></span>
+<span id="cb13-8"><a href="" aria-label="8"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -606,18 +604,18 @@ E^2 = p^2c^2+(mc^2)^2; \qquad p^2 = p_x^2+p_y^2+p_z^2
 </div>
 </div><div class="column" style="font-size:0.56em;">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="" aria-label="1"></a>x <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">150</span>)</span>
-<span id="cb16-2"><a href="" aria-label="2"></a>y <span class="op">=</span> x<span class="op">**</span><span class="dv">2</span></span>
-<span id="cb16-3"><a href="" aria-label="3"></a>result <span class="op">=</span> pearsonr(x,y)</span>
-<span id="cb16-4"><a href="" aria-label="4"></a><span class="bu">float</span>(<span class="bu">round</span>(result.statistic, <span class="dv">14</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="" aria-label="1"></a>x <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">150</span>)</span>
+<span id="cb14-2"><a href="" aria-label="2"></a>y <span class="op">=</span> x<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb14-3"><a href="" aria-label="3"></a>result <span class="op">=</span> pearsonr(x,y)</span>
+<span id="cb14-4"><a href="" aria-label="4"></a><span class="bu">float</span>(<span class="bu">round</span>(result.statistic, <span class="dv">14</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>-0.0</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="" aria-label="1"></a>plt.scatter(x, y, s<span class="op">=</span><span class="dv">12</span>)</span>
-<span id="cb18-2"><a href="" aria-label="2"></a>plt.xlabel(<span class="st">"X"</span>)</span>
-<span id="cb18-3"><a href="" aria-label="3"></a>plt.ylabel(<span class="st">"Y"</span>)</span>
-<span id="cb18-4"><a href="" aria-label="4"></a>plt.title(<span class="st">"A nonlinear relationship can have r close to 0"</span>)</span>
-<span id="cb18-5"><a href="" aria-label="5"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="" aria-label="1"></a>plt.scatter(x, y, s<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb16-2"><a href="" aria-label="2"></a>plt.xlabel(<span class="st">"X"</span>)</span>
+<span id="cb16-3"><a href="" aria-label="3"></a>plt.ylabel(<span class="st">"Y"</span>)</span>
+<span id="cb16-4"><a href="" aria-label="4"></a>plt.title(<span class="st">"A nonlinear relationship can have r close to 0"</span>)</span>
+<span id="cb16-5"><a href="" aria-label="5"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -638,18 +636,18 @@ E^2 = p^2c^2+(mc^2)^2; \qquad p^2 = p_x^2+p_y^2+p_z^2
 <li>Does the relationship look similar without it?</li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="" aria-label="1"></a><span class="co"># Clean Data: Strong positive linear trend</span></span>
-<span id="cb19-2"><a href="" aria-label="2"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>)</span>
-<span id="cb19-3"><a href="" aria-label="3"></a>y_clean <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">1.1</span>, <span class="fl">1.9</span>, <span class="fl">3.2</span>, <span class="fl">3.8</span>, <span class="fl">5.1</span>, <span class="fl">6.0</span>, <span class="fl">6.9</span>, <span class="fl">8.2</span>, <span class="fl">9.0</span>, <span class="fl">10.1</span>)</span>
-<span id="cb19-4"><a href="" aria-label="4"></a>r_clean <span class="ot">&lt;-</span> <span class="fu">cor</span>(x, y_clean)</span>
-<span id="cb19-5"><a href="" aria-label="5"></a><span class="fu">cat</span>(<span class="st">"Clean Data Correlation (r):"</span>, <span class="fu">round</span>(r_clean, <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="" aria-label="1"></a><span class="co"># Clean Data: Strong positive linear trend</span></span>
+<span id="cb17-2"><a href="" aria-label="2"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>)</span>
+<span id="cb17-3"><a href="" aria-label="3"></a>y_clean <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">1.1</span>, <span class="fl">1.9</span>, <span class="fl">3.2</span>, <span class="fl">3.8</span>, <span class="fl">5.1</span>, <span class="fl">6.0</span>, <span class="fl">6.9</span>, <span class="fl">8.2</span>, <span class="fl">9.0</span>, <span class="fl">10.1</span>)</span>
+<span id="cb17-4"><a href="" aria-label="4"></a>r_clean <span class="ot">&lt;-</span> <span class="fu">cor</span>(x, y_clean)</span>
+<span id="cb17-5"><a href="" aria-label="5"></a><span class="fu">cat</span>(<span class="st">"Clean Data Correlation (r):"</span>, <span class="fu">round</span>(r_clean, <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Clean Data Correlation (r): 0.9991 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="" aria-label="1"></a><span class="co"># Outlier Data: Change the last point from 10.1 to -50.0</span></span>
-<span id="cb21-2"><a href="" aria-label="2"></a>y_outlier <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">1.1</span>, <span class="fl">1.9</span>, <span class="fl">3.2</span>, <span class="fl">3.8</span>, <span class="fl">5.1</span>, <span class="fl">6.0</span>, <span class="fl">6.9</span>, <span class="fl">8.2</span>, <span class="fl">9.0</span>, <span class="sc">-</span><span class="fl">50.0</span>)</span>
-<span id="cb21-3"><a href="" aria-label="3"></a>r_outlier <span class="ot">&lt;-</span> <span class="fu">cor</span>(x, y_outlier)</span>
-<span id="cb21-4"><a href="" aria-label="4"></a><span class="fu">cat</span>(<span class="st">"Outlier Data Correlation (r):"</span>, <span class="fu">round</span>(r_outlier, <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="" aria-label="1"></a><span class="co"># Outlier Data: Change the last point from 10.1 to -50.0</span></span>
+<span id="cb19-2"><a href="" aria-label="2"></a>y_outlier <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">1.1</span>, <span class="fl">1.9</span>, <span class="fl">3.2</span>, <span class="fl">3.8</span>, <span class="fl">5.1</span>, <span class="fl">6.0</span>, <span class="fl">6.9</span>, <span class="fl">8.2</span>, <span class="fl">9.0</span>, <span class="sc">-</span><span class="fl">50.0</span>)</span>
+<span id="cb19-3"><a href="" aria-label="3"></a>r_outlier <span class="ot">&lt;-</span> <span class="fu">cor</span>(x, y_outlier)</span>
+<span id="cb19-4"><a href="" aria-label="4"></a><span class="fu">cat</span>(<span class="st">"Outlier Data Correlation (r):"</span>, <span class="fu">round</span>(r_outlier, <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Outlier Data Correlation (r): -0.3912 </code></pre>
 </div>
@@ -697,48 +695,48 @@ E^2 = p^2c^2+(mc^2)^2; \qquad p^2 = p_x^2+p_y^2+p_z^2
 <div class="columns">
 <div class="column" style="font-size:0.56em;">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="" aria-label="1"></a><span class="co"># Synthetic data</span></span>
-<span id="cb23-2"><a href="" aria-label="2"></a>sat <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb23-3"><a href="" aria-label="3"></a>  <span class="dv">1000</span>, <span class="dv">1050</span>, <span class="dv">1100</span>, <span class="dv">1150</span>, <span class="dv">1200</span>, <span class="dv">1250</span>,</span>
-<span id="cb23-4"><a href="" aria-label="4"></a>  <span class="dv">1300</span>, <span class="dv">1350</span>, <span class="dv">1400</span>, <span class="dv">1450</span>, <span class="dv">1500</span>, <span class="dv">1550</span></span>
-<span id="cb23-5"><a href="" aria-label="5"></a>)</span>
-<span id="cb23-6"><a href="" aria-label="6"></a>gpa <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb23-7"><a href="" aria-label="7"></a>  <span class="fl">2.00</span>, <span class="fl">2.15</span>, <span class="fl">2.30</span>, <span class="fl">2.45</span>, <span class="fl">2.65</span>, <span class="fl">3.25</span>,</span>
-<span id="cb23-8"><a href="" aria-label="8"></a>  <span class="fl">2.65</span>, <span class="fl">3.05</span>, <span class="fl">3.50</span>, <span class="fl">3.65</span>, <span class="fl">3.80</span>, <span class="fl">3.95</span></span>
-<span id="cb23-9"><a href="" aria-label="9"></a>)</span>
-<span id="cb23-10"><a href="" aria-label="10"></a></span>
-<span id="cb23-11"><a href="" aria-label="11"></a>full <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(sat, gpa)</span>
-<span id="cb23-12"><a href="" aria-label="12"></a>restricted <span class="ot">&lt;-</span> <span class="fu">subset</span>(</span>
-<span id="cb23-13"><a href="" aria-label="13"></a>  full,</span>
-<span id="cb23-14"><a href="" aria-label="14"></a>  sat <span class="sc">&gt;=</span> <span class="dv">1200</span> <span class="sc">&amp;</span> sat <span class="sc">&lt;=</span> <span class="dv">1400</span></span>
-<span id="cb23-15"><a href="" aria-label="15"></a>)</span>
-<span id="cb23-16"><a href="" aria-label="16"></a></span>
-<span id="cb23-17"><a href="" aria-label="17"></a><span class="fu">cat</span>(<span class="st">"Correlation with full data: "</span>, <span class="fu">cor</span>(full<span class="sc">$</span>sat, full<span class="sc">$</span>gpa))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="" aria-label="1"></a><span class="co"># Synthetic data</span></span>
+<span id="cb21-2"><a href="" aria-label="2"></a>sat <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb21-3"><a href="" aria-label="3"></a>  <span class="dv">1000</span>, <span class="dv">1050</span>, <span class="dv">1100</span>, <span class="dv">1150</span>, <span class="dv">1200</span>, <span class="dv">1250</span>,</span>
+<span id="cb21-4"><a href="" aria-label="4"></a>  <span class="dv">1300</span>, <span class="dv">1350</span>, <span class="dv">1400</span>, <span class="dv">1450</span>, <span class="dv">1500</span>, <span class="dv">1550</span></span>
+<span id="cb21-5"><a href="" aria-label="5"></a>)</span>
+<span id="cb21-6"><a href="" aria-label="6"></a>gpa <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb21-7"><a href="" aria-label="7"></a>  <span class="fl">2.00</span>, <span class="fl">2.15</span>, <span class="fl">2.30</span>, <span class="fl">2.45</span>, <span class="fl">2.65</span>, <span class="fl">3.25</span>,</span>
+<span id="cb21-8"><a href="" aria-label="8"></a>  <span class="fl">2.65</span>, <span class="fl">3.05</span>, <span class="fl">3.50</span>, <span class="fl">3.65</span>, <span class="fl">3.80</span>, <span class="fl">3.95</span></span>
+<span id="cb21-9"><a href="" aria-label="9"></a>)</span>
+<span id="cb21-10"><a href="" aria-label="10"></a></span>
+<span id="cb21-11"><a href="" aria-label="11"></a>full <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(sat, gpa)</span>
+<span id="cb21-12"><a href="" aria-label="12"></a>restricted <span class="ot">&lt;-</span> <span class="fu">subset</span>(</span>
+<span id="cb21-13"><a href="" aria-label="13"></a>  full,</span>
+<span id="cb21-14"><a href="" aria-label="14"></a>  sat <span class="sc">&gt;=</span> <span class="dv">1200</span> <span class="sc">&amp;</span> sat <span class="sc">&lt;=</span> <span class="dv">1400</span></span>
+<span id="cb21-15"><a href="" aria-label="15"></a>)</span>
+<span id="cb21-16"><a href="" aria-label="16"></a></span>
+<span id="cb21-17"><a href="" aria-label="17"></a><span class="fu">cat</span>(<span class="st">"Correlation with full data: "</span>, <span class="fu">cor</span>(full<span class="sc">$</span>sat, full<span class="sc">$</span>gpa))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Correlation with full data:  0.9639019</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="" aria-label="1"></a><span class="fu">cat</span>(<span class="st">"Correlation with restricted data: "</span>, <span class="fu">cor</span>(restricted<span class="sc">$</span>sat, restricted<span class="sc">$</span>gpa))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="" aria-label="1"></a><span class="fu">cat</span>(<span class="st">"Correlation with restricted data: "</span>, <span class="fu">cor</span>(restricted<span class="sc">$</span>sat, restricted<span class="sc">$</span>gpa))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Correlation with restricted data:  0.6350006</code></pre>
 </div>
 </div>
 </div><div class="column" style="font-size:0.56em;">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="" aria-label="1"></a><span class="fu">plot</span>(</span>
-<span id="cb27-2"><a href="" aria-label="2"></a>  full<span class="sc">$</span>sat, full<span class="sc">$</span>gpa, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"gray60"</span>,</span>
-<span id="cb27-3"><a href="" aria-label="3"></a>  <span class="at">xlab =</span> <span class="st">"SAT score"</span>, <span class="at">ylab =</span> <span class="st">"GPA"</span>,</span>
-<span id="cb27-4"><a href="" aria-label="4"></a>  <span class="at">main =</span> <span class="st">"Range Restriction and Pearson's Correlation"</span></span>
-<span id="cb27-5"><a href="" aria-label="5"></a>)</span>
-<span id="cb27-6"><a href="" aria-label="6"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">c</span>(<span class="dv">1200</span>, <span class="dv">1400</span>), <span class="at">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb27-7"><a href="" aria-label="7"></a></span>
-<span id="cb27-8"><a href="" aria-label="8"></a><span class="co"># Highlight points within the restricted SAT range</span></span>
-<span id="cb27-9"><a href="" aria-label="9"></a><span class="fu">points</span>(restricted<span class="sc">$</span>sat,restricted<span class="sc">$</span>gpa, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span>
-<span id="cb27-10"><a href="" aria-label="10"></a></span>
-<span id="cb27-11"><a href="" aria-label="11"></a><span class="fu">legend</span>(</span>
-<span id="cb27-12"><a href="" aria-label="12"></a>  <span class="st">"topleft"</span>,</span>
-<span id="cb27-13"><a href="" aria-label="13"></a>  <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Full range"</span>, <span class="st">"Restricted range (1200–1400)"</span>),</span>
-<span id="cb27-14"><a href="" aria-label="14"></a>  <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"gray60"</span>, <span class="st">"red"</span>), <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">bty =</span> <span class="st">"n"</span></span>
-<span id="cb27-15"><a href="" aria-label="15"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="" aria-label="1"></a><span class="fu">plot</span>(</span>
+<span id="cb25-2"><a href="" aria-label="2"></a>  full<span class="sc">$</span>sat, full<span class="sc">$</span>gpa, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"gray60"</span>,</span>
+<span id="cb25-3"><a href="" aria-label="3"></a>  <span class="at">xlab =</span> <span class="st">"SAT score"</span>, <span class="at">ylab =</span> <span class="st">"GPA"</span>,</span>
+<span id="cb25-4"><a href="" aria-label="4"></a>  <span class="at">main =</span> <span class="st">"Range Restriction and Pearson's Correlation"</span></span>
+<span id="cb25-5"><a href="" aria-label="5"></a>)</span>
+<span id="cb25-6"><a href="" aria-label="6"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">c</span>(<span class="dv">1200</span>, <span class="dv">1400</span>), <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb25-7"><a href="" aria-label="7"></a></span>
+<span id="cb25-8"><a href="" aria-label="8"></a><span class="co"># Highlight points within the restricted SAT range</span></span>
+<span id="cb25-9"><a href="" aria-label="9"></a><span class="fu">points</span>(restricted<span class="sc">$</span>sat,restricted<span class="sc">$</span>gpa, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span>
+<span id="cb25-10"><a href="" aria-label="10"></a></span>
+<span id="cb25-11"><a href="" aria-label="11"></a><span class="fu">legend</span>(</span>
+<span id="cb25-12"><a href="" aria-label="12"></a>  <span class="st">"topleft"</span>,</span>
+<span id="cb25-13"><a href="" aria-label="13"></a>  <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Full range"</span>, <span class="st">"Restricted range (1200–1400)"</span>),</span>
+<span id="cb25-14"><a href="" aria-label="14"></a>  <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"gray60"</span>, <span class="st">"red"</span>), <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">bty =</span> <span class="st">"n"</span></span>
+<span id="cb25-15"><a href="" aria-label="15"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -781,13 +779,13 @@ E^2 = p^2c^2+(mc^2)^2; \qquad p^2 = p_x^2+p_y^2+p_z^2
 <div class="column" style="font-size:0.56em;">
 <h4 id="r-3">R</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="" aria-label="1"></a><span class="fu">round</span>(</span>
-<span id="cb28-2"><a href="" aria-label="2"></a>  <span class="fu">cor</span>(</span>
-<span id="cb28-3"><a href="" aria-label="3"></a>    cern_voi[, <span class="fu">c</span>(<span class="st">"E1"</span>, <span class="st">"px1"</span>, <span class="st">"py1"</span>, <span class="st">"pz1"</span>)],</span>
-<span id="cb28-4"><a href="" aria-label="4"></a>    <span class="at">use =</span> <span class="st">"complete.obs"</span></span>
-<span id="cb28-5"><a href="" aria-label="5"></a>  ),</span>
-<span id="cb28-6"><a href="" aria-label="6"></a>  <span class="dv">3</span></span>
-<span id="cb28-7"><a href="" aria-label="7"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="" aria-label="1"></a><span class="fu">round</span>(</span>
+<span id="cb26-2"><a href="" aria-label="2"></a>  <span class="fu">cor</span>(</span>
+<span id="cb26-3"><a href="" aria-label="3"></a>    cern_voi[, <span class="fu">c</span>(<span class="st">"E1"</span>, <span class="st">"px1"</span>, <span class="st">"py1"</span>, <span class="st">"pz1"</span>)],</span>
+<span id="cb26-4"><a href="" aria-label="4"></a>    <span class="at">use =</span> <span class="st">"complete.obs"</span></span>
+<span id="cb26-5"><a href="" aria-label="5"></a>  ),</span>
+<span id="cb26-6"><a href="" aria-label="6"></a>  <span class="dv">3</span></span>
+<span id="cb26-7"><a href="" aria-label="7"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        E1    px1   py1    pz1
 E1   1.000 -0.007 0.034 -0.150
@@ -799,7 +797,7 @@ pz1 -0.150 -0.033 0.037  1.000</code></pre>
 </div><div class="column" style="font-size:0.56em;">
 <h4 id="python-3">Python</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="" aria-label="1"></a>cern_voi[[<span class="st">"E1"</span>, <span class="st">"px1"</span>, <span class="st">"py1"</span>, <span class="st">"pz1"</span>]].corr()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="" aria-label="1"></a>cern_voi[[<span class="st">"E1"</span>, <span class="st">"px1"</span>, <span class="st">"py1"</span>, <span class="st">"pz1"</span>]].corr()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           E1       px1       py1       pz1
 E1   1.000000 -0.006738  0.033675 -0.149513
@@ -953,10 +951,7 @@ pz1 -0.149513 -0.032913  0.037369  1.000000</code></pre>
 <p><strong>Pearson’s <span class="math inline">\(r\)</span> is also the exact statistical test designed to measure the relationship between two variables measured on an interval or ratio scale.</strong></p>
 </div>
 <div class="callout-content">
-<p>Here differences between values have a consistent meaning.</p>
-<ul>
-<li>For example, the difference between 160 cm and 170 cm is the same amount of height as the difference between 200 cm and 210 cm. Because these distances are equivalent, Pearson’s <span class="math inline">\(r\)</span> can use them to compare how <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> change together without worrying about order and measure how closely their relationship follows a straight-line pattern.</li>
-</ul>
+<p>Here differences between values have a consistent meaning. <strong>For example</strong>, the difference between 160 cm and 170 cm is the same amount of height as the difference between 200 cm and 210 cm. Because these distances are equivalent, Pearson’s <span class="math inline">\(r\)</span> can use them to compare how <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> change together without worrying about order and measure how closely their relationship follows a straight-line pattern.</p>
 </div>
 </div>
 </div>
@@ -1008,14 +1003,14 @@ r_s = 1- \frac{6 \sum d_i^2}{n(n^2-1)} \text{, where}
 <div class="column" style="font-size:0.56em;">
 <h4 id="r-4">R</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="" aria-label="1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span>
-<span id="cb32-2"><a href="" aria-label="2"></a>y <span class="ot">&lt;-</span> <span class="dv">2</span><span class="sc">^</span>x</span>
-<span id="cb32-3"><a href="" aria-label="3"></a></span>
-<span id="cb32-4"><a href="" aria-label="4"></a><span class="fu">cor</span>(x, y, <span class="at">method =</span> <span class="st">"pearson"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="" aria-label="1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span>
+<span id="cb30-2"><a href="" aria-label="2"></a>y <span class="ot">&lt;-</span> <span class="dv">2</span><span class="sc">^</span>x</span>
+<span id="cb30-3"><a href="" aria-label="3"></a></span>
+<span id="cb30-4"><a href="" aria-label="4"></a><span class="fu">cor</span>(x, y, <span class="at">method =</span> <span class="st">"pearson"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.7988372</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="" aria-label="1"></a><span class="fu">cor</span>(x, y, <span class="at">method =</span> <span class="st">"spearman"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="" aria-label="1"></a><span class="fu">cor</span>(x, y, <span class="at">method =</span> <span class="st">"spearman"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1</code></pre>
 </div>
@@ -1023,16 +1018,16 @@ r_s = 1- \frac{6 \sum d_i^2}{n(n^2-1)} \text{, where}
 </div><div class="column" style="font-size:0.56em;">
 <h4 id="python-4">Python</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="" aria-label="1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> pearsonr, spearmanr</span>
-<span id="cb36-2"><a href="" aria-label="2"></a></span>
-<span id="cb36-3"><a href="" aria-label="3"></a>x <span class="op">=</span> np.arange(<span class="dv">1</span>, <span class="dv">11</span>)</span>
-<span id="cb36-4"><a href="" aria-label="4"></a>y <span class="op">=</span> <span class="dv">2</span><span class="op">**</span>x</span>
-<span id="cb36-5"><a href="" aria-label="5"></a></span>
-<span id="cb36-6"><a href="" aria-label="6"></a>pearsonr(x, y).statistic</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="" aria-label="1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> pearsonr, spearmanr</span>
+<span id="cb34-2"><a href="" aria-label="2"></a></span>
+<span id="cb34-3"><a href="" aria-label="3"></a>x <span class="op">=</span> np.arange(<span class="dv">1</span>, <span class="dv">11</span>)</span>
+<span id="cb34-4"><a href="" aria-label="4"></a>y <span class="op">=</span> <span class="dv">2</span><span class="op">**</span>x</span>
+<span id="cb34-5"><a href="" aria-label="5"></a></span>
+<span id="cb34-6"><a href="" aria-label="6"></a>pearsonr(x, y).statistic</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>np.float64(0.798837242618123)</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="" aria-label="1"></a>spearmanr(x, y).statistic</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="" aria-label="1"></a>spearmanr(x, y).statistic</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>np.float64(0.9999999999999999)</code></pre>
 </div>
@@ -1096,25 +1091,25 @@ n \text{ : total number of observations}
 <div class="column" style="font-size:0.56em;">
 <h4 id="r-5">R</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="" aria-label="1"></a><span class="fu">set.seed</span>(<span class="dv">2026</span>)</span>
-<span id="cb40-2"><a href="" aria-label="2"></a>clinic <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb40-3"><a href="" aria-label="3"></a>  <span class="at">treatment =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">each =</span> <span class="dv">12</span>),</span>
-<span id="cb40-4"><a href="" aria-label="4"></a>  <span class="at">wait_min =</span> <span class="fu">c</span>(</span>
-<span id="cb40-5"><a href="" aria-label="5"></a>    <span class="dv">42</span>, <span class="dv">38</span>, <span class="dv">51</span>, <span class="dv">47</span>, <span class="dv">44</span>, <span class="dv">55</span>, <span class="dv">49</span>, <span class="dv">36</span>, <span class="dv">46</span>, <span class="dv">52</span>, <span class="dv">41</span>, <span class="dv">48</span>,</span>
-<span id="cb40-6"><a href="" aria-label="6"></a>    <span class="dv">28</span>, <span class="dv">35</span>, <span class="dv">31</span>, <span class="dv">24</span>, <span class="dv">39</span>, <span class="dv">33</span>, <span class="dv">27</span>, <span class="dv">30</span>, <span class="dv">36</span>, <span class="dv">25</span>, <span class="dv">32</span>, <span class="dv">29</span></span>
-<span id="cb40-7"><a href="" aria-label="7"></a>  )</span>
-<span id="cb40-8"><a href="" aria-label="8"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="" aria-label="1"></a><span class="fu">set.seed</span>(<span class="dv">2026</span>)</span>
+<span id="cb38-2"><a href="" aria-label="2"></a>clinic <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb38-3"><a href="" aria-label="3"></a>  <span class="at">treatment =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">each =</span> <span class="dv">12</span>),</span>
+<span id="cb38-4"><a href="" aria-label="4"></a>  <span class="at">wait_min =</span> <span class="fu">c</span>(</span>
+<span id="cb38-5"><a href="" aria-label="5"></a>    <span class="dv">42</span>, <span class="dv">38</span>, <span class="dv">51</span>, <span class="dv">47</span>, <span class="dv">44</span>, <span class="dv">55</span>, <span class="dv">49</span>, <span class="dv">36</span>, <span class="dv">46</span>, <span class="dv">52</span>, <span class="dv">41</span>, <span class="dv">48</span>,</span>
+<span id="cb38-6"><a href="" aria-label="6"></a>    <span class="dv">28</span>, <span class="dv">35</span>, <span class="dv">31</span>, <span class="dv">24</span>, <span class="dv">39</span>, <span class="dv">33</span>, <span class="dv">27</span>, <span class="dv">30</span>, <span class="dv">36</span>, <span class="dv">25</span>, <span class="dv">32</span>, <span class="dv">29</span></span>
+<span id="cb38-7"><a href="" aria-label="7"></a>  )</span>
+<span id="cb38-8"><a href="" aria-label="8"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="font-size:0.56em;">
 <h4 id="python-5">Python</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="" aria-label="1"></a>clinic <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb41-2"><a href="" aria-label="2"></a>    <span class="st">"treatment"</span>: [<span class="dv">0</span>] <span class="op">*</span> <span class="dv">12</span> <span class="op">+</span> [<span class="dv">1</span>] <span class="op">*</span> <span class="dv">12</span>,</span>
-<span id="cb41-3"><a href="" aria-label="3"></a>    <span class="st">"wait_min"</span>: [</span>
-<span id="cb41-4"><a href="" aria-label="4"></a>        <span class="dv">42</span>, <span class="dv">38</span>, <span class="dv">51</span>, <span class="dv">47</span>, <span class="dv">44</span>, <span class="dv">55</span>, <span class="dv">49</span>, <span class="dv">36</span>, <span class="dv">46</span>, <span class="dv">52</span>, <span class="dv">41</span>, <span class="dv">48</span>,</span>
-<span id="cb41-5"><a href="" aria-label="5"></a>        <span class="dv">28</span>, <span class="dv">35</span>, <span class="dv">31</span>, <span class="dv">24</span>, <span class="dv">39</span>, <span class="dv">33</span>, <span class="dv">27</span>, <span class="dv">30</span>, <span class="dv">36</span>, <span class="dv">25</span>, <span class="dv">32</span>, <span class="dv">29</span></span>
-<span id="cb41-6"><a href="" aria-label="6"></a>    ]</span>
-<span id="cb41-7"><a href="" aria-label="7"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="" aria-label="1"></a>clinic <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb39-2"><a href="" aria-label="2"></a>    <span class="st">"treatment"</span>: [<span class="dv">0</span>] <span class="op">*</span> <span class="dv">12</span> <span class="op">+</span> [<span class="dv">1</span>] <span class="op">*</span> <span class="dv">12</span>,</span>
+<span id="cb39-3"><a href="" aria-label="3"></a>    <span class="st">"wait_min"</span>: [</span>
+<span id="cb39-4"><a href="" aria-label="4"></a>        <span class="dv">42</span>, <span class="dv">38</span>, <span class="dv">51</span>, <span class="dv">47</span>, <span class="dv">44</span>, <span class="dv">55</span>, <span class="dv">49</span>, <span class="dv">36</span>, <span class="dv">46</span>, <span class="dv">52</span>, <span class="dv">41</span>, <span class="dv">48</span>,</span>
+<span id="cb39-5"><a href="" aria-label="5"></a>        <span class="dv">28</span>, <span class="dv">35</span>, <span class="dv">31</span>, <span class="dv">24</span>, <span class="dv">39</span>, <span class="dv">33</span>, <span class="dv">27</span>, <span class="dv">30</span>, <span class="dv">36</span>, <span class="dv">25</span>, <span class="dv">32</span>, <span class="dv">29</span></span>
+<span id="cb39-6"><a href="" aria-label="6"></a>    ]</span>
+<span id="cb39-7"><a href="" aria-label="7"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div></div>
 </section>
@@ -1127,12 +1122,12 @@ n \text{ : total number of observations}
 <div class="column" style="font-size:0.56em;">
 <h4 id="r-6">R</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="" aria-label="1"></a><span class="co"># If treatment is coded 0/1:</span></span>
-<span id="cb42-2"><a href="" aria-label="2"></a><span class="fu">cor.test</span>(</span>
-<span id="cb42-3"><a href="" aria-label="3"></a>  clinic<span class="sc">$</span>treatment,</span>
-<span id="cb42-4"><a href="" aria-label="4"></a>  clinic<span class="sc">$</span>wait_min,</span>
-<span id="cb42-5"><a href="" aria-label="5"></a>  <span class="at">method =</span> <span class="st">"pearson"</span></span>
-<span id="cb42-6"><a href="" aria-label="6"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="" aria-label="1"></a><span class="co"># If treatment is coded 0/1:</span></span>
+<span id="cb40-2"><a href="" aria-label="2"></a><span class="fu">cor.test</span>(</span>
+<span id="cb40-3"><a href="" aria-label="3"></a>  clinic<span class="sc">$</span>treatment,</span>
+<span id="cb40-4"><a href="" aria-label="4"></a>  clinic<span class="sc">$</span>wait_min,</span>
+<span id="cb40-5"><a href="" aria-label="5"></a>  <span class="at">method =</span> <span class="st">"pearson"</span></span>
+<span id="cb40-6"><a href="" aria-label="6"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Pearson's product-moment correlation
@@ -1150,12 +1145,12 @@ sample estimates:
 </div><div class="column" style="font-size:0.56em;">
 <h4 id="python-6">Python</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="" aria-label="1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> pointbiserialr</span>
-<span id="cb44-2"><a href="" aria-label="2"></a></span>
-<span id="cb44-3"><a href="" aria-label="3"></a>pointbiserialr(</span>
-<span id="cb44-4"><a href="" aria-label="4"></a>    clinic[<span class="st">"treatment"</span>],</span>
-<span id="cb44-5"><a href="" aria-label="5"></a>    clinic[<span class="st">"wait_min"</span>]</span>
-<span id="cb44-6"><a href="" aria-label="6"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="" aria-label="1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> pointbiserialr</span>
+<span id="cb42-2"><a href="" aria-label="2"></a></span>
+<span id="cb42-3"><a href="" aria-label="3"></a>pointbiserialr(</span>
+<span id="cb42-4"><a href="" aria-label="4"></a>    clinic[<span class="st">"treatment"</span>],</span>
+<span id="cb42-5"><a href="" aria-label="5"></a>    clinic[<span class="st">"wait_min"</span>]</span>
+<span id="cb42-6"><a href="" aria-label="6"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>SignificanceResult(statistic=np.float64(-0.8345146815218545), pvalue=np.float64(3.99818642351625e-07))</code></pre>
 </div>
@@ -1198,8 +1193,8 @@ sample estimates:
 <p>Here we also work with two binary variables, but a different conceptual model.</p>
 <p>Tetrachoric correlation is used for <strong>two binary variables</strong> when each binary variable is understood as a thresholded version of an underlying continuous variable.</p>
 <p>For example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb46"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb46-1"><a href="" aria-label="1"></a>latent engagement  →  low / high</span>
-<span id="cb46-2"><a href="" aria-label="2"></a>latent performance →  fail / pass</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb44-1"><a href="" aria-label="1"></a>latent engagement  →  low / high</span>
+<span id="cb44-2"><a href="" aria-label="2"></a>latent performance →  fail / pass</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The tetrachoric correlation estimates the association between the underlying latent continuous variables. The lecture source describes it as a correlation between two two-category nominal/ordinal variables and emphasizes the continuous conceptualization behind the observed categories.</p>
 </div>
 <div style="font-size:0.56em;">
@@ -1247,19 +1242,19 @@ sample estimates:
 <p>The observed table is all we see. The tetrachoric model treats those categories as thresholded observations from underlying continuous variables.</p>
 </div><div class="column" style="font-size:0.56em;">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="" aria-label="1"></a>x_binary <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb47-2"><a href="" aria-label="2"></a>  <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">38</span>),  <span class="co"># X=0, Y=0</span></span>
-<span id="cb47-3"><a href="" aria-label="3"></a>  <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">10</span>),  <span class="co"># X=1, Y=0</span></span>
-<span id="cb47-4"><a href="" aria-label="4"></a>  <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">18</span>),  <span class="co"># X=0, Y=1</span></span>
-<span id="cb47-5"><a href="" aria-label="5"></a>  <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">34</span>)   <span class="co"># X=1, Y=1</span></span>
-<span id="cb47-6"><a href="" aria-label="6"></a>)</span>
-<span id="cb47-7"><a href="" aria-label="7"></a></span>
-<span id="cb47-8"><a href="" aria-label="8"></a>y_binary <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb47-9"><a href="" aria-label="9"></a>  <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">38</span>),  <span class="co"># X=0, Y=0</span></span>
-<span id="cb47-10"><a href="" aria-label="10"></a>  <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">10</span>),  <span class="co"># X=1, Y=0</span></span>
-<span id="cb47-11"><a href="" aria-label="11"></a>  <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">18</span>),  <span class="co"># X=0, Y=1</span></span>
-<span id="cb47-12"><a href="" aria-label="12"></a>  <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">34</span>)   <span class="co"># X=1, Y=1</span></span>
-<span id="cb47-13"><a href="" aria-label="13"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="" aria-label="1"></a>x_binary <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb45-2"><a href="" aria-label="2"></a>  <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">38</span>),  <span class="co"># X=0, Y=0</span></span>
+<span id="cb45-3"><a href="" aria-label="3"></a>  <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">10</span>),  <span class="co"># X=1, Y=0</span></span>
+<span id="cb45-4"><a href="" aria-label="4"></a>  <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">18</span>),  <span class="co"># X=0, Y=1</span></span>
+<span id="cb45-5"><a href="" aria-label="5"></a>  <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">34</span>)   <span class="co"># X=1, Y=1</span></span>
+<span id="cb45-6"><a href="" aria-label="6"></a>)</span>
+<span id="cb45-7"><a href="" aria-label="7"></a></span>
+<span id="cb45-8"><a href="" aria-label="8"></a>y_binary <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb45-9"><a href="" aria-label="9"></a>  <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">38</span>),  <span class="co"># X=0, Y=0</span></span>
+<span id="cb45-10"><a href="" aria-label="10"></a>  <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">10</span>),  <span class="co"># X=1, Y=0</span></span>
+<span id="cb45-11"><a href="" aria-label="11"></a>  <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">18</span>),  <span class="co"># X=0, Y=1</span></span>
+<span id="cb45-12"><a href="" aria-label="12"></a>  <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">34</span>)   <span class="co"># X=1, Y=1</span></span>
+<span id="cb45-13"><a href="" aria-label="13"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div></div>
 <div style="font-size:0.56em;">
@@ -1274,15 +1269,15 @@ sample estimates:
 <div style="font-size:0.56em;">
 <p>Use <code>polycor::polychor()</code> to compute the tetrachoric correlation.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="" aria-label="1"></a><span class="fu">library</span>(polycor)</span>
-<span id="cb48-2"><a href="" aria-label="2"></a></span>
-<span id="cb48-3"><a href="" aria-label="3"></a>output <span class="ot">&lt;-</span> polycor<span class="sc">::</span><span class="fu">polychor</span>(</span>
-<span id="cb48-4"><a href="" aria-label="4"></a>  <span class="at">x =</span> x_binary,</span>
-<span id="cb48-5"><a href="" aria-label="5"></a>  <span class="at">y =</span> y_binary,</span>
-<span id="cb48-6"><a href="" aria-label="6"></a>  <span class="at">std.err =</span> <span class="cn">TRUE</span></span>
-<span id="cb48-7"><a href="" aria-label="7"></a>)</span>
-<span id="cb48-8"><a href="" aria-label="8"></a></span>
-<span id="cb48-9"><a href="" aria-label="9"></a>output</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="" aria-label="1"></a><span class="fu">library</span>(polycor)</span>
+<span id="cb46-2"><a href="" aria-label="2"></a></span>
+<span id="cb46-3"><a href="" aria-label="3"></a>output <span class="ot">&lt;-</span> polycor<span class="sc">::</span><span class="fu">polychor</span>(</span>
+<span id="cb46-4"><a href="" aria-label="4"></a>  <span class="at">x =</span> x_binary,</span>
+<span id="cb46-5"><a href="" aria-label="5"></a>  <span class="at">y =</span> y_binary,</span>
+<span id="cb46-6"><a href="" aria-label="6"></a>  <span class="at">std.err =</span> <span class="cn">TRUE</span></span>
+<span id="cb46-7"><a href="" aria-label="7"></a>)</span>
+<span id="cb46-8"><a href="" aria-label="8"></a></span>
+<span id="cb46-9"><a href="" aria-label="9"></a>output</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Polychoric Correlation, 2-step est. = 0.6533 (0.1067)
@@ -1297,12 +1292,12 @@ Polychoric Correlation, 2-step est. = 0.6533 (0.1067)
 </div>
 <p>The activity then converts the estimated correlation and its variance into a z statistic and a two-sided p-value:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="" aria-label="1"></a>z_stat <span class="ot">&lt;-</span> output<span class="sc">$</span>rho <span class="sc">/</span> <span class="fu">sqrt</span>(output<span class="sc">$</span>var)</span>
-<span id="cb50-2"><a href="" aria-label="2"></a></span>
-<span id="cb50-3"><a href="" aria-label="3"></a><span class="dv">2</span> <span class="sc">*</span> <span class="fu">pnorm</span>(</span>
-<span id="cb50-4"><a href="" aria-label="4"></a>  <span class="fu">abs</span>(z_stat),</span>
-<span id="cb50-5"><a href="" aria-label="5"></a>  <span class="at">lower.tail =</span> <span class="cn">FALSE</span></span>
-<span id="cb50-6"><a href="" aria-label="6"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="" aria-label="1"></a>z_stat <span class="ot">&lt;-</span> output<span class="sc">$</span>rho <span class="sc">/</span> <span class="fu">sqrt</span>(output<span class="sc">$</span>var)</span>
+<span id="cb48-2"><a href="" aria-label="2"></a></span>
+<span id="cb48-3"><a href="" aria-label="3"></a><span class="dv">2</span> <span class="sc">*</span> <span class="fu">pnorm</span>(</span>
+<span id="cb48-4"><a href="" aria-label="4"></a>  <span class="fu">abs</span>(z_stat),</span>
+<span id="cb48-5"><a href="" aria-label="5"></a>  <span class="at">lower.tail =</span> <span class="cn">FALSE</span></span>
+<span id="cb48-6"><a href="" aria-label="6"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             [,1]
 [1,] 9.273696e-10</code></pre>
@@ -1352,12 +1347,12 @@ Polychoric Correlation, 2-step est. = 0.6533 (0.1067)
 <h2>Intuition for partial correlation</h2>
 <div style="font-size:0.56em;">
 <p>One way to think about it is to remove the part of each variable explained by the control variable.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb52"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb52-1"><a href="" aria-label="1"></a>X  ── remove relationship with Z ──→ residual X</span>
-<span id="cb52-2"><a href="" aria-label="2"></a>Y  ── remove relationship with Z ──→ residual Y</span>
-<span id="cb52-3"><a href="" aria-label="3"></a></span>
-<span id="cb52-4"><a href="" aria-label="4"></a>                 ↓</span>
-<span id="cb52-5"><a href="" aria-label="5"></a></span>
-<span id="cb52-6"><a href="" aria-label="6"></a>       correlate residual X and residual Y</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb50"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb50-1"><a href="" aria-label="1"></a>X  ── remove relationship with Z ──→ residual X</span>
+<span id="cb50-2"><a href="" aria-label="2"></a>Y  ── remove relationship with Z ──→ residual Y</span>
+<span id="cb50-3"><a href="" aria-label="3"></a></span>
+<span id="cb50-4"><a href="" aria-label="4"></a>                 ↓</span>
+<span id="cb50-5"><a href="" aria-label="5"></a></span>
+<span id="cb50-6"><a href="" aria-label="6"></a>       correlate residual X and residual Y</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>That residual correlation is the <strong>partial correlation of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> given <span class="math inline">\(Z\)</span></strong>.</p>
 </div>
 </section>
@@ -1366,23 +1361,23 @@ Polychoric Correlation, 2-step est. = 0.6533 (0.1067)
 <div style="font-size:0.56em;">
 <p>Use <code>ppcor::pcor.test()</code> for the inferential analysis.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="" aria-label="1"></a><span class="fu">library</span>(ppcor)</span>
-<span id="cb53-2"><a href="" aria-label="2"></a>life_expectancy <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/life_expectancy.csv"</span>)</span>
-<span id="cb53-3"><a href="" aria-label="3"></a>life_complete <span class="ot">&lt;-</span> life_expectancy[</span>
-<span id="cb53-4"><a href="" aria-label="4"></a>  <span class="fu">complete.cases</span>(</span>
-<span id="cb53-5"><a href="" aria-label="5"></a>    life_expectancy[, <span class="fu">c</span>(</span>
-<span id="cb53-6"><a href="" aria-label="6"></a>      <span class="st">"Alcohol"</span>,</span>
-<span id="cb53-7"><a href="" aria-label="7"></a>      <span class="st">"Life.expectancy"</span>,</span>
-<span id="cb53-8"><a href="" aria-label="8"></a>      <span class="st">"percentage.expenditure"</span></span>
-<span id="cb53-9"><a href="" aria-label="9"></a>    )]</span>
-<span id="cb53-10"><a href="" aria-label="10"></a>  ),</span>
-<span id="cb53-11"><a href="" aria-label="11"></a>]</span>
-<span id="cb53-12"><a href="" aria-label="12"></a></span>
-<span id="cb53-13"><a href="" aria-label="13"></a><span class="fu">pcor.test</span>(</span>
-<span id="cb53-14"><a href="" aria-label="14"></a>  <span class="at">x =</span> life_complete<span class="sc">$</span>Alcohol,</span>
-<span id="cb53-15"><a href="" aria-label="15"></a>  <span class="at">y =</span> life_complete<span class="sc">$</span>Life.expectancy,</span>
-<span id="cb53-16"><a href="" aria-label="16"></a>  <span class="at">z =</span> life_complete<span class="sc">$</span>percentage.expenditure</span>
-<span id="cb53-17"><a href="" aria-label="17"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="" aria-label="1"></a><span class="fu">library</span>(ppcor)</span>
+<span id="cb51-2"><a href="" aria-label="2"></a>life_expectancy <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/life_expectancy.csv"</span>)</span>
+<span id="cb51-3"><a href="" aria-label="3"></a>life_complete <span class="ot">&lt;-</span> life_expectancy[</span>
+<span id="cb51-4"><a href="" aria-label="4"></a>  <span class="fu">complete.cases</span>(</span>
+<span id="cb51-5"><a href="" aria-label="5"></a>    life_expectancy[, <span class="fu">c</span>(</span>
+<span id="cb51-6"><a href="" aria-label="6"></a>      <span class="st">"Alcohol"</span>,</span>
+<span id="cb51-7"><a href="" aria-label="7"></a>      <span class="st">"Life.expectancy"</span>,</span>
+<span id="cb51-8"><a href="" aria-label="8"></a>      <span class="st">"percentage.expenditure"</span></span>
+<span id="cb51-9"><a href="" aria-label="9"></a>    )]</span>
+<span id="cb51-10"><a href="" aria-label="10"></a>  ),</span>
+<span id="cb51-11"><a href="" aria-label="11"></a>]</span>
+<span id="cb51-12"><a href="" aria-label="12"></a></span>
+<span id="cb51-13"><a href="" aria-label="13"></a><span class="fu">pcor.test</span>(</span>
+<span id="cb51-14"><a href="" aria-label="14"></a>  <span class="at">x =</span> life_complete<span class="sc">$</span>Alcohol,</span>
+<span id="cb51-15"><a href="" aria-label="15"></a>  <span class="at">y =</span> life_complete<span class="sc">$</span>Life.expectancy,</span>
+<span id="cb51-16"><a href="" aria-label="16"></a>  <span class="at">z =</span> life_complete<span class="sc">$</span>percentage.expenditure</span>
+<span id="cb51-17"><a href="" aria-label="17"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   estimate      p.value statistic   n gp  Method
 1 0.4395488 5.995001e-10  6.547139 182  1 pearson</code></pre>
@@ -1395,18 +1390,18 @@ Polychoric Correlation, 2-step est. = 0.6533 (0.1067)
 <div style="font-size:0.56em;">
 <p>A convenient implementation is available through <code>pingouin</code>:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="" aria-label="1"></a><span class="im">import</span> pingouin <span class="im">as</span> pg</span>
-<span id="cb55-2"><a href="" aria-label="2"></a>life_expectancy <span class="op">=</span> pd.read_csv(<span class="st">"data/life_expectancy.csv"</span>)</span>
-<span id="cb55-3"><a href="" aria-label="3"></a>life_complete <span class="op">=</span> life_expectancy[</span>
-<span id="cb55-4"><a href="" aria-label="4"></a>    [<span class="st">"Alcohol"</span>, <span class="st">"Life expectancy"</span>, <span class="st">"percentage expenditure"</span>]</span>
-<span id="cb55-5"><a href="" aria-label="5"></a>].dropna()</span>
-<span id="cb55-6"><a href="" aria-label="6"></a></span>
-<span id="cb55-7"><a href="" aria-label="7"></a>pg.partial_corr(</span>
-<span id="cb55-8"><a href="" aria-label="8"></a>    data<span class="op">=</span>life_complete,</span>
-<span id="cb55-9"><a href="" aria-label="9"></a>    x<span class="op">=</span><span class="st">"Alcohol"</span>,</span>
-<span id="cb55-10"><a href="" aria-label="10"></a>    y<span class="op">=</span><span class="st">"Life expectancy"</span>,</span>
-<span id="cb55-11"><a href="" aria-label="11"></a>    covar<span class="op">=</span><span class="st">"percentage expenditure"</span></span>
-<span id="cb55-12"><a href="" aria-label="12"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="" aria-label="1"></a><span class="im">import</span> pingouin <span class="im">as</span> pg</span>
+<span id="cb53-2"><a href="" aria-label="2"></a>life_expectancy <span class="op">=</span> pd.read_csv(<span class="st">"data/life_expectancy.csv"</span>)</span>
+<span id="cb53-3"><a href="" aria-label="3"></a>life_complete <span class="op">=</span> life_expectancy[</span>
+<span id="cb53-4"><a href="" aria-label="4"></a>    [<span class="st">"Alcohol"</span>, <span class="st">"Life expectancy"</span>, <span class="st">"percentage expenditure"</span>]</span>
+<span id="cb53-5"><a href="" aria-label="5"></a>].dropna()</span>
+<span id="cb53-6"><a href="" aria-label="6"></a></span>
+<span id="cb53-7"><a href="" aria-label="7"></a>pg.partial_corr(</span>
+<span id="cb53-8"><a href="" aria-label="8"></a>    data<span class="op">=</span>life_complete,</span>
+<span id="cb53-9"><a href="" aria-label="9"></a>    x<span class="op">=</span><span class="st">"Alcohol"</span>,</span>
+<span id="cb53-10"><a href="" aria-label="10"></a>    y<span class="op">=</span><span class="st">"Life expectancy"</span>,</span>
+<span id="cb53-11"><a href="" aria-label="11"></a>    covar<span class="op">=</span><span class="st">"percentage expenditure"</span></span>
+<span id="cb53-12"><a href="" aria-label="12"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           n         r          CI95         p_val
 pearson  182  0.439549  [0.31, 0.55]  5.995001e-10</code></pre>
@@ -1509,21 +1504,21 @@ pearson  182  0.439549  [0.31, 0.55]  5.995001e-10</code></pre>
 <h2>The full correlation workflow</h2>
 <div style="font-size:0.56em;">
 <p>A robust correlation analysis often looks like:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb57"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb57-1"><a href="" aria-label="1"></a>Research question</span>
-<span id="cb57-2"><a href="" aria-label="2"></a>      ↓</span>
-<span id="cb57-3"><a href="" aria-label="3"></a>Identify variables + measurement scales</span>
-<span id="cb57-4"><a href="" aria-label="4"></a>      ↓</span>
-<span id="cb57-5"><a href="" aria-label="5"></a>Visualize the relationship</span>
-<span id="cb57-6"><a href="" aria-label="6"></a>      ↓</span>
-<span id="cb57-7"><a href="" aria-label="7"></a>Check shape, outliers, range, and coding</span>
-<span id="cb57-8"><a href="" aria-label="8"></a>      ↓</span>
-<span id="cb57-9"><a href="" aria-label="9"></a>Choose an appropriate correlation</span>
-<span id="cb57-10"><a href="" aria-label="10"></a>      ↓</span>
-<span id="cb57-11"><a href="" aria-label="11"></a>Compute the sample statistic</span>
-<span id="cb57-12"><a href="" aria-label="12"></a>      ↓</span>
-<span id="cb57-13"><a href="" aria-label="13"></a>If appropriate, perform the inferential test</span>
-<span id="cb57-14"><a href="" aria-label="14"></a>      ↓</span>
-<span id="cb57-15"><a href="" aria-label="15"></a>Interpret effect size + uncertainty + limitations</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb55"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb55-1"><a href="" aria-label="1"></a>Research question</span>
+<span id="cb55-2"><a href="" aria-label="2"></a>      ↓</span>
+<span id="cb55-3"><a href="" aria-label="3"></a>Identify variables + measurement scales</span>
+<span id="cb55-4"><a href="" aria-label="4"></a>      ↓</span>
+<span id="cb55-5"><a href="" aria-label="5"></a>Visualize the relationship</span>
+<span id="cb55-6"><a href="" aria-label="6"></a>      ↓</span>
+<span id="cb55-7"><a href="" aria-label="7"></a>Check shape, outliers, range, and coding</span>
+<span id="cb55-8"><a href="" aria-label="8"></a>      ↓</span>
+<span id="cb55-9"><a href="" aria-label="9"></a>Choose an appropriate correlation</span>
+<span id="cb55-10"><a href="" aria-label="10"></a>      ↓</span>
+<span id="cb55-11"><a href="" aria-label="11"></a>Compute the sample statistic</span>
+<span id="cb55-12"><a href="" aria-label="12"></a>      ↓</span>
+<span id="cb55-13"><a href="" aria-label="13"></a>If appropriate, perform the inferential test</span>
+<span id="cb55-14"><a href="" aria-label="14"></a>      ↓</span>
+<span id="cb55-15"><a href="" aria-label="15"></a>Interpret effect size + uncertainty + limitations</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The activity file follows this pattern across three motivating datasets: CERN energy/momentum, Rate My Professor binary tags, and WHO life-expectancy data.</p>
 </div>
 </section>

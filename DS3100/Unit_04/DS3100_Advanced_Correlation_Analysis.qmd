@@ -292,13 +292,13 @@ r_obs <- cor(
   method = "pearson"
 )
 
-r_obs
-
-cor.test(
+p_value <- cor.test(
   cern_voi$E1,
   cern_voi$px1,
   method = "pearson"
 )$p.value
+
+cat(r_obs, p_value)
 ```
 
 :::
@@ -318,7 +318,7 @@ result = pearsonr(
 r_obs = result.statistic
 p_value = result.pvalue
 
-r_obs, p_value
+print(r_obs, p_value)
 ```
 :::
 
@@ -741,9 +741,7 @@ Pearson's correlation is a natural choice when:
 
 ## Pearson’s $r$ is also the exact statistical test designed to measure the relationship between two variables measured on an interval or ratio scale. 
 
-Here differences between values have a consistent meaning.
-
-- For example, the difference between 160 cm and 170 cm is the same amount of height as the difference between 200 cm and 210 cm. Because these distances are equivalent, Pearson’s $r$ can use them to compare how $X$ and $Y$ change together without worrying about order and measure how closely their relationship follows a straight-line pattern.
+Here differences between values have a consistent meaning. **For example**, the difference between 160 cm and 170 cm is the same amount of height as the difference between 200 cm and 210 cm. Because these distances are equivalent, Pearson’s $r$ can use them to compare how $X$ and $Y$ change together without worrying about order and measure how closely their relationship follows a straight-line pattern.
 
 :::
 
