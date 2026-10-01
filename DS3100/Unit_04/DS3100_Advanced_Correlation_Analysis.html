@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Dr.&nbsp;Satadisha Saha Bhowmick">
-  <meta name="dcterms.date" content="2026-09-28">
+  <meta name="dcterms.date" content="2026-09-30">
   <title>DS 3100 | Advanced Correlation Analysis</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -210,7 +210,7 @@ Dr.&nbsp;Satadisha Saha Bhowmick
 </div>
 </div>
 
-  <p class="date">2026-09-28</p>
+  <p class="date">2026-09-30</p>
 </section>
 <section class="slide level2">
 
@@ -292,7 +292,7 @@ Dr.&nbsp;Satadisha Saha Bhowmick
 <section id="motivating-example-cern-data" class="slide level2">
 <h2>⚛️ Motivating Example : CERN data</h2>
 <div style="font-size:0.56em;">
-<p>Before calculating a correlation, look at the data. The activity uses CERN particle data obtained via <a href="https://opendata.cern.ch/">open source data repository</a>. Data measure energy and momentum of muons, a subatomic particle that is similar to an electron but is about 207 times more massive.</p>
+<p>Before calculating a correlation, look at the data. CERN particle data obtained via <a href="https://opendata.cern.ch/">open source data repository</a>. Data consist of the total relativistic energy and momentum components along <span class="math inline">\(3\)</span> orthogonal axes of muons, a subatomic particle that is similar to an electron but is about 207 times more massive.</p>
 <p>We want to understand whether energy and momentum are associated.</p>
 <p>Start by reading some data.</p>
 </div>
@@ -412,7 +412,8 @@ Dr.&nbsp;Satadisha Saha Bhowmick
 <p><span class="math display">\[
 r = \text{sample Pearson correlation}.
 \]</span></p>
-<p>For your standard two-sided test:</p>
+<p><span style="color:#1565C0;">Pearson’s <span class="math inline">\(r\)</span> measures how strongly the observations follow a linear pattern.</span> In other words, magnitude of <span class="math inline">\(r\)</span> tells how close the points are to a straight line and the sign tells us about the direction of the linear trend.</p>
+<p>On top of estimating this if you were to ask how significant is this correlation, your standard two-sided test would look like:</p>
 <p><span class="math display">\[
 H_0: \rho = 0
 \]</span></p>
@@ -433,7 +434,7 @@ H_A: \rho \neq 0
 <p><strong>Pearson’s <span class="math inline">\(r\)</span></strong></p>
 </div>
 <div class="callout-content">
-<p>Calculate the linear association and run an inferential test to validate the statistical significance of the observed association.</p>
+<p>Calculate the <span style="color:#1565C0;"><strong>linear association</strong></span> and run an inferential test to validate the statistical significance of the observed association.</p>
 <p><strong>Exploratory:</strong> <span class="math inline">\(r\)</span> summarizes the association in the observed sample.<br>
 <strong>Inferential:</strong> a correlation test asks how unusual the observed <span class="math inline">\(r\)</span> would be under a null model such as <span class="math inline">\(H_0:\rho=0\)</span>.</p>
 </div>
@@ -483,6 +484,25 @@ H_A: \rho \neq 0
 </div>
 </div>
 </div></div>
+<div style="font-size:0.56em;">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Takeaway</strong></p>
+</div>
+<div class="callout-content">
+<p>Pearson’s correlation between energy and the <span class="math inline">\(x\)</span> component of momentum is essentially zero in magnitude and not statistically significant.</p>
+<p>This does not imply that energy and momentum are unrelated. In fact it makes sense given the relationship between relativistic energy and total momentum is non-linear (quadratic) to begin with while Pearson’s <span class="math inline">\(r\)</span> measures <strong>linear trend</strong>.</p>
+<p><span class="math display">\[
+E^2 = p^2c^2+(mc^2)^2; \qquad p^2 = p_x^2+p_y^2+p_z^2
+\]</span></p>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section class="slide level2">
 
@@ -491,6 +511,65 @@ H_A: \rho \neq 0
 <section id="section" class="title-slide slide level1 center">
 <h1>2.</h1>
 <p><span style="color:#1565C0; font-size:1.8em; font-weight:600;"> Correlation is not a complete description </span></p>
+</section>
+<section id="one-number-four-pictures" class="slide level2">
+<h2>One number, four pictures</h2>
+
+<img data-src="images/anscombes-quartet.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"><div style="font-size:0.56em;">
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Guess the <span class="math inline">\(r\)</span> value</strong></p>
+</div>
+<div class="callout-content">
+<p>You have four datasets, each containing samples measuring two variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. You are required to guess the value of the Pearson’s <span class="math inline">\(r\)</span> that best captures the relationship between the two variables in each case.<br> <a href="https://forms.cloud.microsoft/r/1pCLNu1PxV">Fill in your responses in this form</a></p>
+<p><span style="color:#1565C0;"><strong>Remember</strong></span> <span class="math inline">\(r\)</span> is a value between <span class="math inline">\(1\)</span> and <span class="math inline">\(-1\)</span> where positive values indicate an association where both variables grow and shrink together. Values close to <span class="math inline">\(0\)</span> indicate no meaningful relationship.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="anscombes-quartet" class="slide level2">
+<h2>Anscombe’s Quartet</h2>
+<div class="columns v-center">
+<div class="column" style="font-size:0.56em;">
+<p>Created by statistician <span style="color:#1565C0;">Francis Anscombe in 1973</span>, the quartet consists of four distinct datasets that share identical summary statistics, including the correlation coefficient <span class="math inline">\(r \approx 0.82\)</span>.</p>
+<p>This is a cautionary tale that summary statistics do not tell the whole story because the scatterplots show four very different relationships.</p>
+<ul>
+<li>Set 1: A reasonably linear relationship—the setting in which Pearson’s <span class="math inline">\(r\)</span> gives a useful summary.</li>
+<li>Set 2: A clear curved relationship. Pearson’s <span class="math inline">\(r\)</span> can still be calculated, but it does not describe the curvature.</li>
+<li>Set 3: An approximately linear pattern dominated by one influential observation.</li>
+</ul>
+</div><div class="column" style="font-size:0.56em;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/anscombe-fitted.png" class="quarto-figure quarto-figure-center" style="width:100.0%"></p>
+</figure>
+</div>
+</div></div>
+<div style="font-size:0.56em;">
+<ul>
+<li>Set 4: Almost all <span class="math inline">\(x\)</span>-values are identical, with one unusual observation creating the apparent correlation.</li>
+</ul>
+</div>
+<div style="font-size:0.56em;">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Remember</strong></p>
+</div>
+<div class="callout-content">
+<p>Pearson’s <span class="math inline">\(r\)</span> summarizes linear association directly from data. But nothing about it tells us whether a linear model is actually appropriate for the data.</p>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section id="limitation-1-pearsons-correlation-measures-linear-association" class="slide level2">
 <h2>Limitation 1: Pearson’s Correlation measures linear association</h2>
@@ -737,10 +816,10 @@ pz1 -0.149513 -0.032913  0.037369  1.000000</code></pre>
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Tip</strong></p>
+<p><strong>Limitations</strong></p>
 </div>
 <div class="callout-content">
-<p>A matrix helps you <strong>screen</strong> many relationships but it does not tell you which relationships are substantively meaningful, linear, stable, or causally interpretable.</p>
+<p>A correlation matrix helps you <strong>screen</strong> many pairwise relationships but the coefficients alone do not tell us whether an association is statistically significant or substantively important, whether the relationship is appropriately described as linear, whether it is influenced by outliers, or whether it reflects a causal relationship.</p>
 </div>
 </div>
 </div>
@@ -823,6 +902,26 @@ pz1 -0.149513 -0.032913  0.037369  1.000000</code></pre>
 </div>
 </div>
 </section>
+<section id="pearsons-r-a-standardized-measure" class="slide level2">
+<h2>Pearson’s <span class="math inline">\(r\)</span>: a standardized measure</h2>
+<div class="columns v-center">
+<div class="column" style="font-size:0.56em;">
+<p>One representation standardizes each variable first <span class="math inline">\(z_x=\frac{x-\bar x}{\sigma_x}, \qquad z_y=\frac{y-\bar y}{\sigma_y}\)</span></p>
+<p>then measures how standardized values move together <span class="math inline">\(r = \frac{\sum z_xz_y}{n-1}\)</span></p>
+<p>Each axis measures a variable in <span class="math inline">\(z\)</span>-scores – <em>units of its standard deviations from its mean at <span class="math inline">\(0\)</span></em>.<br> A point above average on both scales, or below on both, has a positive product of its two z-scores (blue); above on one and below on the other produces a negative product (orange). <span class="math inline">\(r\)</span> is the average of these products of two <span class="math inline">\(z\)</span> scores.</p>
+</div><div class="column" style="font-size:0.56em;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/how-r-is-made.png" class="quarto-figure quarto-figure-center" style="width:100.0%"></p>
+</figure>
+</div>
+</div></div>
+<div style="font-size:0.56em;">
+<p>We divide by <span class="math inline">\(n-1\)</span> when computing the average because we use sample standard deviations (<em>which uses the same</em>) when computing the <span class="math inline">\(z\)</span>-scores. <span class="math inline">\(\rightarrow\)</span> goes back to <span style="color:#1565C0;">degrees of freedom</span> (given the sample mean, knowing <span class="math inline">\(n-1\)</span> deviations gives away the last one).</p>
+<p>Or, <span class="math inline">\(r = \frac{\sum_{i=1}^n(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^n(x_i - \bar{x})^2}\sqrt{\sum_{i=1}^n(y_i - \bar{y})^2}} = \frac{cov(X,Y)}{\sigma_x \sigma_y}\)</span></p>
+<p><span style="color:#1565C0;">Interpretation</span>: <span style="color:#898989;"><strong>How strongly do high/low values of one variable line up with high/low values of the other, in a linear sense?</strong></span></p>
+</div>
+</section>
 <section id="pearsons-r-1" class="slide level2">
 <h2>Pearson’s <span class="math inline">\(r\)</span></h2>
 <div style="font-size:0.56em;">
@@ -854,31 +953,13 @@ pz1 -0.149513 -0.032913  0.037369  1.000000</code></pre>
 <p><strong>Pearson’s <span class="math inline">\(r\)</span> is also the exact statistical test designed to measure the relationship between two variables measured on an interval or ratio scale.</strong></p>
 </div>
 <div class="callout-content">
-<p>Here differences between values have a consistent meaning. - For example, the difference between 160 cm and 170 cm is the same amount of height as the difference between 200 cm and 210 cm. Because these distances are equivalent, Pearson’s <span class="math inline">\(r\)</span> can use them to compare how <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> change together without worrying about order and measure how closely their relationship follows a straight-line pattern.</p>
+<p>Here differences between values have a consistent meaning.</p>
+<ul>
+<li>For example, the difference between 160 cm and 170 cm is the same amount of height as the difference between 200 cm and 210 cm. Because these distances are equivalent, Pearson’s <span class="math inline">\(r\)</span> can use them to compare how <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> change together without worrying about order and measure how closely their relationship follows a straight-line pattern.</li>
+</ul>
 </div>
 </div>
 </div>
-</div>
-</section>
-<section id="pearsons-r-a-standardized-measure" class="slide level2">
-<h2>Pearson’s <span class="math inline">\(r\)</span>: a standardized measure</h2>
-<div style="font-size:0.56em;">
-<p>One useful representation standardizes each variable first:</p>
-<p><span class="math display">\[
-z_x=\frac{x-\bar x}{\sigma_x},
-\qquad
-z_y=\frac{y-\bar y}{\sigma_y}
-\]</span></p>
-<p>and then measures how the standardized values move together:</p>
-<p><span class="math display">\[
-r = \frac{\sum z_xz_y}{n-1} \text{ or,}
-\]</span> <span class="math display">\[
-r = \frac{\sum_{i=1}^n(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^n(x_i - \bar{x})^2}\sqrt{\sum_{i=1}^n(y_i - \bar{y})^2}} = \frac{cov(X,Y)}{\sigma_x \sigma_y}
-\]</span></p>
-<p>Interpretation:</p>
-<blockquote>
-<p><strong>How strongly do high/low values of one variable line up with high/low values of the other, in a linear sense?</strong></p>
-</blockquote>
 </div>
 </section>
 <section id="spearmans-rank-correlation" class="slide level2">

@@ -136,7 +136,7 @@ import matplotlib.pyplot as plt
 
 ::: {style="font-size:0.56em;"}
 
-Before calculating a correlation, look at the data. The activity uses CERN particle data obtained via [open source data repository](https://opendata.cern.ch/). Data measure energy and momentum of muons, a subatomic particle that is similar to an electron but is about 207 times more massive.
+Before calculating a correlation, look at the data.  CERN particle data obtained via [open source data repository](https://opendata.cern.ch/). Data consist of the total relativistic energy and momentum components along $3$ orthogonal axes of muons, a subatomic particle that is similar to an electron but is about 207 times more massive.
 
 We want to understand whether energy and momentum are associated.
 
@@ -249,7 +249,9 @@ $$
  r = \text{sample Pearson correlation}.
 $$
 
-For your standard two-sided test:
+<span style="color:#1565C0;">Pearson's $r$ measures how strongly the observations follow a linear pattern.</span> In other words, magnitude of $r$ tells how close the points are to a straight line and the sign tells us about the direction of the linear trend.
+
+On top of estimating this if you were to ask how significant is this correlation, your standard two-sided test would look like:
 
 $$
 H_0: \rho = 0
@@ -269,7 +271,7 @@ $$
 
 ## Pearson's $r$
 
-Calculate the linear association and run an inferential test to validate the statistical significance of the observed association.
+Calculate the <span style="color:#1565C0;">**linear association**</span> and run an inferential test to validate the statistical significance of the observed association.
 
 **Exploratory:** $r$ summarizes the association in the observed sample.  
 **Inferential:** a correlation test asks how unusual the observed $r$ would be under a null model such as $H_0:\rho=0$.
@@ -322,11 +324,82 @@ r_obs, p_value
 
 :::
 
+::: {.callout-tip style="font-size:0.56em;"}
+
+## Takeaway
+
+Pearson's correlation between energy and the $x$ component of momentum is essentially zero in magnitude and not statistically significant. 
+
+This does not imply that energy and momentum are unrelated. In fact it makes sense given the relationship between relativistic energy and total momentum is non-linear (quadratic) to begin with while Pearson's $r$ measures **linear trend**.
+
+$$
+E^2 = p^2c^2+(mc^2)^2; \qquad p^2 = p_x^2+p_y^2+p_z^2
+$$
+
+:::
+
 ---
 
 # 2.
 
 <span style="color:#1565C0; font-size:1.8em; font-weight:600;"> Correlation is not a complete description </span>
+
+---
+
+## One number, four pictures
+
+![](images/anscombes-quartet.png){width=100% fig-align="center"}
+
+::: {.callout-important style="font-size:0.56em;"}
+
+## Guess the $r$ value
+
+You have four datasets, each containing samples measuring two variables $X$ and $Y$. You are required to guess the value of the Pearson's $r$ that best captures the relationship between the two variables in each case.<br>
+[Fill in your responses in this form](https://forms.cloud.microsoft/r/1pCLNu1PxV)
+
+<span style="color:#1565C0;">**Remember**</span> $r$ is a value between $1$ and $-1$ where positive values indicate an association where both variables grow and shrink together. Values close to $0$ indicate no meaningful relationship.
+
+:::
+
+---
+
+## Anscombe's Quartet
+
+::: {.columns .v-center}
+
+::: {.column width="40%" style="font-size:0.56em;"}
+
+Created by statistician <span style="color:#1565C0;">Francis Anscombe in 1973</span>, the quartet consists of four distinct datasets that share identical summary statistics, including the correlation coefficient $r \approx 0.82$.
+
+This is a cautionary tale that summary statistics do not tell the whole story because the scatterplots show four very different relationships.
+
+- Set 1: A reasonably linear relationship—the setting in which Pearson’s $r$ gives a useful summary.
+- Set 2: A clear curved relationship. Pearson’s $r$ can still be calculated, but it does not describe the curvature.
+- Set 3: An approximately linear pattern dominated by one influential observation.
+
+:::
+
+::: {.column width="60%" style="font-size:0.56em;"}
+
+![](images/anscombe-fitted.png){width=100% fig-align="center"}
+
+:::
+
+:::
+
+::: {style="font-size:0.56em;"}
+
+- Set 4: Almost all $x$-values are identical, with one unusual observation creating the apparent correlation.
+
+:::
+
+::: {.callout-tip style="font-size:0.56em;"}
+
+## Remember
+
+Pearson’s $r$ summarizes linear association directly from data. But nothing about it tells us whether a linear model is actually appropriate for the data.
+
+:::
 
 ---
 
@@ -549,7 +622,9 @@ cern_voi[["E1", "px1", "py1", "pz1"]].corr()
 
 ::: {.callout-tip style="font-size:0.56em;"}
 
-A matrix helps you **screen** many relationships but it does not tell you which relationships are substantively meaningful, linear, stable, or causally interpretable.
+## Limitations
+
+A correlation matrix helps you **screen** many pairwise relationships but the coefficients alone do not tell us whether an association is statistically significant or substantively important, whether the relationship is appropriately described as linear, whether it is influenced by outliers, or whether it reflects a causal relationship.
 
 :::
 
@@ -596,6 +671,41 @@ These categories can also be used as a basis for deciding how variables should b
 
 ---
 
+## Pearson's $r$: a standardized measure
+
+::: {.columns .v-center}
+
+::: {.column width="65%" style="font-size:0.56em;"}
+
+One representation standardizes each variable first $z_x=\frac{x-\bar x}{\sigma_x}, \qquad z_y=\frac{y-\bar y}{\sigma_y}$
+
+then measures how standardized values move together $r = \frac{\sum z_xz_y}{n-1}$
+
+Each axis measures a variable in $z$-scores -- *units of its standard deviations from its mean at $0$*.<br> 
+A point above average on both scales, or below on both, has a positive product of its two z-scores (blue); above on one and below on the other produces a negative product (orange). $r$ is the average of these products of two $z$ scores.
+
+:::
+
+::: {.column width="35%" style="font-size:0.56em;"}
+
+![](images/how-r-is-made.png){width=100% fig-align="center"}
+
+:::
+
+:::
+
+::: {style="font-size:0.56em;"}
+
+We divide by $n-1$ when computing the average because we use sample standard deviations (*which uses the same*) when computing the $z$-scores. $\rightarrow$ goes back to <span style="color:#1565C0;">degrees of freedom</span> (given the sample mean, knowing $n-1$ deviations gives away the last one).
+
+Or, $r = \frac{\sum_{i=1}^n(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^n(x_i - \bar{x})^2}\sqrt{\sum_{i=1}^n(y_i - \bar{y})^2}} = \frac{cov(X,Y)}{\sigma_x \sigma_y}$
+
+<span style="color:#1565C0;">Interpretation</span>: <span style="color:#898989;">**How strongly do high/low values of one variable line up with high/low values of the other, in a linear sense?**</span>
+
+:::
+
+---
+
 ## Pearson's  $r$
 
 ::: {style="font-size:0.56em;"}
@@ -632,36 +742,8 @@ Pearson's correlation is a natural choice when:
 ## Pearson’s $r$ is also the exact statistical test designed to measure the relationship between two variables measured on an interval or ratio scale. 
 
 Here differences between values have a consistent meaning.
+
 - For example, the difference between 160 cm and 170 cm is the same amount of height as the difference between 200 cm and 210 cm. Because these distances are equivalent, Pearson’s $r$ can use them to compare how $X$ and $Y$ change together without worrying about order and measure how closely their relationship follows a straight-line pattern.
-
-:::
-
----
-
-## Pearson's $r$: a standardized measure
-
-::: {style="font-size:0.56em;"}
-
-One useful representation standardizes each variable first:
-
-$$
- z_x=\frac{x-\bar x}{\sigma_x},
- \qquad
- z_y=\frac{y-\bar y}{\sigma_y}
-$$
-
-and then measures how the standardized values move together:
-
-$$
- r = \frac{\sum z_xz_y}{n-1} \text{ or,}
-$$
-$$
- r = \frac{\sum_{i=1}^n(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^n(x_i - \bar{x})^2}\sqrt{\sum_{i=1}^n(y_i - \bar{y})^2}} = \frac{cov(X,Y)}{\sigma_x \sigma_y}
-$$
-
-Interpretation:
-
-> **How strongly do high/low values of one variable line up with high/low values of the other, in a linear sense?**
 
 :::
 
