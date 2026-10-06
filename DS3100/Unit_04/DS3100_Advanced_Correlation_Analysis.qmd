@@ -1080,7 +1080,7 @@ rho_se <- sqrt(output$var)
 z_stat <- rho_est / rho_se
 p_value <- 2 * (1 - pnorm(abs(z_stat)))
 
-cat("--- Polychoric Significance Test (Full ML) ---\n",
+cat("--- Polychoric Significance Test ---\n",
     "Correlation (Rho):   ", round(rho_est, 4), "\n",
     "Standard Error:       ", round(rho_se, 4), "\n",
     "Z-statistic:          ", round(z_stat, 4), "\n",
