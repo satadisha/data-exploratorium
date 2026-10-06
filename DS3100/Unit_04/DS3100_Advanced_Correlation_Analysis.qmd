@@ -705,25 +705,19 @@ Or, $r = \frac{\sum_{i=1}^n(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^n(x_
 
 ---
 
-## Pearson's  $r$
-
-::: {style="font-size:0.56em;"}
-
-<span style="color:#1565C0;"> **When should we use Pearson's product moment correlation coefficient?** </span>
-
-:::
+## Pearson's  $r$: When to use?
 
 ::: {.columns}
 
 ::: {.column width="60%" style="font-size:0.56em;"}
 
-Pearson's correlation and the associated test become a natural choice when:
+Pearson's correlation and the corresponding statistical test rely upon the following assumptions:
 
 - both variables are quantitative
 - the scientific question concerns **linear association**
-  - the relationship is reasonably well represented by a straight-line pattern
+  - the relationship (between $X$ and its expected-$Y$) is reasonably well represented by a straight-line pattern
 - both variables approximately abide by normality
-- homoscedasticity: the variance of your dependent variable should be relatively equal across all levels of the independent variable
+- <span style="color:#1565C0;">homoscedasticity</span>: the variance of your dependent variable should be relatively equal across all levels of the independent variable
 - extreme outliers are not dominating the result
 
 :::
@@ -738,9 +732,11 @@ Pearson's correlation and the associated test become a natural choice when:
 
 ::: {.callout-note style="font-size:0.56em;"}
 
-## Pearson’s $r$ is also the exact statistical test designed to measure the relationship between two variables measured on an interval or ratio scale. 
+## 💡 Summary rule of thumb for Pearson’s $r$
 
-Here differences between values have a consistent meaning. **For example**, the difference between 160 cm and 170 cm is the same amount of height as the difference between 200 cm and 210 cm. Because these distances are equivalent, Pearson’s $r$ can use them to compare how $X$ and $Y$ change together without worrying about order and measure how closely their relationship follows a straight-line pattern.
+Together these assumptions are what we expect for <span style="color:#1565C0;"> **approximate bivariate normality** </span>: a joint distribution of two variables that is approximately normal in both dimensions and has an elliptical pattern around a linear relationship.
+
+Although it may seem like Pearson's $r$ has strict assumptions around bivariate normality, the statistic is actually quite robust to violations of these assumptions. When wanting to just find the descriptive statistic, it suffices that the relationship is linear and not dominated by outliers. For generalization and statistical inference, the assumptions above are more important.
 
 :::
 
@@ -750,11 +746,11 @@ Here differences between values have a consistent meaning. **For example**, the 
 
 ::: {style="font-size:0.56em;"}
 
-<span style="color:#1565C0;"> **What changes with Spearman's rank correlation coefficient?** </span>
+When we are not measuring linear relationships but rather simple monotonicity or have ranks instead of distances. Spearman's correlation evaluates <span style="color:#1565C0;">whether those **ranks** move together monotonically</span>. For example, if we want to estimate whether job satisfaction (measured on a Likert scale) is associated with an annual performance rank (also ordinal).
 
-When we are not measuring linear relationships but rather simple monotonicity or have ranks instead of distances. Spearman's correlation evaluates whether those **ranks** move together monotonically. Conceptually, when there are not too many ties in ranks, Spearman's rank correlation coefficient can be computed as:
-
+When there are not too many ties in ranks, Spearman's rank correlation coefficient can be computed as:
 $$
+\scriptsize
 X,Y
 \quad\longrightarrow\quad
 \operatorname{rank}(X),\operatorname{rank}(Y)
@@ -762,6 +758,7 @@ X,Y
 r_s = 1- \frac{6 \sum d_i^2}{n(n^2-1)} \text{, where}
 $$
 $$
+\scriptsize
 \begin{aligned}
   d_i &= \text{difference between the two ranks for each observation } rank(X_i) \text{ and } rank(Y_i)\\ 
   n &= \text{total number of observations}
@@ -780,7 +777,7 @@ It is useful when:
 
 ## When there are several tied ranks
 
-If multiple data points share the same rank, they are assigned an average rank. When ties are frequent, the forumla above becomes inaccurate. Instead, you must convert the raw data to ranks and then apply the standard Pearson correlation formula to those ranks.
+If multiple data points (*upon ranking*) share the same rank, they are assigned an average rank. When ties are frequent, the forumla above becomes inaccurate. Instead, you must convert the raw data to ranks and then apply the standard Pearson correlation formula to those ranks.
 
 :::
 
@@ -819,9 +816,10 @@ spearmanr(x, y).statistic
 
 :::
 
-::: {style="font-size:0.56em;"}
+::: {.callout-note style="font-size:0.56em;"}
 
-The relationship is perfectly monotonic, but not linear. Spearman's rank correlation coefficient captures the monotonic ordering better.
+- The relationship is perfectly monotonic, but not linear. Spearman's rank correlation coefficient captures the monotonic ordering better.
+- There are slight differences in floating-point precisions between R and Python implementations, but the results are essentially the same.
 
 :::
 
@@ -966,7 +964,7 @@ If you assign numeric values like $0$ and $1$ to your binary variable and run a 
 
 ## Equivalence to independent two-sample $t$-test
 
-The usual significance test for a point-biserial correlation gives the same $p$-value as the **equal-variance independent $t$-test** applied to the same data. Both tests ask whether the two population means are equal.
+The usual significance test for a point-biserial correlation gives the same $p$-value as the **equal-variance** (*<span style="color:#1565C0;">homoscedasticity</span>*) **independent $t$-test** applied to the same data. Both tests ask whether the two population means are equal.
 
 :::
 
@@ -976,24 +974,55 @@ The usual significance test for a point-biserial correlation gives the same $p$-
 
 ::: {style="font-size:0.56em;"}
 
-Here we also work with two binary variables, but a different conceptual model.
+Tetrachoric correlation is used when we have <span style="color:#1565C0;">**two binary variables**</span> but <span style="color:#1565C0;">*a different conceptual model underneath*</span>. Each binary variable is understood as a thresholded version of an underlying (*latent*) continuous variable. Additionally, the continuous variables are assumed to be <span style="color:#1565C0;">**bivariate normal**</span>.
 
-Tetrachoric correlation is used for **two binary variables** when each binary variable is understood as a thresholded version of an underlying continuous variable.
-
-For example:
-
-```text
-latent engagement  →  low / high
-latent performance →  fail / pass
-```
-
-The tetrachoric correlation estimates the association between the underlying latent continuous variables. The lecture source describes it as a correlation between two two-category nominal/ordinal variables and emphasizes the continuous conceptualization behind the observed categories.
+Tetrachoric correlation estimates the association between the underlying latent continuous variables.
 
 :::
 
-::: {.callout-warning style="font-size:0.56em;"}
+::: {.columns}
 
-**Two binary variables does not automatically mean tetrachoric correlation.** The latent-continuous interpretation is an assumption of the method.
+::: {.column width="50%" style="font-size:0.66em;"}
+
+::: {.callout-tip style="font-size:0.70em;"}
+
+## Example
+
+Suppose we have a dataset of students along with scores in two tests: a) an exam and b) a certification. Each distribution is continuous, but we only observe whether the student outcomes in each test after they have been thresholded as low/high and pass/fail.
+
+```text
+latent exam  →  low / high
+latent certification  →  fail / pass
+```
+
+The observed binary outcomes can be laid out in a $2\times2$ table.
+
+```text
+          Certification (X)
+                    Fail (0)  Pass (1)
+Exam (Y)   Low (0)     a       b
+           High (1)    c       d
+```
+
+:::
+
+::: {.callout-warning style="font-size:0.70em;"}
+
+## Two binary variables does not automatically mean tetrachoric correlation.
+
+The latent-continuous interpretation is a key assumption of the method.
+
+Additionally, the tetrachoric correlation is not a simple function of the observed $2\times2$ table. It is an estimate of <span style="color:#1565C0;">*how strongly would the two underlying continuous variables be correlated if the observed 0/1 categories arose by cutting those continuous variables at thresholds?*</span>
+:::
+
+:::
+
+::: {.column width="50%" style="font-size:0.66em;"}
+
+![](images/tetrachoric-corr.png){width=100%}
+
+:::
+
 :::
 
 ---
@@ -1004,20 +1033,25 @@ The tetrachoric correlation estimates the association between the underlying lat
 
 ::: {.column width="50%" style="font-size:0.56em;"}
 
-Suppose two binary variables produce:
+Suppose the two binary variables produce this table upon thresholding, and that is all we directly observe:
 
 |  | $X=0$ | $X=1$ |
 |---|---:|---:|
 | $Y=0$ | 38 | 10 |
 | $Y=1$ | 18 | 34 |
 
-The observed table is all we see. The tetrachoric model treats those categories as thresholded observations from underlying continuous variables. 
+The key question: *how strongly associated would those latent variables need to be to produce a table like this after thresholding?* 
 
+R users can use the `polycor::polychor()` package to compute the tetrachoric correlation. <span style="color:#1565C0;">*Python does not have a direct equivalent in SciPy, but we will discuss alternatives.*</span>
+
+Here, the correlation is estimated to be $0.653$ with a standard error of $\approx 0.11$. The two-tailed test for the null hypothesis $\rho=0$ uses `pnorm` that calculates the area under the standard normal curve below the Z-score. 
+The p-value indicates strong evidence that the latent variables are positively associated.
 :::
 
 ::: {.column width="50%" style="font-size:0.56em;"}
 
 ```{r}
+library(polycor)
 x_binary <- c(
   rep(0, 38),  # X=0, Y=0
   rep(1, 10),  # X=1, Y=0
@@ -1031,30 +1065,6 @@ y_binary <- c(
   rep(1, 18),  # X=0, Y=1
   rep(1, 34)   # X=1, Y=1
 )
-```
-
-:::
-
-:::
-
-::: {style="font-size:0.56em;"}
-
-The key question becomes:
-
-> **How strongly associated would those latent continuous variables need to be to produce a table like this after thresholding?**
-
-:::
-
----
-
-## Tetrachoric correlation: R
-
-::: {style="font-size:0.56em;"}
-
-Use `polycor::polychor()` to compute the tetrachoric correlation.
-
-```{r}
-library(polycor)
 
 output <- polycor::polychor(
   x = x_binary,
@@ -1062,40 +1072,76 @@ output <- polycor::polychor(
   std.err = TRUE
 )
 
-output
+# the correlation and its standard error
+rho_est <- output$rho
+rho_se <- sqrt(output$var)
+
+# Z-score and two-tailed test p-value
+z_stat <- rho_est / rho_se
+p_value <- 2 * (1 - pnorm(abs(z_stat)))
+
+cat("--- Polychoric Significance Test (Full ML) ---\n",
+    "Correlation (Rho):   ", round(rho_est, 4), "\n",
+    "Standard Error:       ", round(rho_se, 4), "\n",
+    "Z-statistic:          ", round(z_stat, 4), "\n",
+    "P-value:              ", p_value, "\n")
 ```
 
-The activity then converts the estimated correlation and its variance into a z statistic and a two-sided p-value:
+:::
 
-```{r}
-z_stat <- output$rho / sqrt(output$var)
-
-2 * pnorm(
-  abs(z_stat),
-  lower.tail = FALSE
-)
-```
 :::
 
 ---
 
-## Tetrachoric correlation: Python
+## Polychoric Correlation
 
-:::{style="font-size:0.56em;"}
+::: {.columns}
 
-Python does not have a direct SciPy equivalent of `polycor::polychor()`.
+::: {.column width="55%" style="font-size:0.50em;"}
+
+**Polychoric correlation** estimates the correlation between two **<span style="color:#1565C0;">unobserved</span> continuous variables** when we observe only their **ordinal categories**.
+
+Imagine latent continuous variables: $\scriptsize X^*,Y^* \sim \text{bivariate normal}$. We do not observe $X^*$ and $Y^*$ directly but categories created by placing **thresholds** on them. For example, responses submitted on a Likert scale (e.g., strongly disagree, disagree, neutral, agree, strongly agree) are ($2$ or more) ordinal categories that arise from underlying continuous valuations.
+$$
+\scriptsize
+X^* \rightarrow
+\begin{cases}
+1 & \text{low}\\
+2 & \text{below-average}\\
+3 & \text{average}\\
+\dots
+\end{cases}
+$$
+
+*What correlation between the two latent continuous variables best explains the observed pattern of ordinal categories?*
+
+:::
+
+::: {.column width="45%" style="font-size:0.50em;"}
+
+![](images/polychoric-corr.png){width=90%}
+
+:::
 
 :::
 
 ::: {.callout-note style="font-size:0.56em;"}
-This is one place where the two ecosystems are not perfectly one-to-one. The important learning objective is understanding **why** tetrachoric correlation is different, not memorizing a package name.
+
+## Tetrachoric: A special case of polychoric correlation
+
+The special case where **both variables are strictly binary** and there is only one threshold for each latent variable. $X^* \rightarrow X\in\{0,1\}; Y^* \rightarrow Y\in\{0,1\}$
+
+**Key distinction:** Pearson's correlation describes association between the **observed numerical values**. Polychoric/tetrachoric correlation instead estimates association between **latent continuous variables** underlying the observed ordinal/binary categories.
+
 :::
 
 ---
 
 ## Partial correlation
 
-::: {style="font-size:0.56em;"}
+::: {.columns}
+
+::: {.column width="100%" style="font-size:0.50em;"}
 
 What if there is a third variable matters? Suppose:
 
@@ -1103,34 +1149,33 @@ What if there is a third variable matters? Suppose:
 - $Y$ = life expectancy;
 - $Z$ = GDP / health expenditure.
 
-The research question is:
-
 > **Is alcohol consumption associated with life expectancy, given GDP?**
 
-The partial correlation asks about the relationship between $X$ and $Y$ **after accounting for their linear relationships with $Z$**.
-
-The lecture source uses essentially this framing with the WHO life-expectancy data.
-
-:::
-
----
-
-## Intuition for partial correlation
-
-::: {style="font-size:0.56em;"}
-
-One way to think about it is to remove the part of each variable explained by the control variable.
+The partial correlation asks about the relationship between $X$ and $Y$ **<span style="color:#1565C0;">after</span> accounting for their linear relationships with $Z$**. One way to think about it is to remove the part of each variable explained by the control variable. That residual correlation is the **partial correlation of $X$ and $Y$ given $Z$**.
 
 ```text
 X  ── remove relationship with Z ──→ residual X
 Y  ── remove relationship with Z ──→ residual Y
-
                  ↓
-
        correlate residual X and residual Y
 ```
+::: {.callout-note style="font-size:0.86em;"}
 
-That residual correlation is the **partial correlation of $X$ and $Y$ given $Z$**.
+## Handling confounding variables
+
+Partial correlation explicitly arises in the context of **confounding variables**. A confounder is a third variable ($Z$) that influences both the independent and dependent variables. By controlling for the confounder, partial correlation provides a clearer picture of the <span style="color:#1565C0;">true direct association</span> between the two primary variables of interest.
+
+*Without accounting for confounding variables, we often seriously overestimate the strength of a correlation.*
+
+:::
+
+:::
+
+::: {.column width="10%" style="text-align:right;font-size:0.50em;"}
+
+![](images/partial-corr.png){width=50%}
+
+:::
 
 :::
 
@@ -1140,7 +1185,9 @@ That residual correlation is the **partial correlation of $X$ and $Y$ given $Z$*
 
 ::: {style="font-size:0.56em;"}
 
-Use `ppcor::pcor.test()` for the inferential analysis.
+> **Are alcohol consumption and life expectancy strongly linearly associated after accounting for GDP?**
+
+Use `ppcor::pcor.test()`, an R Package for calculations of partial and semi-partial correlations.
 
 ```{r}
 library(ppcor)
@@ -1164,13 +1211,23 @@ pcor.test(
 
 :::
 
+::: {.callout-note style="font-size:0.56em;"}
+
+## Output interpretation
+
+We estimate a moderate but positive partial pearson's correlation of $0.439$ between alcohol consumption and life expectancy over 182 samples after accounting for GDP. The p-value of $5.99 \times 10^{-10}$ for the estimated $t$ statistic of $6.547$ indicates that this association is highly statistically significant.
+
+:::
+
 ---
 
 ## Partial correlation: Python
 
 ::: {style="font-size:0.56em;"}
 
-A convenient implementation is available through `pingouin`:
+> **Are alcohol consumption and life expectancy strongly linearly associated after accounting for GDP?**
+
+A convenient implementation is available through `pingouin`.
 
 ```{python}
 import pingouin as pg
@@ -1187,9 +1244,13 @@ pg.partial_corr(
 )
 ```
 
-The important interpretation is:
+:::
 
-> **How strongly are $X$ and $Y$ linearly associated after accounting for $Z$?**
+::: {.callout-note style="font-size:0.56em;"}
+
+## Output interpretation
+
+Same interpretation as the R output: a moderate but positive partial pearson's correlation of $0.439$ between alcohol consumption and life expectancy over 182 samples after accounting for GDP, with a highly statistically significant p-value of $5.99 \times 10^{-10}$.
 
 :::
 
@@ -1250,9 +1311,50 @@ Start with the **research question**, then inspect the variables.
 
 :::
 
-::: {.callout-tip style="font-size:0.56em;"}
+::: {.callout-tip style="font-size:0.66em;"}
 
-This is a **starting point, not an automatic lookup table**. Always inspect the data and ask whether the assumptions and scientific interpretation fit the coefficient.
+## How to use this table?
+
+<span style="color:#1565C0;">**Do not treat this as an automatic lookup table**.</span> Always inspect the data and ask whether the assumptions and scientific interpretation fit the coefficient.
+:::
+
+---
+
+## Key assumptions for different correlation types
+
+::: {style="font-size:0.56em;"}
+
+Every correlation method has its own assumptions that we have laid out along the way. The table below summarizes these key assumptions for each correlation type.
+
+:::
+
+::: {.callout-tip style="font-size:0.60em;"}
+
+## 📝 A cheat sheet of assumptions
+
+<style>
+.assumption-table th:first-child,
+.assumption-table td:first-child {
+  width: 35%;
+}
+</style>
+
+::: {.assumption-table}
+
+| Key condition | Pearson | Spearman | Kendall | Point-biserial | Partial | Tetrachoric | Polychoric |
+|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| Independent paired observations | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Linear relationship | ✓ | — | — | ✓ | ✓ | — | — |
+| Monotonic relationship | — | ✓ | ✓ | — | — | — | — |
+| Normality assumptions for classical parametric inference | ✓ | — | — | ✓ | ✓ | — | — |
+| Binary observed variable(s) | — | — | — | ✓ (one) | — | ✓ (both) | — |
+| Ordered categorical variables | — | ✓ | ✓ | — | — | — | ✓ |
+| Categories represent thresholds on latent continuous variables | — | — | — | — | — | ✓ | ✓ |
+| Latent variables jointly normal | — | — | — | — | — | ✓ | ✓ |
+| Large sample needed for asymptotic $z$-test | — | sometimes | typically | — | — | ✓ | ✓ |
+
+:::
+
 :::
 
 ---
@@ -1281,112 +1383,20 @@ If appropriate, perform the inferential test
 Interpret effect size + uncertainty + limitations
 ```
 
-The activity file follows this pattern across three motivating datasets: CERN energy/momentum, Rate My Professor binary tags, and WHO life-expectancy data.
-
-:::
-
----
-
-## Activity bridge: CERN
-
-::: {style="font-size:0.56em;"}
-
-The source activity asks:
-
-> **For particles with very little mass, can we predict their energy given momentum alone?**
-
-Students first subset the data, inspect pairwise relationships, calculate Pearson correlation, test it, and then construct a 3D momentum variable from `px1`, `py1`, and `pz1`.
-
-:::
-
-::: {.callout-note style="font-size:0.56em;"}
-
-The important teaching point is that the correlation is not the end of the analysis. The scatterplot and the scientifically motivated derived variable tell us much more about the relationship.
-:::
-
----
-
-## Activity bridge: two binary variables
-
-::: {style="font-size:0.56em;"}
-
-The source activity then moves to Rate My Professor and asks students to:
-
-1. formulate a research question;
-2. write formal hypotheses;
-3. predict the expected direction and magnitude;
-4. compute a tetrachoric correlation;
-5. interpret the correlation and p-value;
-6. compare the result with the prior prediction.
-
-The activity explicitly warns against HARKing — forming the hypothesis only after seeing the results.
-
-:::
-
----
-
-## Activity bridge: partial correlation
-
-::: {style="font-size:0.56em;"}
-
-The third dataset contains 183 countries and multiple health-related variables.
-
-The research question is:
-
-> **Is there a relationship between population levels of substance use on life expectancy given GDP (expenditure)?**
-
-Students then use the relevant variables and a partial-correlation test to answer the question.
-
-:::
-
----
-
-## What to remember
-
-::: {.columns}
-
-::: {.column width="50%" style="font-size:0.56em;"}
-
-#### Correlation CAN help us
-
-- discover associations;
-- quantify their direction and strength;
-- motivate further analysis;
-- make controlled comparisons with partial correlation.
-:::
-
-::: {.column width="50%" style="font-size:0.56em;"}
-
-#### Correlation CANNOT (*by itself*)
-
-- establish causality;
-- reveal nonlinear structure completely;
-- protect against outliers or restriction of range;
-- tell us that an association is substantively important.
-:::
-
 :::
 
 ::: {.callout-tip style="font-size:0.56em;"}
 
-**The coefficient is only the beginning.** Understand the variables, inspect the relationship, choose the correlation deliberately, and interpret the result in context.
-:::
+## 🏛️ On the underlying inferential test
 
----
+To test whether the corresponding population correlation differs from zero, we need a reference distribution which determines the corresponding test statistic. The choice of the test statistic depends not only on the **type of correlation**, but also on whether the assumptions needed for its sampling distribution are satisfied.
 
-## Before the activity
-
-::: {style="font-size:0.56em;"}
-
-Be ready to answer:
-
-1. What is the measurement scale of each variable?
-2. What kind of relationship are you trying to quantify?
-3. What could make Pearson's $r$ misleading here?
-4. Which correlation coefficient would you choose—and why?
-5. What would a statistically significant result allow you to say, and what would it **not** allow you to say?
+- $t$-statisitc: used when the assumptions of the correlation test allow us to compare the observed correlation against a \(t\)-distribution. This is the usual approach for Pearson’s $r$, Point-biserial, and partial Pearson correlation.
+- $z$-statistic: commonly used when the correlation estimate becomes approximately **normally distributed in sufficiently large samples**. This is typical for correlations such as **tetrachoric/polychoric correlations**, where the coefficients are estimated from an underlying continuous distribution model, provided assumptions are satisfied.
+- **Rank correlations:** methods such as Spearman rank correlation does not rely on a specific universal test but rather depends on sample size and software implementation.
 
 :::
+
 
 <!-- ---
 

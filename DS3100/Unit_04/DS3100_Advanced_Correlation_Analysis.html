@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Dr.&nbsp;Satadisha Saha Bhowmick">
-  <meta name="dcterms.date" content="2026-10-01">
+  <meta name="dcterms.date" content="2026-10-05">
   <title>DS 3100 | Advanced Correlation Analysis</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -210,7 +210,7 @@ Dr.&nbsp;Satadisha Saha Bhowmick
 </div>
 </div>
 
-  <p class="date">2026-10-01</p>
+  <p class="date">2026-10-05</p>
 </section>
 <section class="slide level2">
 
@@ -919,22 +919,19 @@ pz1 -0.149513 -0.032913  0.037369  1.000000</code></pre>
 <p><span style="color:#1565C0;">Interpretation</span>: <span style="color:#898989;"><strong>How strongly do high/low values of one variable line up with high/low values of the other, in a linear sense?</strong></span></p>
 </div>
 </section>
-<section id="pearsons-r-1" class="slide level2">
-<h2>Pearson’s <span class="math inline">\(r\)</span></h2>
-<div style="font-size:0.56em;">
-<p><span style="color:#1565C0;"> <strong>When should we use Pearson’s product moment correlation coefficient?</strong> </span></p>
-</div>
+<section id="pearsons-r-when-to-use" class="slide level2">
+<h2>Pearson’s <span class="math inline">\(r\)</span>: When to use?</h2>
 <div class="columns">
 <div class="column" style="font-size:0.56em;">
-<p>Pearson’s correlation and the associated test become a natural choice when:</p>
+<p>Pearson’s correlation and the corresponding statistical test rely upon the following assumptions:</p>
 <ul>
 <li>both variables are quantitative</li>
 <li>the scientific question concerns <strong>linear association</strong>
 <ul>
-<li>the relationship is reasonably well represented by a straight-line pattern</li>
+<li>the relationship (between <span class="math inline">\(X\)</span> and its expected-<span class="math inline">\(Y\)</span>) is reasonably well represented by a straight-line pattern</li>
 </ul></li>
 <li>both variables approximately abide by normality</li>
-<li>homoscedasticity: the variance of your dependent variable should be relatively equal across all levels of the independent variable</li>
+<li><span style="color:#1565C0;">homoscedasticity</span>: the variance of your dependent variable should be relatively equal across all levels of the independent variable</li>
 <li>extreme outliers are not dominating the result</li>
 </ul>
 </div><div class="column" style="font-size:0.56em;">
@@ -947,10 +944,11 @@ pz1 -0.149513 -0.032913  0.037369  1.000000</code></pre>
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Pearson’s <span class="math inline">\(r\)</span> is also the exact statistical test designed to measure the relationship between two variables measured on an interval or ratio scale.</strong></p>
+<p><strong>💡 Summary rule of thumb for Pearson’s <span class="math inline">\(r\)</span></strong></p>
 </div>
 <div class="callout-content">
-<p>Here differences between values have a consistent meaning. <strong>For example</strong>, the difference between 160 cm and 170 cm is the same amount of height as the difference between 200 cm and 210 cm. Because these distances are equivalent, Pearson’s <span class="math inline">\(r\)</span> can use them to compare how <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> change together without worrying about order and measure how closely their relationship follows a straight-line pattern.</p>
+<p>Together these assumptions are what we expect for <span style="color:#1565C0;"> <strong>approximate bivariate normality</strong> </span>: a joint distribution of two variables that is approximately normal in both dimensions and has an elliptical pattern around a linear relationship.</p>
+<p>Although it may seem like Pearson’s <span class="math inline">\(r\)</span> has strict assumptions around bivariate normality, the statistic is actually quite robust to violations of these assumptions. When wanting to just find the descriptive statistic, it suffices that the relationship is linear and not dominated by outliers. For generalization and statistical inference, the assumptions above are more important.</p>
 </div>
 </div>
 </div>
@@ -959,15 +957,16 @@ pz1 -0.149513 -0.032913  0.037369  1.000000</code></pre>
 <section id="spearmans-rank-correlation" class="slide level2">
 <h2>Spearman’s rank correlation</h2>
 <div style="font-size:0.56em;">
-<p><span style="color:#1565C0;"> <strong>What changes with Spearman’s rank correlation coefficient?</strong> </span></p>
-<p>When we are not measuring linear relationships but rather simple monotonicity or have ranks instead of distances. Spearman’s correlation evaluates whether those <strong>ranks</strong> move together monotonically. Conceptually, when there are not too many ties in ranks, Spearman’s rank correlation coefficient can be computed as:</p>
-<p><span class="math display">\[
+<p>When we are not measuring linear relationships but rather simple monotonicity or have ranks instead of distances. Spearman’s correlation evaluates <span style="color:#1565C0;">whether those <strong>ranks</strong> move together monotonically</span>. For example, if we want to estimate whether job satisfaction (measured on a Likert scale) is associated with an annual performance rank (also ordinal).</p>
+<p>When there are not too many ties in ranks, Spearman’s rank correlation coefficient can be computed as: <span class="math display">\[
+\scriptsize
 X,Y
 \quad\longrightarrow\quad
 \operatorname{rank}(X),\operatorname{rank}(Y)
 \quad\longrightarrow\quad
 r_s = 1- \frac{6 \sum d_i^2}{n(n^2-1)} \text{, where}
 \]</span> <span class="math display">\[
+\scriptsize
 \begin{aligned}
   d_i &amp;= \text{difference between the two ranks for each observation } rank(X_i) \text{ and } rank(Y_i)\\
   n &amp;= \text{total number of observations}
@@ -990,7 +989,7 @@ r_s = 1- \frac{6 \sum d_i^2}{n(n^2-1)} \text{, where}
 <p><strong>When there are several tied ranks</strong></p>
 </div>
 <div class="callout-content">
-<p>If multiple data points share the same rank, they are assigned an average rank. When ties are frequent, the forumla above becomes inaccurate. Instead, you must convert the raw data to ranks and then apply the standard Pearson correlation formula to those ranks.</p>
+<p>If multiple data points (<em>upon ranking</em>) share the same rank, they are assigned an average rank. When ties are frequent, the forumla above becomes inaccurate. Instead, you must convert the raw data to ranks and then apply the standard Pearson correlation formula to those ranks.</p>
 </div>
 </div>
 </div>
@@ -1033,7 +1032,22 @@ r_s = 1- \frac{6 \sum d_i^2}{n(n^2-1)} \text{, where}
 </div>
 </div></div>
 <div style="font-size:0.56em;">
-<p>The relationship is perfectly monotonic, but not linear. Spearman’s rank correlation coefficient captures the monotonic ordering better.</p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li>The relationship is perfectly monotonic, but not linear. Spearman’s rank correlation coefficient captures the monotonic ordering better.</li>
+<li>There are slight differences in floating-point precisions between R and Python implementations, but the results are essentially the same.</li>
+</ul>
+</div>
+</div>
+</div>
 </div>
 </section>
 <section id="point-biserial-correlation" class="slide level2">
@@ -1180,7 +1194,7 @@ sample estimates:
 <p><strong>Equivalence to independent two-sample <span class="math inline">\(t\)</span>-test</strong></p>
 </div>
 <div class="callout-content">
-<p>The usual significance test for a point-biserial correlation gives the same <span class="math inline">\(p\)</span>-value as the <strong>equal-variance independent <span class="math inline">\(t\)</span>-test</strong> applied to the same data. Both tests ask whether the two population means are equal.</p>
+<p>The usual significance test for a point-biserial correlation gives the same <span class="math inline">\(p\)</span>-value as the <strong>equal-variance</strong> (<em><span style="color:#1565C0;">homoscedasticity</span></em>) <strong>independent <span class="math inline">\(t\)</span>-test</strong> applied to the same data. Both tests ask whether the two population means are equal.</p>
 </div>
 </div>
 </div>
@@ -1189,34 +1203,58 @@ sample estimates:
 <section id="tetrachoric-correlation" class="slide level2">
 <h2>Tetrachoric correlation</h2>
 <div style="font-size:0.56em;">
-<p>Here we also work with two binary variables, but a different conceptual model.</p>
-<p>Tetrachoric correlation is used for <strong>two binary variables</strong> when each binary variable is understood as a thresholded version of an underlying continuous variable.</p>
-<p>For example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb44-1"><a href="" aria-label="1"></a>latent engagement  →  low / high</span>
-<span id="cb44-2"><a href="" aria-label="2"></a>latent performance →  fail / pass</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The tetrachoric correlation estimates the association between the underlying latent continuous variables. The lecture source describes it as a correlation between two two-category nominal/ordinal variables and emphasizes the continuous conceptualization behind the observed categories.</p>
+<p>Tetrachoric correlation is used when we have <span style="color:#1565C0;"><strong>two binary variables</strong></span> but <span style="color:#1565C0;"><em>a different conceptual model underneath</em></span>. Each binary variable is understood as a thresholded version of an underlying (<em>latent</em>) continuous variable. Additionally, the continuous variables are assumed to be <span style="color:#1565C0;"><strong>bivariate normal</strong></span>.</p>
+<p>Tetrachoric correlation estimates the association between the underlying latent continuous variables.</p>
 </div>
-<div style="font-size:0.56em;">
+<div class="columns">
+<div class="column" style="font-size:0.66em;">
+<div style="font-size:0.70em;">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Example</strong></p>
+</div>
+<div class="callout-content">
+<p>Suppose we have a dataset of students along with scores in two tests: a) an exam and b) a certification. Each distribution is continuous, but we only observe whether the student outcomes in each test after they have been thresholded as low/high and pass/fail.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb44-1"><a href="" aria-label="1"></a>latent exam  →  low / high</span>
+<span id="cb44-2"><a href="" aria-label="2"></a>latent certification  →  fail / pass</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The observed binary outcomes can be laid out in a <span class="math inline">\(2\times2\)</span> table.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb45-1"><a href="" aria-label="1"></a>          Certification (X)</span>
+<span id="cb45-2"><a href="" aria-label="2"></a>                    Fail (0)  Pass (1)</span>
+<span id="cb45-3"><a href="" aria-label="3"></a>Exam (Y)   Low (0)     a       b</span>
+<span id="cb45-4"><a href="" aria-label="4"></a>           High (1)    c       d</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</div>
+<div style="font-size:0.70em;">
 <div class="callout callout-warning callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Warning</strong></p>
+<p><strong>Two binary variables does not automatically mean tetrachoric correlation.</strong></p>
 </div>
 <div class="callout-content">
-<p><strong>Two binary variables does not automatically mean tetrachoric correlation.</strong> The latent-continuous interpretation is an assumption of the method.</p>
+<p>The latent-continuous interpretation is a key assumption of the method.</p>
+<p>Additionally, the tetrachoric correlation is not a simple function of the observed <span class="math inline">\(2\times2\)</span> table. It is an estimate of <span style="color:#1565C0;"><em>how strongly would the two underlying continuous variables be correlated if the observed 0/1 categories arose by cutting those continuous variables at thresholds?</em></span></p>
 </div>
 </div>
 </div>
 </div>
+</div><div class="column" style="font-size:0.66em;">
+<p><img data-src="images/tetrachoric-corr.png" style="width:100.0%"></p>
+</div></div>
 </section>
 <section id="tetrachoric-correlation-a-2times2-table" class="slide level2">
 <h2>Tetrachoric correlation: a <span class="math inline">\(2\times2\)</span> table</h2>
 <div class="columns">
 <div class="column" style="font-size:0.56em;">
-<p>Suppose two binary variables produce:</p>
+<p>Suppose the two binary variables produce this table upon thresholding, and that is all we directly observe:</p>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -1238,76 +1276,159 @@ sample estimates:
 </tr>
 </tbody>
 </table>
-<p>The observed table is all we see. The tetrachoric model treats those categories as thresholded observations from underlying continuous variables.</p>
+<p>The key question: <em>how strongly associated would those latent variables need to be to produce a table like this after thresholding?</em></p>
+<p>R users can use the <code>polycor::polychor()</code> package to compute the tetrachoric correlation. <span style="color:#1565C0;"><em>Python does not have a direct equivalent in SciPy, but we will discuss alternatives.</em></span></p>
+<p>Here, the correlation is estimated to be <span class="math inline">\(0.653\)</span> with a standard error of <span class="math inline">\(\approx 0.11\)</span>. The two-tailed test for the null hypothesis <span class="math inline">\(\rho=0\)</span> uses <code>pnorm</code> that calculates the area under the standard normal curve below the Z-score. The p-value indicates strong evidence that the latent variables are positively associated.</p>
 </div><div class="column" style="font-size:0.56em;">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="" aria-label="1"></a>x_binary <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb45-2"><a href="" aria-label="2"></a>  <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">38</span>),  <span class="co"># X=0, Y=0</span></span>
-<span id="cb45-3"><a href="" aria-label="3"></a>  <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">10</span>),  <span class="co"># X=1, Y=0</span></span>
-<span id="cb45-4"><a href="" aria-label="4"></a>  <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">18</span>),  <span class="co"># X=0, Y=1</span></span>
-<span id="cb45-5"><a href="" aria-label="5"></a>  <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">34</span>)   <span class="co"># X=1, Y=1</span></span>
-<span id="cb45-6"><a href="" aria-label="6"></a>)</span>
-<span id="cb45-7"><a href="" aria-label="7"></a></span>
-<span id="cb45-8"><a href="" aria-label="8"></a>y_binary <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb45-9"><a href="" aria-label="9"></a>  <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">38</span>),  <span class="co"># X=0, Y=0</span></span>
-<span id="cb45-10"><a href="" aria-label="10"></a>  <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">10</span>),  <span class="co"># X=1, Y=0</span></span>
-<span id="cb45-11"><a href="" aria-label="11"></a>  <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">18</span>),  <span class="co"># X=0, Y=1</span></span>
-<span id="cb45-12"><a href="" aria-label="12"></a>  <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">34</span>)   <span class="co"># X=1, Y=1</span></span>
-<span id="cb45-13"><a href="" aria-label="13"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div></div>
-<div style="font-size:0.56em;">
-<p>The key question becomes:</p>
-<blockquote>
-<p><strong>How strongly associated would those latent continuous variables need to be to produce a table like this after thresholding?</strong></p>
-</blockquote>
-</div>
-</section>
-<section id="tetrachoric-correlation-r" class="slide level2">
-<h2>Tetrachoric correlation: R</h2>
-<div style="font-size:0.56em;">
-<p>Use <code>polycor::polychor()</code> to compute the tetrachoric correlation.</p>
-<div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="" aria-label="1"></a><span class="fu">library</span>(polycor)</span>
-<span id="cb46-2"><a href="" aria-label="2"></a></span>
-<span id="cb46-3"><a href="" aria-label="3"></a>output <span class="ot">&lt;-</span> polycor<span class="sc">::</span><span class="fu">polychor</span>(</span>
-<span id="cb46-4"><a href="" aria-label="4"></a>  <span class="at">x =</span> x_binary,</span>
-<span id="cb46-5"><a href="" aria-label="5"></a>  <span class="at">y =</span> y_binary,</span>
-<span id="cb46-6"><a href="" aria-label="6"></a>  <span class="at">std.err =</span> <span class="cn">TRUE</span></span>
+<span id="cb46-2"><a href="" aria-label="2"></a>x_binary <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb46-3"><a href="" aria-label="3"></a>  <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">38</span>),  <span class="co"># X=0, Y=0</span></span>
+<span id="cb46-4"><a href="" aria-label="4"></a>  <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">10</span>),  <span class="co"># X=1, Y=0</span></span>
+<span id="cb46-5"><a href="" aria-label="5"></a>  <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">18</span>),  <span class="co"># X=0, Y=1</span></span>
+<span id="cb46-6"><a href="" aria-label="6"></a>  <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">34</span>)   <span class="co"># X=1, Y=1</span></span>
 <span id="cb46-7"><a href="" aria-label="7"></a>)</span>
 <span id="cb46-8"><a href="" aria-label="8"></a></span>
-<span id="cb46-9"><a href="" aria-label="9"></a>output</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb46-9"><a href="" aria-label="9"></a>y_binary <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb46-10"><a href="" aria-label="10"></a>  <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">38</span>),  <span class="co"># X=0, Y=0</span></span>
+<span id="cb46-11"><a href="" aria-label="11"></a>  <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">10</span>),  <span class="co"># X=1, Y=0</span></span>
+<span id="cb46-12"><a href="" aria-label="12"></a>  <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">18</span>),  <span class="co"># X=0, Y=1</span></span>
+<span id="cb46-13"><a href="" aria-label="13"></a>  <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">34</span>)   <span class="co"># X=1, Y=1</span></span>
+<span id="cb46-14"><a href="" aria-label="14"></a>)</span>
+<span id="cb46-15"><a href="" aria-label="15"></a></span>
+<span id="cb46-16"><a href="" aria-label="16"></a>output <span class="ot">&lt;-</span> polycor<span class="sc">::</span><span class="fu">polychor</span>(</span>
+<span id="cb46-17"><a href="" aria-label="17"></a>  <span class="at">x =</span> x_binary,</span>
+<span id="cb46-18"><a href="" aria-label="18"></a>  <span class="at">y =</span> y_binary,</span>
+<span id="cb46-19"><a href="" aria-label="19"></a>  <span class="at">std.err =</span> <span class="cn">TRUE</span></span>
+<span id="cb46-20"><a href="" aria-label="20"></a>)</span>
+<span id="cb46-21"><a href="" aria-label="21"></a></span>
+<span id="cb46-22"><a href="" aria-label="22"></a><span class="co"># the correlation and its standard error</span></span>
+<span id="cb46-23"><a href="" aria-label="23"></a>rho_est <span class="ot">&lt;-</span> output<span class="sc">$</span>rho</span>
+<span id="cb46-24"><a href="" aria-label="24"></a>rho_se <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(output<span class="sc">$</span>var)</span>
+<span id="cb46-25"><a href="" aria-label="25"></a></span>
+<span id="cb46-26"><a href="" aria-label="26"></a><span class="co"># Z-score and two-tailed test p-value</span></span>
+<span id="cb46-27"><a href="" aria-label="27"></a>z_stat <span class="ot">&lt;-</span> rho_est <span class="sc">/</span> rho_se</span>
+<span id="cb46-28"><a href="" aria-label="28"></a>p_value <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="fu">abs</span>(z_stat)))</span>
+<span id="cb46-29"><a href="" aria-label="29"></a></span>
+<span id="cb46-30"><a href="" aria-label="30"></a><span class="fu">cat</span>(<span class="st">"--- Polychoric Significance Test (Full ML) ---</span><span class="sc">\n</span><span class="st">"</span>,</span>
+<span id="cb46-31"><a href="" aria-label="31"></a>    <span class="st">"Correlation (Rho):   "</span>, <span class="fu">round</span>(rho_est, <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>,</span>
+<span id="cb46-32"><a href="" aria-label="32"></a>    <span class="st">"Standard Error:       "</span>, <span class="fu">round</span>(rho_se, <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>,</span>
+<span id="cb46-33"><a href="" aria-label="33"></a>    <span class="st">"Z-statistic:          "</span>, <span class="fu">round</span>(z_stat, <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>,</span>
+<span id="cb46-34"><a href="" aria-label="34"></a>    <span class="st">"P-value:              "</span>, p_value, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>
-Polychoric Correlation, 2-step est. = 0.6533 (0.1067)
-
-  Row Threshold       
-  0.151
-
-
-  Column Threshold          
-  -0.05015</code></pre>
+<pre><code>--- Polychoric Significance Test (Full ML) ---
+ Correlation (Rho):    0.6533 
+ Standard Error:        0.1067 
+ Z-statistic:           6.1214 
+ P-value:               9.273695e-10 </code></pre>
 </div>
 </div>
-<p>The activity then converts the estimated correlation and its variance into a z statistic and a two-sided p-value:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="" aria-label="1"></a>z_stat <span class="ot">&lt;-</span> output<span class="sc">$</span>rho <span class="sc">/</span> <span class="fu">sqrt</span>(output<span class="sc">$</span>var)</span>
-<span id="cb48-2"><a href="" aria-label="2"></a></span>
-<span id="cb48-3"><a href="" aria-label="3"></a><span class="dv">2</span> <span class="sc">*</span> <span class="fu">pnorm</span>(</span>
-<span id="cb48-4"><a href="" aria-label="4"></a>  <span class="fu">abs</span>(z_stat),</span>
-<span id="cb48-5"><a href="" aria-label="5"></a>  <span class="at">lower.tail =</span> <span class="cn">FALSE</span></span>
-<span id="cb48-6"><a href="" aria-label="6"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>             [,1]
-[1,] 9.273696e-10</code></pre>
+</div></div>
+</section>
+<section id="polychoric-correlation" class="slide level2">
+<h2>Polychoric Correlation</h2>
+<div class="columns">
+<div class="column" style="font-size:0.50em;">
+<p><strong>Polychoric correlation</strong> estimates the correlation between two <strong><span style="color:#1565C0;">unobserved</span> continuous variables</strong> when we observe only their <strong>ordinal categories</strong>.</p>
+<p>Imagine latent continuous variables: <span class="math inline">\(\scriptsize X^*,Y^* \sim \text{bivariate normal}\)</span>. We do not observe <span class="math inline">\(X^*\)</span> and <span class="math inline">\(Y^*\)</span> directly but categories created by placing <strong>thresholds</strong> on them. For example, responses submitted on a Likert scale (e.g., strongly disagree, disagree, neutral, agree, strongly agree) are (<span class="math inline">\(2\)</span> or more) ordinal categories that arise from underlying continuous valuations. <span class="math display">\[
+\scriptsize
+X^* \rightarrow
+\begin{cases}
+1 &amp; \text{low}\\
+2 &amp; \text{below-average}\\
+3 &amp; \text{average}\\
+\dots
+\end{cases}
+\]</span></p>
+<p><em>What correlation between the two latent continuous variables best explains the observed pattern of ordinal categories?</em></p>
+</div><div class="column" style="font-size:0.50em;">
+<p><img data-src="images/polychoric-corr.png" style="width:90.0%"></p>
+</div></div>
+<div style="font-size:0.56em;">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tetrachoric: A special case of polychoric correlation</strong></p>
+</div>
+<div class="callout-content">
+<p>The special case where <strong>both variables are strictly binary</strong> and there is only one threshold for each latent variable. <span class="math inline">\(X^* \rightarrow X\in\{0,1\}; Y^* \rightarrow Y\in\{0,1\}\)</span></p>
+<p><strong>Key distinction:</strong> Pearson’s correlation describes association between the <strong>observed numerical values</strong>. Polychoric/tetrachoric correlation instead estimates association between <strong>latent continuous variables</strong> underlying the observed ordinal/binary categories.</p>
+</div>
 </div>
 </div>
 </div>
 </section>
-<section id="tetrachoric-correlation-python" class="slide level2">
-<h2>Tetrachoric correlation: Python</h2>
+<section id="partial-correlation" class="slide level2">
+<h2>Partial correlation</h2>
+<div class="columns">
+<div class="column" style="font-size:0.50em;">
+<p>What if there is a third variable matters? Suppose:</p>
+<ul>
+<li><span class="math inline">\(X\)</span> = alcohol consumption;</li>
+<li><span class="math inline">\(Y\)</span> = life expectancy;</li>
+<li><span class="math inline">\(Z\)</span> = GDP / health expenditure.</li>
+</ul>
+<blockquote>
+<p><strong>Is alcohol consumption associated with life expectancy, given GDP?</strong></p>
+</blockquote>
+<p>The partial correlation asks about the relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> <strong><span style="color:#1565C0;">after</span> accounting for their linear relationships with <span class="math inline">\(Z\)</span></strong>. One way to think about it is to remove the part of each variable explained by the control variable. That residual correlation is the <strong>partial correlation of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> given <span class="math inline">\(Z\)</span></strong>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb48"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb48-1"><a href="" aria-label="1"></a>X  ── remove relationship with Z ──→ residual X</span>
+<span id="cb48-2"><a href="" aria-label="2"></a>Y  ── remove relationship with Z ──→ residual Y</span>
+<span id="cb48-3"><a href="" aria-label="3"></a>                 ↓</span>
+<span id="cb48-4"><a href="" aria-label="4"></a>       correlate residual X and residual Y</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div style="font-size:0.86em;">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Handling confounding variables</strong></p>
+</div>
+<div class="callout-content">
+<p>Partial correlation explicitly arises in the context of <strong>confounding variables</strong>. A confounder is a third variable (<span class="math inline">\(Z\)</span>) that influences both the independent and dependent variables. By controlling for the confounder, partial correlation provides a clearer picture of the <span style="color:#1565C0;">true direct association</span> between the two primary variables of interest.</p>
+<p><em>Without accounting for confounding variables, we often seriously overestimate the strength of a correlation.</em></p>
+</div>
+</div>
+</div>
+</div>
+</div><div class="column" style="text-align:right;font-size:0.50em;">
+<p><img data-src="images/partial-corr.png" style="width:50.0%"></p>
+</div></div>
+</section>
+<section id="partial-correlation-r" class="slide level2">
+<h2>Partial correlation: R</h2>
 <div style="font-size:0.56em;">
-<p>Python does not have a direct SciPy equivalent of <code>polycor::polychor()</code>.</p>
+<blockquote>
+<p><strong>Are alcohol consumption and life expectancy strongly linearly associated after accounting for GDP?</strong></p>
+</blockquote>
+<p>Use <code>ppcor::pcor.test()</code>, an R Package for calculations of partial and semi-partial correlations.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="" aria-label="1"></a><span class="fu">library</span>(ppcor)</span>
+<span id="cb49-2"><a href="" aria-label="2"></a>life_expectancy <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/life_expectancy.csv"</span>)</span>
+<span id="cb49-3"><a href="" aria-label="3"></a>life_complete <span class="ot">&lt;-</span> life_expectancy[</span>
+<span id="cb49-4"><a href="" aria-label="4"></a>  <span class="fu">complete.cases</span>(</span>
+<span id="cb49-5"><a href="" aria-label="5"></a>    life_expectancy[, <span class="fu">c</span>(</span>
+<span id="cb49-6"><a href="" aria-label="6"></a>      <span class="st">"Alcohol"</span>,</span>
+<span id="cb49-7"><a href="" aria-label="7"></a>      <span class="st">"Life.expectancy"</span>,</span>
+<span id="cb49-8"><a href="" aria-label="8"></a>      <span class="st">"percentage.expenditure"</span></span>
+<span id="cb49-9"><a href="" aria-label="9"></a>    )]</span>
+<span id="cb49-10"><a href="" aria-label="10"></a>  ),</span>
+<span id="cb49-11"><a href="" aria-label="11"></a>]</span>
+<span id="cb49-12"><a href="" aria-label="12"></a></span>
+<span id="cb49-13"><a href="" aria-label="13"></a><span class="fu">pcor.test</span>(</span>
+<span id="cb49-14"><a href="" aria-label="14"></a>  <span class="at">x =</span> life_complete<span class="sc">$</span>Alcohol,</span>
+<span id="cb49-15"><a href="" aria-label="15"></a>  <span class="at">y =</span> life_complete<span class="sc">$</span>Life.expectancy,</span>
+<span id="cb49-16"><a href="" aria-label="16"></a>  <span class="at">z =</span> life_complete<span class="sc">$</span>percentage.expenditure</span>
+<span id="cb49-17"><a href="" aria-label="17"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   estimate      p.value statistic   n gp  Method
+1 0.4395488 5.995001e-10  6.547139 182  1 pearson</code></pre>
+</div>
+</div>
 </div>
 <div style="font-size:0.56em;">
 <div class="callout callout-note callout-titled callout-style-default">
@@ -1316,70 +1437,11 @@ Polychoric Correlation, 2-step est. = 0.6533 (0.1067)
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Note</strong></p>
+<p><strong>Output interpretation</strong></p>
 </div>
 <div class="callout-content">
-<p>This is one place where the two ecosystems are not perfectly one-to-one. The important learning objective is understanding <strong>why</strong> tetrachoric correlation is different, not memorizing a package name.</p>
+<p>We estimate a moderate but positive partial pearson’s correlation of <span class="math inline">\(0.439\)</span> between alcohol consumption and life expectancy over 182 samples after accounting for GDP. The p-value of <span class="math inline">\(5.99 \times 10^{-10}\)</span> for the estimated <span class="math inline">\(t\)</span> statistic of <span class="math inline">\(6.547\)</span> indicates that this association is highly statistically significant.</p>
 </div>
-</div>
-</div>
-</div>
-</section>
-<section id="partial-correlation" class="slide level2">
-<h2>Partial correlation</h2>
-<div style="font-size:0.56em;">
-<p>What if there is a third variable matters? Suppose:</p>
-<ul>
-<li><span class="math inline">\(X\)</span> = alcohol consumption;</li>
-<li><span class="math inline">\(Y\)</span> = life expectancy;</li>
-<li><span class="math inline">\(Z\)</span> = GDP / health expenditure.</li>
-</ul>
-<p>The research question is:</p>
-<blockquote>
-<p><strong>Is alcohol consumption associated with life expectancy, given GDP?</strong></p>
-</blockquote>
-<p>The partial correlation asks about the relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> <strong>after accounting for their linear relationships with <span class="math inline">\(Z\)</span></strong>.</p>
-<p>The lecture source uses essentially this framing with the WHO life-expectancy data.</p>
-</div>
-</section>
-<section id="intuition-for-partial-correlation" class="slide level2">
-<h2>Intuition for partial correlation</h2>
-<div style="font-size:0.56em;">
-<p>One way to think about it is to remove the part of each variable explained by the control variable.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb50"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb50-1"><a href="" aria-label="1"></a>X  ── remove relationship with Z ──→ residual X</span>
-<span id="cb50-2"><a href="" aria-label="2"></a>Y  ── remove relationship with Z ──→ residual Y</span>
-<span id="cb50-3"><a href="" aria-label="3"></a></span>
-<span id="cb50-4"><a href="" aria-label="4"></a>                 ↓</span>
-<span id="cb50-5"><a href="" aria-label="5"></a></span>
-<span id="cb50-6"><a href="" aria-label="6"></a>       correlate residual X and residual Y</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>That residual correlation is the <strong>partial correlation of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> given <span class="math inline">\(Z\)</span></strong>.</p>
-</div>
-</section>
-<section id="partial-correlation-r" class="slide level2">
-<h2>Partial correlation: R</h2>
-<div style="font-size:0.56em;">
-<p>Use <code>ppcor::pcor.test()</code> for the inferential analysis.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="" aria-label="1"></a><span class="fu">library</span>(ppcor)</span>
-<span id="cb51-2"><a href="" aria-label="2"></a>life_expectancy <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/life_expectancy.csv"</span>)</span>
-<span id="cb51-3"><a href="" aria-label="3"></a>life_complete <span class="ot">&lt;-</span> life_expectancy[</span>
-<span id="cb51-4"><a href="" aria-label="4"></a>  <span class="fu">complete.cases</span>(</span>
-<span id="cb51-5"><a href="" aria-label="5"></a>    life_expectancy[, <span class="fu">c</span>(</span>
-<span id="cb51-6"><a href="" aria-label="6"></a>      <span class="st">"Alcohol"</span>,</span>
-<span id="cb51-7"><a href="" aria-label="7"></a>      <span class="st">"Life.expectancy"</span>,</span>
-<span id="cb51-8"><a href="" aria-label="8"></a>      <span class="st">"percentage.expenditure"</span></span>
-<span id="cb51-9"><a href="" aria-label="9"></a>    )]</span>
-<span id="cb51-10"><a href="" aria-label="10"></a>  ),</span>
-<span id="cb51-11"><a href="" aria-label="11"></a>]</span>
-<span id="cb51-12"><a href="" aria-label="12"></a></span>
-<span id="cb51-13"><a href="" aria-label="13"></a><span class="fu">pcor.test</span>(</span>
-<span id="cb51-14"><a href="" aria-label="14"></a>  <span class="at">x =</span> life_complete<span class="sc">$</span>Alcohol,</span>
-<span id="cb51-15"><a href="" aria-label="15"></a>  <span class="at">y =</span> life_complete<span class="sc">$</span>Life.expectancy,</span>
-<span id="cb51-16"><a href="" aria-label="16"></a>  <span class="at">z =</span> life_complete<span class="sc">$</span>percentage.expenditure</span>
-<span id="cb51-17"><a href="" aria-label="17"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   estimate      p.value statistic   n gp  Method
-1 0.4395488 5.995001e-10  6.547139 182  1 pearson</code></pre>
 </div>
 </div>
 </div>
@@ -1387,29 +1449,43 @@ Polychoric Correlation, 2-step est. = 0.6533 (0.1067)
 <section id="partial-correlation-python" class="slide level2">
 <h2>Partial correlation: Python</h2>
 <div style="font-size:0.56em;">
-<p>A convenient implementation is available through <code>pingouin</code>:</p>
+<blockquote>
+<p><strong>Are alcohol consumption and life expectancy strongly linearly associated after accounting for GDP?</strong></p>
+</blockquote>
+<p>A convenient implementation is available through <code>pingouin</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="" aria-label="1"></a><span class="im">import</span> pingouin <span class="im">as</span> pg</span>
-<span id="cb53-2"><a href="" aria-label="2"></a>life_expectancy <span class="op">=</span> pd.read_csv(<span class="st">"data/life_expectancy.csv"</span>)</span>
-<span id="cb53-3"><a href="" aria-label="3"></a>life_complete <span class="op">=</span> life_expectancy[</span>
-<span id="cb53-4"><a href="" aria-label="4"></a>    [<span class="st">"Alcohol"</span>, <span class="st">"Life expectancy"</span>, <span class="st">"percentage expenditure"</span>]</span>
-<span id="cb53-5"><a href="" aria-label="5"></a>].dropna()</span>
-<span id="cb53-6"><a href="" aria-label="6"></a></span>
-<span id="cb53-7"><a href="" aria-label="7"></a>pg.partial_corr(</span>
-<span id="cb53-8"><a href="" aria-label="8"></a>    data<span class="op">=</span>life_complete,</span>
-<span id="cb53-9"><a href="" aria-label="9"></a>    x<span class="op">=</span><span class="st">"Alcohol"</span>,</span>
-<span id="cb53-10"><a href="" aria-label="10"></a>    y<span class="op">=</span><span class="st">"Life expectancy"</span>,</span>
-<span id="cb53-11"><a href="" aria-label="11"></a>    covar<span class="op">=</span><span class="st">"percentage expenditure"</span></span>
-<span id="cb53-12"><a href="" aria-label="12"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="" aria-label="1"></a><span class="im">import</span> pingouin <span class="im">as</span> pg</span>
+<span id="cb51-2"><a href="" aria-label="2"></a>life_expectancy <span class="op">=</span> pd.read_csv(<span class="st">"data/life_expectancy.csv"</span>)</span>
+<span id="cb51-3"><a href="" aria-label="3"></a>life_complete <span class="op">=</span> life_expectancy[</span>
+<span id="cb51-4"><a href="" aria-label="4"></a>    [<span class="st">"Alcohol"</span>, <span class="st">"Life expectancy"</span>, <span class="st">"percentage expenditure"</span>]</span>
+<span id="cb51-5"><a href="" aria-label="5"></a>].dropna()</span>
+<span id="cb51-6"><a href="" aria-label="6"></a></span>
+<span id="cb51-7"><a href="" aria-label="7"></a>pg.partial_corr(</span>
+<span id="cb51-8"><a href="" aria-label="8"></a>    data<span class="op">=</span>life_complete,</span>
+<span id="cb51-9"><a href="" aria-label="9"></a>    x<span class="op">=</span><span class="st">"Alcohol"</span>,</span>
+<span id="cb51-10"><a href="" aria-label="10"></a>    y<span class="op">=</span><span class="st">"Life expectancy"</span>,</span>
+<span id="cb51-11"><a href="" aria-label="11"></a>    covar<span class="op">=</span><span class="st">"percentage expenditure"</span></span>
+<span id="cb51-12"><a href="" aria-label="12"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           n         r          CI95         p_val
 pearson  182  0.439549  [0.31, 0.55]  5.995001e-10</code></pre>
 </div>
 </div>
-<p>The important interpretation is:</p>
-<blockquote>
-<p><strong>How strongly are <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> linearly associated after accounting for <span class="math inline">\(Z\)</span>?</strong></p>
-</blockquote>
+</div>
+<div style="font-size:0.56em;">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Output interpretation</strong></p>
+</div>
+<div class="callout-content">
+<p>Same interpretation as the R output: a moderate but positive partial pearson’s correlation of <span class="math inline">\(0.439\)</span> between alcohol consumption and life expectancy over 182 samples after accounting for GDP, with a highly statistically significant p-value of <span class="math inline">\(5.99 \times 10^{-10}\)</span>.</p>
+</div>
+</div>
+</div>
 </div>
 </section>
 <section class="slide level2">
@@ -1483,17 +1559,161 @@ pearson  182  0.439549  [0.31, 0.55]  5.995001e-10</code></pre>
 </tbody>
 </table>
 </div>
-<div style="font-size:0.56em;">
+<div style="font-size:0.66em;">
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Tip</strong></p>
+<p><strong>How to use this table?</strong></p>
 </div>
 <div class="callout-content">
-<p>This is a <strong>starting point, not an automatic lookup table</strong>. Always inspect the data and ask whether the assumptions and scientific interpretation fit the coefficient.</p>
+<p><span style="color:#1565C0;"><strong>Do not treat this as an automatic lookup table</strong>.</span> Always inspect the data and ask whether the assumptions and scientific interpretation fit the coefficient.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="key-assumptions-for-different-correlation-types" class="slide level2">
+<h2>Key assumptions for different correlation types</h2>
+<div style="font-size:0.56em;">
+<p>Every correlation method has its own assumptions that we have laid out along the way. The table below summarizes these key assumptions for each correlation type.</p>
+</div>
+<div style="font-size:0.60em;">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>📝 A cheat sheet of assumptions</strong></p>
+</div>
+<div class="callout-content">
+<style>
+.assumption-table th:first-child,
+.assumption-table td:first-child {
+  width: 35%;
+}
+</style>
+<div class="assumption-table">
+<table class="caption-top" style="width:100%;">
+<colgroup>
+<col style="width: 7%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 13%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Key condition</th>
+<th style="text-align: center;">Pearson</th>
+<th style="text-align: center;">Spearman</th>
+<th style="text-align: center;">Kendall</th>
+<th style="text-align: center;">Point-biserial</th>
+<th style="text-align: center;">Partial</th>
+<th style="text-align: center;">Tetrachoric</th>
+<th style="text-align: center;">Polychoric</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Independent paired observations</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+</tr>
+<tr class="even">
+<td>Linear relationship</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr class="odd">
+<td>Monotonic relationship</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr class="even">
+<td>Normality assumptions for classical parametric inference</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr class="odd">
+<td>Binary observed variable(s)</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">✓ (one)</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">✓ (both)</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr class="even">
+<td>Ordered categorical variables</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">✓</td>
+</tr>
+<tr class="odd">
+<td>Categories represent thresholds on latent continuous variables</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+</tr>
+<tr class="even">
+<td>Latent variables jointly normal</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+</tr>
+<tr class="odd">
+<td>Large sample needed for asymptotic <span class="math inline">\(z\)</span>-test</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">sometimes</td>
+<td style="text-align: center;">typically</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 </div>
 </div>
@@ -1503,95 +1723,22 @@ pearson  182  0.439549  [0.31, 0.55]  5.995001e-10</code></pre>
 <h2>The full correlation workflow</h2>
 <div style="font-size:0.56em;">
 <p>A robust correlation analysis often looks like:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb55"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb55-1"><a href="" aria-label="1"></a>Research question</span>
-<span id="cb55-2"><a href="" aria-label="2"></a>      ↓</span>
-<span id="cb55-3"><a href="" aria-label="3"></a>Identify variables + measurement scales</span>
-<span id="cb55-4"><a href="" aria-label="4"></a>      ↓</span>
-<span id="cb55-5"><a href="" aria-label="5"></a>Visualize the relationship</span>
-<span id="cb55-6"><a href="" aria-label="6"></a>      ↓</span>
-<span id="cb55-7"><a href="" aria-label="7"></a>Check shape, outliers, range, and coding</span>
-<span id="cb55-8"><a href="" aria-label="8"></a>      ↓</span>
-<span id="cb55-9"><a href="" aria-label="9"></a>Choose an appropriate correlation</span>
-<span id="cb55-10"><a href="" aria-label="10"></a>      ↓</span>
-<span id="cb55-11"><a href="" aria-label="11"></a>Compute the sample statistic</span>
-<span id="cb55-12"><a href="" aria-label="12"></a>      ↓</span>
-<span id="cb55-13"><a href="" aria-label="13"></a>If appropriate, perform the inferential test</span>
-<span id="cb55-14"><a href="" aria-label="14"></a>      ↓</span>
-<span id="cb55-15"><a href="" aria-label="15"></a>Interpret effect size + uncertainty + limitations</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The activity file follows this pattern across three motivating datasets: CERN energy/momentum, Rate My Professor binary tags, and WHO life-expectancy data.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb53"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb53-1"><a href="" aria-label="1"></a>Research question</span>
+<span id="cb53-2"><a href="" aria-label="2"></a>      ↓</span>
+<span id="cb53-3"><a href="" aria-label="3"></a>Identify variables + measurement scales</span>
+<span id="cb53-4"><a href="" aria-label="4"></a>      ↓</span>
+<span id="cb53-5"><a href="" aria-label="5"></a>Visualize the relationship</span>
+<span id="cb53-6"><a href="" aria-label="6"></a>      ↓</span>
+<span id="cb53-7"><a href="" aria-label="7"></a>Check shape, outliers, range, and coding</span>
+<span id="cb53-8"><a href="" aria-label="8"></a>      ↓</span>
+<span id="cb53-9"><a href="" aria-label="9"></a>Choose an appropriate correlation</span>
+<span id="cb53-10"><a href="" aria-label="10"></a>      ↓</span>
+<span id="cb53-11"><a href="" aria-label="11"></a>Compute the sample statistic</span>
+<span id="cb53-12"><a href="" aria-label="12"></a>      ↓</span>
+<span id="cb53-13"><a href="" aria-label="13"></a>If appropriate, perform the inferential test</span>
+<span id="cb53-14"><a href="" aria-label="14"></a>      ↓</span>
+<span id="cb53-15"><a href="" aria-label="15"></a>Interpret effect size + uncertainty + limitations</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</section>
-<section id="activity-bridge-cern" class="slide level2">
-<h2>Activity bridge: CERN</h2>
-<div style="font-size:0.56em;">
-<p>The source activity asks:</p>
-<blockquote>
-<p><strong>For particles with very little mass, can we predict their energy given momentum alone?</strong></p>
-</blockquote>
-<p>Students first subset the data, inspect pairwise relationships, calculate Pearson correlation, test it, and then construct a 3D momentum variable from <code>px1</code>, <code>py1</code>, and <code>pz1</code>.</p>
-</div>
-<div style="font-size:0.56em;">
-<div class="callout callout-note callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Note</strong></p>
-</div>
-<div class="callout-content">
-<p>The important teaching point is that the correlation is not the end of the analysis. The scatterplot and the scientifically motivated derived variable tell us much more about the relationship.</p>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="activity-bridge-two-binary-variables" class="slide level2">
-<h2>Activity bridge: two binary variables</h2>
-<div style="font-size:0.56em;">
-<p>The source activity then moves to Rate My Professor and asks students to:</p>
-<ol type="1">
-<li>formulate a research question;</li>
-<li>write formal hypotheses;</li>
-<li>predict the expected direction and magnitude;</li>
-<li>compute a tetrachoric correlation;</li>
-<li>interpret the correlation and p-value;</li>
-<li>compare the result with the prior prediction.</li>
-</ol>
-<p>The activity explicitly warns against HARKing — forming the hypothesis only after seeing the results.</p>
-</div>
-</section>
-<section id="activity-bridge-partial-correlation" class="slide level2">
-<h2>Activity bridge: partial correlation</h2>
-<div style="font-size:0.56em;">
-<p>The third dataset contains 183 countries and multiple health-related variables.</p>
-<p>The research question is:</p>
-<blockquote>
-<p><strong>Is there a relationship between population levels of substance use on life expectancy given GDP (expenditure)?</strong></p>
-</blockquote>
-<p>Students then use the relevant variables and a partial-correlation test to answer the question.</p>
-</div>
-</section>
-<section id="what-to-remember" class="slide level2">
-<h2>What to remember</h2>
-<div class="columns">
-<div class="column" style="font-size:0.56em;">
-<h4 id="correlation-can-help-us">Correlation CAN help us</h4>
-<ul>
-<li>discover associations;</li>
-<li>quantify their direction and strength;</li>
-<li>motivate further analysis;</li>
-<li>make controlled comparisons with partial correlation.</li>
-</ul>
-</div><div class="column" style="font-size:0.56em;">
-<h4 id="correlation-cannot-by-itself">Correlation CANNOT (<em>by itself</em>)</h4>
-<ul>
-<li>establish causality;</li>
-<li>reveal nonlinear structure completely;</li>
-<li>protect against outliers or restriction of range;</li>
-<li>tell us that an association is substantively important.</li>
-</ul>
-</div></div>
 <div style="font-size:0.56em;">
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
@@ -1599,26 +1746,18 @@ pearson  182  0.439549  [0.31, 0.55]  5.995001e-10</code></pre>
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Tip</strong></p>
+<p><strong>🏛️ On the underlying inferential test</strong></p>
 </div>
 <div class="callout-content">
-<p><strong>The coefficient is only the beginning.</strong> Understand the variables, inspect the relationship, choose the correlation deliberately, and interpret the result in context.</p>
+<p>To test whether the corresponding population correlation differs from zero, we need a reference distribution which determines the corresponding test statistic. The choice of the test statistic depends not only on the <strong>type of correlation</strong>, but also on whether the assumptions needed for its sampling distribution are satisfied.</p>
+<ul>
+<li><span class="math inline">\(t\)</span>-statisitc: used when the assumptions of the correlation test allow us to compare the observed correlation against a (t)-distribution. This is the usual approach for Pearson’s <span class="math inline">\(r\)</span>, Point-biserial, and partial Pearson correlation.</li>
+<li><span class="math inline">\(z\)</span>-statistic: commonly used when the correlation estimate becomes approximately <strong>normally distributed in sufficiently large samples</strong>. This is typical for correlations such as <strong>tetrachoric/polychoric correlations</strong>, where the coefficients are estimated from an underlying continuous distribution model, provided assumptions are satisfied.</li>
+<li><strong>Rank correlations:</strong> methods such as Spearman rank correlation does not rely on a specific universal test but rather depends on sample size and software implementation.</li>
+</ul>
 </div>
 </div>
 </div>
-</div>
-</section>
-<section id="before-the-activity" class="slide level2">
-<h2>Before the activity</h2>
-<div style="font-size:0.56em;">
-<p>Be ready to answer:</p>
-<ol type="1">
-<li>What is the measurement scale of each variable?</li>
-<li>What kind of relationship are you trying to quantify?</li>
-<li>What could make Pearson’s <span class="math inline">\(r\)</span> misleading here?</li>
-<li>Which correlation coefficient would you choose—and why?</li>
-<li>What would a statistically significant result allow you to say, and what would it <strong>not</strong> allow you to say?</li>
-</ol>
 </div>
 <!-- ---
 
