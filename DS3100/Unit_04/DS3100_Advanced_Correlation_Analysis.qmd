@@ -1277,6 +1277,7 @@ Start with the **research question**, then inspect the variables.
 #### Step 1: What are the variables?
 
 - quantitative?
+- continuous?
 - ordinal?
 - binary?
 - two binary variables?
@@ -1359,11 +1360,9 @@ Every correlation method has its own assumptions that we have laid out along the
 
 ---
 
-## The full correlation workflow
+## A robust correlation workflow
 
-::: {style="font-size:0.56em;"}
-
-A robust correlation analysis often looks like:
+::: {style="font-size:0.50em;"}
 
 ```text
 Research question
@@ -1389,11 +1388,15 @@ Interpret effect size + uncertainty + limitations
 
 ## 🏛️ On the underlying inferential test
 
-To test whether the corresponding population correlation differs from zero, we need a reference distribution which determines the corresponding test statistic. The choice of the test statistic depends not only on the **type of correlation**, but also on whether the assumptions needed for its sampling distribution are satisfied.
+To test whether the corresponding population correlation differs from zero, we need a **reference distribution** that tells us how likely our observed test statistic would be under the null hypothesis. The appropriate test statistic depends not only on the **type of correlation** but also the assumptions that justify its sampling distribution.
 
-- $t$-statisitc: used when the assumptions of the correlation test allow us to compare the observed correlation against a \(t\)-distribution. This is the usual approach for Pearson’s $r$, Point-biserial, and partial Pearson correlation.
-- $z$-statistic: commonly used when the correlation estimate becomes approximately **normally distributed in sufficiently large samples**. This is typical for correlations such as **tetrachoric/polychoric correlations**, where the coefficients are estimated from an underlying continuous distribution model, provided assumptions are satisfied.
-- **Rank correlations:** methods such as Spearman rank correlation does not rely on a specific universal test but rather depends on sample size and software implementation.
+- **$t$-statistic:** used when the assumptions of the correlation test allow us to compare the observed correlation against a $t$-distribution. This is the case for **Pearson's $r$**, **point-biserial**, and **partial Pearson correlation**. This is not simply because we typically work with smaller samples in these cases; the alignment with $t$-distribution often directly follows from the statisitcal behavior of these correlations.
+
+- **$z$-statistic:** commonly used when an estimated correlation becomes approximately **normally distributed in sufficiently large samples**. This is typical for model-based correlations, such as **tetrachoric/polychoric**, where our estimates rely on a procedure (maximum likelihood estimation) that becomes normally distributed in large samples.
+
+- **Rank correlations:** methods such as **Spearman's rank correlation** do not have one universal $t$- or $z$-based test. The inferential procedure may depend on the sample size, ties, and software implementation.
+
+For large samples, the $t$-distribution becomes very similar to the standard normal distribution. But the distinction is still retained here because, even outside sample size, the statistical conditions around different correlations lead to these different distributions.
 
 :::
 

@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Dr.&nbsp;Satadisha Saha Bhowmick">
-  <meta name="dcterms.date" content="2026-10-06">
+  <meta name="dcterms.date" content="2026-10-07">
   <title>DS 3100 | Advanced Correlation Analysis</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -210,7 +210,7 @@ Dr.&nbsp;Satadisha Saha Bhowmick
 </div>
 </div>
 
-  <p class="date">2026-10-06</p>
+  <p class="date">2026-10-07</p>
 </section>
 <section class="slide level2">
 
@@ -1506,6 +1506,7 @@ pearson  182  0.439549  [0.31, 0.55]  5.995001e-10</code></pre>
 <h4 id="step-1-what-are-the-variables">Step 1: What are the variables?</h4>
 <ul>
 <li>quantitative?</li>
+<li>continuous?</li>
 <li>ordinal?</li>
 <li>binary?</li>
 <li>two binary variables?</li>
@@ -1719,10 +1720,9 @@ pearson  182  0.439549  [0.31, 0.55]  5.995001e-10</code></pre>
 </div>
 </div>
 </section>
-<section id="the-full-correlation-workflow" class="slide level2">
-<h2>The full correlation workflow</h2>
-<div style="font-size:0.56em;">
-<p>A robust correlation analysis often looks like:</p>
+<section id="a-robust-correlation-workflow" class="slide level2">
+<h2>A robust correlation workflow</h2>
+<div style="font-size:0.50em;">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb53"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb53-1"><a href="" aria-label="1"></a>Research question</span>
 <span id="cb53-2"><a href="" aria-label="2"></a>      ↓</span>
 <span id="cb53-3"><a href="" aria-label="3"></a>Identify variables + measurement scales</span>
@@ -1749,12 +1749,13 @@ pearson  182  0.439549  [0.31, 0.55]  5.995001e-10</code></pre>
 <p><strong>🏛️ On the underlying inferential test</strong></p>
 </div>
 <div class="callout-content">
-<p>To test whether the corresponding population correlation differs from zero, we need a reference distribution which determines the corresponding test statistic. The choice of the test statistic depends not only on the <strong>type of correlation</strong>, but also on whether the assumptions needed for its sampling distribution are satisfied.</p>
+<p>To test whether the corresponding population correlation differs from zero, we need a <strong>reference distribution</strong> that tells us how likely our observed test statistic would be under the null hypothesis. The appropriate test statistic depends not only on the <strong>type of correlation</strong> but also the assumptions that justify its sampling distribution.</p>
 <ul>
-<li><span class="math inline">\(t\)</span>-statisitc: used when the assumptions of the correlation test allow us to compare the observed correlation against a (t)-distribution. This is the usual approach for Pearson’s <span class="math inline">\(r\)</span>, Point-biserial, and partial Pearson correlation.</li>
-<li><span class="math inline">\(z\)</span>-statistic: commonly used when the correlation estimate becomes approximately <strong>normally distributed in sufficiently large samples</strong>. This is typical for correlations such as <strong>tetrachoric/polychoric correlations</strong>, where the coefficients are estimated from an underlying continuous distribution model, provided assumptions are satisfied.</li>
-<li><strong>Rank correlations:</strong> methods such as Spearman rank correlation does not rely on a specific universal test but rather depends on sample size and software implementation.</li>
+<li><p><strong><span class="math inline">\(t\)</span>-statistic:</strong> used when the assumptions of the correlation test allow us to compare the observed correlation against a <span class="math inline">\(t\)</span>-distribution. This is the case for <strong>Pearson’s <span class="math inline">\(r\)</span></strong>, <strong>point-biserial</strong>, and <strong>partial Pearson correlation</strong>. This is not simply because we typically work with smaller samples in these cases; the alignment with <span class="math inline">\(t\)</span>-distribution often directly follows from the statisitcal behavior of these correlations.</p></li>
+<li><p><strong><span class="math inline">\(z\)</span>-statistic:</strong> commonly used when an estimated correlation becomes approximately <strong>normally distributed in sufficiently large samples</strong>. This is typical for model-based correlations, such as <strong>tetrachoric/polychoric</strong>, where our estimates rely on a procedure (maximum likelihood estimation) that becomes normally distributed in large samples.</p></li>
+<li><p><strong>Rank correlations:</strong> methods such as <strong>Spearman’s rank correlation</strong> do not have one universal <span class="math inline">\(t\)</span>- or <span class="math inline">\(z\)</span>-based test. The inferential procedure may depend on the sample size, ties, and software implementation.</p></li>
 </ul>
+<p>For large samples, the <span class="math inline">\(t\)</span>-distribution becomes very similar to the standard normal distribution. But the distinction is still retained here because, even outside sample size, the statistical conditions around different correlations lead to these different distributions.</p>
 </div>
 </div>
 </div>
