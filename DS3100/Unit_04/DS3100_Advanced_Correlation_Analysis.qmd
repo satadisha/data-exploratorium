@@ -1303,8 +1303,8 @@ Start with the **research question**, then inspect the variables.
 
 | Situation | First candidate |
 |---|---|
-| Two quantitative variables; linear pattern | **Pearson** |
-| Ordinal or monotonic relationship | **Spearman** |
+| Two continuous variables; linear pattern | **Pearson** |
+| Ordinal variables or monotonic relationship | **Spearman** |
 | One binary + one quantitative variable | **Point-biserial** |
 | Two binary variables with a defensible latent-continuous model | **Tetrachoric** |
 | Two quantitative variables while controlling for another variable | **Partial Pearson** |
