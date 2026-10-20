@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Dr.&nbsp;Satadisha Saha Bhowmick">
-  <meta name="dcterms.date" content="2026-10-19">
+  <meta name="dcterms.date" content="2026-10-20">
   <title>DS 3100 | Multiple Linear Regression</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -210,7 +210,7 @@ Dr.&nbsp;Satadisha Saha Bhowmick
 </div>
 </div>
 
-  <p class="date">2026-10-19</p>
+  <p class="date">2026-10-20</p>
 </section>
 <section class="slide level2">
 
@@ -289,8 +289,13 @@ Impact of Influential Observations
 <ul>
 <li>The world is too complex for every experiment or phenomenon to be explained by a single predictor.</li>
 <li>A general linear model with multiple predictors is more common in practice.</li>
-<li>General form of the equation is same as before : <span class="math display">\[y = X\beta + \epsilon\]</span></li>
-<li>Normal equations still hold to provide the least-squares solution <span class="math inline">\(\hat{\beta} \text{:} X^TX\hat{\beta} = X^Ty\)</span></li>
+<li>For a dataset with <span class="math inline">\(m\)</span> different features and <span class="math inline">\(n\)</span> observations, the general form of the equation is same as before. <span class="math display">\[\begin{aligned}
+\color{#1565C0}{y} &amp;\color{#1565C0}{= X\beta + \epsilon} \text{; where}\\
+y &amp;\rightarrow \text{\textbf{response vector} of shape } \color{#1565C0}{n\times1}\\
+X &amp;\rightarrow \text{\textbf{design matrix} of shape } \color{#1565C0}{n\times(m+1)}\\
+\beta &amp;\rightarrow \text{\textbf{parameter vector} (\textit{includes intercept}) of shape } \color{#1565C0}{(m+1)\times1}
+\end{aligned}\]</span></li>
+<li>Normal equations still hold to provide the least-squares solution <span class="math inline">\(\hat{\beta} \text{ : } X^TX\hat{\beta} = X^Ty\)</span></li>
 <li>Instead of a least squares line, we have a hyperplane!</li>
 </ul>
 </section>
@@ -534,13 +539,13 @@ F-statistic: 42.39 on 5 and 10 DF,  p-value: 2.057e-06</code></pre>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">Date:</th>
-<td>Mon, 19 Oct 2026</td>
+<td>Tue, 20 Oct 2026</td>
 <th data-quarto-table-cell-role="th">Prob (F-statistic):</th>
 <td>2.06e-06</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">Time:</th>
-<td>23:11:28</td>
+<td>12:40:49</td>
 <th data-quarto-table-cell-role="th">Log-Likelihood:</th>
 <td>52.538</td>
 </tr>
@@ -684,13 +689,13 @@ F-statistic: 42.39 on 5 and 10 DF,  p-value: 2.057e-06</code></pre>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">Date:</th>
-<td>Mon, 19 Oct 2026</td>
+<td>Tue, 20 Oct 2026</td>
 <th data-quarto-table-cell-role="th">Prob (F-statistic):</th>
 <td>2.06e-06</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">Time:</th>
-<td>23:11:28</td>
+<td>12:40:49</td>
 <th data-quarto-table-cell-role="th">Log-Likelihood:</th>
 <td>52.538</td>
 </tr>
@@ -1541,13 +1546,13 @@ F-statistic: 42.39 on 5 and 10 DF,  p-value: 2.057e-06</code></pre>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">Date:</th>
-<td>Mon, 19 Oct 2026</td>
+<td>Tue, 20 Oct 2026</td>
 <th data-quarto-table-cell-role="th">Prob (F-statistic):</th>
 <td>2.06e-06</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">Time:</th>
-<td>23:11:28</td>
+<td>12:40:50</td>
 <th data-quarto-table-cell-role="th">Log-Likelihood:</th>
 <td>52.538</td>
 </tr>
