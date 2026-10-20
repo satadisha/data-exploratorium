@@ -153,7 +153,8 @@ $$\begin{aligned}
 \color{#1565C0}{y} &\color{#1565C0}{= X\beta + \epsilon} \text{; where}\\
 y &\rightarrow \text{\textbf{response vector} of shape } \color{#1565C0}{n\times1}\\
 X &\rightarrow \text{\textbf{design matrix} of shape } \color{#1565C0}{n\times(p+1)}\\
-\beta &\rightarrow \text{\textbf{parameter vector} (\textit{includes intercept}) of shape } \color{#1565C0}{(p+1)\times1}
+\beta &\rightarrow \text{\textbf{parameter vector} (\textit{includes intercept}) of shape } \color{#1565C0}{(p+1)\times1}\\
+\epsilon &\rightarrow \text{\textbf{error (\textit{residual}) vector} of shape } \color{#1565C0}{n\times1}
 \end{aligned}$$
 - Normal equations still hold to provide the least-squares solution $\hat{\beta} \text{ : } X^TX\hat{\beta} = X^Ty$
 - Instead of a least squares line, we have a hyperplane!
