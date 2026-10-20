@@ -299,21 +299,17 @@ Impact of Influential Observations
 <h3 id="multiple-linear-regression-1">Multiple Linear Regression</h3>
 <p>Given a collection of <span class="math inline">\(p\)</span> potential predictors, multiple linear regression fits the following model: <span class="math display">\[\begin{aligned}
 &amp;&amp; E(Y|X)= \beta_{0}+\beta_{1}X_{1}+\beta_{2}X_{2}+ ... +\beta_{p}X_{p}\\
-&amp;&amp; Var(Y|X)= \sigma^2
+&amp;&amp; Var(Y|X)= \sigma^2 \rightarrow \text{error variance}
 \end{aligned}\]</span></p>
 <p>All the <span class="math inline">\(\beta\)</span> s and <span class="math inline">\(\sigma^2\)</span> are unknown parameters to be estimated.</p>
 <ul>
 <li><span class="math inline">\(\color{blue}{\text{Ordinary Least Squares}}\)</span>(OLS) Estimator: <span class="math inline">\(\hat{\beta} = (X^TX)^{-1}X^Ty\)</span></li>
-<li>For the least squares solution to exist, <span class="math inline">\(X^TX\)</span> must be invertible.</li>
-<li>We still do not compute the <span class="math inline">\(\beta\)</span> s from least squares estimates directly.
-<ul>
-<li>Uncorrected sums of squares and cross products are prone to large rounding errors!</li>
-</ul></li>
+<li>In practice, we usually do not calculate the closed-form least-squares estimates of the <span class="math inline">\(\beta\)</span> s by hand. Statistical software uses numerical linear-algebra methods to obtain the coefficient values that minimize the residual sum of squares.</li>
 </ul>
 <p>For any observable pair of <span class="math inline">\((x,y)\)</span> we have: <span class="math display">\[\begin{aligned}
 &amp;&amp; \hat{y} = E(Y|X=x)= \beta_{0}+\beta_{1}x_{1}+\beta_{2}x_{2}+ ... +\beta_{p}x_{p}; \quad \hat{e} = y - \hat{y}
 \end{aligned}\]</span> <span class="math inline">\(e\)</span> is the residual or error term. Linear regression places the following <u><b>assumptions on the error</b></u>. <span class="math display">\[\begin{aligned}
-&amp;&amp; E(e|X) = 0; Var (e|X) = \mathcal{\sigma^2 I_n}\\
+&amp;&amp; E(e|X) = 0; Var (e|X) = \sigma^2 \mathcal{I_n} \rightarrow \text{\scriptsize represents the variance covariance structure of all $n$ errors} \\
 &amp;&amp; \textbf{Normality: } P(e|X) \sim \mathcal{N(0, \sigma^2 I_n)}
 \end{aligned}\]</span></p>
 <p>More on model assumptions later!</p>
@@ -544,7 +540,7 @@ F-statistic: 42.39 on 5 and 10 DF,  p-value: 2.057e-06</code></pre>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">Time:</th>
-<td>19:41:09</td>
+<td>23:11:28</td>
 <th data-quarto-table-cell-role="th">Log-Likelihood:</th>
 <td>52.538</td>
 </tr>
@@ -694,7 +690,7 @@ F-statistic: 42.39 on 5 and 10 DF,  p-value: 2.057e-06</code></pre>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">Time:</th>
-<td>19:41:09</td>
+<td>23:11:28</td>
 <th data-quarto-table-cell-role="th">Log-Likelihood:</th>
 <td>52.538</td>
 </tr>
@@ -1551,7 +1547,7 @@ F-statistic: 42.39 on 5 and 10 DF,  p-value: 2.057e-06</code></pre>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">Time:</th>
-<td>19:41:09</td>
+<td>23:11:28</td>
 <th data-quarto-table-cell-role="th">Log-Likelihood:</th>
 <td>52.538</td>
 </tr>

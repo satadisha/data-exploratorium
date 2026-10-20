@@ -159,15 +159,13 @@ Moving beyond Simple Linear Regression
 Given a collection of $p$ potential predictors, multiple linear regression fits the following model:
 $$\begin{aligned}
 && E(Y|X)= \beta_{0}+\beta_{1}X_{1}+\beta_{2}X_{2}+ ... +\beta_{p}X_{p}\\
-&& Var(Y|X)= \sigma^2
+&& Var(Y|X)= \sigma^2 \rightarrow \text{error variance}
 \end{aligned}$$
 
 All the $\beta$ s and $\sigma^2$ are unknown parameters to be estimated.
 
 - $\color{blue}{\text{Ordinary Least Squares}}$(OLS) Estimator: $\hat{\beta} = (X^TX)^{-1}X^Ty$
-- For the least squares solution to exist, $X^TX$ must be invertible.
-- We still do not compute the $\beta$ s from least squares estimates directly. 
-    - Uncorrected sums of squares and cross products are prone to large rounding errors!
+- In practice, we usually do not calculate the closed-form least-squares estimates of the $\beta$ s by hand. Statistical software uses numerical linear-algebra methods to obtain the coefficient values that minimize the residual sum of squares.
 
 For any observable pair of $(x,y)$ we have:
 $$\begin{aligned}
@@ -175,7 +173,7 @@ $$\begin{aligned}
 \end{aligned}$$
 $e$ is the residual or error term. Linear regression places the following <u><b>assumptions on the error</b></u>.
 $$\begin{aligned}
-&& E(e|X) = 0; Var (e|X) = \mathcal{\sigma^2 I_n}\\
+&& E(e|X) = 0; Var (e|X) = \sigma^2 \mathcal{I_n} \rightarrow \text{\scriptsize represents the variance covariance structure of all $n$ errors} \\
 && \textbf{Normality: } P(e|X) \sim \mathcal{N(0, \sigma^2 I_n)}
 \end{aligned}$$
 
