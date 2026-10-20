@@ -1,0 +1,242 @@
+---
+title: "Lab 5: Peer Review Workshop"
+author: "FIRSTNAME LASTNAME"
+date: today
+date-format: "MMMM D, YYYY"
+
+format: html
+jupyter: python3
+
+execute:
+  echo: true
+  warning: true
+  error: false
+  cache: false
+---
+
+<!--
+
+Rename this file Lab-5_FIRSTNAME_LASTNAME.qmd and put your name in the
+header above, keeping the quotation marks. Save it in a folder for
+Lab 5. The sheet needs no data file unless you add code or a figure
+that reads one. Submit the qmd and its knitted PDF to Brightspace
+before you leave, with any files you added.
+
+Please have your Report 1 draft (or the work from Labs 2 to 4), its
+qmd and data, and the Report 1 brief and student rubric open.
+
+The syllabus does not allow generative AI for peer review. Please
+read the drafts and write the feedback yourself. Its existing policy
+for work on your own report, including disclosure, still applies.
+
+If you miss your section, contact your TA promptly to arrange an
+exchange with a classmate. Complete all three parts within one week
+of your original lab time for the three progress points. Record the
+actual feedback exchanged. The Report 1 deadline stays 2026-10-09.
+For a TA-arranged pair, complete one peer-review block and all the
+other parts of the sheet, and note the arrangement under Group members.
+
+-->
+
+# Part 1: Feedback preferences
+
+Please discuss these questions with your group, then record your own
+responses. Share only examples you are comfortable discussing; you
+do not need to name the people involved.
+
+**Your lab section and the date of the review:** *Your answer here.*
+
+**Group members:** *First names or initials are enough.*
+
+**Feedback that helped you improve something. What made it useful?**
+
+*Your answer here.*
+
+**Feedback that was difficult to use. What was missing or unhelpful?**
+
+*Your answer here.*
+
+**How would you prefer this group to give you feedback?**
+
+*Your answer here.*
+
+# Part 2: Reviewing the drafts
+
+Please divide the review hour equally: 20 minutes each for three
+people, 15 for four, or 12 for five. Use the brief and student rubric
+to guide the comments; you are not assigning grades. Keep notes as you
+go, and share your comments with the author.
+
+## Your draft
+
+Please fill this in before your turn so your group can see what you
+are working on.
+
+**Dataset, source, and what one row represents:** *Your answer here.*
+
+**Research question:** *Your question here.*
+
+**What each figure contributes to the answer (or what you plan to draw
+if it is not ready):**
+
+1. *Figure 1: ...*
+2. *Figure 2: ...*
+3. *Figure 3: ...*
+
+**One concern you would like your group to help with:**
+
+*Your answer here.*
+
+## Feedback you gave: first classmate
+
+Please refer to a figure or section in each comment and explain why
+it works or how it could be improved. The handout's "What to look
+for" section has the review questions.
+
+**Author (first name or initials) and topic:** *Your answer here.*
+
+**Research question as you understood it:** *Your answer here.*
+
+**What you saw (which figures or sections were available):**
+
+*Your answer here.*
+
+**Star 1 (what works and why):** *Your answer here.*
+
+**Star 2 (what works and why):** *Your answer here.*
+
+**Wish (where, what could change, and why it would help):**
+
+*Your answer here.*
+
+**An alternative for one figure: what would you draw, what would it
+make easier to see, and what might it make harder?**
+
+*Your answer here.*
+
+## Feedback you gave: second classmate
+
+Please record your comments on the next draft. Copy this whole
+section for each additional classmate in a group of four or five.
+
+**Author (first name or initials) and topic:** *Your answer here.*
+
+**Research question as you understood it:** *Your answer here.*
+
+**What you saw (which figures or sections were available):**
+
+*Your answer here.*
+
+**Star 1 (what works and why):** *Your answer here.*
+
+**Star 2 (what works and why):** *Your answer here.*
+
+**Wish (where, what could change, and why it would help):**
+
+*Your answer here.*
+
+**An alternative for one figure: what would you draw, what would it
+make easier to see, and what might it make harder?**
+
+*Your answer here.*
+
+## Feedback you received
+
+Please record the comments on your own draft, with the figure or
+section each refers to. Add rows if you need them. If you disagree
+with a suggestion, record it here and explain your decision in Part 3.
+
+| From | Figure or section | What works, and why |
+|:-----|:------------------|:--------------------|
+| ... | ... | ... |
+| ... | ... | ... |
+
+| From | Figure or section | Suggested change, and why |
+|:-----|:------------------|:-------------------------|
+| ... | ... | ... |
+| ... | ... | ... |
+
+**Alternative figure discussed by the group, and its tradeoff:**
+
+*Your answer here.*
+
+**A question you asked to clarify the feedback, and the answer (or
+say that nothing needed clarification):**
+
+*Your answer here.*
+
+# Part 3: Reflection and revision
+
+Please spend fifteen minutes on your own reflection and plan, then
+five minutes discussing the feedback process with your group. Use
+the next ten minutes to begin a revision and the last five to render,
+show your TA your progress, and submit.
+
+## What you took from the feedback
+
+**Which one or two comments most changed how you see your draft, and
+why?**
+
+*Your answer here.*
+
+## Your revision plan
+
+Please list two or three specific changes in the order you intend to
+make them. Say how you will check each one, such as asking someone to
+read the revised caption without your explanation.
+
+| Priority | Figure or section | Specific change | How you will check it |
+|:---------|:------------------|:----------------|:----------------------|
+| 1 | ... | ... | ... |
+| 2 | ... | ... | ... |
+| 3 (if needed) | ... | ... | ... |
+
+**A suggestion you decided against, and why (or say you plan to try
+all the suggestions):**
+
+*Your answer here.*
+
+## What you learned from another draft
+
+What did someone else's approach help you notice about your own
+report? Please name the feature and how you could use that idea.
+
+*Your answer here.*
+
+## How the feedback was given
+
+Please discuss these questions with your group, then record your own
+responses. It is fine to say that one did not arise in your group.
+
+**Did giving feedback reveal something to change in your own report?**
+
+*Your answer here.*
+
+**Did someone's way of phrasing feedback help you understand it?**
+
+*Your answer here.*
+
+**Did knowing someone's preferences change how you gave feedback?**
+
+*Your answer here.*
+
+## The first revision
+
+Please start the change in your report, then record it here. If it
+is not finished, say what you tried and what remains to do.
+
+**What you changed and where:** *Your answer here.*
+
+**How you checked it and what you found:** *Your answer here.*
+
+**What remains before the Report 1 deadline (2026-10-09, 11:59 pm):**
+
+*Your answer here.*
+
+# Generative AI disclosure
+
+The feedback above must be your own. Please disclose any generative
+AI used for other work on this lab, identifying the tool and purpose,
+or write "none". Keep your report's disclosure up to date separately.
+
+*Your answer here.*

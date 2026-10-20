@@ -1,0 +1,321 @@
+---
+title: "Lab 6: Identifying Data for Regression"
+author: "FIRSTNAME LASTNAME"
+date: today
+date-format: "MMMM D, YYYY"
+
+format: html
+jupyter: python3
+
+execute:
+  echo: true
+  warning: true
+  error: false
+  cache: false
+---
+
+<!--
+Rename this file Lab-6_FIRSTNAME_LASTNAME.qmd and put your name in the
+header above, keeping the quotation marks. Save it in a folder for
+Lab 6 and put your data in a data/ folder beside it. Please submit
+this QMD, its rendered PDF, and the files it reads on Brightspace
+before you leave your section. The handout explains the lab grading
+and the makeup rule. Parts 1 and 2 are half of the sheet.
+
+You can reuse your Report 1 dataset or choose another under the
+source rules in Lab 2, Part 1. If you need PluckData for practice,
+ask your TA and download PluckData.csv from the earlier lectures.
+That file cannot be used for the report. Please say in Part 4 that
+you still need a report dataset.
+
+-->
+
+```{python}
+#| label: setup
+#| include: false
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy import stats
+```
+
+# Part 1: Data and possible outcomes
+
+Please open your file, record where it came from, and check what the
+variables measure. Examine two possible outcomes. If there is only
+one suitable outcome, compare it with a numeric-looking variable you
+rule out and explain why.
+
+## The data and the question
+
+**Dataset, source link, and documentation link:** *Your answer here.*
+
+**Who collected the data, and why:** *Your answer here.*
+
+**Permission or license for using the data:** *Your answer here.*
+
+**Observed or generated data, and how you know:** *Your answer here.*
+
+**One row represents:** *Your answer here.*
+
+**Are any rows repeated measurements of the same person, place, or
+object? If so, which ones?** *Your answer here.*
+
+Please remove the comment characters from the lines you need, change
+the path to your own file, and import any other packages you use. `d` is
+the pandas DataFrame read from the file. The later examples use that name.
+
+```{python}
+#| label: read-data
+# d = pd.read_csv("data/your-file.csv")
+# d.shape
+# d.columns.tolist()
+# d.info()
+# d.describe(include="all")
+```
+
+**Rows and columns, and any import problems:** *Your answer here.*
+
+**Recoding, filtering, or joining, and why (or none):**
+
+*Your answer here.*
+
+```{python}
+#| label: prepare-data
+# Please put any changes here, then check the row count again.
+# d.shape
+```
+
+**Question about how a numeric outcome relates to other measurements:**
+
+*Your question here.*
+
+## Possible outcomes
+
+Please replace the two variable names below. Keep the meaning and
+scale separate from the storage type in Python. Add a source for the
+possible range, or say that it is undocumented.
+
+| Variable | Meaning, scale, and units | Possible range and source |
+|:---------|:--------------------------|:--------------------------|
+| Outcome A | ... | ... |
+| Outcome B | ... | ... |
+
+Please count distinct nonmissing values and missing values for each
+variable. For plausible outcomes, compute the mean, median, standard
+deviation, minimum, and maximum. Check documented missing codes first.
+The following example is for one variable. Please replace `OUTCOME_A`
+with its column name and repeat for the other candidate.
+
+```{python}
+#| label: outcome-checks
+# d["OUTCOME_A"].nunique(dropna=True)
+# d["OUTCOME_A"].isna().sum()
+# d["OUTCOME_A"].mean()
+# d["OUTCOME_A"].median()
+# d["OUTCOME_A"].std()
+# (d["OUTCOME_A"].min(), d["OUTCOME_A"].max())
+```
+
+| Variable | Observed range | Distinct values | Missing values |
+|:---------|:---------------|:----------------|:---------------|
+| Outcome A | ... | ... | ... |
+| Outcome B | ... | ... | ... |
+
+**Which variables could be outcomes, and which would you rule out?
+Please explain using what each variable measures.**
+
+*Your answer here.*
+
+# Part 2: Distributions
+
+Please draw a histogram and a boxplot for each plausible outcome.
+Choose histogram bins or a bin width suited to its units. If you
+ruled out one candidate, explain its distribution with a count table
+or another suitable figure instead.
+
+## Outcome A
+
+Please replace `OUTCOME_A`, activate the code, and label the axes
+with the measurement and units. Add a second histogram with a
+different bin width if it would help you interpret the shape.
+
+```{python}
+#| label: distribution-a
+# fig, ax = plt.subplots(figsize=(6, 3.5))
+# ax.hist(d["OUTCOME_A"].dropna(), bins=20)
+# ax.set_xlabel("Outcome A (units)")
+# ax.set_ylabel("Observations")
+# plt.show()
+#
+# fig, ax = plt.subplots(figsize=(6, 3.5))
+# ax.boxplot(d["OUTCOME_A"].dropna(), vert=True)
+# ax.set_xticks([])
+# ax.set_ylabel("Outcome A (units)")
+# plt.show()
+```
+
+**Center, spread, and shape, with numbers from Part 1:**
+
+*Your answer here. Please use inline Python for numbers where possible.*
+
+**Values to check, any restriction of range or ceiling effect, and
+what you would keep or change:**
+
+*Your answer here.*
+
+## Outcome B
+
+Please make and interpret the corresponding figures for the second
+candidate, or show why it was ruled out.
+
+```{python}
+#| label: distribution-b
+# Please put your plots or count table here.
+```
+
+**Center, spread, and shape, with numbers from Part 1:**
+
+*Your answer here.*
+
+**Values to check, any restriction of range or ceiling effect, and
+what you would keep or change:**
+
+*Your answer here.*
+
+## Normality and transformations
+
+**Would you consider a transformation for either outcome? What
+problem might it address, and are there zeros or negative values?**
+
+*Your answer here. No transformation is required today.*
+
+**Why does a histogram of the outcome alone not check the usual
+normality assumption for regression inference?**
+
+*Your answer here. Please use the explanation in the handout.*
+
+**Optional: a normality test and power.** You may try
+`scipy.stats.shapiro()` on an outcome with 3 to 5,000 nonmissing values.
+Please state its null hypothesis, interpret its *p* value, and explain
+why a large sample can detect a small departure from normality.
+Neither a small nor a large *p* value decides whether to keep an
+outcome. You can leave this optional chunk commented.
+
+```{python}
+#| label: optional-normality
+# x = d["OUTCOME_A"].dropna()
+# stats.shapiro(x)  # Use only when the sample size is appropriate for this exercise, check documentation.
+```
+
+*Optional response, or say you did not run the test.*
+
+# Part 3: Relationships
+
+Please explore two plausible predictors for each suitable outcome.
+The same predictors can be used for both outcomes. Use scatterplots
+for numeric predictors and boxplots with group sizes for categorical
+predictors. Then choose a summary from the handout's table.
+
+## Why these predictors?
+
+**Predictors, their meanings and units or group labels, and why they
+might relate to each outcome:**
+
+*Your answer here.*
+
+**Were the predictors measured before, with, or after the outcomes?
+Does any predictor contain or get calculated from the outcome?**
+
+*Your answer here. Say if the documentation leaves this unclear.*
+
+## The figures
+
+Please label the axes. Make one plot for each pair you investigate.
+
+```{python}
+#| label: relationship-plots
+# fig, ax = plt.subplots(figsize=(6, 3.5))
+# ax.scatter(d["PREDICTOR_1"], d["OUTCOME_A"], alpha=0.5)
+# ax.set_xlabel("Predictor 1 (units)")
+# ax.set_ylabel("Outcome A (units)")
+# plt.show()
+```
+
+## The calculations
+
+For each pair, please select its two columns and keep rows observed
+on both. `pair_a` below holds those rows for the first pair. Record
+its row count. If you compare methods, use the same rows for both.
+Choose the method from the scales and the figure, and name the
+coding if the predictor is binary. Please use group summaries for
+three or more unordered groups instead of correlating their codes.
+
+```{python}
+#| label: relationship-summaries
+# pair_a = d[["OUTCOME_A", "PREDICTOR_1"]].dropna()
+# len(pair_a)
+# pair_a["OUTCOME_A"].corr(pair_a["PREDICTOR_1"], method="pearson")
+# pair_a["OUTCOME_A"].corr(pair_a["PREDICTOR_1"], method="spearman")
+```
+
+| Outcome and predictor | Method and coding | Rows | Summary |
+|:----------------------|:------------------|:-----|:--------|
+| A and predictor 1 | ... | ... | ... |
+| A and predictor 2 | ... | ... | ... |
+| B and predictor 1 (if B is suitable) | ... | ... | ... |
+| B and predictor 2 (if B is suitable) | ... | ... | ... |
+
+**What does each figure show, and how does its summary describe that
+pattern? Please report direction, size, and anything a correlation
+misses. There is no minimum correlation required.**
+
+*Your answer here.*
+
+## A possible third variable
+
+**For one relationship, what third variable might affect both the
+predictor and the outcome? Why, and was it measured?**
+
+*Your answer here. A diagram is optional. No partial or semi-partial
+correlation calculation is required.*
+
+# Part 4: A provisional choice
+
+Please use the measurements, row counts, figures, and question to
+explain your choice. If the dataset is unsuitable, record what a
+replacement needs instead. Today's choices can change.
+
+**Question:** *Your answer here.*
+
+**Dataset and outcome, with units:** *Your answer here.*
+
+**Two possible predictors, with a reason for each:**
+
+1. *Predictor and reason.*
+2. *Predictor and reason.*
+
+**Why this outcome rather than the alternative you examined?**
+
+*Your answer here.*
+
+**Two checks still needed before you could interpret a regression
+model (please use concerns specific to your data):**
+
+1. *Check and why it matters.*
+2. *Check and why it matters.*
+
+**What cannot be established from the present analysis?**
+
+*Your answer here.*
+
+**What remains to do, including finding a report dataset if you used
+the course example?**
+
+*Your answer here.*
+
+# Generative AI disclosure
+
+Please identify the tool and what you used it for, or write "none".
+
+*Your answer here.*

@@ -1,0 +1,2708 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="MULTIPLE-LIN-REG_files/libs/clipboard/clipboard.min.js"></script>
+<script src="MULTIPLE-LIN-REG_files/libs/quarto-html/tabby.min.js"></script>
+<script src="MULTIPLE-LIN-REG_files/libs/quarto-html/popper.min.js"></script>
+<script src="MULTIPLE-LIN-REG_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="MULTIPLE-LIN-REG_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="MULTIPLE-LIN-REG_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="MULTIPLE-LIN-REG_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
+
+  <meta name="author" content="Dr.&nbsp;Satadisha Saha Bhowmick">
+  <meta name="dcterms.date" content="2026-10-19">
+  <title>DS 3100 | Multiple Linear Regression</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="MULTIPLE-LIN-REG_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="MULTIPLE-LIN-REG_files/libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="MULTIPLE-LIN-REG_files/libs/revealjs/dist/theme/quarto-e7615ae3f47a09451c723600273e2044.css">
+  <link href="MULTIPLE-LIN-REG_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="MULTIPLE-LIN-REG_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="MULTIPLE-LIN-REG_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="MULTIPLE-LIN-REG_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">DS 3100 | Multiple Linear Regression</h1>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Dr.&nbsp;Satadisha Saha Bhowmick
+</div>
+</div>
+</div>
+
+  <p class="date">2026-10-19</p>
+</section>
+<section class="slide level2">
+
+<style>
+.reveal blockquote {
+  margin-top: 0.2em;
+  margin-bottom: 0.2em;
+  padding-top: 0.1em;
+  padding-bottom: 0.1em;
+}
+.reveal .slides section {
+  font-size: 0.56em;
+}
+
+/* Code inside code blocks */
+.reveal pre code {
+  font-size: 0.85em;
+}
+
+/* Printed cell output */
+.reveal .cell-output {
+  font-size: 0.85em;
+}
+</style>
+<div style="height: 80vh; display: flex; align-items: center;">
+<div class="columns v-center">
+<div class="column" style="width:55%;">
+<h3 id="working-with-many-predictors-and-more"><strong>Working with many predictors and more…</strong></h3>
+<h4 id="an-analysts-take-on-linear-regression">An analyst’s take on Linear Regression</h4>
+<h4 id="dr.-satadisha-saha-bhowmick"><em><span style="color: blue;">Dr.&nbsp;Satadisha Saha Bhowmick</span></em></h4>
+</div><div class="column" style="width:45%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/intro-pic.png" class="quarto-figure quarto-figure-center" style="width:70.0%"></p>
+</figure>
+</div>
+<div style="font-size:0.5em; text-align:center;">
+<p>Woman teaching geometry, from a fourteenth-century edition of Euclid’s geometry book.</p>
+</div>
+</div></div>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="learning-outcomes">Learning Outcomes</h3>
+<p>Moving beyond Simple Linear Regression</p>
+<div style="display: flex; gap: 2px;">
+<div style="flex: 1;">
+<ul>
+<li class="fragment">
+Fitting linear models with multiple predictors.
+</li>
+<li class="fragment">
+Model Fit Statistics for evaluation
+</li>
+<li class="fragment">
+Linear Regression Assumptions and Diagnostics
+</li>
+</ul>
+</div>
+<div style="flex: 1;">
+<ul>
+<li class="fragment">
+Identify significant variables in a linear regression model.
+</li>
+<li class="fragment">
+Impact of Influential Observations
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="multiple-linear-regression">Multiple Linear Regression</h3>
+<ul>
+<li>The world is too complex for every experiment or phenomenon to be explained by a single predictor.</li>
+<li>A general linear model with multiple predictors is more common in practice.</li>
+<li>General form of the equation is same as before : <span class="math display">\[y = X\beta + \epsilon\]</span></li>
+<li>Normal equations still hold to provide the least-squares solution <span class="math inline">\(\hat{\beta} \text{:} X^TX\hat{\beta} = X^Ty\)</span></li>
+<li>Instead of a least squares line, we have a hyperplane!</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="multiple-linear-regression-1">Multiple Linear Regression</h3>
+<p>Given a collection of <span class="math inline">\(p\)</span> potential predictors, multiple linear regression fits the following model: <span class="math display">\[\begin{aligned}
+&amp;&amp; E(Y|X)= \beta_{0}+\beta_{1}X_{1}+\beta_{2}X_{2}+ ... +\beta_{p}X_{p}\\
+&amp;&amp; Var(Y|X)= \sigma^2
+\end{aligned}\]</span></p>
+<p>All the <span class="math inline">\(\beta\)</span> s and <span class="math inline">\(\sigma^2\)</span> are unknown parameters to be estimated.</p>
+<ul>
+<li><span class="math inline">\(\color{blue}{\text{Ordinary Least Squares}}\)</span>(OLS) Estimator: <span class="math inline">\(\hat{\beta} = (X^TX)^{-1}X^Ty\)</span></li>
+<li>For the least squares solution to exist, <span class="math inline">\(X^TX\)</span> must be invertible.</li>
+<li>We still do not compute the <span class="math inline">\(\beta\)</span> s from least squares estimates directly.
+<ul>
+<li>Uncorrected sums of squares and cross products are prone to large rounding errors!</li>
+</ul></li>
+</ul>
+<p>For any observable pair of <span class="math inline">\((x,y)\)</span> we have: <span class="math display">\[\begin{aligned}
+&amp;&amp; \hat{y} = E(Y|X=x)= \beta_{0}+\beta_{1}x_{1}+\beta_{2}x_{2}+ ... +\beta_{p}x_{p}; \quad \hat{e} = y - \hat{y}
+\end{aligned}\]</span> <span class="math inline">\(e\)</span> is the residual or error term. Linear regression places the following <u><b>assumptions on the error</b></u>. <span class="math display">\[\begin{aligned}
+&amp;&amp; E(e|X) = 0; Var (e|X) = \mathcal{\sigma^2 I_n}\\
+&amp;&amp; \textbf{Normality: } P(e|X) \sim \mathcal{N(0, \sigma^2 I_n)}
+\end{aligned}\]</span></p>
+<p>More on model assumptions later!</p>
+</section>
+<section class="slide level2">
+
+<h3 id="linear-regression-beers-and-bac">Linear Regression: Beers and BAC</h3>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Study Setup</strong></p>
+</div>
+<div class="callout-content">
+<p>Researchers at Ohio State University had sixteen volunteers drink a randomly drawn number of 12 ounce beer cans. Thirty minutes after drinking their last beer, each subject had their blood alcohol content (BAC) measured. Subjects had their gender and weight recorded and were also administered a road sobriety test before and after the alcohol consumption. We want to predict <b>BAC</b> from the remaining information available for each subject.</p>
+</div>
+</div>
+</div>
+<h4 id="aside-on-categorical-variables">Aside on Categorical Variables</h4>
+<p>Our data has a categorical variable <code>Gender_OSU</code> whose values are converted to dummy variables.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h4 id="r">R</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="" aria-label="1"></a><span class="fu">library</span>(tidytable)</span>
+<span id="cb1-2"><a href="" aria-label="2"></a></span>
+<span id="cb1-3"><a href="" aria-label="3"></a>reg_vars <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Gender_OSU"</span>, <span class="st">"Weight_OSU"</span>, <span class="st">"Beers"</span>, <span class="st">"Sobr1"</span>, <span class="st">"Sobr2"</span>, <span class="st">"BAC"</span>)</span>
+<span id="cb1-4"><a href="" aria-label="4"></a></span>
+<span id="cb1-5"><a href="" aria-label="5"></a>bac_data <span class="ot">&lt;-</span> bac_data <span class="sc">%&gt;%</span></span>
+<span id="cb1-6"><a href="" aria-label="6"></a>  <span class="fu">select</span>(<span class="fu">all_of</span>(reg_vars)) <span class="sc">%&gt;%</span></span>
+<span id="cb1-7"><a href="" aria-label="7"></a>  <span class="fu">get_dummies</span>(<span class="at">drop_first =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-8"><a href="" aria-label="8"></a></span>
+<span id="cb1-9"><a href="" aria-label="9"></a>bac_data <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="at">n=</span><span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tidytable: 5 × 7
+  Gender_OSU Weight_OSU Beers Sobr1 Sobr2   BAC Gender_OSU_male
+  &lt;chr&gt;           &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;           &lt;int&gt;
+1 female            132     5 10     6     0.1                0
+2 female            128     2  9.5   9.25  0.03               0
+3 female            110     9  9.75  4.75  0.19               0
+4 male              192     8 10     7.5   0.12               1
+5 male              172     3 10     9.75  0.04               1</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<h4 id="python">Python</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="" aria-label="1"></a>reg_vars <span class="op">=</span> [<span class="st">"Gender_OSU"</span>, <span class="st">"Weight_OSU"</span>, <span class="st">"Beers"</span>, <span class="st">"Sobr1"</span>, <span class="st">"Sobr2"</span>, <span class="st">"BAC"</span>]</span>
+<span id="cb3-2"><a href="" aria-label="2"></a>bac_data <span class="op">=</span> pd.get_dummies(bac_data[reg_vars], drop_first <span class="op">=</span> <span class="va">True</span>)</span>
+<span id="cb3-3"><a href="" aria-label="3"></a>bac_data.head(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Weight_OSU  Beers  Sobr1  Sobr2   BAC  Gender_OSU_male
+0         132      5  10.00   6.00  0.10            False
+1         128      2   9.50   9.25  0.03            False
+2         110      9   9.75   4.75  0.19            False
+3         192      8  10.00   7.50  0.12             True
+4         172      3  10.00   9.75  0.04             True</code></pre>
+</div>
+</div>
+</div></div>
+</section>
+<section class="slide level2">
+
+<h3 id="a-linear-regression-model-for-bac">A Linear Regression Model for BAC</h3>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h4 id="r-1">R</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="" aria-label="1"></a><span class="co"># Define the model using an R formula</span></span>
+<span id="cb5-2"><a href="" aria-label="2"></a>mlr_formula <span class="ot">&lt;-</span> BAC <span class="sc">~</span> Beers <span class="sc">+</span> Weight_OSU <span class="sc">+</span> Gender_OSU_male <span class="sc">+</span> Sobr1 <span class="sc">+</span> Sobr2</span>
+<span id="cb5-3"><a href="" aria-label="3"></a></span>
+<span id="cb5-4"><a href="" aria-label="4"></a><span class="co"># Fit the model using OLS (Ordinary Least Squares)</span></span>
+<span id="cb5-5"><a href="" aria-label="5"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(mlr_formula, <span class="at">data =</span> bac_data)</span>
+<span id="cb5-6"><a href="" aria-label="6"></a></span>
+<span id="cb5-7"><a href="" aria-label="7"></a><span class="co"># Print the estimated regression coefficients</span></span>
+<span id="cb5-8"><a href="" aria-label="8"></a><span class="fu">coef</span>(model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    (Intercept)           Beers      Weight_OSU Gender_OSU_male           Sobr1 
+   0.0924596848    0.0191305457   -0.0003486564    0.0012611012   -0.0034469292 
+          Sobr2 
+  -0.0023201314 </code></pre>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<h4 id="python-1">Python</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-label="1"></a><span class="co"># Define the model using R-style formula</span></span>
+<span id="cb7-2"><a href="" aria-label="2"></a>mlr_formula <span class="op">=</span> <span class="st">'BAC ~ Beers + Weight_OSU + Gender_OSU_male + Sobr1 + Sobr2'</span></span>
+<span id="cb7-3"><a href="" aria-label="3"></a></span>
+<span id="cb7-4"><a href="" aria-label="4"></a><span class="co"># Fit the model using OLS (Ordinary Least Squares)</span></span>
+<span id="cb7-5"><a href="" aria-label="5"></a>model <span class="op">=</span> smf.ols(formula<span class="op">=</span>mlr_formula, data<span class="op">=</span>bac_data).fit()</span>
+<span id="cb7-6"><a href="" aria-label="6"></a></span>
+<span id="cb7-7"><a href="" aria-label="7"></a><span class="co"># Print the summary of the regression results</span></span>
+<span id="cb7-8"><a href="" aria-label="8"></a>model.params</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Intercept                  0.092460
+Gender_OSU_male[T.True]    0.001261
+Beers                      0.019131
+Weight_OSU                -0.000349
+Sobr1                     -0.003447
+Sobr2                     -0.002320
+dtype: float64</code></pre>
+</div>
+</div>
+</div></div>
+<p>Our linear regression model can be symbolically expressed as: <span class="math display">\[\begin{aligned}
+BAC = 0.092460 + 0.001261 \times Gender\_OSU\_male + 0.019131 \times Beers -0.000349 \times Weight\_OSU\\
+        -0.003447 \times Sobr1 -0.002320 \times Sobr2
+\end{aligned}\]</span></p>
+<span class="fragment">
+<h4 style="color: blue; font-weight: bold; font-style: italic;">
+Your Turn
+</h4>
+<p>What interpretations can you make of the impact of the model variables on BAC looking at the model coefficients? </p>
+</span></section>
+<section class="slide level2">
+
+<h3 id="sum-of-squares">Sum of Squares</h3>
+<p>When discussing linear regression, it is common to have three types of sum of squares.</p>
+<ul>
+<li><span class="math inline">\(\color{blue}{\textbf{SST}}\)</span>: Total variability of data. <span class="math inline">\(\lVert \vec{y}-\bar{y} \rVert^2\)</span></li>
+<li><span class="math inline">\(\color{blue}{\textbf{SSR}}\)</span>: Sum of squares of Regression. This is the portion of the total variability explained by regression. <span class="math inline">\(\lVert \bar{y}-X\vec{\beta} \rVert^2 = \lVert \bar{y}-\hat{y} \rVert^2\)</span></li>
+<li><span class="math inline">\(\color{blue}{\textbf{SSE}}\)</span>: Sum of squared errors or residuals. This is the portion of the total variability that remains unexplained. <span class="math inline">\(\lVert \vec{y}-X\vec{\beta} \rVert^2 = \lVert \vec{e} \rVert^2\)</span> <br></li>
+</ul>
+<p>The total variability of data is the sum of the variability explained by regression and the unexplained variability that manifests as error.</p>
+<ul>
+<li><span class="math inline">\(SST = SSR+SSE\)</span></li>
+<li>Given a constant total variability, a lower error will indicate better regression and a higher error will indicate less powerful regression.</li>
+</ul>
+<div style="
+border-left: 6px solid #2563eb;
+background: #eef6ff;
+padding: 12px 16px;
+margin: 10px 0;
+border-radius: 6px;
+">
+<p><strong>Remark.</strong><br>
+Please beware of notational differences between SSE vs RSS or SSR vs ESS depending on the text you are following.<br> We will be consistent with the notations listed above!</p>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="model-fit-statistics">Model Fit Statistics</h3>
+<p>How well does our estimated regression equation fit the data?</p>
+<ul>
+<li>We will study metrics that help us evaluate the fit of a regression models.</li>
+<li>We will learn about metrics that help us draw statistical inferences around our model’s fit.</li>
+<li>We will test existing packages that help us draw both predictions and inferences from our fitted model.
+<ul>
+<li>Base R already has built-in support for linear regression and model fit statistics.</li>
+<li>For predictive purposes <code>sklearn</code> is the standard Python package to use.</li>
+<li>We can use the <code>statsmodels</code> package to organize all relevant information for statistical inference in an ANOVA table.</li>
+</ul></li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="model-fit-statistics-colorbluetextcoefficient-of-determination">Model Fit Statistics: <span class="math inline">\(\color{blue}{\text{Coefficient of Determination}}\)</span></h3>
+<p><span class="math inline">\(R^2\)</span> measures what proportion of the total variability of the response variable is explained by the model. It always falls between 0 and 1, with values closer to 1 representing better model fit. <span class="math display">\[\scriptsize R^2 = \frac{SSR}{SST} = 1 - \frac{SSE}{SST}\]</span></p>
+<div class="columns">
+<div class="column" style="width:35%;">
+<h4 id="r-2">R</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="" aria-label="1"></a>model_summary <span class="ot">&lt;-</span> <span class="fu">summary</span>(model)</span>
+<span id="cb9-2"><a href="" aria-label="2"></a>model_summary</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = mlr_formula, data = bac_data)
+
+Residuals:
+       Min         1Q     Median         3Q        Max 
+-0.0221698 -0.0043422  0.0006911  0.0068117  0.0127175 
+
+Coefficients:
+                  Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)      9.246e-02  1.594e-01   0.580 0.574748    
+Beers            1.913e-02  2.117e-03   9.037 3.99e-06 ***
+Weight_OSU      -3.487e-04  7.447e-05  -4.682 0.000865 ***
+Gender_OSU_male  1.261e-03  9.517e-03   0.133 0.897212    
+Sobr1           -3.447e-03  1.647e-02  -0.209 0.838388    
+Sobr2           -2.320e-03  3.631e-03  -0.639 0.537234    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.01148 on 10 degrees of freedom
+Multiple R-squared:  0.9549,    Adjusted R-squared:  0.9324 
+F-statistic: 42.39 on 5 and 10 DF,  p-value: 2.057e-06</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="" aria-label="1"></a>model_summary<span class="sc">$</span>r.squared</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.9549428</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:65%;">
+<h4 id="python-2">Python</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="" aria-label="1"></a>model.summary().tables[<span class="dv">0</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="simpletable caption-top">
+<caption>OLS Regression Results</caption>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Dep. Variable:</th>
+<td>BAC</td>
+<th data-quarto-table-cell-role="th">R-squared:</th>
+<td>0.955</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Model:</th>
+<td>OLS</td>
+<th data-quarto-table-cell-role="th">Adj. R-squared:</th>
+<td>0.932</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Method:</th>
+<td>Least Squares</td>
+<th data-quarto-table-cell-role="th">F-statistic:</th>
+<td>42.39</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Date:</th>
+<td>Mon, 19 Oct 2026</td>
+<th data-quarto-table-cell-role="th">Prob (F-statistic):</th>
+<td>2.06e-06</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Time:</th>
+<td>19:41:09</td>
+<th data-quarto-table-cell-role="th">Log-Likelihood:</th>
+<td>52.538</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">No. Observations:</th>
+<td>16</td>
+<th data-quarto-table-cell-role="th">AIC:</th>
+<td>-93.08</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Df Residuals:</th>
+<td>10</td>
+<th data-quarto-table-cell-role="th">BIC:</th>
+<td>-88.44</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Df Model:</th>
+<td>5</td>
+<th data-quarto-table-cell-role="th"></th>
+<td></td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Covariance Type:</th>
+<td>nonrobust</td>
+<th data-quarto-table-cell-role="th"></th>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="" aria-label="1"></a>model.rsquared</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>np.float64(0.954942792460181)</code></pre>
+</div>
+</div>
+</div></div>
+</section>
+<section class="slide level2">
+
+<h3 id="an-aside-on-degrees-of-freedom">An aside on Degrees of Freedom</h3>
+<p>You may have seen this concept come up often in statistics and data science. Generally speaking, degrees of freedom represents the number of independent values that are free to vary during the calculation of a statistic.<br></p>
+<p><span style="color:#1565C0;"><b>Degrees of Freedom for Sample Variance</b></span>. For a dataset with n observations <span class="math inline">\(Y = {y_1, y_2,..., y_n}\)</span>, sample variance calculation uses the sample mean, <span class="math inline">\(\bar{y} = \frac{1}{n}\sum_{i=1}^{n}y_{i}\)</span>. Variance also requires calculating the squared deviation <span class="math inline">\((y_{i}-\bar{y})^2; \forall i\)</span>. However, knowing the first <span class="math inline">\(n-1\)</span> <span class="math inline">\(y\)</span>-terms implies that we can infer the last term <span class="math inline">\(y_n = n\bar{y} - \sum_{i=1}^{n-1}y_{i}\)</span>, thereby no longer making it a free (to vary) variable. Hence the calculation of sample variance has a degree of freedom of <span class="math inline">\(n-1\)</span>.</p>
+<p>You may have already seen this in the formula for sample variance <span class="math inline">\(\frac{1}{n-1}\sum_{i=1}^{n}(y_{i}-\bar{y})^2\)</span>, where the sum of squares is divided by the degrees of freedom instead of the number of samples!<br></p>
+<div style="
+border-left: 6px solid #2563eb;
+background: #eef6ff;
+padding: 12px 16px;
+margin: 10px 0;
+border-radius: 6px;
+font-size: 0.76em;
+">
+<p><b><span style="color:#1565C0;">Remark.</span></b><br>
+Dividing the sum of squares by <span class="math inline">\(n-1\)</span>, instead of the sample size <span class="math inline">\(n\)</span>, to calculate the sample variance is called <span style="color:#1565C0;"><b>Bessel’s correction</b></span>.<br> This is a necessary statistical adjustment that avoids potential underestimation and ensures that the sample variance provides an unbiased estimate of the population variance.<br> This is especially crucial for small samples where the correction makes a significant difference.</p>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="degrees-of-freedom-in-regression">Degrees of Freedom in Regression</h3>
+<p>In linear regression we are dealing with two types of degrees of freedom.</p>
+<ol type="1">
+<li><span class="math inline">\(\color{blue}{\textbf{Total Degrees of Freedom}}\)</span>: You can think of it as the degrees of freedom for SST. Follows from the previous discussion that this is given by <span class="math inline">\(n-1\)</span>, with <span class="math inline">\(n\)</span> being the number of observations.</li>
+<li><span class="math inline">\(\color{blue}{\textbf{Residual Degrees of Freedom}}\)</span>: You can think of it as the degrees of freedom for SSE, i.e.&nbsp;the sum of squared residuals. For a regression model with <span class="math inline">\(p\)</span> feature coefficients (hyperplane of <span class="math inline">\(p+1\)</span> vectors including the intercept), the residual degrees of freedom is given by <span class="math inline">\(n-p-1\)</span>.</li>
+</ol>
+<p>Remember, <span class="math inline">\(p\)</span> is the <span class="math inline">\(\color{blue}{\textbf{number of predictors}}\)</span> in your regression model coming from the data (<b>excluding the intercept</b>).</p>
+</section>
+<section class="slide level2">
+
+<h3 id="model-fit-statistics-adjusted-r2">Model Fit Statistics: Adjusted <span class="math inline">\(R^2\)</span></h3>
+<p>A fairly big disadvantage of <span class="math inline">\(R^2\)</span> is the fact that it is non-decreasing. Given that <span class="math inline">\(R^2\)</span> is a measure of fit where model coefficients are calculated using OLS (by minimizing the SSE), its mathematical form ensures that adding more than necessary predictors will still result in the best possible fit with those variables.</p>
+<p>Mathematically, adding more variables cannot increase the sum of squared residuals because the new model has more degrees of freedom to minimize these residuals. Even by adding unrelated variables, SSE can stay the same (when the corresponding coefficients are set to 0). Or worse, even decrease variation of the response variable by capturing correlations with new predictors that exist purely due to random chance.<br>
+<span style="color:#1565C0;">Reminder, SSE is inversely related to <span class="math inline">\(R^2\)</span>.</span></p>
+<p>Since <span class="math inline">\(R^2\)</span> does not guarantee adding more predictors will always lead to models with more explanatory power, we need an alternative!</p>
+<p>Adjusted <span class="math inline">\(R^2\)</span> factors in a model’s degrees of freedom (higher for those with more variables). It is bounded between 0 and 1, with values closer to 1 being more desirable. <span class="math display">\[
+R^2_{adj} = 1- \frac{SSE}{SST}\frac{n-1}{n-p-1} = 1 - (1-R^2)\frac{n-1}{n-p-1}
+\]</span></p>
+<p><span style="color:#1565C0;"><b>Overfitting</b></span>: A model with too many predictors may fit the training data very well but fail to generalize to new data. Adjusted <span class="math inline">\(R^2\)</span> helps mitigate this risk by penalizing models for inclusion of irrelevant predictors.</p>
+</section>
+<section class="slide level2">
+
+<h3 id="model-fit-statistics-adjusted-r2-1">Model Fit Statistics: Adjusted <span class="math inline">\(R^2\)</span></h3>
+<div class="columns">
+<div class="column" style="width:35%;">
+<h4 id="r-3">R</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="" aria-label="1"></a>model_summary <span class="ot">&lt;-</span> <span class="fu">summary</span>(model)</span>
+<span id="cb16-2"><a href="" aria-label="2"></a>model_summary</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = mlr_formula, data = bac_data)
+
+Residuals:
+       Min         1Q     Median         3Q        Max 
+-0.0221698 -0.0043422  0.0006911  0.0068117  0.0127175 
+
+Coefficients:
+                  Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)      9.246e-02  1.594e-01   0.580 0.574748    
+Beers            1.913e-02  2.117e-03   9.037 3.99e-06 ***
+Weight_OSU      -3.487e-04  7.447e-05  -4.682 0.000865 ***
+Gender_OSU_male  1.261e-03  9.517e-03   0.133 0.897212    
+Sobr1           -3.447e-03  1.647e-02  -0.209 0.838388    
+Sobr2           -2.320e-03  3.631e-03  -0.639 0.537234    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.01148 on 10 degrees of freedom
+Multiple R-squared:  0.9549,    Adjusted R-squared:  0.9324 
+F-statistic: 42.39 on 5 and 10 DF,  p-value: 2.057e-06</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="" aria-label="1"></a>model_summary<span class="sc">$</span>adj.r.squared</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.9324142</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:65%;">
+<h4 id="python-3">Python</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="" aria-label="1"></a>model.summary().tables[<span class="dv">0</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="simpletable caption-top">
+<caption>OLS Regression Results</caption>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Dep. Variable:</th>
+<td>BAC</td>
+<th data-quarto-table-cell-role="th">R-squared:</th>
+<td>0.955</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Model:</th>
+<td>OLS</td>
+<th data-quarto-table-cell-role="th">Adj. R-squared:</th>
+<td>0.932</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Method:</th>
+<td>Least Squares</td>
+<th data-quarto-table-cell-role="th">F-statistic:</th>
+<td>42.39</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Date:</th>
+<td>Mon, 19 Oct 2026</td>
+<th data-quarto-table-cell-role="th">Prob (F-statistic):</th>
+<td>2.06e-06</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Time:</th>
+<td>19:41:09</td>
+<th data-quarto-table-cell-role="th">Log-Likelihood:</th>
+<td>52.538</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">No. Observations:</th>
+<td>16</td>
+<th data-quarto-table-cell-role="th">AIC:</th>
+<td>-93.08</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Df Residuals:</th>
+<td>10</td>
+<th data-quarto-table-cell-role="th">BIC:</th>
+<td>-88.44</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Df Model:</th>
+<td>5</td>
+<th data-quarto-table-cell-role="th"></th>
+<td></td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Covariance Type:</th>
+<td>nonrobust</td>
+<th data-quarto-table-cell-role="th"></th>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="" aria-label="1"></a>model.rsquared_adj</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>np.float64(0.9324141886902715)</code></pre>
+</div>
+</div>
+</div></div>
+</section>
+<section class="slide level2">
+
+<h3 id="model-fit-statistics-rmse">Model Fit Statistics: RMSE</h3>
+<p>Root Mean Squared Error (RMSE) is an alternative simple metric to compare regression models. It is the square root of the average squared error (residual) of predictions made by a model. <span class="math display">\[
+RMSE = \sqrt{\frac{SSE}{n}} = \sqrt{\frac{\sum\limits_{i=1}^{n}(y_i - \hat{y_i})^2}{n}}
+\]</span></p>
+<p>There is no scale for RMSE! You have to compare it to the RMSE for another model fit from the same data. Smaller values are more desirable.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h4 id="r-4">R</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="" aria-label="1"></a><span class="co"># Calculating predicted values and RMSE</span></span>
+<span id="cb23-2"><a href="" aria-label="2"></a>fitted2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(model)</span>
+<span id="cb23-3"><a href="" aria-label="3"></a></span>
+<span id="cb23-4"><a href="" aria-label="4"></a><span class="fu">sqrt</span>(<span class="fu">mean</span>((bac_data<span class="sc">$</span>BAC <span class="sc">-</span> fitted2)<span class="sc">^</span><span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.009071924</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<h4 id="python-4">Python</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="" aria-label="1"></a><span class="co">#Calculating predicted values and RMSE</span></span>
+<span id="cb25-2"><a href="" aria-label="2"></a>fitted2 <span class="op">=</span> model.predict()</span>
+<span id="cb25-3"><a href="" aria-label="3"></a>np.sqrt(metrics.mean_squared_error(bac_data[<span class="st">"BAC"</span>], fitted2))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>np.float64(0.009071924032251965)</code></pre>
+</div>
+</div>
+</div></div>
+</section>
+<section class="slide level2">
+
+<h3 id="model-fit-statistics-rse">Model Fit Statistics: RSE</h3>
+<p>This metric can go by a few different names:</p>
+<ul>
+<li>Residual Standard Error (RSE)</li>
+<li>Standard Error of the Regression</li>
+<li>Standard Error of Fit</li>
+</ul>
+<p>It is an <u><b>unbiased estimate</b></u> of the <span style="color:#1565C0;"><b>standard deviation of the error term</b></span> in a regression model; i.e., it is the square root of the variance of estimated residuals. As explained before, when working with sample data, the calculation is adjusted for the number of degrees of freedom.</p>
+<p><span class="math display">\[
+rse = \sqrt{\frac{SSE}{n-p-1}} = \sqrt{\frac{\sum\limits_{i=1}^{n}(y_i - \hat{y_i})^2}{n-p-1}}
+\]</span></p>
+<p>It is the average distance between an observation from a sample of data and the regression hyperplane (line in 2D) in units of the response variable.</p>
+<ul>
+<li>Think of it as a measure showing how tightly the observations surround the regression hyperplane.</li>
+<li>Can be used to make prediction intervals, more on this later!</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="rse-in-practice">RSE in practice</h3>
+<p>Like RMSE, there is no scale for RSE! You have to compare it to the RSE for another model fit from the same data. Smaller values are more desirable.</p>
+<p>While the RSE is not directly available in the summary table of <code>statsmodel</code> it is defined within the package as the square root of mean squared error of the residuals. In R, it is obrained using the <code>sigma()</code> function applied to a fitted model object.</p>
+<ul>
+<li><i>Please beware that this is <u><b>not</b></u> the RMSE which is a regular average of mean squared error and not corrected with division by the appropriate degrees of freedom.</i> This can be confusing!</li>
+</ul>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h4 id="r-5">R</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="" aria-label="1"></a>rse <span class="ot">&lt;-</span> <span class="fu">sigma</span>(model)</span>
+<span id="cb27-2"><a href="" aria-label="2"></a><span class="fu">print</span>(rse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.01147518</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<h4 id="python-5">Python</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="" aria-label="1"></a>rse <span class="op">=</span> np.sqrt(model.mse_resid)</span>
+<span id="cb29-2"><a href="" aria-label="2"></a><span class="bu">print</span>(rse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.011475177080774014</code></pre>
+</div>
+</div>
+</div></div>
+</section>
+<section class="slide level2">
+
+<h3 id="variable-significance">Variable Significance</h3>
+<p>Regression Analysis can help us understand the statistical significance of variables in an experiment as potential predictors of the response.</p>
+<p><span style="color:#1565C0;"><strong>A typical framing</strong></span>: <em>Is the number of beers a student drinks a statistically significant predictor of the student’s blood alcohol content, all other factors held equal?</em></p>
+<ul>
+<li>To answer this we estimate the statistical significance of the regression model’s coefficient associated with this variable.</li>
+<li>We conduct a hypothesis test at a certain pre-determined significance level (<span class="math inline">\(\alpha = 5\%\)</span>).
+<ul>
+<li>Is the predictor’s model coefficient (statistically) significantly different from 0?</li>
+<li>Null Hypothesis is assumption of no significance <span class="math inline">\(H_0: \beta_{Beers} = 0\)</span>.</li>
+<li>Alternative Hypothesis <span class="math inline">\(H_A: \beta_{Beers} \neq 0\)</span>.</li>
+</ul></li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="variable-significance-1">Variable Significance</h3>
+<p>We can use the <span class="math inline">\(\color{blue}{\textbf{Standard Error of Model Coefficients}}\)</span> and known sampling distributions to develop inference around our model predictors.</p>
+<ul>
+<li>Remember that the regression model is fitted around a sample. So much like sample mean, the model coefficients (parameters) are also estimates that are subject to an underlying sampling distribution(how they’d vary across samples).</li>
+</ul>
+<p>For a linear model, the OLS estimator is <span class="math inline">\(\hat{\beta} = (X^TX)^{-1}X^Ty\)</span>. By substituting <span class="math inline">\(y = X\beta + \epsilon\)</span> we get, <span class="math inline">\(\hat{\beta} = \beta + (X^TX)^{-1}X^T\epsilon\)</span></p>
+<p>Turns out that upon deriving the OLS estimator:</p>
+<ul>
+<li>Estimates of individual model coefficients are normally distributed
+<ul>
+<li><span class="math inline">\(\hat{\beta}_j|X \sim \mathcal{N}(\beta_j, \sigma^2(X^TX)^{-1}_{jj})\)</span></li>
+</ul></li>
+<li>Standardized coefficients individually follow a <span style="color:#1565C0;">Student’s T Distribution</span>. Also called the observed <span class="math inline">\(t\)</span>-statistics of the model coefficients.
+<ul>
+<li><span class="math inline">\(\frac{\hat{\beta}_j-\beta_j}{se(\hat{\beta}_j)} \sim \mathcal{t}_{n-p-1}\)</span>; <span class="math inline">\(\beta_j\)</span> reflects your prior belief in the predictor’s coefficient. <u style="color: blue; font-size: 1.0em; font-weight: bold; font-style: italic;">Typically set to 0</u>.</li>
+<li>The standard error of model coefficient <span class="math inline">\(\hat{\beta}_j\)</span> is <span class="math inline">\(se(\hat{\beta}_j) = \sqrt{se^2 (X^TX)^{-1}_{jj}}\)</span>, where <span class="math inline">\(se\)</span> is the standard error of regression.</li>
+<li>For simple linear regression, the standard error of the slope is given by <span class="math inline">\(se(\hat{\beta}_1) = \sqrt{ \frac{se^2}{\sum_{i=1}^n(x_i-\bar{x})^2}}\)</span></li>
+</ul></li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="variable-significance-with-hypothesis-testing">Variable Significance with Hypothesis Testing</h3>
+<p>It’s good practice to follow these steps for any hypothesis test:</p>
+<ul>
+<li>Identify sample statistics, in this case model coefficient of the predictor of interest, and determine what significance level you wish to use.</li>
+<li>Check if model (linear regression) conditions hold. More on that later!</li>
+<li>Compute the standard error of model coefficient and corresponding <span class="math inline">\(t\)</span>-statistic. <a href="https://www.graphpad.com/quickcalcs/pvalue1/">Calculate the two-tailed <span class="math inline">\(p\)</span>-value</a> for this <span class="math inline">\(\lvert t \rvert\)</span>-statistic.
+<ul>
+<li>Alternatively, we can also refer to the <span class="math inline">\(t\)</span>-critical value of a two-tailed <span class="math inline">\(t\)</span> test at the desired significance level.</li>
+<li>We must factor in the correct number of degrees of freedom!</li>
+</ul></li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="variable-significance-in-practice">Variable Significance in Practice</h3>
+<ul>
+<li>The <span class="math inline">\(\lvert t \rvert\)</span>-statistic statistic for <span class="math inline">\(\beta_{Beers}\)</span> is 9.037(very high), and the corresponding <span class="math inline">\(p\)</span> value is rounded to 0.000</li>
+<li>This <span class="math inline">\(p\)</span> value is lower than any reasonable significance level including <span class="math inline">\(\alpha=0.05\)</span>. Hence we <u>reject</u> the null hypothesis.</li>
+<li>We conclude that there is statistically significant evidence that the number of beers a student drinks can help predict the student’s BAC.</li>
+</ul>
+<div class="columns">
+<div class="column" style="width:45%;">
+<h4 id="r-6">R</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="" aria-label="1"></a><span class="fu">summary</span>(model)<span class="sc">$</span>coefficients</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                     Estimate   Std. Error    t value     Pr(&gt;|t|)
+(Intercept)      0.0924596848 1.594126e-01  0.5800023 5.747478e-01
+Beers            0.0191305457 2.116901e-03  9.0370528 3.987915e-06
+Weight_OSU      -0.0003486564 7.446629e-05 -4.6820706 8.647895e-04
+Gender_OSU_male  0.0012611012 9.517320e-03  0.1325059 8.972125e-01
+Sobr1           -0.0034469292 1.646590e-02 -0.2093375 8.383878e-01
+Sobr2           -0.0023201314 3.631337e-03 -0.6389193 5.372341e-01</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:55%;">
+<h4 id="python-6">Python</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="" aria-label="1"></a>model.summary().tables[<span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="simpletable caption-top">
+<tbody>
+<tr class="odd">
+<td></td>
+<th data-quarto-table-cell-role="th">coef</th>
+<th data-quarto-table-cell-role="th">std err</th>
+<th data-quarto-table-cell-role="th">t</th>
+<th data-quarto-table-cell-role="th">P&gt;|t|</th>
+<th data-quarto-table-cell-role="th">[0.025</th>
+<th data-quarto-table-cell-role="th">0.975]</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Intercept</th>
+<td>0.0925</td>
+<td>0.159</td>
+<td>0.580</td>
+<td>0.575</td>
+<td>-0.263</td>
+<td>0.448</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Gender_OSU_male[T.True]</th>
+<td>0.0013</td>
+<td>0.010</td>
+<td>0.133</td>
+<td>0.897</td>
+<td>-0.020</td>
+<td>0.022</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Beers</th>
+<td>0.0191</td>
+<td>0.002</td>
+<td>9.037</td>
+<td>0.000</td>
+<td>0.014</td>
+<td>0.024</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Weight_OSU</th>
+<td>-0.0003</td>
+<td>7.45e-05</td>
+<td>-4.682</td>
+<td>0.001</td>
+<td>-0.001</td>
+<td>-0.000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Sobr1</th>
+<td>-0.0034</td>
+<td>0.016</td>
+<td>-0.209</td>
+<td>0.838</td>
+<td>-0.040</td>
+<td>0.033</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Sobr2</th>
+<td>-0.0023</td>
+<td>0.004</td>
+<td>-0.639</td>
+<td>0.537</td>
+<td>-0.010</td>
+<td>0.006</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div></div>
+<p><span class="fragment"> <u style="color: blue; font-size: 1.0em; font-weight: bold; font-style: italic;">Your Turn</u><br> Can you comment on the significance of the other predictors? </span></p>
+</section>
+<section class="slide level2">
+
+<h3 id="confidence-intervals-for-model-coefficients">Confidence Intervals for Model Coefficients</h3>
+<ul>
+<li><p>Alternatively we can draw the 95% confidence interval (CI) of the model coefficient in question.</p>
+<ul>
+<li>As we know, confidence intervals are an effective way of capturing the uncertainty around a sample estimate. A 95% confidence interval means that if we repeated drawing samples from the population and also conducted regression analysis many times, the true (population) coefficient for the predictor will be present within 95% of the calculated intervals.</li>
+</ul></li>
+<li><p>If the interval does not contain 0 then we can infer that the predictor, whose coefficient we have been analyzing, has statistical significance in predicting the response variable.</p></li>
+<li><p>The summary table output also provides us with the 95% confidence intervals of each predictor. However, we can also draw intervals upon setting the significance level as we see fit.</p></li>
+</ul>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h4 id="r-7">R</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="" aria-label="1"></a><span class="fu">confint</span>(model, <span class="at">level =</span> <span class="fl">0.95</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                        2.5 %        97.5 %
+(Intercept)     -0.2627337475  0.4476531171
+Beers            0.0144137965  0.0238472950
+Weight_OSU      -0.0005145777 -0.0001827352
+Gender_OSU_male -0.0199448099  0.0224670123
+Sobr1           -0.0401352360  0.0332413776
+Sobr2           -0.0104112545  0.0057709917</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<h4 id="python-7">Python</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="" aria-label="1"></a>model.conf_int(alpha<span class="op">=</span><span class="fl">0.05</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                                0         1
+Intercept               -0.262734  0.447653
+Gender_OSU_male[T.True] -0.019945  0.022467
+Beers                    0.014414  0.023847
+Weight_OSU              -0.000515 -0.000183
+Sobr1                   -0.040135  0.033241
+Sobr2                   -0.010411  0.005771</code></pre>
+</div>
+</div>
+</div></div>
+<p><span class="fragment"> <u style="color: blue; font-size: 1.0em; font-weight: bold; font-style: italic;">Your Turn</u><br> Do the CIs drawn for each predictor back up your previous inference regarding their statistical significance to predict BAC? </span></p>
+</section>
+<section class="slide level2">
+
+<h3 id="uncertainty-in-predictions">Uncertainty in Predictions</h3>
+<p>As mentioned before, regression models are fitted on a sample of data drawn from an underlying population. As such, not only the model coefficients, but also the prediction estimates are subject to uncertainty.<br> <u style="color: blue; font-size: 1.0em; font-weight: bold;">Regression is not deterministic!</u></p>
+<p>Sources of uncertainty in prediction.</p>
+<ol type="1">
+<li><span style="color:#1565C0;">Uncertainty in predictor values</span>: Data sampled from a population of North American adults to estimate BAC might be very different from those sampled from a population of adults in the Indian subcontinent.
+<ul>
+<li>Out-of-Distribution data or Selection Bias.</li>
+</ul></li>
+<li><span style="color:#1565C0;">Uncertainty in coefficient values</span>: This points to your inherent sampling variability even when pulling data from fixed populations. We have discussed this already.</li>
+<li><span style="color:#1565C0;">Variation in the actual outcome</span> even given perfect knowledge of predictors/coefficients.
+<ul>
+<li>For example, two individuals with the same weight and gender, drawn from the same population, drinking the same number of beers over the same time period may get two different BACs due to a variety of factors.</li>
+</ul></li>
+</ol>
+</section>
+<section class="slide level2">
+
+<h3 id="uncertainty-in-predictions-1">Uncertainty in Predictions</h3>
+<p>In addition to reporting confidence intervals for model coefficients <span class="math inline">\(\beta\)</span>, we might want to draw similar inferences around model predictions.</p>
+<p><u style="color: blue; font-size: 1.0em; font-weight: bold;">Reminder</u><br> What we estimate as prediction <span class="math inline">\(\hat{y}\)</span> is the expected value of the response variable given the observation of predictors <span class="math inline">\(x\)</span>.</p>
+<h4 id="prediction-with-linear-regression">Prediction with Linear Regression</h4>
+<p>For any given observation, the regression model produces the expected value of a distribution of possible responses modelled by factoring in Gaussian noise.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-left">
+<figure>
+<p><img data-src="images/lin-reg-gaussian.png" class="quarto-figure quarto-figure-left" style="width:95.0%"></p>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-right">
+<figure>
+<p><img data-src="images/lin-reg-gaussian2.png" class="quarto-figure quarto-figure-right" style="width:95.0%"></p>
+</figure>
+</div>
+</div></div>
+</section>
+<section class="slide level2">
+
+<!-- ### Confidence Intervals for the Mean Response
+
+As mentioned before, we can use the regression model to estimate $E(y_h|\vec{x}_h) = \vec{x}_h\beta$. Much like before, we can calculate the standard error of the expected prediction and use this to generate a $t$-interval.
+
+The general formula is: $\text{sample estimate} \pm (\text{t-multiplier} \times \text{standard error of expected prediction})$
+
+Standard error of the fit: $SE[\bar{y_h}] = \sqrt{se^2(\vec{x}_h^T(X^TX)^{-1}\vec{x}_h)}$
+- For Simple Linear Regression, $SE[\bar{y_h}] = se\sqrt{\frac{1}{n}+\frac{(x_h-\bar{x})^2}{\sum_{i=1}^n(x_i-\bar{x})^2}}$
+
+Confidence Interval: $\bar{y_h} \pm t_{\frac{\alpha}{2},n-p-1}\times SE[\bar{y_h}]$
+
+### Confidence Intervals for the Mean Response
+
+<div style="display: flex; align-items: center; gap: 5px;">
+
+  <div class="fragment"; style="flex: 1;">
+    <p>Standard error grows for values of $\vec{x}_h$ further away from $\bar{X}$.</p>
+    <p>Estimated variance of $y_h$ is at the minimum at the mean of the independent variable</p>
+    <p>Predictions near $\bar{x}$ have the narrowest confidence band and the corresponding predictions are the most stable. Confidence bands flare out further away from the mean of the independent variable.</p>
+  </div>
+
+  <div class="fragment"; style="flex: 1;">
+    <img src="images/LinRegCIBand.png" alt="Confidence Band" scale="0.45;" style="width: 90%;">
+  </div>
+</div>
+
+### Prediction Intervals of an Individual Response
+
+Prediction intervals are uncertainty around an individual response value $\hat{y_h}$, for a given observation $\vec{x}_h$, rather than a statistic like the mean response or a model coefficient.
+- Gives us the range of likely predicted values for a given observation.
+
+Much like before, the general formula is: $\text{Sample estimate} \pm (\text{t-multiplier} \times \text{standard error})$
+
+Standard error of the prediction: $SE[\hat{y_h}] = \sqrt{se^2(1+\vec{x}_h^T(X^TX)^{-1}\vec{x}_h)}$
+- For Simple Linear Regression, $SE[\hat{y_h}] = se\sqrt{1+\frac{1}{n}+\frac{(x_h-\bar{x})^2}{\sum_{i=1}^n(x_i-\bar{x})^2}}$
+
+Confidence Interval: $\hat{y_h} \pm t_{\frac{\alpha}{2},n-p-1}\times SE[\hat{y_h}]$
+
+### Prediction Intervals of an Individual Response
+
+<div style="display: flex; align-items: center; gap: 5px;">
+
+  <div class="fragment"; style="flex: 1;">
+    <p>Prediction intervals are typically <u style="color: blue; font-size: 1.0em; font-weight: bold;">wider</u> than confidence intervals. Using a confidence interval for a single predicted value (not a statistic) will underestimate the uncertainty.</p>
+    <p>Confidence Intervals aim to capture the variation in mean response due to sampling variability. Prediction Intervals also factor in the random error ($\epsilon$) that can manifest in individual response values due to the inherent variability of individual observations.</p>
+  </div>
+
+  <div class="fragment"; style="flex: 1;">
+    <img src="images/LinRegPIBand.png" alt="Confidence and Prediction Intervals" scale="0.45;" style="width: 90%;">
+  </div>
+</div>
+
+#### Confidence and Prediction Intervals in Practice 
+
+- We do not have to use these formula to calculate the intervals by hand. Instead, we can reliably use statistical packages like `statsmodels`.
+
+- `summary_table` gives a lot of information, pretty much all that could reasonably be of an analyst's interest.
+
+::: {.columns}
+
+::: {.column width="50%" style="font-size:0.56em;"}
+
+#### R
+
+
+::: {.cell}
+
+```{.r .cell-code}
+# Confidence and prediction intervals for each observed predictor combination
+prediction_table <- predict(
+  model,
+  newdata = bac_data,
+  interval = "prediction",
+  level = 0.95
+)
+
+prediction_table
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+            fit          lwr        upr
+1  0.0936996841  0.062400558 0.12499881
+2  0.0318857101  0.002026260 0.06174516
+3  0.1816542051  0.149618623 0.21368979
+4  0.1279528395  0.098959262 0.15694642
+5  0.0340529437  0.004707477 0.06339841
+6  0.0913827156  0.059169445 0.12359599
+7  0.0572825208  0.028860767 0.08570427
+8  0.0744499296  0.046857361 0.10204250
+9  0.0421698307  0.010754524 0.07358514
+10 0.0401643194  0.010168091 0.07016055
+11 0.0711895873  0.041959751 0.10041942
+12 0.0992029341  0.067953272 0.13045260
+13 0.0907357464  0.061277184 0.12019431
+14 0.0894148136  0.060352618 0.11847701
+15 0.0008846012 -0.029773782 0.03154298
+16 0.0538776188  0.025485335 0.08226990
+```
+
+
+:::
+:::
+
+
+:::
+
+::: {.column width="50%" style="font-size:0.56em;"}
+
+#### Python
+
+
+::: {.cell}
+
+```{.python .cell-code}
+from statsmodels.stats.outliers_influence import summary_table
+st, data, ss2 = summary_table(model, alpha = 0.05)
+st
+```
+
+::: {.cell-output-display}
+
+```{=html}
+
+<table class="simpletable caption-top" data-quarto-postprocess="true">
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Obs</td>
+<td data-quarto-table-cell-role="th">Dep Var</td>
+<td data-quarto-table-cell-role="th">Predicted</td>
+<td data-quarto-table-cell-role="th">Std Error</td>
+<td data-quarto-table-cell-role="th">Mean ci</td>
+<td data-quarto-table-cell-role="th">Mean ci</td>
+<td data-quarto-table-cell-role="th">Predict ci</td>
+<td data-quarto-table-cell-role="th">Predict ci</td>
+<td data-quarto-table-cell-role="th">Residual</td>
+<td data-quarto-table-cell-role="th">Std Error</td>
+<td data-quarto-table-cell-role="th">Student</td>
+<td data-quarto-table-cell-role="th">Cook's</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th"></td>
+<td data-quarto-table-cell-role="th">Population</td>
+<td data-quarto-table-cell-role="th">Value</td>
+<td data-quarto-table-cell-role="th">Mean Predict</td>
+<td data-quarto-table-cell-role="th">95% low</td>
+<td data-quarto-table-cell-role="th">95% upp</td>
+<td data-quarto-table-cell-role="th">95% low</td>
+<td data-quarto-table-cell-role="th">95% upp</td>
+<td data-quarto-table-cell-role="th"></td>
+<td data-quarto-table-cell-role="th">Residual</td>
+<td data-quarto-table-cell-role="th">Residual</td>
+<td data-quarto-table-cell-role="th">D</td>
+</tr>
+<tr class="odd">
+<td>1.0</td>
+<td>0.1</td>
+<td>0.09369968407159798</td>
+<td>0.008102117681094506</td>
+<td>0.07564704088298638</td>
+<td>0.11175232726020959</td>
+<td>0.062400558339835065</td>
+<td>0.1249988098033609</td>
+<td>0.006300315928402023</td>
+<td>0.008126215485502276</td>
+<td>0.7753075142595242</td>
+<td>0.09959032756082704</td>
+</tr>
+<tr class="even">
+<td>2.0</td>
+<td>0.03</td>
+<td>0.031885710092675476</td>
+<td>0.0069216366280788364</td>
+<td>0.016463342602321747</td>
+<td>0.047308077583029205</td>
+<td>0.0020262599221700477</td>
+<td>0.0617451602631809</td>
+<td>-0.0018857100926754772</td>
+<td>0.009152629973071055</td>
+<td>-0.20602931596968624</td>
+<td>0.004046062370334406</td>
+</tr>
+<tr class="odd">
+<td>3.0</td>
+<td>0.19</td>
+<td>0.1816542050766009</td>
+<td>0.008662533046744296</td>
+<td>0.1623528786385349</td>
+<td>0.2009555315146669</td>
+<td>0.14961862255113156</td>
+<td>0.21368978760207025</td>
+<td>0.008345794923399097</td>
+<td>0.007525969057150329</td>
+<td>1.1089329307658873</td>
+<td>0.27153402827061746</td>
+</tr>
+<tr class="even">
+<td>4.0</td>
+<td>0.12</td>
+<td>0.12795283950456068</td>
+<td>0.006135514724779953</td>
+<td>0.11428206076934459</td>
+<td>0.14162361823977676</td>
+<td>0.0989592619966953</td>
+<td>0.15694641701242606</td>
+<td>-0.007952839504560688</td>
+<td>0.009697172170129269</td>
+<td>-0.820119449777148</td>
+<td>0.04487606469975983</td>
+</tr>
+<tr class="odd">
+<td>5.0</td>
+<td>0.04</td>
+<td>0.03405294374859858</td>
+<td>0.0064637130385438646</td>
+<td>0.01965089359932874</td>
+<td>0.04845499389786842</td>
+<td>0.004707477421081484</td>
+<td>0.06339841007611569</td>
+<td>0.00594705625140142</td>
+<td>0.009481566473451487</td>
+<td>0.6272229665903052</td>
+<td>0.03047169414399952</td>
+</tr>
+<tr class="even">
+<td>6.0</td>
+<td>0.095</td>
+<td>0.09138271560132388</td>
+<td>0.008794259959050331</td>
+<td>0.07178788331209661</td>
+<td>0.11097754789055116</td>
+<td>0.05916944507626989</td>
+<td>0.12359598612637787</td>
+<td>0.0036172843986761183</td>
+<td>0.007371613175402334</td>
+<td>0.4907045869886805</td>
+<td>0.05711662119643172</td>
+</tr>
+<tr class="odd">
+<td>7.0</td>
+<td>0.07</td>
+<td>0.057282520800910904</td>
+<td>0.0055705867357951095</td>
+<td>0.04487048006652642</td>
+<td>0.0696945615352954</td>
+<td>0.028860766796814378</td>
+<td>0.08570427480500743</td>
+<td>0.012717479199089103</td>
+<td>0.010032360263372961</td>
+<td>1.2676457847630547</td>
+<td>0.08257341110055731</td>
+</tr>
+<tr class="even">
+<td>8.0</td>
+<td>0.06</td>
+<td>0.07444992964857125</td>
+<td>0.004655744136112914</td>
+<td>0.06407628525399078</td>
+<td>0.08482357404315172</td>
+<td>0.046857361020359395</td>
+<td>0.1020424982767831</td>
+<td>-0.014449929648571253</td>
+<td>0.010488266566700688</td>
+<td>-1.3777233403323759</td>
+<td>0.06233666415082501</td>
+</tr>
+<tr class="odd">
+<td>9.0</td>
+<td>0.02</td>
+<td>0.04216983066677349</td>
+<td>0.008192188322617215</td>
+<td>0.0239164975823618</td>
+<td>0.06042316375118518</td>
+<td>0.010754523662578293</td>
+<td>0.07358513767096869</td>
+<td>-0.02216983066677349</td>
+<td>0.008035405373837423</td>
+<td>-2.759018323948723</td>
+<td>1.3186884176760758</td>
+</tr>
+<tr class="even">
+<td>10.0</td>
+<td>0.05</td>
+<td>0.040164319410213076</td>
+<td>0.007039752740010712</td>
+<td>0.024478772821818373</td>
+<td>0.05584986599860778</td>
+<td>0.010168091026396583</td>
+<td>0.07016054779402957</td>
+<td>0.009835680589786927</td>
+<td>0.009062095254113858</td>
+<td>1.0853649530247313</td>
+<td>0.1184835076273328</td>
+</tr>
+<tr class="odd">
+<td>11.0</td>
+<td>0.07</td>
+<td>0.07118958726881251</td>
+<td>0.00635730439483938</td>
+<td>0.057024630352767794</td>
+<td>0.08535454418485723</td>
+<td>0.04195975063035734</td>
+<td>0.10041942390726769</td>
+<td>-0.0011895872688125059</td>
+<td>0.009553238710849694</td>
+<td>-0.12452188255920808</td>
+<td>0.0011444184707138593</td>
+</tr>
+<tr class="even">
+<td>12.0</td>
+<td>0.1</td>
+<td>0.09920293411798936</td>
+<td>0.008063567803064026</td>
+<td>0.08123618541035679</td>
+<td>0.11716968282562193</td>
+<td>0.06795327164620299</td>
+<td>0.13045259658977573</td>
+<td>0.0007970658820106447</td>
+<td>0.008164469567614937</td>
+<td>0.09762616853546426</td>
+<td>0.0015494578801617809</td>
+</tr>
+<tr class="odd">
+<td>13.0</td>
+<td>0.085</td>
+<td>0.0907357464213045</td>
+<td>0.006566519363972006</td>
+<td>0.07610462950411827</td>
+<td>0.10536686333849073</td>
+<td>0.06127718352828887</td>
+<td>0.12019430931432012</td>
+<td>-0.005735746421304491</td>
+<td>0.00941065951342954</td>
+<td>-0.609494628205309</td>
+<td>0.030145247353950633</td>
+</tr>
+<tr class="even">
+<td>14.0</td>
+<td>0.09</td>
+<td>0.08941481364275172</td>
+<td>0.006200561021158909</td>
+<td>0.07559910272739587</td>
+<td>0.10323052455810758</td>
+<td>0.060352618034469833</td>
+<td>0.1184770092510336</td>
+<td>0.0005851863572482741</td>
+<td>0.009655709816373212</td>
+<td>0.06060521374161142</td>
+<td>0.00025244239102038666</td>
+</tr>
+<tr class="odd">
+<td>15.0</td>
+<td>0.01</td>
+<td>0.0008846011731690273</td>
+<td>0.007592623790715707</td>
+<td>-0.016032818883439947</td>
+<td>0.017802021229778</td>
+<td>-0.029773781805212677</td>
+<td>0.03154298415155073</td>
+<td>0.009115398826830972</td>
+<td>0.00860417067518881</td>
+<td>1.059416319241127</td>
+<td>0.14566251234607924</td>
+</tr>
+<tr class="even">
+<td>16.0</td>
+<td>0.05</td>
+<td>0.05387761875414613</td>
+<td>0.0055402331038074066</td>
+<td>0.04153321012649234</td>
+<td>0.06622202738179991</td>
+<td>0.02548533512207706</td>
+<td>0.0822699023862152</td>
+<td>-0.003877618754146127</td>
+<td>0.010049154501280085</td>
+<td>-0.385865174393745</td>
+<td>0.007542528266575376</td>
+</tr>
+</tbody>
+</table>
+
+```
+
+:::
+:::
+
+
+:::
+
+:::
+-->
+<h3 id="multicollinearity">Multicollinearity</h3>
+<p>The issue of linearly dependent (or “almost” linearly dependent) column/variables is called multicollinearity. Multicollinearity occurs when a variable is highly or perfectly correlated with a linear combination of one or more columns.</p>
+<ul>
+<li>Intuitively, this means that the variable can be deduced from other variables and thus is not capable of adding new information to the model.</li>
+</ul>
+<p><span style="color:#1565C0;"><b>Structural Multicollinearity</b></span>: Creating new predictors from other predictors through mathematical transformations. This is a design issue but does not reflect a problem with the data itself.</p>
+<ul>
+<li>For example, multicollinearity can occur when <span class="math inline">\(p\)</span> dummy variables are incorporated into a model instead of <span class="math inline">\(p-1\)</span> for a categorical variable that has <span class="math inline">\(p\)</span> levels.</li>
+</ul>
+<p><span style="color:#1565C0;"><b>Data-based multicollinearity</b></span>: Result of a poorly designed experiment, reliance on observational data where variables naturally move together. Why can’t a researcher just collect his data in such a way to ensure that the predictors aren’t highly correlated?</p>
+<ul>
+<li>Unfortunately, researchers often can’t control the predictors. For example when gathering a person’s gender, race, grade point average, math SAT score, IQ, and starting salary, one or more variables maybe dependent on others but data collectors in such observational studies cannot control for them.</li>
+</ul>
+<p><u style="color: blue; font-size: 1.0em; font-weight: bold;">Big problem</u> Design matrix <span class="math inline">\(X\)</span> having dependent columns is a violation of a key condition!</p>
+</section>
+<section class="slide level2">
+
+<h3 id="multicollinearity-1">Multicollinearity</h3>
+<p><code>statsmodels</code> should give you a warning when you have issues with multicollinearity. It’s good practice to check your models even if you don’t see this warning!</p>
+<ul>
+<li><b>First check</b>: Derive a correlation matrix of your predictors. Do not include the response variable as we want our predictors to have high correlation with it.</li>
+<li><b>Second check</b>: Variance Inflation Factor to systematically remove variables that can be explained by others.
+<ul>
+<li><span class="math inline">\(VIF = \frac{1}{(1-R^2_x)}\)</span>; where <span class="math inline">\(R^2_x\)</span> is the variation in <span class="math inline">\(x\)</span> that can be explained by its relationship to other variables in the model.
+<ul>
+<li>Treat x as the response variable that you are trying to predict from the remaining explanatory variables. Calculate <span class="math inline">\(R^2\)</span> of this auxiliary regression. <em>VIF over 10 is worrisome.</em></li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="multicollinearity-handling">Multicollinearity handling</h3>
+<p>First we start with the full model</p>
+<div class="columns">
+<div class="column" style="width:35%;">
+<h4 id="r-8">R</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="" aria-label="1"></a><span class="co"># Ensure the dummy variable is numeric</span></span>
+<span id="cb38-2"><a href="" aria-label="2"></a>bac_data<span class="sc">$</span>Gender_OSU_male <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(bac_data<span class="sc">$</span>Gender_OSU_male)</span>
+<span id="cb38-3"><a href="" aria-label="3"></a></span>
+<span id="cb38-4"><a href="" aria-label="4"></a>full_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(</span>
+<span id="cb38-5"><a href="" aria-label="5"></a>  BAC <span class="sc">~</span> Beers <span class="sc">+</span> Weight_OSU <span class="sc">+</span> Gender_OSU_male <span class="sc">+</span> Sobr1 <span class="sc">+</span> Sobr2,</span>
+<span id="cb38-6"><a href="" aria-label="6"></a>  <span class="at">data =</span> bac_data</span>
+<span id="cb38-7"><a href="" aria-label="7"></a>)</span>
+<span id="cb38-8"><a href="" aria-label="8"></a></span>
+<span id="cb38-9"><a href="" aria-label="9"></a><span class="fu">summary</span>(full_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = BAC ~ Beers + Weight_OSU + Gender_OSU_male + Sobr1 + 
+    Sobr2, data = bac_data)
+
+Residuals:
+       Min         1Q     Median         3Q        Max 
+-0.0221698 -0.0043422  0.0006911  0.0068117  0.0127175 
+
+Coefficients:
+                  Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)      9.246e-02  1.594e-01   0.580 0.574748    
+Beers            1.913e-02  2.117e-03   9.037 3.99e-06 ***
+Weight_OSU      -3.487e-04  7.447e-05  -4.682 0.000865 ***
+Gender_OSU_male  1.261e-03  9.517e-03   0.133 0.897212    
+Sobr1           -3.447e-03  1.647e-02  -0.209 0.838388    
+Sobr2           -2.320e-03  3.631e-03  -0.639 0.537234    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.01148 on 10 degrees of freedom
+Multiple R-squared:  0.9549,    Adjusted R-squared:  0.9324 
+F-statistic: 42.39 on 5 and 10 DF,  p-value: 2.057e-06</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:65%;">
+<h4 id="python-8">Python</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="" aria-label="1"></a><span class="co">#convert boolean column to numeric</span></span>
+<span id="cb40-2"><a href="" aria-label="2"></a>bac_data[<span class="st">'Gender_OSU_male'</span>] <span class="op">=</span> bac_data[<span class="st">'Gender_OSU_male'</span>].astype(<span class="bu">int</span>)</span>
+<span id="cb40-3"><a href="" aria-label="3"></a>full_model <span class="op">=</span> smf.ols(</span>
+<span id="cb40-4"><a href="" aria-label="4"></a>    <span class="st">'BAC ~ Beers + Weight_OSU + Gender_OSU_male + Sobr1 + Sobr2'</span>,</span>
+<span id="cb40-5"><a href="" aria-label="5"></a>    data<span class="op">=</span>bac_data</span>
+<span id="cb40-6"><a href="" aria-label="6"></a>).fit()</span>
+<span id="cb40-7"><a href="" aria-label="7"></a>full_model.summary().tables[<span class="dv">0</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="simpletable caption-top">
+<caption>OLS Regression Results</caption>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Dep. Variable:</th>
+<td>BAC</td>
+<th data-quarto-table-cell-role="th">R-squared:</th>
+<td>0.955</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Model:</th>
+<td>OLS</td>
+<th data-quarto-table-cell-role="th">Adj. R-squared:</th>
+<td>0.932</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Method:</th>
+<td>Least Squares</td>
+<th data-quarto-table-cell-role="th">F-statistic:</th>
+<td>42.39</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Date:</th>
+<td>Mon, 19 Oct 2026</td>
+<th data-quarto-table-cell-role="th">Prob (F-statistic):</th>
+<td>2.06e-06</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Time:</th>
+<td>19:41:09</td>
+<th data-quarto-table-cell-role="th">Log-Likelihood:</th>
+<td>52.538</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">No. Observations:</th>
+<td>16</td>
+<th data-quarto-table-cell-role="th">AIC:</th>
+<td>-93.08</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Df Residuals:</th>
+<td>10</td>
+<th data-quarto-table-cell-role="th">BIC:</th>
+<td>-88.44</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Df Model:</th>
+<td>5</td>
+<th data-quarto-table-cell-role="th"></th>
+<td></td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Covariance Type:</th>
+<td>nonrobust</td>
+<th data-quarto-table-cell-role="th"></th>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div></div>
+</section>
+<section class="slide level2">
+
+<h3 id="multicollinearity-handling-1">Multicollinearity handling</h3>
+<p>While the overall model seems statistically significant, some predictors have high <span class="math inline">\(p\)</span> values and relatively higher standard error. Let’s investigate further by computing VIF of all predictors</p>
+<div class="columns">
+<div class="column" style="width:40%;">
+<h4 id="r-9">R</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="" aria-label="1"></a><span class="fu">summary</span>(full_model)<span class="sc">$</span>coefficients</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                     Estimate   Std. Error    t value     Pr(&gt;|t|)
+(Intercept)      0.0924596848 1.594126e-01  0.5800023 5.747478e-01
+Beers            0.0191305457 2.116901e-03  9.0370528 3.987915e-06
+Weight_OSU      -0.0003486564 7.446629e-05 -4.6820706 8.647895e-04
+Gender_OSU_male  0.0012611012 9.517320e-03  0.1325059 8.972125e-01
+Sobr1           -0.0034469292 1.646590e-02 -0.2093375 8.383878e-01
+Sobr2           -0.0023201314 3.631337e-03 -0.6389193 5.372341e-01</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="" aria-label="1"></a><span class="fu">vif</span>(full_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          Beers      Weight_OSU Gender_OSU_male           Sobr1           Sobr2 
+       2.465164        1.514411        2.751507        1.512063        3.057056 </code></pre>
+</div>
+</div>
+</div><div class="column" style="width:60%;">
+<h4 id="python-9">Python</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="" aria-label="1"></a>full_model.summary().tables[<span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="simpletable caption-top">
+<tbody>
+<tr class="odd">
+<td></td>
+<th data-quarto-table-cell-role="th">coef</th>
+<th data-quarto-table-cell-role="th">std err</th>
+<th data-quarto-table-cell-role="th">t</th>
+<th data-quarto-table-cell-role="th">P&gt;|t|</th>
+<th data-quarto-table-cell-role="th">[0.025</th>
+<th data-quarto-table-cell-role="th">0.975]</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Intercept</th>
+<td>0.0925</td>
+<td>0.159</td>
+<td>0.580</td>
+<td>0.575</td>
+<td>-0.263</td>
+<td>0.448</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Beers</th>
+<td>0.0191</td>
+<td>0.002</td>
+<td>9.037</td>
+<td>0.000</td>
+<td>0.014</td>
+<td>0.024</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Weight_OSU</th>
+<td>-0.0003</td>
+<td>7.45e-05</td>
+<td>-4.682</td>
+<td>0.001</td>
+<td>-0.001</td>
+<td>-0.000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Gender_OSU_male</th>
+<td>0.0013</td>
+<td>0.010</td>
+<td>0.133</td>
+<td>0.897</td>
+<td>-0.020</td>
+<td>0.022</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Sobr1</th>
+<td>-0.0034</td>
+<td>0.016</td>
+<td>-0.209</td>
+<td>0.838</td>
+<td>-0.040</td>
+<td>0.033</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Sobr2</th>
+<td>-0.0023</td>
+<td>0.004</td>
+<td>-0.639</td>
+<td>0.537</td>
+<td>-0.010</td>
+<td>0.006</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="" aria-label="1"></a>bac_predictors <span class="op">=</span> bac_data[[<span class="st">'Beers'</span>, <span class="st">'Weight_OSU'</span>, <span class="st">'Gender_OSU_male'</span>, <span class="st">'Sobr1'</span>, <span class="st">'Sobr2'</span>]]</span>
+<span id="cb46-2"><a href="" aria-label="2"></a>bac_predictors <span class="op">=</span> sm.add_constant(bac_predictors)</span>
+<span id="cb46-3"><a href="" aria-label="3"></a>vif <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb46-4"><a href="" aria-label="4"></a>    <span class="st">'Feature'</span>: bac_predictors.columns,</span>
+<span id="cb46-5"><a href="" aria-label="5"></a>    <span class="st">'VIF'</span>: [variance_inflation_factor(bac_predictors.values, i) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(bac_predictors.columns))]</span>
+<span id="cb46-6"><a href="" aria-label="6"></a>})</span>
+<span id="cb46-7"><a href="" aria-label="7"></a>vif</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           Feature       VIF
+0            const  1.000000
+1            Beers  2.465164
+2       Weight_OSU  1.514411
+3  Gender_OSU_male  2.751507
+4            Sobr1  1.512063
+5            Sobr2  3.057056</code></pre>
+</div>
+</div>
+</div></div>
+</section>
+<section class="slide level2">
+
+<h3 id="multicollinearity-handling-2">Multicollinearity handling</h3>
+<p>Investigating the VIF table, we see that none of the predictors are severely collinear to each other and their VIFs are all below 10. This is good news and the high <span class="math inline">\(p\)</span> values cannot be attributed to multicollinearity!</p>
+<p>However, for datasets where the number of predictors is large, it is possible that some predictors are highly collinear with each other. In such cases, we can use the VIF table to identify and progressively remove the most collinear predictor and refit the model until VIFs are acceptable again.</p>
+<div class="fragment">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>The impact of sample size</strong></p>
+</div>
+<div class="callout-content">
+<p>In the BAC example, we have 16 samples and for a model with 6 parameters (<em>an intercept plus five slopes</em>) <span class="math inline">\(df_\text{residual} = 16-6= 10\)</span>.</p>
+<p>So the model might explain BAC very well but with only 16 observations and several predictors, there may not be enough information to estimate every predictor’s unique contribution precisely. This could explain the considerable uncertainty around some predictors in our post regression analysis given we are trying to estimate several effects from a very small dataset.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="multicollinearity-handling-3">Multicollinearity handling</h3>
+<p><span style="color:#1565C0;"><b>One caveat</b></span> to consider before removing a predictor with a high VIF score is its <strong>substantive importance</strong> in predicting or explaining the response variable. For example, suppose the VIF table reveals a high score for <code>Weight_OSU</code>, while the regression summary indicates that, holding beers consumed, gender, and sobriety scores constant, weight is significantly associated with BAC. This would suggest that <code>Weight_OSU</code> shares substantial information with other predictors, but still contributes unique information about BAC.<br></p>
+<p><span style="color:#1565C0;"><b>Ask yourself</b></span>: does weight provide more meaningful interpretive value than, for example, one of the sobriety-test scores for the research question? If so, <strong>do not blindly remove it!</strong></p>
+<p>Instead, investigate <strong>why the predictors are collinear</strong>. For example, <code>Weight_OSU</code> might be associated with gender if male and female participants tend to differ systematically in weight. Depending on the research question, possible responses to problematic multicollinearity include:</p>
+<ul>
+<li>retaining an important predictor despite its high VIF;</li>
+<li>removing one of two predictors that measure largely redundant information;</li>
+<li>combining closely related predictors when scientifically defensible; or</li>
+<li>collecting additional observations that provide more independent variation among the predictors.</li>
+</ul>
+<div class="fragment">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Centering or standardization does not generally remove data-based multicollinearity between distinct predictors.</strong></p>
+</div>
+<div class="callout-content">
+<p>It is more useful to alleviate certain forms of structural multicollinearity, such as that introduced by polynomial or interaction terms, reducing VIF without changing model fit or inference for slopes.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="assumptions-of-linear-regression">Assumptions of Linear Regression</h3>
+<p>Some key conditions essential to linear regression:</p>
+<ul>
+<li class="fragment">
+<u style="color: blue; font-size: 1.0em; font-weight: bold;">L</u><b>inearity</b>: We predict the expected response <span class="math inline">\(E(Y)\)</span> for a given observation <span class="math inline">\(X\)</span> and it exhibits a linear relationship with the explanatory variables (predictors) in <span class="math inline">\(X\)</span>
+</li>
+<li class="fragment">
+<u style="color: blue; font-size: 1.0em; font-weight: bold;">I</u><b>ndependent Residuals</b>: The error terms <span class="math inline">\(\epsilon_i\)</span> for each prediction (also known as the residual) are independent, meaning that the value of the error for one case gives no information about the value of the error for another case.
+</li>
+<li class="fragment">
+<u style="color: blue; font-size: 1.0em; font-weight: bold;">N</u><b>ormality of Residuals</b>: The error terms <span class="math inline">\(\epsilon_i\)</span> for each prediction are n.i.d., i.e.&nbsp;normally distributed around the regression hyperplane (line in 2D).
+</li>
+<li class="fragment">
+<u style="color: blue; font-size: 1.0em; font-weight: bold;">E</u><b>quality of Variance</b>: The error terms <span class="math inline">\(\epsilon_i\)</span> have the same variance for all observations
+</li>
+</ul>
+<p><span class="fragment">An equivalent way to think of linearity is that the conditional mean of the error, <span class="math inline">\(E(\epsilon_i|X_i)=0\)</span> . If the model perfectly captured the average trend, then any deviation (residual) above the line should be cancelled by the ones below it, thereby keeping the average error at 0.</span></p>
+<p><span class="fragment">All four conditions can be summed up by: <span class="math display">\[
+P(e|X) \sim \mathcal{N(0, \sigma^2 I_n)}
+\]</span> </span></p>
+<p><span class="fragment">Next we will see how to check if each of these conditions holds.</span></p>
+</section>
+<section class="slide level2">
+
+<h3 id="linearity">Linearity</h3>
+<ul>
+<li>You can check this assumption using scatterplots – one for each predictor vs the response variable.</li>
+<li>You can also check for linearity with a scatterplot of the (standardized) residuals, against the predicted values (on the horizontal axis).</li>
+<li>What do you do if your data are not linear?
+<ul>
+<li>Transformations (log, square root, inverse, etc.) on either the predictors or responses.</li>
+</ul></li>
+</ul>
+<div class="columns">
+<div class="column" style="width:40%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/linearity2.png" class="quarto-figure quarto-figure-center" style="width:100.0%"></p>
+</figure>
+</div>
+</div><div class="column" style="width:60%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/linearity1.png" class="quarto-figure quarto-figure-center" style="width:92.0%"></p>
+</figure>
+</div>
+</div></div>
+</section>
+<section class="slide level2">
+
+<!-- ### Standardized Residuals
+
+- Residuals can be sensitive to the scale of the data and the presence of outliers. In other words, some points are expected to be closer to the line than others.</br> Standardized residuals adjust for that, so we don’t unfairly judge them.
+- We already know that residuals in a true linear relationship are centered around 0. Standardized residuals $e^{std}_i$ are obtained by dividing the raw residuals by the standard deviation of residuals, se.
+$
+e^{std}_i = \frac{y_i-\hat{y}_i}{se}
+$
+- $P(e^{std}_i|X) \sim \mathcal{N(0, 1)}$
+
+#### Partial Residuals
+
+<span class="fragment">A scatterplot like <u style="color: blue; font-size: 1.0em; font-weight: bold;">BAC vs Weight</u> shows the marginal relationship between the response variable and the predictor while ignoring all other predictors. But this is not what we estimate in linear regression.
+$$\beta_j = \text{effect of } X_j \text{ while holding all other predictors fixed}$$
+</span>
+
+<span class="fragment">A predictor can look weak or nonlinear marginally but show strong conditional linearity or vice versa.
+</span>
+
+<span class="fragment">A partial residual with respect to the $j$-th predictor is
+$$\begin{aligned}
+r^{(j)}_i &= y_i - \sum\limits_{k \neq j} \hat{\beta}_kx_{ik} \implies
+r^{(j)}_i = \hat{\beta}_jx_{ij} + e_i
+\end{aligned}$$
+</span>
+
+<span class="fragment">Sometimes this is thought of as an added value–how much else does this particular predictor contribute? Marginal plots cannot show this.
+</span> 
+-->
+<h3 id="independence-and-uncorrelated-residuals">Independence and Uncorrelated Residuals</h3>
+<p>We are assuming that each observation and corresponding residual is independent from all of others.<br> What we want to check is for the residuals to be uncorrelated, no general pattern among the residuals across observations or predicted values.</p>
+<ul>
+<li>Scatterplots of residuals against predictors and response variables.</li>
+</ul>
+<p>Most commonly violated in</p>
+<ul>
+<li>Time-series data</li>
+<li>Spatial data</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="normality-of-residuals">Normality of Residuals</h3>
+<p>For the usual inferential procedures in linear regression, we assume that the <strong>errors around the fitted regression model are approximately normally distributed</strong>: <span class="math display">\[
+\epsilon_i= y_i-\hat{y}_i; \epsilon_i \sim N(0,\sigma^2)
+\]</span></p>
+<div class="fragment">
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>If residuals are <strong>standardized</strong>, we expect them to approximately follow a <strong>standard normal distribution</strong>.</p>
+<p>In practice, we therefore look for a residual distribution that is:</p>
+<ul>
+<li>approximately symmetric and bell-shaped,</li>
+<li>centered around zero, and</li>
+<li>without substantial departures in the tails.</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/normality.png" class="quarto-figure quarto-figure-center" style="width:90.0%"></p>
+</figure>
+</div>
+</div></div>
+</div>
+<div class="fragment">
+<p><span style="color:#1565C0;"><strong>Possible remedies</strong></span>: Non-linear transformations (log, square root, inverse, etc.) on either the predictors or responses.</p>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="checking-normality-of-residuals">Checking Normality of Residuals</h3>
+<p>We should use <strong>visual diagnostics and a formal test together</strong> when assessing residual normality.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h4 id="visual-checks">Visual checks</h4>
+<div class="fragment">
+<ol type="1">
+<li><strong>Histogram of residuals</strong></li>
+</ol>
+<ul>
+<li>Look for an approximately symmetric, bell-shaped distribution centered near zero.</li>
+<li>Useful for seeing skewness, multiple modes, and unusual observations.</li>
+</ul>
+<ol start="2" type="1">
+<li><strong>Normal Q–Q plot</strong></li>
+</ol>
+<ul>
+<li>Compares the observed <em>standardized</em> residuals (<span class="math inline">\(Y\)</span>-axis) with the quantiles that are expected (<span class="math inline">\(X\)</span>-axis) under a normal distribution.</li>
+<li>Residuals that are approximately normal should fall reasonably close to the diagonal reference line.</li>
+<li>Systematic curvatures or <span class="math inline">\(S\)</span>-shaped patterns around the line or strong departures in the tails suggest violations of normality.</li>
+</ul>
+</div>
+</div><div class="column" style="width:50%;">
+<h4 id="shapirowilk-test">Shapiro–Wilk test</h4>
+<div class="fragment">
+<p>The Shapiro–Wilk test formally evaluates:</p>
+<p><span class="math display">\[\begin{aligned}
+H_0 &amp;:\text{residuals are consistent with normality}\\
+H_A &amp;:\text{residuals depart from normality}
+\end{aligned}
+\]</span></p>
+<ul>
+<li><span style="color:#1565C0;"><strong>Small <span class="math inline">\(p\)</span>-value</strong></span>: evidence against normality.</li>
+<li><span style="color:#1565C0;"><strong>Large <span class="math inline">\(p\)</span>-value</strong></span>: insufficient evidence to reject normality; it does <em>not</em> prove that the residuals are normal.</li>
+</ul>
+<div class="fragment">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>What to use</strong></p>
+</div>
+<div class="callout-content">
+<p>Use the test <em>alongside</em> the Q-Q plot that is generally more diagnostically useful than expecting a histogram, especially with a small dataset such as the BAC example. With only 16 observations, a histogram can look quite irregular even when the underlying errors are reasonably normal, and the Shapiro–Wilk test also has limited power to detect departures.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></div>
+</section>
+<section class="slide level2">
+
+<h3 id="what-if-residual-normality-is-violated">What if residual normality is violated?</h3>
+<div class="columns">
+<div class="column" style="width:55%;">
+<div class="fragment">
+<p>What <span style="color:#1565C0;"><i>does not</i></span> break:</p>
+<ul>
+<li>Least-squares coefficient estimates</li>
+<li>Linearity of the fitted model</li>
+<li><span class="math inline">\(R^2\)</span></li>
+<li>Prediction accuracy (subject to the presence of outliers)</li>
+</ul>
+<p>Although the tests and confidence intervals originate from normal distributions, the consequences are usually minor because the formulas are based on the sampling distributions of the estimates.</p>
+<p>What <span style="color:#1565C0;"><i>does</i></span> break:</p>
+<ul>
+<li>Hypothesis tests</li>
+<li>Confidence intervals for means</li>
+<li>Prediction intervals</li>
+<li>Outlier diagnostics (more on this later!)</li>
+</ul>
+</div>
+</div><div class="column" style="width:45%;">
+<div class="fragment">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/qq-plot-residuals.png" class="quarto-figure quarto-figure-center" style="width:90.0%"></p>
+</figure>
+</div>
+</div>
+</div></div>
+<div class="fragment">
+<p>These inferential procedures make stronger assumptions about normality; consequently, the usual <span class="math inline">\(t\)</span>-statistics and related inference may no longer be reliable.</p>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="equality-of-variance">Equality of Variance</h3>
+<p>We can plot the residuals against the predictors.</p>
+<ul>
+<li>What we want is <u style="color: blue; font-size: 1.0em; font-weight: bold;">Homoscedasticity</u>: equal spread of residuals along either side of the mean response for all observations.</li>
+</ul>
+<p>Violation of this condition is called <u style="color: blue; font-size: 1.0em; font-weight: bold;">Heteroscedasticity</u> and it has far more serious consequences.</p>
+<ul>
+<li>Standard errors inaccurately describe the uncertainty in the estimates, as a consequence means tests, confidence intervals and p-values can be misleading.</li>
+<li>Could rebuild the model with different independent variables.</li>
+<li>Perform transformations on non linear data or fit other (non linear) models.</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="homoscedasticity">Homoscedasticity</h3>
+
+<img src="images/homoscedasticity.png" alt="Confidence and Prediction Intervals" scale="0.5;" style="width: 70%;" class="r-stretch"></section>
+<section class="slide level2">
+
+<h3 id="heteroscedasticity">Heteroscedasticity</h3>
+
+<img src="images/heteroscedasticity.png" alt="Confidence and Prediction Intervals" scale="0.5;" style="width: 70%;" class="r-stretch"></section>
+<section class="slide level2">
+
+<h3 id="non-linearity">Non Linearity</h3>
+
+<img src="images/non-linearity.png" alt="Confidence and Prediction Intervals" scale="0.5;" style="width: 70%;" class="r-stretch"></section>
+<section class="slide level2">
+
+<h3 id="outliers-and-influential-observations">Outliers and Influential Observations</h3>
+<p>Always do scatter-plots. They are conceptually simple but can reveal the shape and pattern of your data and reveal a lot of information.</p>
+<div class="fragment">
+<p><span style="color:#1565C0;"><u><b>Outliers</b></u></span>: Can influence the regression line/hyperplane by pulling it in the direction of the outlier.</p>
+<ul>
+<li>A value that can appear out of the norm or extreme for at least one of the variables; does not follow the predicted pattern of the model.</li>
+<li>A point whose value may fall within the expected range but produces an extremely large residual.</li>
+</ul>
+<p>Removing an observation simply because it is an outlier is not a good idea, but it is also not a good idea to report a conclusion that rests on one or two data points.</p>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="outliers-and-influential-observations-1">Outliers and Influential Observations</h3>
+<span class="fragment"> <u style="color: blue; font-size: 1.0em; font-weight: bold;">Influential Observation</u>: It could be an outlier, but not necessarily. The point has a disproportionate effect on model estimates and interpretations.
+<ul>
+<li>
+<u><b>High Leverage Point</b></u>: Could be a value corresponding to an observation that <u>horizontally</u> further away from the rest of the observations in the sample. These points exhibit very strong influence on the least squares plane.<br>Some outliers are high leverage points, but all high leverage points are <b>NOT</b> outliers.
+</li>
+<li>
+It could be a value of the dependent variable that is far outside of the rest of the values for the data.
+</li>
+</ul>
+<p></p>
+<div class="fragment">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Outliers vs.&nbsp;Influential Observations</strong></p>
+</div>
+<div class="callout-content">
+<p><strong>Outliers</strong> are unusual in the response. <strong>Influential observations</strong> are unusual in how much they affect the fitted model.</p>
+<p>Influential observations can substantially change:</p>
+<ul>
+<li>regression coefficients,</li>
+<li>the strength and direction of relationships between predictors and the response,</li>
+<li>model significance, and</li>
+<li>standard errors.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</span></section>
+<section class="slide level2">
+
+<h3 id="influential-observations">Influential Observations</h3>
+<div class="columns">
+<div class="column" style="width:55%;">
+<div class="fragment">
+<p><strong>Influential points</strong> are observations that substantially <strong>influence the slope of the fitted regression line</strong>. They are often (but not always) high-leverage points.</p>
+<p>Influence is a combination of <strong>leverage</strong> and how extreme a point is in the <span class="math inline">\(y\)</span>-direction.</p>
+<ul>
+<li>Influential points could change a strong relationship to a weak relationship.</li>
+<li>Influential points could change a weak relationship to a strong relationship.</li>
+</ul>
+<p><span style="color:#1565C0;"><strong>High-leverage outlier points can be very influential!</strong></span></p>
+</div>
+</div><div class="column" style="width:45%;">
+<div class="fragment">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/influential-points-lev-outlier.png" class="quarto-figure quarto-figure-center" style="width:90.0%"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section class="slide level2">
+
+<h3 id="how-to-deal-with-influential-observations">How to deal with influential observations?</h3>
+<ul>
+<li>One way to assess the influence of an observation is to temporarily remove the observation to see whether the answers to the questions of interest change.
+<ul>
+<li>Does the evidence from a test change from slight to convincing? Does the decision to include a term in the model change?</li>
+<li>Does an important estimate change by a practically relevant amount?</li>
+</ul></li>
+<li>If not, the observation is not influential.</li>
+<li>If so, we need to deal with it!</li>
+<li>If an influential observation is not particularly unusual in its explanatory variables, and if no definitive explanation for its unique behavior can be found, omitting it cannot be justified.
+<ul>
+<li>More data are needed to answer the questions of interest.</li>
+<li>As a last resort, report sensitivity: the results with and without the influential observation.</li>
+</ul></li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="case-influence-statistics">Case-Influence Statistics</h3>
+<p>Case-influence statistics are numerical measures that reveal insight regarding individual influence of each observation (or “case”) on the overall regression.</p>
+<ul>
+<li>They can help identify influential observations that may not be visible in a graph</li>
+<li>They partition the overall influence of an observation into what is unusual about its explanatory variable values and what is unusual about its response relative to the fitted model.</li>
+</ul>
+<p>We will discuss three different types of case-influence statistics:</p>
+<ol type="1">
+<li>Leverage</li>
+<li>Studentized residuals</li>
+<li>Cook’s distance.</li>
+</ol>
+</section>
+<section class="slide level2">
+
+<h3 id="leverage">Leverage</h3>
+<p>The leverage of a case is a measure of the distance between its explanatory values and the average of the explanatory variable values in the entire dataset.</p>
+<ul>
+<li><p>For simple linear regression with one predictor, leverage is given as the proportion of the total sum of squares in <span class="math inline">\(X\)</span> due to a single case, but it can also be re-expressed as the distance from the center of the dataset in terms of standard deviations. <span class="math display">\[
+h_i = \frac{(X_i-\bar{X})^2}{\sum(X_i-\bar{X})^2} + \frac{1}{n}
+\]</span></p></li>
+<li><p>For multiple explanatory variables, the calculation is more involved (not included) but the concept is the same: <i>proportion of the total sum of squares due to a single case.</i></p></li>
+</ul>
+<p><u style="color: blue; font-size: 1.0em; font-weight: bold;">Rule of thumb</u>: Although model dependent, if <span class="math inline">\(h_i&gt;2\frac{p+1}{n}\)</span> the case should be flagged.</p>
+</section>
+<section class="slide level2">
+
+<h3 id="estimating-leverage-in-practice">Estimating Leverage in Practice</h3>
+<p>Let us check the leverage of individual observations on a reduced model to predict BAC that uses 4 predictors. As we will see, there are some high leverage points.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h4 id="r-10">R</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="" aria-label="1"></a>bac_data<span class="sc">$</span>Weight_c <span class="ot">&lt;-</span> bac_data<span class="sc">$</span>Weight_OSU <span class="sc">-</span> <span class="fu">mean</span>(bac_data<span class="sc">$</span>Weight_OSU)</span>
+<span id="cb48-2"><a href="" aria-label="2"></a>model2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(</span>
+<span id="cb48-3"><a href="" aria-label="3"></a>  BAC <span class="sc">~</span> Beers <span class="sc">+</span> Weight_c <span class="sc">+</span> Gender_OSU_male <span class="sc">+</span> Sobr2,</span>
+<span id="cb48-4"><a href="" aria-label="4"></a>  <span class="at">data =</span> bac_data</span>
+<span id="cb48-5"><a href="" aria-label="5"></a>)</span>
+<span id="cb48-6"><a href="" aria-label="6"></a>influence_vals <span class="ot">&lt;-</span> <span class="fu">influence.measures</span>(model2)</span>
+<span id="cb48-7"><a href="" aria-label="7"></a>leverage <span class="ot">&lt;-</span> <span class="fu">hatvalues</span>(model2)</span>
+<span id="cb48-8"><a href="" aria-label="8"></a></span>
+<span id="cb48-9"><a href="" aria-label="9"></a><span class="fu">print</span>(leverage)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        1         2         3         4         5         6         7         8 
+0.2259685 0.3596798 0.5609540 0.2787538 0.2013143 0.5492454 0.2269204 0.1490620 
+        9        10        11        12        13        14        15        16 
+0.5092866 0.3763201 0.2758489 0.2042940 0.3128164 0.2497292 0.3726767 0.1471302 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="" aria-label="1"></a><span class="fu">print</span>(<span class="fu">sum</span>(leverage))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="" aria-label="1"></a><span class="co"># Checking individually for high leverage using the same rule of thumb</span></span>
+<span id="cb52-2"><a href="" aria-label="2"></a><span class="fu">print</span>(leverage <span class="sc">&gt;</span> <span class="dv">2</span> <span class="sc">*</span> <span class="dv">5</span> <span class="sc">/</span> <span class="dv">16</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    1     2     3     4     5     6     7     8     9    10    11    12    13 
+FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE 
+   14    15    16 
+FALSE FALSE FALSE </code></pre>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<h4 id="python-10">Python</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="" aria-label="1"></a>bac_data[<span class="st">'Weight_c'</span>] <span class="op">=</span> bac_data[<span class="st">'Weight_OSU'</span>] <span class="op">-</span> bac_data[<span class="st">'Weight_OSU'</span>].mean()</span>
+<span id="cb54-2"><a href="" aria-label="2"></a>model2 <span class="op">=</span> smf.ols(</span>
+<span id="cb54-3"><a href="" aria-label="3"></a>    <span class="st">'BAC ~ Beers + Weight_c + Gender_OSU_male + Sobr2'</span>,</span>
+<span id="cb54-4"><a href="" aria-label="4"></a>    data<span class="op">=</span>bac_data</span>
+<span id="cb54-5"><a href="" aria-label="5"></a>).fit()</span>
+<span id="cb54-6"><a href="" aria-label="6"></a>influence <span class="op">=</span> model2.get_influence()</span>
+<span id="cb54-7"><a href="" aria-label="7"></a>leverage <span class="op">=</span> influence.hat_matrix_diag</span>
+<span id="cb54-8"><a href="" aria-label="8"></a><span class="bu">print</span>(<span class="st">"Leverage of all 16 points:"</span>, leverage)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Leverage of all 16 points: [0.22596846 0.3596798  0.56095405 0.27875375 0.20131429 0.54924536
+ 0.22692039 0.14906195 0.50928662 0.37632013 0.27584885 0.20429398
+ 0.31281635 0.24972917 0.37267669 0.14713016]</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="" aria-label="1"></a><span class="bu">print</span>(leverage.<span class="bu">sum</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>5.0</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="" aria-label="1"></a><span class="co">#checking individually for high leverage as per rule of thumb</span></span>
+<span id="cb58-2"><a href="" aria-label="2"></a><span class="bu">print</span>(leverage<span class="op">&gt;</span><span class="dv">2</span><span class="op">*</span><span class="dv">5</span><span class="op">/</span><span class="dv">16</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[False False False False False False False False False False False False
+ False False False False]</code></pre>
+</div>
+</div>
+</div></div>
+</section>
+<section class="slide level2">
+
+<h3 id="cooks-distance.">Cook’s distance.</h3>
+<p>Cook’s distance measure the effect that omitting a case has on the estimated regression coeﬀicients. Joint effect of leverage and residual. <span class="math display">\[D_i = \sum\limits_{j=1}^{n}\frac{\hat{y_{j(i)}}-\hat{y_j}}{p\times se^2}\]</span> where <span class="math inline">\(\hat{y_j}\)</span> is the <span class="math inline">\(j\)</span>-th fitted value in a fit using all points, <span class="math inline">\(\hat{y_{j(i)}}\)</span> is the <span class="math inline">\(j\)</span>-th fitted value in a fit that excludes the <span class="math inline">\(i\)</span>th point in the dataset, <span class="math inline">\(p\)</span> is the number of regression coefficients, and <span class="math inline">\(se^2\)</span> is our estimated variance from the fit based on all observations (the square of our standard error as seen many times before).</p>
+<p>A case that is influential in changing the least squares estimates when deleted will have a high Cook’s Distance.</p>
+<p><u style="color: blue; font-size: 1.0em; font-weight: bold;">Rule of thumb</u>: <span class="math inline">\(\approx\)</span> 1 or above indicate large influence.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h4 id="r-11">R</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="" aria-label="1"></a><span class="co"># Get Cook's distance</span></span>
+<span id="cb60-2"><a href="" aria-label="2"></a>cooks_d <span class="ot">&lt;-</span> <span class="fu">cooks.distance</span>(model2)</span>
+<span id="cb60-3"><a href="" aria-label="3"></a><span class="fu">print</span>(cooks_d)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           1            2            3            4            5            6 
+1.597606e-02 4.372164e-03 3.557388e-01 5.928876e-02 1.381007e-02 7.507578e-02 
+           7            8            9           10           11           12 
+1.057876e-01 6.856655e-02 1.721925e+00 1.561253e-01 5.136161e-04 2.343456e-03 
+          13           14           15           16 
+4.001869e-02 6.172542e-06 1.490851e-01 7.063833e-03 </code></pre>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<h4 id="python-11">Python</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb62-1"><a href="" aria-label="1"></a><span class="co"># Get Cook's distance</span></span>
+<span id="cb62-2"><a href="" aria-label="2"></a>sm_fr <span class="op">=</span> influence.summary_frame()</span>
+<span id="cb62-3"><a href="" aria-label="3"></a><span class="bu">print</span>(<span class="st">"Summary Frame with Cook's Distance:</span><span class="ch">\n</span><span class="st">"</span>, sm_fr[<span class="st">'cooks_d'</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Summary Frame with Cook's Distance:
+ 0     0.015976
+1     0.004372
+2     0.355739
+3     0.059289
+4     0.013810
+5     0.075076
+6     0.105788
+7     0.068567
+8     1.721925
+9     0.156125
+10    0.000514
+11    0.002343
+12    0.040019
+13    0.000006
+14    0.149085
+15    0.007064
+Name: cooks_d, dtype: float64</code></pre>
+</div>
+</div>
+</div></div>
+</section>
+<section class="slide level2">
+
+<h3 id="leverage-vs-cooks-distance">Leverage vs Cook’s Distance</h3>
+<p>It is difficult, though not mathematically impossible, for a genuinely low-leverage observation to have a very large Cook’s distance.</p>
+
+<img src="images/leverage-vs-cook.png" alt="Leverage and Influence" scale="0.5;" style="width: 70%;" class="r-stretch"></section>
+<section class="slide level2">
+
+<h3 id="studentized-residuals">Studentized residuals</h3>
+<p>A high leverage point is one where the observation is further away from the general trend of predictor values, i.e.&nbsp;a sparse region of the predictor(feature) space. Since the regression model is forced to pass close to the point, its residual is naturally constrained to have smaller variance. In such a case, the residual plot will not direct any attention even if the corresponding observation is influential or problematic, relative to its natural scale.</p>
+<p>A high leverage point can have a small residual and yet be highly influential. This is why <span style="color:#1565C0;"><b>influence <span class="math inline">\(\neq\)</span> outlier</b></span> and leverage must be accounted for. On the contrary, large residuals at low-leverage points can look alarming but often don’t matter.</p>
+<p>Raw residuals can be misleading. Hence we standardize them while also rescaling them to their natural variability.</p>
+<ul>
+<li>What is a large residual and what is not is unclear without standardization?</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="studentized-residuals-1">Studentized residuals</h3>
+<p><b><u style="color: blue;">Studentized Residual</u></b>: This ensures that our residuals approximately follow a standard normal distribution. 95% of the residuals must fall between -2 and 2 and those beyond that can be considered unusual.</p>
+<ul>
+<li>Internally studentized residual: <span class="math inline">\(\frac{e_i}{se\sqrt{1-h_i}}\)</span>; <span class="math inline">\(h_i\)</span> is the leverage of the corresponding observation</li>
+<li>Externally studentized residual: <span class="math inline">\(\frac{e_i}{se_{(i)}\sqrt{1-h_i}}\)</span>; <span class="math inline">\(se_{(i)}\)</span> is the estimated standard deviation of fit <span style="color:#1565C0;"><u>after removing</u></span> the observation in question</li>
+</ul>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h4 id="r-12">R</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="" aria-label="1"></a>studres <span class="ot">&lt;-</span> <span class="fu">rstudent</span>(model2)</span>
+<span id="cb64-2"><a href="" aria-label="2"></a>studres</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           1            2            3            4            5            6 
+ 0.505066701 -0.188428716  1.203728933 -0.865767954  0.505374772  0.536776758 
+           7            8            9           10           11           12 
+ 1.399687553 -1.471136307 -5.538503363  1.154510346 -0.078310525  0.204111913 
+          13           14           15           16 
+-0.645159430  0.009181146  1.134711885 -0.435490899 </code></pre>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<h4 id="python-12">Python</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb66-1"><a href="" aria-label="1"></a>studres <span class="op">=</span> influence.get_resid_studentized_external()</span>
+<span id="cb66-2"><a href="" aria-label="2"></a>studres</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>array([ 0.52308864, -0.1972758 ,  1.17989119, -0.87579533,  0.52339976,
+        0.55503688,  1.34238699, -1.39896462, -2.88021482,  1.13742758,
+       -0.0821076 ,  0.21362983, -0.66299171,  0.00962923,  1.12016422,
+       -0.4524762 ])</code></pre>
+</div>
+</div>
+</div></div>
+</section>
+<section class="slide level2">
+
+<h3 id="thats-all-folks">Thats all folks!</h3>
+
+
+<img data-src="images/endslide.png" class="quarto-figure quarto-figure-center r-stretch" style="width:40.0%"></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="MULTIPLE-LIN-REG_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="MULTIPLE-LIN-REG_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="MULTIPLE-LIN-REG_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="MULTIPLE-LIN-REG_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="MULTIPLE-LIN-REG_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="MULTIPLE-LIN-REG_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="MULTIPLE-LIN-REG_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="MULTIPLE-LIN-REG_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="MULTIPLE-LIN-REG_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="MULTIPLE-LIN-REG_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'fade',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>
