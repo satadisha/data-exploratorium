@@ -148,12 +148,12 @@ Moving beyond Simple Linear Regression
 
 - The world is too complex for every experiment or phenomenon to be explained by a single predictor.
 - A general linear model with multiple predictors is more common in practice.
-- For a dataset with $m$ different features and $n$ observations, the general form of the equation is same as before.
+- For a dataset with $p$ different features and $n$ observations, the general (*linear algebraic*) form of the equation is same as before.
 $$\begin{aligned}
 \color{#1565C0}{y} &\color{#1565C0}{= X\beta + \epsilon} \text{; where}\\
 y &\rightarrow \text{\textbf{response vector} of shape } \color{#1565C0}{n\times1}\\
-X &\rightarrow \text{\textbf{design matrix} of shape } \color{#1565C0}{n\times(m+1)}\\
-\beta &\rightarrow \text{\textbf{parameter vector} (\textit{includes intercept}) of shape } \color{#1565C0}{(m+1)\times1}
+X &\rightarrow \text{\textbf{design matrix} of shape } \color{#1565C0}{n\times(p+1)}\\
+\beta &\rightarrow \text{\textbf{parameter vector} (\textit{includes intercept}) of shape } \color{#1565C0}{(p+1)\times1}
 \end{aligned}$$
 - Normal equations still hold to provide the least-squares solution $\hat{\beta} \text{ : } X^TX\hat{\beta} = X^Ty$
 - Instead of a least squares line, we have a hyperplane!
