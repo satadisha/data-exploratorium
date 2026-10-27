@@ -146,10 +146,10 @@ Moving beyond Simple Linear Regression
 
 ## TIPS WHEN READING THESE LECTURE NOTES
 
-These notes rely on a set of mathematical notations that helps us bridge the mathematical links between the various concepts discussed here and also enforce consistency in writing and recalling them across slides.
+These notes rely on a set of mathematical notations that help us bridge the mathematical links between the various concepts discussed here and also enforce consistency in writing and recalling them across slides.
 
 - You **need** to focus on the conceptual links between topics explained in these notes.
-- You **do not** need to focus on the specifics of the various mathematical formulae laid out in these notes. These formulae, albeit important, have mainly been included for the sake of completeness of information. But you do not need to remember them since we will estimate most things involving regression analysis programmatically.
+- You **do not need** to focus on the specifics of the various mathematical formulae laid out in these notes. These formulae, albeit important, have mainly been included for the sake of completeness of information. But you do not need to remember them since we will estimate most things related to regression analysis programmatically.
 :::
 
 ---
