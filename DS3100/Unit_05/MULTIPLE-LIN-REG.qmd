@@ -142,6 +142,16 @@ Moving beyond Simple Linear Regression
 
 </div>
 
+:::{.callout-caution}
+
+## TIPS WHEN READING THESE LECTURE NOTES
+
+These notes rely on a set of mathematical notations that helps us bridge the mathematical links between the various concepts discussed here and also enforce consistency in writing and recalling them across slides.
+
+- You **need** to focus on the conceptual links between topics explained in these notes.
+- You **do not** need to focus on the specifics of the various mathematical formulae laid out in these notes. These formulae, albeit important, have mainly been included for the sake of completeness of information. But you do not need to remember them since we will estimate most things involving regression analysis programmatically.
+:::
+
 ---
 
 ### Multiple Linear Regression
@@ -416,12 +426,19 @@ Mathematically, adding more variables cannot increase the sum of squared residua
 
 Since $R^2$ does not guarantee adding more predictors will always lead to models with more explanatory power, we need an alternative!
 
-Adjusted $R^2$ factors in a model's degrees of freedom (higher for those with more variables). It is bounded between 0 and 1, with values closer to 1 being more desirable.
+Adjusted $R^2$ factors in a model's degrees of freedom (higher for those with more variables). It is bounded between 0 and 1, with values closer to 1 being more desirable. 
 $$
 R^2_{adj} = 1- \frac{SSE}{SST}\frac{n-1}{n-p-1} = 1 - (1-R^2)\frac{n-1}{n-p-1}
 $$
+If $SSE$ (*error term*) is constant between two models, the one with higher value of $p$ yields lower $R^2_{adj}$
 
-<span style="color:#1565C0;"><b>Overfitting</b></span>: A model with too many predictors may fit the training data very well but fail to generalize to new data. Adjusted $R^2$ helps mitigate this risk by penalizing models for inclusion of irrelevant predictors.
+:::{.callout-note}
+
+## Overfitting
+
+A model with too many predictors may fit the training data very well but fail to generalize to new data. Adjusted $R^2$ helps mitigate this risk by penalizing models for inclusion of irrelevant predictors.
+
+:::
 
 ---
 
@@ -508,7 +525,7 @@ It is an <u><b>unbiased estimate</b></u> of the <span style="color:#1565C0;"><b>
 As explained before, when working with sample data, the calculation is adjusted for the number of degrees of freedom.
 
 $$
-rse = \sqrt{\frac{SSE}{n-p-1}} = \sqrt{\frac{\sum\limits_{i=1}^{n}(y_i - \hat{y_i})^2}{n-p-1}}
+se = \sqrt{\frac{SSE}{n-p-1}} = \sqrt{\frac{\sum\limits_{i=1}^{n}(y_i - \hat{y_i})^2}{n-p-1}}
 $$
 
 It is the average distance between an observation from a sample of data and the regression hyperplane (line in 2D) in units of the response variable.
@@ -533,8 +550,8 @@ While the RSE is not directly available in the summary table of `statsmodel` it 
 #### R
 
 ```{r}
-rse <- sigma(model)
-print(rse)
+se <- sigma(model)
+print(se)
 print(model_summary$sigma)
 ```
 
@@ -545,8 +562,8 @@ print(model_summary$sigma)
 #### Python
 
 ```{python}
-rse = np.sqrt(model.mse_resid)
-print(rse)
+se = np.sqrt(model.mse_resid)
+print(se)
 ```
 
 :::
@@ -579,11 +596,10 @@ We can use the $\color{blue}{\textbf{Standard Error of Model Coefficients}}$ and
 
 Turns out that upon deriving the OLS estimator:
 
-- Estimates of individual model coefficients are **normally distributed**
-    - $\hat{\beta}_j|X \sim \mathcal{N}(\beta_j, \sigma^2(X^TX)^{-1}_{jj})$
+- Estimates of individual model coefficients are **normally distributed**: $\hat{\beta}_j|X \sim \mathcal{N}(\beta_j, \sigma^2(X^TX)^{-1}_{jj})$
 - Standardized coefficients individually follow a <span style="color:#1565C0;">Student's T Distribution</span>. Also called the observed $t$-statistics of the model coefficients.
     - $\frac{\hat{\beta}_j-\beta_j}{se(\hat{\beta}_j)} \sim \mathcal{t}_{n-p-1}$; $\beta_j$ reflects your prior belief in the predictor's coefficient. <u style="color: blue; font-size: 1.0em; font-weight: bold; font-style: italic;">Typically set to 0</u>.
-    - The standard error of model coefficient $\hat{\beta}_j$ is $se(\hat{\beta}_j) = \sqrt{se^2 (X^TX)^{-1}_{jj}}$, where $se$ is the standard error of regression.
+    - The standard error of model coefficient is $se(\hat{\beta}_j) = \sqrt{se^2 (X^TX)^{-1}_{jj}}$. It is dependent on $se$, the standard error of regression which has $n-p-1$ residual degrees of freedom.<br> *That leads to the $\mathcal{t}_{n-p-1}$ reference distribution.*
     - For simple linear regression, the standard error of the slope is given by $se(\hat{\beta}_1) = \sqrt{ \frac{se^2}{\sum_{i=1}^n(x_i-\bar{x})^2}}$
 
 ---

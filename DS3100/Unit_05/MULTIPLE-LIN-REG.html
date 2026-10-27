@@ -282,6 +282,23 @@ Impact of Influential Observations
 </ul>
 </div>
 </div>
+<div class="callout callout-caution callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>TIPS WHEN READING THESE LECTURE NOTES</strong></p>
+</div>
+<div class="callout-content">
+<p>These notes rely on a set of mathematical notations that helps us bridge the mathematical links between the various concepts discussed here and also enforce consistency in writing and recalling them across slides.</p>
+<ul>
+<li>You <strong>need</strong> to focus on the conceptual links between topics explained in these notes.</li>
+<li>You <strong>do not</strong> need to focus on the specifics of the various mathematical formulae laid out in these notes. These formulae, albeit important, have mainly been included for the sake of completeness of information. But you do not need to remember them since we will estimate most things involving regression analysis programmatically.</li>
+</ul>
+</div>
+</div>
+</div>
 </section>
 <section class="slide level2">
 
@@ -546,7 +563,7 @@ F-statistic: 42.39 on 5 and 10 DF,  p-value: 2.057e-06</code></pre>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">Time:</th>
-<td>01:04:35</td>
+<td>13:26:28</td>
 <th data-quarto-table-cell-role="th">Log-Likelihood:</th>
 <td>52.538</td>
 </tr>
@@ -621,8 +638,20 @@ Dividing the sum of squares by <span class="math inline">\(n-1\)</span>, instead
 <p>Since <span class="math inline">\(R^2\)</span> does not guarantee adding more predictors will always lead to models with more explanatory power, we need an alternative!</p>
 <p>Adjusted <span class="math inline">\(R^2\)</span> factors in a model’s degrees of freedom (higher for those with more variables). It is bounded between 0 and 1, with values closer to 1 being more desirable. <span class="math display">\[
 R^2_{adj} = 1- \frac{SSE}{SST}\frac{n-1}{n-p-1} = 1 - (1-R^2)\frac{n-1}{n-p-1}
-\]</span></p>
-<p><span style="color:#1565C0;"><b>Overfitting</b></span>: A model with too many predictors may fit the training data very well but fail to generalize to new data. Adjusted <span class="math inline">\(R^2\)</span> helps mitigate this risk by penalizing models for inclusion of irrelevant predictors.</p>
+\]</span> If <span class="math inline">\(SSE\)</span> (<em>error term</em>) is constant between two models, the one with higher value of <span class="math inline">\(p\)</span> yields lower <span class="math inline">\(R^2_{adj}\)</span></p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Overfitting</strong></p>
+</div>
+<div class="callout-content">
+<p>A model with too many predictors may fit the training data very well but fail to generalize to new data. Adjusted <span class="math inline">\(R^2\)</span> helps mitigate this risk by penalizing models for inclusion of irrelevant predictors.</p>
+</div>
+</div>
+</div>
 </section>
 <section class="slide level2">
 
@@ -696,7 +725,7 @@ F-statistic: 42.39 on 5 and 10 DF,  p-value: 2.057e-06</code></pre>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">Time:</th>
-<td>01:04:35</td>
+<td>13:26:28</td>
 <th data-quarto-table-cell-role="th">Log-Likelihood:</th>
 <td>52.538</td>
 </tr>
@@ -776,7 +805,7 @@ RMSE = \sqrt{\frac{SSE}{n}} = \sqrt{\frac{\sum\limits_{i=1}^{n}(y_i - \hat{y_i})
 </ul>
 <p>It is an <u><b>unbiased estimate</b></u> of the <span style="color:#1565C0;"><b>standard deviation of the error term</b></span> in a regression model; i.e., it is the square root of the variance of estimated residuals. As explained before, when working with sample data, the calculation is adjusted for the number of degrees of freedom.</p>
 <p><span class="math display">\[
-rse = \sqrt{\frac{SSE}{n-p-1}} = \sqrt{\frac{\sum\limits_{i=1}^{n}(y_i - \hat{y_i})^2}{n-p-1}}
+se = \sqrt{\frac{SSE}{n-p-1}} = \sqrt{\frac{\sum\limits_{i=1}^{n}(y_i - \hat{y_i})^2}{n-p-1}}
 \]</span></p>
 <p>It is the average distance between an observation from a sample of data and the regression hyperplane (line in 2D) in units of the response variable.</p>
 <ul>
@@ -796,8 +825,8 @@ rse = \sqrt{\frac{SSE}{n-p-1}} = \sqrt{\frac{\sum\limits_{i=1}^{n}(y_i - \hat{y_
 <div class="column" style="width:50%;">
 <h4 id="r-5">R</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="" aria-label="1"></a>rse <span class="ot">&lt;-</span> <span class="fu">sigma</span>(model)</span>
-<span id="cb27-2"><a href="" aria-label="2"></a><span class="fu">print</span>(rse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="" aria-label="1"></a>se <span class="ot">&lt;-</span> <span class="fu">sigma</span>(model)</span>
+<span id="cb27-2"><a href="" aria-label="2"></a><span class="fu">print</span>(se)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.01147518</code></pre>
 </div>
@@ -809,8 +838,8 @@ rse = \sqrt{\frac{SSE}{n-p-1}} = \sqrt{\frac{\sum\limits_{i=1}^{n}(y_i - \hat{y_
 </div><div class="column" style="width:50%;">
 <h4 id="python-5">Python</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="" aria-label="1"></a>rse <span class="op">=</span> np.sqrt(model.mse_resid)</span>
-<span id="cb31-2"><a href="" aria-label="2"></a><span class="bu">print</span>(rse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="" aria-label="1"></a>se <span class="op">=</span> np.sqrt(model.mse_resid)</span>
+<span id="cb31-2"><a href="" aria-label="2"></a><span class="bu">print</span>(se)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>0.011475177080774014</code></pre>
 </div>
@@ -842,14 +871,11 @@ rse = \sqrt{\frac{SSE}{n-p-1}} = \sqrt{\frac{\sum\limits_{i=1}^{n}(y_i - \hat{y_
 <!-- For a linear model, the OLS estimator is $\hat{\beta} = (X^TX)^{-1}X^Ty$. By substituting $y = X\beta + \epsilon$ we get, $\hat{\beta} = \beta + (X^TX)^{-1}X^T\epsilon$ -->
 <p>Turns out that upon deriving the OLS estimator:</p>
 <ul>
-<li>Estimates of individual model coefficients are <strong>normally distributed</strong>
-<ul>
-<li><span class="math inline">\(\hat{\beta}_j|X \sim \mathcal{N}(\beta_j, \sigma^2(X^TX)^{-1}_{jj})\)</span></li>
-</ul></li>
+<li>Estimates of individual model coefficients are <strong>normally distributed</strong>: <span class="math inline">\(\hat{\beta}_j|X \sim \mathcal{N}(\beta_j, \sigma^2(X^TX)^{-1}_{jj})\)</span></li>
 <li>Standardized coefficients individually follow a <span style="color:#1565C0;">Student’s T Distribution</span>. Also called the observed <span class="math inline">\(t\)</span>-statistics of the model coefficients.
 <ul>
 <li><span class="math inline">\(\frac{\hat{\beta}_j-\beta_j}{se(\hat{\beta}_j)} \sim \mathcal{t}_{n-p-1}\)</span>; <span class="math inline">\(\beta_j\)</span> reflects your prior belief in the predictor’s coefficient. <u style="color: blue; font-size: 1.0em; font-weight: bold; font-style: italic;">Typically set to 0</u>.</li>
-<li>The standard error of model coefficient <span class="math inline">\(\hat{\beta}_j\)</span> is <span class="math inline">\(se(\hat{\beta}_j) = \sqrt{se^2 (X^TX)^{-1}_{jj}}\)</span>, where <span class="math inline">\(se\)</span> is the standard error of regression.</li>
+<li>The standard error of model coefficient is <span class="math inline">\(se(\hat{\beta}_j) = \sqrt{se^2 (X^TX)^{-1}_{jj}}\)</span>. It is dependent on <span class="math inline">\(se\)</span>, the standard error of regression which has <span class="math inline">\(n-p-1\)</span> residual degrees of freedom.<br> <em>That leads to the <span class="math inline">\(\mathcal{t}_{n-p-1}\)</span> reference distribution.</em></li>
 <li>For simple linear regression, the standard error of the slope is given by <span class="math inline">\(se(\hat{\beta}_1) = \sqrt{ \frac{se^2}{\sum_{i=1}^n(x_i-\bar{x})^2}}\)</span></li>
 </ul></li>
 </ul>
@@ -1576,7 +1602,7 @@ F-statistic: 42.39 on 5 and 10 DF,  p-value: 2.057e-06</code></pre>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">Time:</th>
-<td>01:04:36</td>
+<td>13:26:29</td>
 <th data-quarto-table-cell-role="th">Log-Likelihood:</th>
 <td>52.538</td>
 </tr>
