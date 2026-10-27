@@ -522,9 +522,9 @@ It is the average distance between an observation from a sample of data and the 
 
 Like RMSE, there is no scale for RSE! You have to compare it to the RSE for another model fit from the same data. Smaller values are more desirable.
 
-While the RSE is not directly available in the summary table of `statsmodel` it is defined within the package as the square root of mean squared error of the residuals. In R, it is obrained using the `sigma()` function applied to a fitted model object.
+While the RSE is not directly available in the summary table of `statsmodel` it is defined within the package as the square root of mean squared error of the residuals. In R, it is obtained using the `sigma()` function applied to a fitted model object or by probing the `sigma` attribute within the model summary.
 
-- <i>Please beware that this is <u><b>not</b></u> the RMSE which is a regular average of mean squared error and not corrected with division by the appropriate degrees of freedom.</i> This can be confusing!
+- <i>Please be aware that this is <u><b>not</b></u> the RMSE which is a regular average of mean squared error and not corrected with division by the appropriate degrees of freedom.</i> This can be confusing!
 
 ::: {.columns}
 
@@ -535,6 +535,7 @@ While the RSE is not directly available in the summary table of `statsmodel` it 
 ```{r}
 rse <- sigma(model)
 print(rse)
+print(model_summary$sigma)
 ```
 
 :::
@@ -574,11 +575,11 @@ We can use the $\color{blue}{\textbf{Standard Error of Model Coefficients}}$ and
 
 - Remember that the regression model is fitted around a sample. So much like sample mean, the model coefficients (parameters) are also estimates that are subject to an underlying sampling distribution(how they'd vary across samples).
 
-For a linear model, the OLS estimator is $\hat{\beta} = (X^TX)^{-1}X^Ty$. By substituting $y = X\beta + \epsilon$ we get, $\hat{\beta} = \beta + (X^TX)^{-1}X^T\epsilon$
+<!-- For a linear model, the OLS estimator is $\hat{\beta} = (X^TX)^{-1}X^Ty$. By substituting $y = X\beta + \epsilon$ we get, $\hat{\beta} = \beta + (X^TX)^{-1}X^T\epsilon$ -->
 
 Turns out that upon deriving the OLS estimator:
 
-- Estimates of individual model coefficients are normally distributed
+- Estimates of individual model coefficients are **normally distributed**
     - $\hat{\beta}_j|X \sim \mathcal{N}(\beta_j, \sigma^2(X^TX)^{-1}_{jj})$
 - Standardized coefficients individually follow a <span style="color:#1565C0;">Student's T Distribution</span>. Also called the observed $t$-statistics of the model coefficients.
     - $\frac{\hat{\beta}_j-\beta_j}{se(\hat{\beta}_j)} \sim \mathcal{t}_{n-p-1}$; $\beta_j$ reflects your prior belief in the predictor's coefficient. <u style="color: blue; font-size: 1.0em; font-weight: bold; font-style: italic;">Typically set to 0</u>.
@@ -596,6 +597,22 @@ It’s good practice to follow these steps for any hypothesis test:
 - Compute the standard error of model coefficient and corresponding $t$-statistic. [Calculate the two-tailed $p$-value](https://www.graphpad.com/quickcalcs/pvalue1/) for this $\lvert t \rvert$-statistic.
     - Alternatively, we can also refer to the $t$-critical value of a two-tailed $t$ test at the desired significance level.
     - We must factor in the correct number of degrees of freedom!
+
+::: {.callout-note}
+
+## An equivalent test using two regression models
+
+The coefficient $t$-test evaluates **one predictor coefficient at a time**, while holding the other predictors in the model fixed. We can test the same question by comparing two nested models:
+
+- **Full model:** includes the predictor of interest and the other predictors.
+- **Reduced model:** contains the same predictors except the predictor of interest.
+
+The additional contribution of the predictor can be expressed as: $\Delta R^2 = R^2_{\text{full}} - R^2_{\text{reduced}}$. 
+An $F$-test can then determine whether this improvement in fit is statistically significant. When the two models differ by **exactly one coefficient**, $\boxed{F=t^2}$.
+
+So the nested-model $F$-test and the coefficient's two-sided $t$-test produce the **same $p$-value**.
+
+:::
 
 ---
 
@@ -817,9 +834,9 @@ st
 
 ### Multicollinearity
 
-The issue of linearly dependent (or “almost” linearly dependent) column/variables is called multicollinearity. Multicollinearity occurs when a variable is highly or perfectly correlated with a linear combination of one or more columns. 
+The issue of linearly dependent (or “almost” linearly dependent) column/variables is called multicollinearity. Multicollinearity occurs when a variable column in your design matrix is highly or perfectly correlated with a linear combination of one or more columns. Design matrix $X$ having dependent columns a violates a key condition!
 
-- Intuitively, this means that the variable can be deduced from other variables and thus is not capable of adding new information to the model.
+- Intuitively, this means that the variable can be deduced from other variables and they are both not capable of adding new information to the model.
 
 <span style="color:#1565C0;"><b>Structural Multicollinearity</b></span>: Creating new predictors from other predictors through mathematical transformations. This is a design issue but does not reflect a problem with the data itself.
 
@@ -829,7 +846,7 @@ The issue of linearly dependent (or “almost” linearly dependent) column/vari
 
 - Unfortunately, researchers often can't control the predictors. For example when gathering a person's gender, race, grade point average, math SAT score, IQ, and starting salary, one or more variables maybe dependent on others but data collectors in such observational studies cannot control for them.
 
-<u style="color: blue; font-size: 1.0em; font-weight: bold;">Big problem</u> Design matrix $X$ having dependent columns is a violation of a key condition!
+<u style="color: blue; font-size: 1.0em; font-weight: bold;">Big problem</u>: Of the two, data-based multicollinearity is the type that is actually problematic.
 
 ---
 
@@ -901,7 +918,9 @@ While the overall model seems statistically significant, some predictors have hi
 
 ```{r}
 summary(full_model)$coefficients
-vif(full_model)
+vif_values <- vif(full_model)
+vif_table  <- data.frame(Predictor = names(vif_values), VIF = vif_values)
+print(vif_table, row.names = FALSE)
 ```
 
 :::
@@ -941,6 +960,16 @@ However, for datasets where the number of predictors is large, it is possible th
 In the BAC example, we have 16 samples and for a model with 6 parameters (*an intercept plus five slopes*) $df_\text{residual} = 16-6= 10$.
 
 So the model might explain BAC very well but with only 16 observations and several predictors, there may not be enough information to estimate every predictor's unique contribution precisely. This could explain the considerable uncertainty around some predictors in our post regression analysis given we are trying to estimate several effects from a very small dataset.
+
+:::
+
+:::{.callout-tip .fragment}
+
+## Other strategies to handle multicollinearity
+
+1. Feature Engineering: Instead of deleting a redundant variable and throwing away data, combine the highly correlated features into a single, comprehensive variable.
+2. Regularization: If your primary goal is prediction rather than coefficient explanation. *More on this later*
+3. Adding more data can also help. Your current sample could lack rows where your collinear variables move independently of each other due to data deficiency.
 
 :::
 
@@ -998,6 +1027,8 @@ $$
 
 - You can check this assumption using scatterplots – one for each predictor vs the response variable.
 - You can also check for linearity with a scatterplot of the (standardized) residuals, against the predicted values (on the horizontal axis).
+  - Residuals scattered approximately around 0 across the full range of predicted values, with roughly similar number of positives and negatives.
+  - No systematic curve or bend in the residuals.
 - What do you do if your data are not linear?
     - Transformations (log, square root, inverse, etc.) on either the predictors or responses.
 
@@ -1050,15 +1081,30 @@ r^{(j)}_i = \hat{\beta}_jx_{ij} + e_i
 
 ### Independence and Uncorrelated Residuals
 
-We are assuming that each observation and corresponding residual is independent from all of others.<br> 
-What we want to check is for the residuals to be uncorrelated, no general pattern among the residuals across observations or predicted values.
+We assume that the error associated with one observation does not systematically depend on the errors associated with other observations. In particular, we want residuals to be **uncorrelated across observations**.
 
-- Scatterplots of residuals against predictors and response variables.
+::: {.fragment}
 
-Most commonly violated in
+**When observations have a meaningful order** (e.g., time or spatial order):
 
-- Time-series data
-- Spatial data
+- Plot residuals against the **order of observations**.
+  - Residuals should fluctuate randomly around zero with **no systematic sequence or clustering**.
+  - Long runs of positive or negative residuals, repeating cycles, or neighboring residuals with similar values can indicate autocorrelation. <span style="color:#1565C0;">**Autocorrelation**</span> occurs when residuals are correlated with other residuals according to their ordering.
+- The <span style="color:#1565C0;">**Durbin--Watson test**</span> can be used to detect correlation between neighboring residuals when the ordering is meaningful.
+
+**Most commonly violated in:** Time-series data; Spatial data; clustered observations.
+
+:::
+
+::: {.callout-warning .fragment}
+
+## What if the observations have no meaningful order?
+
+If the observations have **no meaningful order or grouping**, plotting residuals against row number or applying a test such as Durbin--Watson is not informative. The result would depend on an arbitrary ordering of the rows.
+
+In this case, independence should be assessed primarily from the **study design and data-collection process**: consider whether observations were independently sampled and whether repeated measurements, clustering, spatial relationships, or other dependencies could connect observations.
+
+:::
 
 ---
 
@@ -1176,14 +1222,14 @@ What <span style="color:#1565C0;"><i>does not</i></span> break:
 - Least-squares coefficient estimates
 - Linearity of the fitted model
 - $R^2$
-- Prediction accuracy (subject to the presence of outliers)
+- Point predictions
 
-Although the tests and confidence intervals originate from normal distributions, the consequences are usually minor because the formulas are based on the sampling distributions of the estimates.
+Violation of residual normality does not, by itself, invalidate the fitted least-squares line or its coefficient estimates. Normality is primarily important for the *sampling distributions used for statistical inference*, especially in smaller samples.
 
 What <span style="color:#1565C0;"><i>does</i></span> break:
 
-- Hypothesis tests
-- Confidence intervals for means
+- Hypothesis tests for model coefficients
+- Confidence intervals for coefficients and mean responses
 - Prediction intervals
 - Outlier diagnostics (more on this later!)
 
@@ -1213,15 +1259,35 @@ These inferential procedures make stronger assumptions about normality; conseque
 
 ### Equality of Variance
 
-We can plot the residuals against the predictors.
+We can examine **residuals against the predicted (fitted) values** to assess whether the error variance remains approximately constant across the range of the model's predictions.
 
-- What we want is <u style="color: blue; font-size: 1.0em; font-weight: bold;">Homoscedasticity</u>: equal spread of residuals along either side of the mean response for all observations.
+::: {.fragment}
 
-Violation of this condition is called <u style="color: blue; font-size: 1.0em; font-weight: bold;">Heteroscedasticity</u> and it has far more serious consequences.
+What we want is <span style="color:#1565C0;"><b>Homoscedasticity</b></span>: approximately equal variance of the errors across values of the predictors, reflected by a roughly constant spread of residuals around $0$.
 
-- Standard errors inaccurately describe the uncertainty in the estimates, as a consequence means tests, confidence intervals and p-values can be misleading.
-- Could rebuild the model with different independent variables.
-- Perform transformations on non linear data or fit other (non linear) models.
+- Look for residuals scattered around $0$ with a **roughly constant vertical spread** across whole range of fitted values.
+- A spread that systematically **widens or narrows** (e.g., a funnel or fan shape) suggests non-constant variance.
+
+:::
+
+::: {.fragment}
+
+Violation of this condition is called <span style="color:#1565C0;"><b>Heteroscedasticity</b></span>.
+
+- Standard errors may inaccurately describe uncertainty in the coefficient estimates; consequently, hypothesis tests, confidence intervals, and $p$-values can be misleading.
+- Consider transformations when the changing variance is related to the scale or distribution of the variables.
+- Consider alternative model specifications or methods that account for non-constant variance.
+
+:::
+
+::: {.callout-note .fragment}
+
+The **same Residuals vs. Fitted Values plot** helps assess two different assumptions:
+
+- **Linearity:** look for systematic curvature or other patterns around the *center* of the residual cloud.
+- **Homoscedasticity:** look for changes in the *vertical spread* of the residual cloud.
+
+:::
 
 ---
 
@@ -1250,8 +1316,8 @@ Always do scatter-plots. They are conceptually simple but can reveal the shape a
 
 <span style="color:#1565C0;"><u><b>Outliers</b></u></span>: Can influence the regression line/hyperplane by pulling it in the direction of the outlier.
 
-- A value that can appear out of the norm or extreme for at least one of the variables; does not follow the predicted pattern of the model.
-- A point whose value may fall within the expected range but produces an extremely large residual.
+- A value that can appear out of the norm or extreme for the response; does not follow the predicted pattern of the model.
+- Poorly predicted by the model. A point whose value may fall within the expected range but produces an extremely large residual.
 
 Removing an observation simply because it is an outlier is not a good idea, but it is also not a good idea to report a conclusion that rests on one or two data points.
 
@@ -1264,7 +1330,7 @@ Removing an observation simply because it is an outlier is not a good idea, but 
 <span class="fragment">
     <u style="color: blue; font-size: 1.0em; font-weight: bold;">Influential Observation</u>: It could be an outlier, but not necessarily. The point has a disproportionate effect on model estimates and interpretations.
     <ul>
-    <li><u><b>High Leverage Point</b></u>: Could be a value corresponding to an observation that <u>horizontally</u> further away from the rest of the observations in the sample. These points exhibit very strong influence on the least squares plane.<br>Some outliers are high leverage points, but all high leverage points are <b>NOT</b> outliers.</li>
+    <li><u><b>High Leverage Point</b></u>: Could be a value corresponding to an observation that is <u>horizontally</u> further away from the rest of the observations in the sample. These points exhibit very strong influence on the least squares plane.<br>Some outliers are high leverage points, but all high leverage points are <b>NOT</b> outliers.</li>
     <li>It could be a value of the dependent variable that is far outside of the rest of the values for the data.</li>
     </ul>
 </span>
@@ -1344,9 +1410,9 @@ Case-influence statistics are numerical measures that reveal insight regarding i
 
 We will discuss three different types of case-influence statistics: 
 
-1. Leverage
-2. Studentized residuals
-3. Cook’s distance.
+1. Leverage (<span style="color:#1565C0;">*unusualness in predictor*</span>)
+2. Cook’s distance
+3. Studentized residuals (<span style="color:#1565C0;">*good for outlier detection*</span>)
 
 ---
 
@@ -1367,7 +1433,9 @@ $$
 
 ### Estimating Leverage in Practice
 
-Let us check the leverage of individual observations on a reduced model to predict BAC that uses 4 predictors. As we will see, there are some high leverage points.
+Let us check the leverage of individual observations on a reduced model to predict BAC that uses 4 predictors. As we will see, there are some high leverage points. 
+
+To estimate leverage, we probe into something called <span style="color:#1565C0;">*the hat matrix*</span>.
 
 ::: {.columns}
 
@@ -1419,12 +1487,12 @@ print(leverage>2*5/16)
 
 ### Cook’s distance.
 Cook's distance measure the effect that omitting a case has on the estimated regression coeﬀicients. Joint effect of leverage and residual. 
-$$D_i = \sum\limits_{j=1}^{n}\frac{\hat{y_{j(i)}}-\hat{y_j}}{p\times se^2}$$
-where $\hat{y_j}$ is the $j$-th fitted value in a fit using all points, $\hat{y_{j(i)}}$ is the $j$-th fitted value in a fit that excludes the $i$th point in the dataset, $p$ is the number of regression coefficients, and $se^2$ is our estimated variance from the fit based on all observations (the square of our standard error as seen many times before).
+$$\scriptsize D_i = \sum\limits_{j=1}^{n}\frac{\hat{y_{j(i)}}-\hat{y_j}}{p\times se^2}$$
+where $\hat{y_j}$ is the $j$-th fitted value in a fit using all points, $\hat{y_{j(i)}}$ is the $j$-th fitted value in a fit that excludes the $i$th point in the dataset, $p$ is the number of regression coefficients, and $se^2$ is our estimated variance from the fit based on all observations (the square of our residual standard error as seen many times before).
 
 A case that is influential in changing the least squares estimates when deleted will have a high Cook's Distance.
 
-<u style="color: blue; font-size: 1.0em; font-weight: bold;">Rule of thumb</u>: $\approx$ 1 or above indicate large influence.
+<u style="color: blue; font-size: 1.0em; font-weight: bold;">Rule of thumb</u>: $\approx \frac{4}{n}$ or above indicate large influence.
 
 ::: {.columns}
 
@@ -1464,15 +1532,40 @@ It is difficult, though not mathematically impossible, for a genuinely low-lever
 
 ---
 
-### Studentized residuals
+### Studentized Residuals: Detecting Outliers
 
-A high leverage point is one where the observation is further away from the general trend of predictor values, i.e. a sparse region of the predictor(feature) space. Since the regression model is forced to pass close to the point, its residual is naturally constrained to have smaller variance. In such a case, the residual plot will not direct any attention even if the corresponding observation is influential or problematic, relative to its natural scale.
+A raw residual tells us how far an observed response is from its predicted value: $e_i = y_i-\hat{y}_i$. But simply asking whether $e_i$ is "large" can be misleading. *Same residual can be more unusual for some observations than for others*.
 
-A high leverage point can have a small residual and yet be highly influential. This is why <span style="color:#1565C0;"><b>influence $\neq$ outlier</b></span> and leverage must be accounted for. On the contrary, large residuals at low-leverage points can look alarming but often don’t matter.
+::: {.fragment}
 
-Raw residuals can be misleading. Hence we standardize them while also rescaling them to their natural variability.
+In particular, observations with high leverage have smaller residual variance because the fitted regression is pulled more strongly toward them. If you look *only* at raw residuals, a massive outlier sitting at a high-leverage position might show a tiny raw error, causing you to completely miss it during your diagnostic screening.
 
-- What is a large residual and what is not is unclear without standardization?
+:::
+
+::: {.fragment}
+
+We **studentize residuals** to transform our model's errors into a standardized scale with a constant variance, making it possible to ask:
+
+> **How unusually far is this observation from its fitted value, relative to how much its residual would normally be expected to vary (*in standard deviation units*)?**
+$$
+\text{Studentized Residual} = \frac{\text{How far the observation is from its fitted value } (e_i)}{\text{How much that residual is normally expected to vary } (se \sqrt{1 - h_i})}
+$$
+
+Observations with large absolute studentized residuals are candidates for **outliers in the response direction**.
+
+:::
+
+::: {.callout-note .fragment}
+
+## Outlier $\neq$ influential observation
+
+A large studentized residual does not necessarily mean that the observation substantially changes the fitted model.
+
+- **Studentized residuals:** useful for detecting **outliers**
+- **Leverage:** identifies unusual locations in **predictor space**
+- **Cook's distance / DFFITS / DFBETAS:** assess **influence on the fitted model**
+
+:::
 
 ---
 
@@ -1481,7 +1574,7 @@ Raw residuals can be misleading. Hence we standardize them while also rescaling 
 <b><u style="color: blue;">Studentized Residual</u></b>: This ensures that our residuals approximately follow a standard normal distribution. 95\% of the residuals must fall between -2 and 2 and those beyond that can be considered unusual.
 
 - Internally studentized residual: $\frac{e_i}{se\sqrt{1-h_i}}$; $h_i$ is the leverage of the corresponding observation
-- Externally studentized residual: $\frac{e_i}{se_{(i)}\sqrt{1-h_i}}$; $se_{(i)}$ is the estimated standard deviation of fit <span style="color:#1565C0;"><u>after removing</u></span> the observation in question
+- Externally studentized residual: $\frac{e_i}{se_{(i)}\sqrt{1-h_i}}$; $se_{(i)}$ is the estimated standard deviation of fit <span style="color:#1565C0;"><u>after removing</u></span> the observation in question. <span style="color:#1565C0;">*Gold Standard*</span>
 
 ::: {.columns}
 

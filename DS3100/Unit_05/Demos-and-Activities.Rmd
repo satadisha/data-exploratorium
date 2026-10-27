@@ -1,0 +1,578 @@
+---
+title: "Unit 4 | Linear Regression Deep Dive"
+author: "FIRSTNAME LASTNAME"
+date: "`r format(Sys.time(), 'Compiled %X on %A, %B %d, %Y')`"
+output: pdf_document
+---
+
+# Load packages
+
+```{r load packages, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Load packages
+library(psych); library(EGAnet)
+library(GGally); library(ggplot2)
+library(tidyverse); library(car)
+library(bestNormalize)
+```
+
+# Motivating Dataset 1: CERN
+
+Research question: For particles with very little mass, can we predict their energy given momentum alone?
+
+## Load in the Data
+
+```{r load cern data, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Load CERN data
+cern <- read.csv("../Unit 3/data/cern.csv")
+```
+
+## Wrangle the Data
+
+1.    Subset to only include `Run` 165617
+
+2.    Select variables of interest: `E1`, `px1`, `py1`, `pz1`
+
+3.    Name final object as `cern_voi` (variables of interest)
+
+```{r wrangle cern data, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Obtain variables of interest
+cern_voi <- cern[cern$Run == 165617, c("E1", "px1", "py1", "pz1")]
+```
+
+## Visualize Dataset using `ggpairs`
+
+```{r ggpairs, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Visualize
+ggpairs(cern_voi)
+```
+
+## Simple Linear Regression
+
+```{r simple linear regression, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+lm(E1 ~ px1, data = cern_voi)
+```
+
+<!--- OR ---->
+
+```{r another way, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+lm(cern_voi$E1 ~ cern_voi$px1)
+```
+
+<!--- not super informative, though... --->
+
+```{r simple summary, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+summary(lm(E1 ~ px1, data = cern_voi))
+```
+
+## Your Turn
+
+> Perform simple linear regression using the `py1` as the predictor of `E1` (print out the summary)
+
+```{r your simple lm, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+
+```
+
+## Plotting
+
+```{r simple lm plot, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+ggplot(data = cern_voi, aes(x = px1, y = E1)) +
+  geom_point() +
+  labs(x = "Momentum in the x-direction", y = "Energy") +
+  geom_smooth(method = lm) +
+  theme_bw()
+```
+
+Doesn't seem to be working well...
+
+Let's try using 3D momentum
+
+## Your Turn: Create 3D Momentum
+
+> Compute 3D momentum by taking the square root of the sum of the squares of these three variables: `px1`, `py1`, `pz1`
+
+1.    Square the variables
+
+2.    Sum the squared values
+
+3.    Take the square root of the sum
+
+This computation *can* be done in a single line of code!
+
+*Hint*: you'll need to sum the rows!
+
+> Store the values as `p1` in your `cern_voi` data frame
+
+```{r 3d momentum, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+
+```
+
+> Now, perform simple linear regression
+
+```{r 3d linear, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+
+```
+
+> Finally, plot
+
+```{r 3d plot, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+
+```
+
+> Reflect: Why would you expect such different results based on one direction of momentum (`px1` or x-direction) versus three-dimensional momentum (`p1`)?
+
+<!--- Delete this comment and write your response --->
+
+
+<!--- Back to slides --->
+
+## Assumptions and Diagnostics
+
+Let's plot all three directions of `p`
+
+```{r multiple plot, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Wrangle into form
+cern_voi %>%
+  pivot_longer(
+    cols = c("px1", "py1", "pz1"),
+    names_to = "Direction",
+    values_to = "Magnitude"
+  ) %>%
+ggplot(aes(x = Magnitude, y = E1, group = Direction, color = Direction)) +
+  geom_point() +
+  labs(x = "Momentum", y = "Energy") +
+  geom_smooth(method = lm) +
+  theme_bw()
+```
+
+Now, let's make a linear model of momentum to predict energy
+
+```{r first multiple regression, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Let's store our model
+E1_model <- lm(E1 ~ px1 + py1 + pz1, data = cern_voi)
+
+# And print the summary
+summary(E1_model)
+```
+
+To plot, we need to get our predictions
+
+```{r linear plot, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Get model predictions
+cern_voi$E1_hat <- predict(E1_model)
+
+# Make a plot
+ggplot(data = cern_voi, aes(x = E1_hat, y = E1)) +
+  geom_point() +
+  labs(x = "Predicted Energy", y = "Observed Energy") +
+  geom_smooth(method = lm) +
+  theme_bw()
+```
+
+> What do you notice about this plot (e.g., do our predictions seem to fit)?
+
+<!--- Delete this comment and write your response --->
+
+
+<!--- Back to slides --->
+
+### Multicollinearity
+
+```{r first multicollinearity, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Compute VIF (variance inflation factor)
+vif(E1_model)
+```
+
+### Outliers
+
+To detect outliers, we'll use three common and related metrics: difference-in-fits (or `dffits`), Cook's distance, and difference-in-betas (or `dfbetas`)
+
+Compute statistics
+
+```{r influence measures, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Get influence measures
+E1_influence <- influence.measures(E1_model)
+
+# Get data frame
+influence_df <- as.data.frame(E1_influence$infmat)
+```
+
+#### difference-in-fits
+
+Compute statistic
+
+```{r dffits, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Plot difference-in-fits with spikes
+plot(influence_df$dffit, type = "h")
+text(influence_df$dffit, row.names(influence_df))
+# Add row names to identify which cases
+```
+
+A general guideline is:
+
+$$
+|DFFITS_i| > 2 \cdot \sqrt{\frac{p + 1}{n}},
+$$
+
+where $p$ is the number of predictors and $n$ is the sample size.
+
+> Compute the above equation and use `which()` to identify outlying indices
+
+```{r dffits test, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+
+```
+
+> Do there appear to be any outliers?
+
+<!--- Delete this comment and write your response --->
+
+#### Cook's distance
+
+Compute statistic
+
+```{r cooks, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Plot Cook's distance with spikes
+plot(influence_df$cook.d, type = "h")
+text(influence_df$cook.d, row.names(influence_df))
+# Add row names to identify which cases
+```
+
+A general guideline is:
+
+$$
+D > \frac{4}{n - k - 1}
+$$
+
+> Compute the above equation and use `which()` to identify outlying indices
+
+```{r cooks test, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+
+```
+
+> Do there appear to be any outliers?
+
+Fewer outliers than DFFIT but still many outliers.
+
+<!--- Delete this comment and write your response --->
+
+#### difference-in-betas
+
+Compute statistic
+
+```{r dfbetas, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+## Plot difference-in-betas with spikes
+plot(influence_df$dfb.1_, type = "h")
+text(influence_df$dfb.1_, row.names(cern_voi))
+## Add row names to identify which cases
+```
+
+A general guideline is:
+
+$$
+|dfbetas| > \frac{2}{\sqrt{n}},
+$$
+
+where $p$ is the number of predictors and $n$ is the sample size.
+
+> Compute the above equation and use `which()` to identify outlying indices
+
+```{r dfbetas test, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+
+```
+
+> Was there a consensus across the influence measures? Do there appear to be any outliers?
+
+<!--- Delete this comment and write your response --->
+
+### Normal Residuals
+
+<!---
+
+Shapiro-Wilks test of normality has the following hypotheses
+
+Null (H_0): The values are not significantly different from normal
+
+Alternative (H_A): The values are significantly different from normal
+
+--->
+
+> Before running this code, what do you expect to happen?
+
+A.    Retain the null: The residuals are not significantly different from normal
+
+B.    Reject the null: The residuals are significantly different from normal
+
+```{r first residuals, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Perform Shapiro-Wilks test
+shapiro.test(residuals(E1_model))
+
+# Plot the residuals
+plot(E1_model, which = 1)
+```
+
+### Homoscedasticity
+
+```{r first qq, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Plot the QQ plot
+plot(E1_model, which = 2)
+```
+
+## Resolutions
+
+We'll start and work backwards on the resolutions for the linear model assumptions.
+
+### Homoscedasticity
+
+If homoscedasticity is an issue, then we can estimate corrected standard errors using the \{sandwich\} package
+
+```{r correct homoscedasticity, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Load {lmtest} and {sandwich}
+library(lmtest); library(sandwich)
+
+# The `coeftest` will print corrected standard errors
+# (this correction will affected our *p*-values)
+coeftest(E1_model, vcov = vcovHC(E1_model))
+```
+
+> Did anything change?
+
+<!--- Delete this comment and write your response --->
+
+We'll also check out whether there is independence using the Durbin-Watson test in the \{car\} package
+
+```{r independence, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# We'll need to set a seed first
+set.seed(42)
+
+# Perform the test
+durbinWatsonTest(E1_model)
+```
+
+Here's how to interpret the test:
+
+$< 2$ = positive autocorrelation
+$2$ = no autocorrelation
+$> 2$ = negative autocorrelation
+
+## Your Turn: Predicting Life Expectancy
+
+Your goal is to work through a similar pipeline as we just walked through above.
+
+Our objective will be to build a model to predict life expectancy.
+
+> Let's start by loading in the dataset: `life_expectancy.csv`
+
+```{r life load, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+
+```
+
+Here's our variables of interest:
+
+`Life.expectancy` (numeric; 48.1-89.0) = average life expectancy in years
+
+`Alcohol` (numeric; 0.01-15.19) = per capita consumption in liters of pure alcohol
+
+`Schooling` (numeric; 4.9-20.4) = average number of years in school
+ 
+`percentage.expenditure` (numeric; 0-100) = expenditure on health as a percentage of GDP per capita
+
+`GDP` (numeric) = gross domestic product in millions (USD)
+
+> Select these variables and rename them as you see fit
+
+```{r life voi, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+
+```
+
+> Run `ggpairs()` to get an idea of the relationships and distributions
+
+```{r life ggpairs, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+
+```
+
+> Reflect on the distributions -- do all variables appear to be normal?
+
+<!--- Delete this comment and write your response --->
+
+We'll come back to these distributions later. For now, let's try to run our model
+
+> Perform linear regression and print the summary
+
+```{r life lm, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+
+```
+
+### Check for assumptions (follow workflow above)
+
+> Multicollinearity?
+
+```{r life multicollinearity, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+
+```
+
+> Any multicollinearity? If so, remove a variable and re-run the model
+
+```{r life new model, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+
+```
+
+> Did the results change?
+
+<!--- Delete this comment and write your response --->
+
+
+> Outliers?
+
+```{r life outliers, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+
+```
+
+> Any outliers? If so, remove observation(s) and re-run the model
+
+```{r life another new model, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+
+```
+
+> Normal residuals?
+
+```{r life residuals, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+
+```
+
+> Are the residuals normal?
+
+<!--- Delete this comment and write your response --->
+
+> Homoscedasticity?
+
+```{r life homoscedasticity, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+
+```
+
+Before jumping to outliers, let's revisit the distributions (take another look at the `ggpairs` plot above)
+
+> Let's transform our variables to be more normal
+
+<!--- Hint: one of these variables should have been removed due to multicollinearity --->
+
+We'll use the \{bestNormalize\} package to search over many different transformations to identify the one that gets our data closest to normal. Here's a list of transformations it applies:
+
+arcsinh:
+
+$$
+\sinh^{-1}(x)
+$$
+
+box-cox:
+
+$$
+\begin{cases}
+\frac{(y + \lambda_2)^{\lambda_1 - 1}}{\lambda_1}, \text{if} \ \lambda_1 \neq 0 \\
+\log(y + \lambda_2), \text{if} \lambda_1 = 0
+\end{cases}
+$$
+
+center and scale: `scale()`
+
+$$
+\frac{x - \bar{x}}{s_x}
+$$
+
+double reversed log:
+
+$$
+-\log_b(x + a)
+$$
+
+exponent:
+
+$$
+e^x
+$$
+
+log:
+
+$$
+\log_b(x + a)
+$$
+
+orderNorm:
+
+$$
+\Phi^{-1} \left( \frac{\text{rank}(x)}{n + 1} \right)
+$$
+
+where $\Phi^{-1}$ is the inverse cumulative normal distribution function (`qnorm()`)
+
+square root:
+
+$$
+\sqrt{x + a}
+$$
+
+yeo-johnson: too complex to precisely display as in-line text
+
+> Create an object called `life_voi` with the data frame you've been using
+
+```{r life voi2, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+
+```
+
+This code is provided for you:
+
+```{r life normalize, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Set seed
+set.seed(42)
+
+# Get {bestNormalize} objects
+life_bestNormalize <- lapply(life_voi, bestNormalize)
+
+# Extract transformed values
+life_transformed <- do.call(
+  cbind.data.frame, lapply(life_bestNormalize, function(x){x$x.t})
+)
+```
+
+Here's how to access which transformations were used (if any):
+
+```{r life transform, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Extract transformation types
+lapply(life_bestNormalize, function(x){x$chosen_transform})
+```
+
+
+> Re-fit your linear model using the `life_transformed` object
+
+```{r life refit lm, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+
+```
+
+> Did your model prediction ($R^2$) get worse or better?
+
+<!--- Delete this comment and write your response --->
+
+> Interpret the `schooling` parameter. (hint: the values have been standardized!)
+
+<!--- Delete this comment and write your response --->
+
+> Normal residuals?
+
+```{r life residuals2, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Shapiro-Wilk
+
+
+# Residual plot
+
+```
+
+> Are the residuals normal?
+
+<!--- Delete this comment and write your response --->
+
+> Homoscedasticity?
+
+```{r life homoscedasticity2, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# QQ-plot
+
+```
+
+<!--- Delete this comment and write your response --->

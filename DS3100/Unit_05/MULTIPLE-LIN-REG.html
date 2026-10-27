@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Dr.&nbsp;Satadisha Saha Bhowmick">
-  <meta name="dcterms.date" content="2026-10-20">
+  <meta name="dcterms.date" content="2026-10-26">
   <title>DS 3100 | Multiple Linear Regression</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -210,7 +210,7 @@ Dr.&nbsp;Satadisha Saha Bhowmick
 </div>
 </div>
 
-  <p class="date">2026-10-20</p>
+  <p class="date">2026-10-26</p>
 </section>
 <section class="slide level2">
 
@@ -540,13 +540,13 @@ F-statistic: 42.39 on 5 and 10 DF,  p-value: 2.057e-06</code></pre>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">Date:</th>
-<td>Tue, 20 Oct 2026</td>
+<td>Mon, 26 Oct 2026</td>
 <th data-quarto-table-cell-role="th">Prob (F-statistic):</th>
 <td>2.06e-06</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">Time:</th>
-<td>12:54:45</td>
+<td>21:01:28</td>
 <th data-quarto-table-cell-role="th">Log-Likelihood:</th>
 <td>52.538</td>
 </tr>
@@ -690,13 +690,13 @@ F-statistic: 42.39 on 5 and 10 DF,  p-value: 2.057e-06</code></pre>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">Date:</th>
-<td>Tue, 20 Oct 2026</td>
+<td>Mon, 26 Oct 2026</td>
 <th data-quarto-table-cell-role="th">Prob (F-statistic):</th>
 <td>2.06e-06</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">Time:</th>
-<td>12:54:45</td>
+<td>21:01:28</td>
 <th data-quarto-table-cell-role="th">Log-Likelihood:</th>
 <td>52.538</td>
 </tr>
@@ -788,9 +788,9 @@ rse = \sqrt{\frac{SSE}{n-p-1}} = \sqrt{\frac{\sum\limits_{i=1}^{n}(y_i - \hat{y_
 
 <h3 id="rse-in-practice">RSE in practice</h3>
 <p>Like RMSE, there is no scale for RSE! You have to compare it to the RSE for another model fit from the same data. Smaller values are more desirable.</p>
-<p>While the RSE is not directly available in the summary table of <code>statsmodel</code> it is defined within the package as the square root of mean squared error of the residuals. In R, it is obrained using the <code>sigma()</code> function applied to a fitted model object.</p>
+<p>While the RSE is not directly available in the summary table of <code>statsmodel</code> it is defined within the package as the square root of mean squared error of the residuals. In R, it is obtained using the <code>sigma()</code> function applied to a fitted model object or by probing the <code>sigma</code> attribute within the model summary.</p>
 <ul>
-<li><i>Please beware that this is <u><b>not</b></u> the RMSE which is a regular average of mean squared error and not corrected with division by the appropriate degrees of freedom.</i> This can be confusing!</li>
+<li><i>Please be aware that this is <u><b>not</b></u> the RMSE which is a regular average of mean squared error and not corrected with division by the appropriate degrees of freedom.</i> This can be confusing!</li>
 </ul>
 <div class="columns">
 <div class="column" style="width:50%;">
@@ -801,12 +801,16 @@ rse = \sqrt{\frac{SSE}{n-p-1}} = \sqrt{\frac{\sum\limits_{i=1}^{n}(y_i - \hat{y_
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.01147518</code></pre>
 </div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="" aria-label="1"></a><span class="fu">print</span>(model_summary<span class="sc">$</span>sigma)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.01147518</code></pre>
+</div>
 </div>
 </div><div class="column" style="width:50%;">
 <h4 id="python-5">Python</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="" aria-label="1"></a>rse <span class="op">=</span> np.sqrt(model.mse_resid)</span>
-<span id="cb29-2"><a href="" aria-label="2"></a><span class="bu">print</span>(rse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="" aria-label="1"></a>rse <span class="op">=</span> np.sqrt(model.mse_resid)</span>
+<span id="cb31-2"><a href="" aria-label="2"></a><span class="bu">print</span>(rse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>0.011475177080774014</code></pre>
 </div>
@@ -835,10 +839,10 @@ rse = \sqrt{\frac{SSE}{n-p-1}} = \sqrt{\frac{\sum\limits_{i=1}^{n}(y_i - \hat{y_
 <ul>
 <li>Remember that the regression model is fitted around a sample. So much like sample mean, the model coefficients (parameters) are also estimates that are subject to an underlying sampling distribution(how they’d vary across samples).</li>
 </ul>
-<p>For a linear model, the OLS estimator is <span class="math inline">\(\hat{\beta} = (X^TX)^{-1}X^Ty\)</span>. By substituting <span class="math inline">\(y = X\beta + \epsilon\)</span> we get, <span class="math inline">\(\hat{\beta} = \beta + (X^TX)^{-1}X^T\epsilon\)</span></p>
+<!-- For a linear model, the OLS estimator is $\hat{\beta} = (X^TX)^{-1}X^Ty$. By substituting $y = X\beta + \epsilon$ we get, $\hat{\beta} = \beta + (X^TX)^{-1}X^T\epsilon$ -->
 <p>Turns out that upon deriving the OLS estimator:</p>
 <ul>
-<li>Estimates of individual model coefficients are normally distributed
+<li>Estimates of individual model coefficients are <strong>normally distributed</strong>
 <ul>
 <li><span class="math inline">\(\hat{\beta}_j|X \sim \mathcal{N}(\beta_j, \sigma^2(X^TX)^{-1}_{jj})\)</span></li>
 </ul></li>
@@ -863,6 +867,25 @@ rse = \sqrt{\frac{SSE}{n-p-1}} = \sqrt{\frac{\sum\limits_{i=1}^{n}(y_i - \hat{y_
 <li>We must factor in the correct number of degrees of freedom!</li>
 </ul></li>
 </ul>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>An equivalent test using two regression models</strong></p>
+</div>
+<div class="callout-content">
+<p>The coefficient <span class="math inline">\(t\)</span>-test evaluates <strong>one predictor coefficient at a time</strong>, while holding the other predictors in the model fixed. We can test the same question by comparing two nested models:</p>
+<ul>
+<li><strong>Full model:</strong> includes the predictor of interest and the other predictors.</li>
+<li><strong>Reduced model:</strong> contains the same predictors except the predictor of interest.</li>
+</ul>
+<p>The additional contribution of the predictor can be expressed as: <span class="math inline">\(\Delta R^2 = R^2_{\text{full}} - R^2_{\text{reduced}}\)</span>. An <span class="math inline">\(F\)</span>-test can then determine whether this improvement in fit is statistically significant. When the two models differ by <strong>exactly one coefficient</strong>, <span class="math inline">\(\boxed{F=t^2}\)</span>.</p>
+<p>So the nested-model <span class="math inline">\(F\)</span>-test and the coefficient’s two-sided <span class="math inline">\(t\)</span>-test produce the <strong>same <span class="math inline">\(p\)</span>-value</strong>.</p>
+</div>
+</div>
+</div>
 </section>
 <section class="slide level2">
 
@@ -876,7 +899,7 @@ rse = \sqrt{\frac{SSE}{n-p-1}} = \sqrt{\frac{\sum\limits_{i=1}^{n}(y_i - \hat{y_
 <div class="column" style="width:45%;">
 <h4 id="r-6">R</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="" aria-label="1"></a><span class="fu">summary</span>(model)<span class="sc">$</span>coefficients</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="" aria-label="1"></a><span class="fu">summary</span>(model)<span class="sc">$</span>coefficients</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                     Estimate   Std. Error    t value     Pr(&gt;|t|)
 (Intercept)      0.0924596848 1.594126e-01  0.5800023 5.747478e-01
@@ -890,7 +913,7 @@ Sobr2           -0.0023201314 3.631337e-03 -0.6389193 5.372341e-01</code></pre>
 </div><div class="column" style="width:55%;">
 <h4 id="python-6">Python</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="" aria-label="1"></a>model.summary().tables[<span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="" aria-label="1"></a>model.summary().tables[<span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="simpletable caption-top">
 <tbody>
@@ -979,7 +1002,7 @@ Sobr2           -0.0023201314 3.631337e-03 -0.6389193 5.372341e-01</code></pre>
 <div class="column" style="width:50%;">
 <h4 id="r-7">R</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="" aria-label="1"></a><span class="fu">confint</span>(model, <span class="at">level =</span> <span class="fl">0.95</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="" aria-label="1"></a><span class="fu">confint</span>(model, <span class="at">level =</span> <span class="fl">0.95</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                        2.5 %        97.5 %
 (Intercept)     -0.2627337475  0.4476531171
@@ -993,7 +1016,7 @@ Sobr2           -0.0104112545  0.0057709917</code></pre>
 </div><div class="column" style="width:50%;">
 <h4 id="python-7">Python</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="" aria-label="1"></a>model.conf_int(alpha<span class="op">=</span><span class="fl">0.05</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="" aria-label="1"></a>model.conf_int(alpha<span class="op">=</span><span class="fl">0.05</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                                0         1
 Intercept               -0.262734  0.447653
@@ -1441,9 +1464,9 @@ st
 :::
 -->
 <h3 id="multicollinearity">Multicollinearity</h3>
-<p>The issue of linearly dependent (or “almost” linearly dependent) column/variables is called multicollinearity. Multicollinearity occurs when a variable is highly or perfectly correlated with a linear combination of one or more columns.</p>
+<p>The issue of linearly dependent (or “almost” linearly dependent) column/variables is called multicollinearity. Multicollinearity occurs when a variable column in your design matrix is highly or perfectly correlated with a linear combination of one or more columns. Design matrix <span class="math inline">\(X\)</span> having dependent columns a violates a key condition!</p>
 <ul>
-<li>Intuitively, this means that the variable can be deduced from other variables and thus is not capable of adding new information to the model.</li>
+<li>Intuitively, this means that the variable can be deduced from other variables and they are both not capable of adding new information to the model.</li>
 </ul>
 <p><span style="color:#1565C0;"><b>Structural Multicollinearity</b></span>: Creating new predictors from other predictors through mathematical transformations. This is a design issue but does not reflect a problem with the data itself.</p>
 <ul>
@@ -1453,7 +1476,7 @@ st
 <ul>
 <li>Unfortunately, researchers often can’t control the predictors. For example when gathering a person’s gender, race, grade point average, math SAT score, IQ, and starting salary, one or more variables maybe dependent on others but data collectors in such observational studies cannot control for them.</li>
 </ul>
-<p><u style="color: blue; font-size: 1.0em; font-weight: bold;">Big problem</u> Design matrix <span class="math inline">\(X\)</span> having dependent columns is a violation of a key condition!</p>
+<p><u style="color: blue; font-size: 1.0em; font-weight: bold;">Big problem</u>: Of the two, data-based multicollinearity is the type that is actually problematic.</p>
 </section>
 <section class="slide level2">
 
@@ -1478,15 +1501,15 @@ st
 <div class="column" style="width:35%;">
 <h4 id="r-8">R</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="" aria-label="1"></a><span class="co"># Ensure the dummy variable is numeric</span></span>
-<span id="cb38-2"><a href="" aria-label="2"></a>bac_data<span class="sc">$</span>Gender_OSU_male <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(bac_data<span class="sc">$</span>Gender_OSU_male)</span>
-<span id="cb38-3"><a href="" aria-label="3"></a></span>
-<span id="cb38-4"><a href="" aria-label="4"></a>full_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(</span>
-<span id="cb38-5"><a href="" aria-label="5"></a>  BAC <span class="sc">~</span> Beers <span class="sc">+</span> Weight_OSU <span class="sc">+</span> Gender_OSU_male <span class="sc">+</span> Sobr1 <span class="sc">+</span> Sobr2,</span>
-<span id="cb38-6"><a href="" aria-label="6"></a>  <span class="at">data =</span> bac_data</span>
-<span id="cb38-7"><a href="" aria-label="7"></a>)</span>
-<span id="cb38-8"><a href="" aria-label="8"></a></span>
-<span id="cb38-9"><a href="" aria-label="9"></a><span class="fu">summary</span>(full_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="" aria-label="1"></a><span class="co"># Ensure the dummy variable is numeric</span></span>
+<span id="cb40-2"><a href="" aria-label="2"></a>bac_data<span class="sc">$</span>Gender_OSU_male <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(bac_data<span class="sc">$</span>Gender_OSU_male)</span>
+<span id="cb40-3"><a href="" aria-label="3"></a></span>
+<span id="cb40-4"><a href="" aria-label="4"></a>full_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(</span>
+<span id="cb40-5"><a href="" aria-label="5"></a>  BAC <span class="sc">~</span> Beers <span class="sc">+</span> Weight_OSU <span class="sc">+</span> Gender_OSU_male <span class="sc">+</span> Sobr1 <span class="sc">+</span> Sobr2,</span>
+<span id="cb40-6"><a href="" aria-label="6"></a>  <span class="at">data =</span> bac_data</span>
+<span id="cb40-7"><a href="" aria-label="7"></a>)</span>
+<span id="cb40-8"><a href="" aria-label="8"></a></span>
+<span id="cb40-9"><a href="" aria-label="9"></a><span class="fu">summary</span>(full_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1516,13 +1539,13 @@ F-statistic: 42.39 on 5 and 10 DF,  p-value: 2.057e-06</code></pre>
 </div><div class="column" style="width:65%;">
 <h4 id="python-8">Python</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="" aria-label="1"></a><span class="co">#convert boolean column to numeric</span></span>
-<span id="cb40-2"><a href="" aria-label="2"></a>bac_data[<span class="st">'Gender_OSU_male'</span>] <span class="op">=</span> bac_data[<span class="st">'Gender_OSU_male'</span>].astype(<span class="bu">int</span>)</span>
-<span id="cb40-3"><a href="" aria-label="3"></a>full_model <span class="op">=</span> smf.ols(</span>
-<span id="cb40-4"><a href="" aria-label="4"></a>    <span class="st">'BAC ~ Beers + Weight_OSU + Gender_OSU_male + Sobr1 + Sobr2'</span>,</span>
-<span id="cb40-5"><a href="" aria-label="5"></a>    data<span class="op">=</span>bac_data</span>
-<span id="cb40-6"><a href="" aria-label="6"></a>).fit()</span>
-<span id="cb40-7"><a href="" aria-label="7"></a>full_model.summary().tables[<span class="dv">0</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="" aria-label="1"></a><span class="co">#convert boolean column to numeric</span></span>
+<span id="cb42-2"><a href="" aria-label="2"></a>bac_data[<span class="st">'Gender_OSU_male'</span>] <span class="op">=</span> bac_data[<span class="st">'Gender_OSU_male'</span>].astype(<span class="bu">int</span>)</span>
+<span id="cb42-3"><a href="" aria-label="3"></a>full_model <span class="op">=</span> smf.ols(</span>
+<span id="cb42-4"><a href="" aria-label="4"></a>    <span class="st">'BAC ~ Beers + Weight_OSU + Gender_OSU_male + Sobr1 + Sobr2'</span>,</span>
+<span id="cb42-5"><a href="" aria-label="5"></a>    data<span class="op">=</span>bac_data</span>
+<span id="cb42-6"><a href="" aria-label="6"></a>).fit()</span>
+<span id="cb42-7"><a href="" aria-label="7"></a>full_model.summary().tables[<span class="dv">0</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="simpletable caption-top">
 <caption>OLS Regression Results</caption>
@@ -1547,13 +1570,13 @@ F-statistic: 42.39 on 5 and 10 DF,  p-value: 2.057e-06</code></pre>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">Date:</th>
-<td>Tue, 20 Oct 2026</td>
+<td>Mon, 26 Oct 2026</td>
 <th data-quarto-table-cell-role="th">Prob (F-statistic):</th>
 <td>2.06e-06</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">Time:</th>
-<td>12:54:45</td>
+<td>21:01:28</td>
 <th data-quarto-table-cell-role="th">Log-Likelihood:</th>
 <td>52.538</td>
 </tr>
@@ -1595,7 +1618,7 @@ F-statistic: 42.39 on 5 and 10 DF,  p-value: 2.057e-06</code></pre>
 <div class="column" style="width:40%;">
 <h4 id="r-9">R</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="" aria-label="1"></a><span class="fu">summary</span>(full_model)<span class="sc">$</span>coefficients</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="" aria-label="1"></a><span class="fu">summary</span>(full_model)<span class="sc">$</span>coefficients</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                     Estimate   Std. Error    t value     Pr(&gt;|t|)
 (Intercept)      0.0924596848 1.594126e-01  0.5800023 5.747478e-01
@@ -1605,16 +1628,22 @@ Gender_OSU_male  0.0012611012 9.517320e-03  0.1325059 8.972125e-01
 Sobr1           -0.0034469292 1.646590e-02 -0.2093375 8.383878e-01
 Sobr2           -0.0023201314 3.631337e-03 -0.6389193 5.372341e-01</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="" aria-label="1"></a><span class="fu">vif</span>(full_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="" aria-label="1"></a>vif_values <span class="ot">&lt;-</span> <span class="fu">vif</span>(full_model)</span>
+<span id="cb45-2"><a href="" aria-label="2"></a>vif_table  <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Predictor =</span> <span class="fu">names</span>(vif_values), <span class="at">VIF =</span> vif_values)</span>
+<span id="cb45-3"><a href="" aria-label="3"></a><span class="fu">print</span>(vif_table, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>          Beers      Weight_OSU Gender_OSU_male           Sobr1           Sobr2 
-       2.465164        1.514411        2.751507        1.512063        3.057056 </code></pre>
+<pre><code>       Predictor      VIF
+           Beers 2.465164
+      Weight_OSU 1.514411
+ Gender_OSU_male 2.751507
+           Sobr1 1.512063
+           Sobr2 3.057056</code></pre>
 </div>
 </div>
 </div><div class="column" style="width:60%;">
 <h4 id="python-9">Python</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="" aria-label="1"></a>full_model.summary().tables[<span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="" aria-label="1"></a>full_model.summary().tables[<span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="simpletable caption-top">
 <tbody>
@@ -1684,13 +1713,13 @@ Sobr2           -0.0023201314 3.631337e-03 -0.6389193 5.372341e-01</code></pre>
 </tbody>
 </table>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="" aria-label="1"></a>bac_predictors <span class="op">=</span> bac_data[[<span class="st">'Beers'</span>, <span class="st">'Weight_OSU'</span>, <span class="st">'Gender_OSU_male'</span>, <span class="st">'Sobr1'</span>, <span class="st">'Sobr2'</span>]]</span>
-<span id="cb46-2"><a href="" aria-label="2"></a>bac_predictors <span class="op">=</span> sm.add_constant(bac_predictors)</span>
-<span id="cb46-3"><a href="" aria-label="3"></a>vif <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb46-4"><a href="" aria-label="4"></a>    <span class="st">'Feature'</span>: bac_predictors.columns,</span>
-<span id="cb46-5"><a href="" aria-label="5"></a>    <span class="st">'VIF'</span>: [variance_inflation_factor(bac_predictors.values, i) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(bac_predictors.columns))]</span>
-<span id="cb46-6"><a href="" aria-label="6"></a>})</span>
-<span id="cb46-7"><a href="" aria-label="7"></a>vif</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="" aria-label="1"></a>bac_predictors <span class="op">=</span> bac_data[[<span class="st">'Beers'</span>, <span class="st">'Weight_OSU'</span>, <span class="st">'Gender_OSU_male'</span>, <span class="st">'Sobr1'</span>, <span class="st">'Sobr2'</span>]]</span>
+<span id="cb48-2"><a href="" aria-label="2"></a>bac_predictors <span class="op">=</span> sm.add_constant(bac_predictors)</span>
+<span id="cb48-3"><a href="" aria-label="3"></a>vif <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb48-4"><a href="" aria-label="4"></a>    <span class="st">'Feature'</span>: bac_predictors.columns,</span>
+<span id="cb48-5"><a href="" aria-label="5"></a>    <span class="st">'VIF'</span>: [variance_inflation_factor(bac_predictors.values, i) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(bac_predictors.columns))]</span>
+<span id="cb48-6"><a href="" aria-label="6"></a>})</span>
+<span id="cb48-7"><a href="" aria-label="7"></a>vif</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           Feature       VIF
 0            const  1.000000
@@ -1720,6 +1749,25 @@ Sobr2           -0.0023201314 3.631337e-03 -0.6389193 5.372341e-01</code></pre>
 <div class="callout-content">
 <p>In the BAC example, we have 16 samples and for a model with 6 parameters (<em>an intercept plus five slopes</em>) <span class="math inline">\(df_\text{residual} = 16-6= 10\)</span>.</p>
 <p>So the model might explain BAC very well but with only 16 observations and several predictors, there may not be enough information to estimate every predictor’s unique contribution precisely. This could explain the considerable uncertainty around some predictors in our post regression analysis given we are trying to estimate several effects from a very small dataset.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Other strategies to handle multicollinearity</strong></p>
+</div>
+<div class="callout-content">
+<ol type="1">
+<li>Feature Engineering: Instead of deleting a redundant variable and throwing away data, combine the highly correlated features into a single, comprehensive variable.</li>
+<li>Regularization: If your primary goal is prediction rather than coefficient explanation. <em>More on this later</em></li>
+<li>Adding more data can also help. Your current sample could lack rows where your collinear variables move independently of each other due to data deficiency.</li>
+</ol>
 </div>
 </div>
 </div>
@@ -1782,7 +1830,11 @@ P(e|X) \sim \mathcal{N(0, \sigma^2 I_n)}
 <h3 id="linearity">Linearity</h3>
 <ul>
 <li>You can check this assumption using scatterplots – one for each predictor vs the response variable.</li>
-<li>You can also check for linearity with a scatterplot of the (standardized) residuals, against the predicted values (on the horizontal axis).</li>
+<li>You can also check for linearity with a scatterplot of the (standardized) residuals, against the predicted values (on the horizontal axis).
+<ul>
+<li>Residuals scattered approximately around 0 across the full range of predicted values, with roughly similar number of positives and negatives.</li>
+<li>No systematic curve or bend in the residuals.</li>
+</ul></li>
 <li>What do you do if your data are not linear?
 <ul>
 <li>Transformations (log, square root, inverse, etc.) on either the predictors or responses.</li>
@@ -1834,15 +1886,35 @@ r^{(j)}_i = \hat{\beta}_jx_{ij} + e_i
 </span> 
 -->
 <h3 id="independence-and-uncorrelated-residuals">Independence and Uncorrelated Residuals</h3>
-<p>We are assuming that each observation and corresponding residual is independent from all of others.<br> What we want to check is for the residuals to be uncorrelated, no general pattern among the residuals across observations or predicted values.</p>
+<p>We assume that the error associated with one observation does not systematically depend on the errors associated with other observations. In particular, we want residuals to be <strong>uncorrelated across observations</strong>.</p>
+<div class="fragment">
+<p><strong>When observations have a meaningful order</strong> (e.g., time or spatial order):</p>
 <ul>
-<li>Scatterplots of residuals against predictors and response variables.</li>
-</ul>
-<p>Most commonly violated in</p>
+<li>Plot residuals against the <strong>order of observations</strong>.
 <ul>
-<li>Time-series data</li>
-<li>Spatial data</li>
+<li>Residuals should fluctuate randomly around zero with <strong>no systematic sequence or clustering</strong>.</li>
+<li>Long runs of positive or negative residuals, repeating cycles, or neighboring residuals with similar values can indicate autocorrelation. <span style="color:#1565C0;"><strong>Autocorrelation</strong></span> occurs when residuals are correlated with other residuals according to their ordering.</li>
+</ul></li>
+<li>The <span style="color:#1565C0;"><strong>Durbin–Watson test</strong></span> can be used to detect correlation between neighboring residuals when the ordering is meaningful.</li>
 </ul>
+<p><strong>Most commonly violated in:</strong> Time-series data; Spatial data; clustered observations.</p>
+</div>
+<div class="fragment">
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>What if the observations have no meaningful order?</strong></p>
+</div>
+<div class="callout-content">
+<p>If the observations have <strong>no meaningful order or grouping</strong>, plotting residuals against row number or applying a test such as Durbin–Watson is not informative. The result would depend on an arbitrary ordering of the rows.</p>
+<p>In this case, independence should be assessed primarily from the <strong>study design and data-collection process</strong>: consider whether observations were independently sampled and whether repeated measurements, clustering, spatial relationships, or other dependencies could connect observations.</p>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section class="slide level2">
 
@@ -1938,13 +2010,13 @@ H_A &amp;:\text{residuals depart from normality}
 <li>Least-squares coefficient estimates</li>
 <li>Linearity of the fitted model</li>
 <li><span class="math inline">\(R^2\)</span></li>
-<li>Prediction accuracy (subject to the presence of outliers)</li>
+<li>Point predictions</li>
 </ul>
-<p>Although the tests and confidence intervals originate from normal distributions, the consequences are usually minor because the formulas are based on the sampling distributions of the estimates.</p>
+<p>Violation of residual normality does not, by itself, invalidate the fitted least-squares line or its coefficient estimates. Normality is primarily important for the <em>sampling distributions used for statistical inference</em>, especially in smaller samples.</p>
 <p>What <span style="color:#1565C0;"><i>does</i></span> break:</p>
 <ul>
-<li>Hypothesis tests</li>
-<li>Confidence intervals for means</li>
+<li>Hypothesis tests for model coefficients</li>
+<li>Confidence intervals for coefficients and mean responses</li>
 <li>Prediction intervals</li>
 <li>Outlier diagnostics (more on this later!)</li>
 </ul>
@@ -1965,16 +2037,41 @@ H_A &amp;:\text{residuals depart from normality}
 <section class="slide level2">
 
 <h3 id="equality-of-variance">Equality of Variance</h3>
-<p>We can plot the residuals against the predictors.</p>
+<p>We can examine <strong>residuals against the predicted (fitted) values</strong> to assess whether the error variance remains approximately constant across the range of the model’s predictions.</p>
+<div class="fragment">
+<p>What we want is <span style="color:#1565C0;"><b>Homoscedasticity</b></span>: approximately equal variance of the errors across values of the predictors, reflected by a roughly constant spread of residuals around <span class="math inline">\(0\)</span>.</p>
 <ul>
-<li>What we want is <u style="color: blue; font-size: 1.0em; font-weight: bold;">Homoscedasticity</u>: equal spread of residuals along either side of the mean response for all observations.</li>
+<li>Look for residuals scattered around <span class="math inline">\(0\)</span> with a <strong>roughly constant vertical spread</strong> across whole range of fitted values.</li>
+<li>A spread that systematically <strong>widens or narrows</strong> (e.g., a funnel or fan shape) suggests non-constant variance.</li>
 </ul>
-<p>Violation of this condition is called <u style="color: blue; font-size: 1.0em; font-weight: bold;">Heteroscedasticity</u> and it has far more serious consequences.</p>
+</div>
+<div class="fragment">
+<p>Violation of this condition is called <span style="color:#1565C0;"><b>Heteroscedasticity</b></span>.</p>
 <ul>
-<li>Standard errors inaccurately describe the uncertainty in the estimates, as a consequence means tests, confidence intervals and p-values can be misleading.</li>
-<li>Could rebuild the model with different independent variables.</li>
-<li>Perform transformations on non linear data or fit other (non linear) models.</li>
+<li>Standard errors may inaccurately describe uncertainty in the coefficient estimates; consequently, hypothesis tests, confidence intervals, and <span class="math inline">\(p\)</span>-values can be misleading.</li>
+<li>Consider transformations when the changing variance is related to the scale or distribution of the variables.</li>
+<li>Consider alternative model specifications or methods that account for non-constant variance.</li>
 </ul>
+</div>
+<div class="fragment">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>The <strong>same Residuals vs.&nbsp;Fitted Values plot</strong> helps assess two different assumptions:</p>
+<ul>
+<li><strong>Linearity:</strong> look for systematic curvature or other patterns around the <em>center</em> of the residual cloud.</li>
+<li><strong>Homoscedasticity:</strong> look for changes in the <em>vertical spread</em> of the residual cloud.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section class="slide level2">
 
@@ -1998,8 +2095,8 @@ H_A &amp;:\text{residuals depart from normality}
 <div class="fragment">
 <p><span style="color:#1565C0;"><u><b>Outliers</b></u></span>: Can influence the regression line/hyperplane by pulling it in the direction of the outlier.</p>
 <ul>
-<li>A value that can appear out of the norm or extreme for at least one of the variables; does not follow the predicted pattern of the model.</li>
-<li>A point whose value may fall within the expected range but produces an extremely large residual.</li>
+<li>A value that can appear out of the norm or extreme for the response; does not follow the predicted pattern of the model.</li>
+<li>Poorly predicted by the model. A point whose value may fall within the expected range but produces an extremely large residual.</li>
 </ul>
 <p>Removing an observation simply because it is an outlier is not a good idea, but it is also not a good idea to report a conclusion that rests on one or two data points.</p>
 </div>
@@ -2010,7 +2107,7 @@ H_A &amp;:\text{residuals depart from normality}
 <span class="fragment"> <u style="color: blue; font-size: 1.0em; font-weight: bold;">Influential Observation</u>: It could be an outlier, but not necessarily. The point has a disproportionate effect on model estimates and interpretations.
 <ul>
 <li>
-<u><b>High Leverage Point</b></u>: Could be a value corresponding to an observation that <u>horizontally</u> further away from the rest of the observations in the sample. These points exhibit very strong influence on the least squares plane.<br>Some outliers are high leverage points, but all high leverage points are <b>NOT</b> outliers.
+<u><b>High Leverage Point</b></u>: Could be a value corresponding to an observation that is <u>horizontally</u> further away from the rest of the observations in the sample. These points exhibit very strong influence on the least squares plane.<br>Some outliers are high leverage points, but all high leverage points are <b>NOT</b> outliers.
 </li>
 <li>
 It could be a value of the dependent variable that is far outside of the rest of the values for the data.
@@ -2092,9 +2189,9 @@ It could be a value of the dependent variable that is far outside of the rest of
 </ul>
 <p>We will discuss three different types of case-influence statistics:</p>
 <ol type="1">
-<li>Leverage</li>
-<li>Studentized residuals</li>
-<li>Cook’s distance.</li>
+<li>Leverage (<span style="color:#1565C0;"><em>unusualness in predictor</em></span>)</li>
+<li>Cook’s distance</li>
+<li>Studentized residuals (<span style="color:#1565C0;"><em>good for outlier detection</em></span>)</li>
 </ol>
 </section>
 <section class="slide level2">
@@ -2113,31 +2210,32 @@ h_i = \frac{(X_i-\bar{X})^2}{\sum(X_i-\bar{X})^2} + \frac{1}{n}
 
 <h3 id="estimating-leverage-in-practice">Estimating Leverage in Practice</h3>
 <p>Let us check the leverage of individual observations on a reduced model to predict BAC that uses 4 predictors. As we will see, there are some high leverage points.</p>
+<p>To estimate leverage, we probe into something called <span style="color:#1565C0;"><em>the hat matrix</em></span>.</p>
 <div class="columns">
 <div class="column" style="width:50%;">
 <h4 id="r-10">R</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="" aria-label="1"></a>bac_data<span class="sc">$</span>Weight_c <span class="ot">&lt;-</span> bac_data<span class="sc">$</span>Weight_OSU <span class="sc">-</span> <span class="fu">mean</span>(bac_data<span class="sc">$</span>Weight_OSU)</span>
-<span id="cb48-2"><a href="" aria-label="2"></a>model2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(</span>
-<span id="cb48-3"><a href="" aria-label="3"></a>  BAC <span class="sc">~</span> Beers <span class="sc">+</span> Weight_c <span class="sc">+</span> Gender_OSU_male <span class="sc">+</span> Sobr2,</span>
-<span id="cb48-4"><a href="" aria-label="4"></a>  <span class="at">data =</span> bac_data</span>
-<span id="cb48-5"><a href="" aria-label="5"></a>)</span>
-<span id="cb48-6"><a href="" aria-label="6"></a>influence_vals <span class="ot">&lt;-</span> <span class="fu">influence.measures</span>(model2)</span>
-<span id="cb48-7"><a href="" aria-label="7"></a>leverage <span class="ot">&lt;-</span> <span class="fu">hatvalues</span>(model2)</span>
-<span id="cb48-8"><a href="" aria-label="8"></a></span>
-<span id="cb48-9"><a href="" aria-label="9"></a><span class="fu">print</span>(leverage)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="" aria-label="1"></a>bac_data<span class="sc">$</span>Weight_c <span class="ot">&lt;-</span> bac_data<span class="sc">$</span>Weight_OSU <span class="sc">-</span> <span class="fu">mean</span>(bac_data<span class="sc">$</span>Weight_OSU)</span>
+<span id="cb50-2"><a href="" aria-label="2"></a>model2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(</span>
+<span id="cb50-3"><a href="" aria-label="3"></a>  BAC <span class="sc">~</span> Beers <span class="sc">+</span> Weight_c <span class="sc">+</span> Gender_OSU_male <span class="sc">+</span> Sobr2,</span>
+<span id="cb50-4"><a href="" aria-label="4"></a>  <span class="at">data =</span> bac_data</span>
+<span id="cb50-5"><a href="" aria-label="5"></a>)</span>
+<span id="cb50-6"><a href="" aria-label="6"></a>influence_vals <span class="ot">&lt;-</span> <span class="fu">influence.measures</span>(model2)</span>
+<span id="cb50-7"><a href="" aria-label="7"></a>leverage <span class="ot">&lt;-</span> <span class="fu">hatvalues</span>(model2)</span>
+<span id="cb50-8"><a href="" aria-label="8"></a></span>
+<span id="cb50-9"><a href="" aria-label="9"></a><span class="fu">print</span>(leverage)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        1         2         3         4         5         6         7         8 
 0.2259685 0.3596798 0.5609540 0.2787538 0.2013143 0.5492454 0.2269204 0.1490620 
         9        10        11        12        13        14        15        16 
 0.5092866 0.3763201 0.2758489 0.2042940 0.3128164 0.2497292 0.3726767 0.1471302 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="" aria-label="1"></a><span class="fu">print</span>(<span class="fu">sum</span>(leverage))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="" aria-label="1"></a><span class="fu">print</span>(<span class="fu">sum</span>(leverage))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 5</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="" aria-label="1"></a><span class="co"># Checking individually for high leverage using the same rule of thumb</span></span>
-<span id="cb52-2"><a href="" aria-label="2"></a><span class="fu">print</span>(leverage <span class="sc">&gt;</span> <span class="dv">2</span> <span class="sc">*</span> <span class="dv">5</span> <span class="sc">/</span> <span class="dv">16</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="" aria-label="1"></a><span class="co"># Checking individually for high leverage using the same rule of thumb</span></span>
+<span id="cb54-2"><a href="" aria-label="2"></a><span class="fu">print</span>(leverage <span class="sc">&gt;</span> <span class="dv">2</span> <span class="sc">*</span> <span class="dv">5</span> <span class="sc">/</span> <span class="dv">16</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    1     2     3     4     5     6     7     8     9    10    11    12    13 
 FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE 
@@ -2148,25 +2246,25 @@ FALSE FALSE FALSE </code></pre>
 </div><div class="column" style="width:50%;">
 <h4 id="python-10">Python</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="" aria-label="1"></a>bac_data[<span class="st">'Weight_c'</span>] <span class="op">=</span> bac_data[<span class="st">'Weight_OSU'</span>] <span class="op">-</span> bac_data[<span class="st">'Weight_OSU'</span>].mean()</span>
-<span id="cb54-2"><a href="" aria-label="2"></a>model2 <span class="op">=</span> smf.ols(</span>
-<span id="cb54-3"><a href="" aria-label="3"></a>    <span class="st">'BAC ~ Beers + Weight_c + Gender_OSU_male + Sobr2'</span>,</span>
-<span id="cb54-4"><a href="" aria-label="4"></a>    data<span class="op">=</span>bac_data</span>
-<span id="cb54-5"><a href="" aria-label="5"></a>).fit()</span>
-<span id="cb54-6"><a href="" aria-label="6"></a>influence <span class="op">=</span> model2.get_influence()</span>
-<span id="cb54-7"><a href="" aria-label="7"></a>leverage <span class="op">=</span> influence.hat_matrix_diag</span>
-<span id="cb54-8"><a href="" aria-label="8"></a><span class="bu">print</span>(<span class="st">"Leverage of all 16 points:"</span>, leverage)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="" aria-label="1"></a>bac_data[<span class="st">'Weight_c'</span>] <span class="op">=</span> bac_data[<span class="st">'Weight_OSU'</span>] <span class="op">-</span> bac_data[<span class="st">'Weight_OSU'</span>].mean()</span>
+<span id="cb56-2"><a href="" aria-label="2"></a>model2 <span class="op">=</span> smf.ols(</span>
+<span id="cb56-3"><a href="" aria-label="3"></a>    <span class="st">'BAC ~ Beers + Weight_c + Gender_OSU_male + Sobr2'</span>,</span>
+<span id="cb56-4"><a href="" aria-label="4"></a>    data<span class="op">=</span>bac_data</span>
+<span id="cb56-5"><a href="" aria-label="5"></a>).fit()</span>
+<span id="cb56-6"><a href="" aria-label="6"></a>influence <span class="op">=</span> model2.get_influence()</span>
+<span id="cb56-7"><a href="" aria-label="7"></a>leverage <span class="op">=</span> influence.hat_matrix_diag</span>
+<span id="cb56-8"><a href="" aria-label="8"></a><span class="bu">print</span>(<span class="st">"Leverage of all 16 points:"</span>, leverage)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Leverage of all 16 points: [0.22596846 0.3596798  0.56095405 0.27875375 0.20131429 0.54924536
  0.22692039 0.14906195 0.50928662 0.37632013 0.27584885 0.20429398
  0.31281635 0.24972917 0.37267669 0.14713016]</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="" aria-label="1"></a><span class="bu">print</span>(leverage.<span class="bu">sum</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="" aria-label="1"></a><span class="bu">print</span>(leverage.<span class="bu">sum</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>5.0</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="" aria-label="1"></a><span class="co">#checking individually for high leverage as per rule of thumb</span></span>
-<span id="cb58-2"><a href="" aria-label="2"></a><span class="bu">print</span>(leverage<span class="op">&gt;</span><span class="dv">2</span><span class="op">*</span><span class="dv">5</span><span class="op">/</span><span class="dv">16</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="" aria-label="1"></a><span class="co">#checking individually for high leverage as per rule of thumb</span></span>
+<span id="cb60-2"><a href="" aria-label="2"></a><span class="bu">print</span>(leverage<span class="op">&gt;</span><span class="dv">2</span><span class="op">*</span><span class="dv">5</span><span class="op">/</span><span class="dv">16</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[False False False False False False False False False False False False
  False False False False]</code></pre>
@@ -2177,16 +2275,16 @@ FALSE FALSE FALSE </code></pre>
 <section class="slide level2">
 
 <h3 id="cooks-distance.">Cook’s distance.</h3>
-<p>Cook’s distance measure the effect that omitting a case has on the estimated regression coeﬀicients. Joint effect of leverage and residual. <span class="math display">\[D_i = \sum\limits_{j=1}^{n}\frac{\hat{y_{j(i)}}-\hat{y_j}}{p\times se^2}\]</span> where <span class="math inline">\(\hat{y_j}\)</span> is the <span class="math inline">\(j\)</span>-th fitted value in a fit using all points, <span class="math inline">\(\hat{y_{j(i)}}\)</span> is the <span class="math inline">\(j\)</span>-th fitted value in a fit that excludes the <span class="math inline">\(i\)</span>th point in the dataset, <span class="math inline">\(p\)</span> is the number of regression coefficients, and <span class="math inline">\(se^2\)</span> is our estimated variance from the fit based on all observations (the square of our standard error as seen many times before).</p>
+<p>Cook’s distance measure the effect that omitting a case has on the estimated regression coeﬀicients. Joint effect of leverage and residual. <span class="math display">\[\scriptsize D_i = \sum\limits_{j=1}^{n}\frac{\hat{y_{j(i)}}-\hat{y_j}}{p\times se^2}\]</span> where <span class="math inline">\(\hat{y_j}\)</span> is the <span class="math inline">\(j\)</span>-th fitted value in a fit using all points, <span class="math inline">\(\hat{y_{j(i)}}\)</span> is the <span class="math inline">\(j\)</span>-th fitted value in a fit that excludes the <span class="math inline">\(i\)</span>th point in the dataset, <span class="math inline">\(p\)</span> is the number of regression coefficients, and <span class="math inline">\(se^2\)</span> is our estimated variance from the fit based on all observations (the square of our residual standard error as seen many times before).</p>
 <p>A case that is influential in changing the least squares estimates when deleted will have a high Cook’s Distance.</p>
-<p><u style="color: blue; font-size: 1.0em; font-weight: bold;">Rule of thumb</u>: <span class="math inline">\(\approx\)</span> 1 or above indicate large influence.</p>
+<p><u style="color: blue; font-size: 1.0em; font-weight: bold;">Rule of thumb</u>: <span class="math inline">\(\approx \frac{4}{n}\)</span> or above indicate large influence.</p>
 <div class="columns">
 <div class="column" style="width:50%;">
 <h4 id="r-11">R</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="" aria-label="1"></a><span class="co"># Get Cook's distance</span></span>
-<span id="cb60-2"><a href="" aria-label="2"></a>cooks_d <span class="ot">&lt;-</span> <span class="fu">cooks.distance</span>(model2)</span>
-<span id="cb60-3"><a href="" aria-label="3"></a><span class="fu">print</span>(cooks_d)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="" aria-label="1"></a><span class="co"># Get Cook's distance</span></span>
+<span id="cb62-2"><a href="" aria-label="2"></a>cooks_d <span class="ot">&lt;-</span> <span class="fu">cooks.distance</span>(model2)</span>
+<span id="cb62-3"><a href="" aria-label="3"></a><span class="fu">print</span>(cooks_d)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           1            2            3            4            5            6 
 1.597606e-02 4.372164e-03 3.557388e-01 5.928876e-02 1.381007e-02 7.507578e-02 
@@ -2199,9 +2297,9 @@ FALSE FALSE FALSE </code></pre>
 </div><div class="column" style="width:50%;">
 <h4 id="python-11">Python</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb62-1"><a href="" aria-label="1"></a><span class="co"># Get Cook's distance</span></span>
-<span id="cb62-2"><a href="" aria-label="2"></a>sm_fr <span class="op">=</span> influence.summary_frame()</span>
-<span id="cb62-3"><a href="" aria-label="3"></a><span class="bu">print</span>(<span class="st">"Summary Frame with Cook's Distance:</span><span class="ch">\n</span><span class="st">"</span>, sm_fr[<span class="st">'cooks_d'</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb64-1"><a href="" aria-label="1"></a><span class="co"># Get Cook's distance</span></span>
+<span id="cb64-2"><a href="" aria-label="2"></a>sm_fr <span class="op">=</span> influence.summary_frame()</span>
+<span id="cb64-3"><a href="" aria-label="3"></a><span class="bu">print</span>(<span class="st">"Summary Frame with Cook's Distance:</span><span class="ch">\n</span><span class="st">"</span>, sm_fr[<span class="st">'cooks_d'</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Summary Frame with Cook's Distance:
  0     0.015976
@@ -2233,28 +2331,55 @@ Name: cooks_d, dtype: float64</code></pre>
 <img src="images/leverage-vs-cook.png" alt="Leverage and Influence" scale="0.5;" style="width: 70%;" class="r-stretch"></section>
 <section class="slide level2">
 
-<h3 id="studentized-residuals">Studentized residuals</h3>
-<p>A high leverage point is one where the observation is further away from the general trend of predictor values, i.e.&nbsp;a sparse region of the predictor(feature) space. Since the regression model is forced to pass close to the point, its residual is naturally constrained to have smaller variance. In such a case, the residual plot will not direct any attention even if the corresponding observation is influential or problematic, relative to its natural scale.</p>
-<p>A high leverage point can have a small residual and yet be highly influential. This is why <span style="color:#1565C0;"><b>influence <span class="math inline">\(\neq\)</span> outlier</b></span> and leverage must be accounted for. On the contrary, large residuals at low-leverage points can look alarming but often don’t matter.</p>
-<p>Raw residuals can be misleading. Hence we standardize them while also rescaling them to their natural variability.</p>
+<h3 id="studentized-residuals-detecting-outliers">Studentized Residuals: Detecting Outliers</h3>
+<p>A raw residual tells us how far an observed response is from its predicted value: <span class="math inline">\(e_i = y_i-\hat{y}_i\)</span>. But simply asking whether <span class="math inline">\(e_i\)</span> is “large” can be misleading. <em>Same residual can be more unusual for some observations than for others</em>.</p>
+<div class="fragment">
+<p>In particular, observations with high leverage have smaller residual variance because the fitted regression is pulled more strongly toward them. If you look <em>only</em> at raw residuals, a massive outlier sitting at a high-leverage position might show a tiny raw error, causing you to completely miss it during your diagnostic screening.</p>
+</div>
+<div class="fragment">
+<p>We <strong>studentize residuals</strong> to transform our model’s errors into a standardized scale with a constant variance, making it possible to ask:</p>
+<blockquote>
+<p><strong>How unusually far is this observation from its fitted value, relative to how much its residual would normally be expected to vary (<em>in standard deviation units</em>)?</strong> <span class="math display">\[
+\text{Studentized Residual} = \frac{\text{How far the observation is from its fitted value } (e_i)}{\text{How much that residual is normally expected to vary } (se \sqrt{1 - h_i})}
+\]</span></p>
+</blockquote>
+<p>Observations with large absolute studentized residuals are candidates for <strong>outliers in the response direction</strong>.</p>
+</div>
+<div class="fragment">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Outlier <span class="math inline">\(\neq\)</span> influential observation</strong></p>
+</div>
+<div class="callout-content">
+<p>A large studentized residual does not necessarily mean that the observation substantially changes the fitted model.</p>
 <ul>
-<li>What is a large residual and what is not is unclear without standardization?</li>
+<li><strong>Studentized residuals:</strong> useful for detecting <strong>outliers</strong></li>
+<li><strong>Leverage:</strong> identifies unusual locations in <strong>predictor space</strong></li>
+<li><strong>Cook’s distance / DFFITS / DFBETAS:</strong> assess <strong>influence on the fitted model</strong></li>
 </ul>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section class="slide level2">
 
-<h3 id="studentized-residuals-1">Studentized residuals</h3>
+<h3 id="studentized-residuals">Studentized residuals</h3>
 <p><b><u style="color: blue;">Studentized Residual</u></b>: This ensures that our residuals approximately follow a standard normal distribution. 95% of the residuals must fall between -2 and 2 and those beyond that can be considered unusual.</p>
 <ul>
 <li>Internally studentized residual: <span class="math inline">\(\frac{e_i}{se\sqrt{1-h_i}}\)</span>; <span class="math inline">\(h_i\)</span> is the leverage of the corresponding observation</li>
-<li>Externally studentized residual: <span class="math inline">\(\frac{e_i}{se_{(i)}\sqrt{1-h_i}}\)</span>; <span class="math inline">\(se_{(i)}\)</span> is the estimated standard deviation of fit <span style="color:#1565C0;"><u>after removing</u></span> the observation in question</li>
+<li>Externally studentized residual: <span class="math inline">\(\frac{e_i}{se_{(i)}\sqrt{1-h_i}}\)</span>; <span class="math inline">\(se_{(i)}\)</span> is the estimated standard deviation of fit <span style="color:#1565C0;"><u>after removing</u></span> the observation in question. <span style="color:#1565C0;"><em>Gold Standard</em></span></li>
 </ul>
 <div class="columns">
 <div class="column" style="width:50%;">
 <h4 id="r-12">R</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="" aria-label="1"></a>studres <span class="ot">&lt;-</span> <span class="fu">rstudent</span>(model2)</span>
-<span id="cb64-2"><a href="" aria-label="2"></a>studres</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="" aria-label="1"></a>studres <span class="ot">&lt;-</span> <span class="fu">rstudent</span>(model2)</span>
+<span id="cb66-2"><a href="" aria-label="2"></a>studres</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           1            2            3            4            5            6 
  0.505066701 -0.188428716  1.203728933 -0.865767954  0.505374772  0.536776758 
@@ -2267,8 +2392,8 @@ Name: cooks_d, dtype: float64</code></pre>
 </div><div class="column" style="width:50%;">
 <h4 id="python-12">Python</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb66-1"><a href="" aria-label="1"></a>studres <span class="op">=</span> influence.get_resid_studentized_external()</span>
-<span id="cb66-2"><a href="" aria-label="2"></a>studres</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb68-1"><a href="" aria-label="1"></a>studres <span class="op">=</span> influence.get_resid_studentized_external()</span>
+<span id="cb68-2"><a href="" aria-label="2"></a>studres</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>array([ 0.52308864, -0.1972758 ,  1.17989119, -0.87579533,  0.52339976,
         0.55503688,  1.34238699, -1.39896462, -2.88021482,  1.13742758,
