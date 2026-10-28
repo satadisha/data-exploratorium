@@ -1434,11 +1434,13 @@ Case-influence statistics are numerical measures that reveal insight regarding i
 - They can help identify influential observations that may not be visible in a graph
 - They partition the overall influence of an observation into what is unusual about its explanatory variable values and what is unusual about its response relative to the fitted model.
 
-We will discuss three different types of case-influence statistics: 
+We will discuss five complementary case-influence statistics:
 
-1. Leverage (<span style="color:#1565C0;">*unusualness in predictor*</span>)
-2. Cook’s distance
-3. Studentized residuals (<span style="color:#1565C0;">*good for outlier detection*</span>)
+1. **Leverage** (<span style="color:#1565C0;">***unusualness in predictor space***</span>)
+2. **Studentized residuals** (<span style="color:#1565C0;">***unusualness in the response; useful for outlier detection***</span>)
+3. **Cook’s distance** (<span style="color:#1565C0;">***overall influence on the fitted model***</span>)
+4. **DFFITS** (<span style="color:#1565C0;">***influence on an observation’s fitted value***</span>)
+5. **DFBETAS** (<span style="color:#1565C0;">***influence on individual model coefficients***</span>)
 
 ---
 

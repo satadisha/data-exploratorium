@@ -563,7 +563,7 @@ F-statistic: 42.39 on 5 and 10 DF,  p-value: 2.057e-06</code></pre>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">Time:</th>
-<td>17:25:54</td>
+<td>17:45:36</td>
 <th data-quarto-table-cell-role="th">Log-Likelihood:</th>
 <td>52.538</td>
 </tr>
@@ -725,7 +725,7 @@ F-statistic: 42.39 on 5 and 10 DF,  p-value: 2.057e-06</code></pre>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">Time:</th>
-<td>17:25:54</td>
+<td>17:45:36</td>
 <th data-quarto-table-cell-role="th">Log-Likelihood:</th>
 <td>52.538</td>
 </tr>
@@ -1617,7 +1617,7 @@ F-statistic: 42.39 on 5 and 10 DF,  p-value: 2.057e-06</code></pre>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">Time:</th>
-<td>17:25:55</td>
+<td>17:45:37</td>
 <th data-quarto-table-cell-role="th">Log-Likelihood:</th>
 <td>52.538</td>
 </tr>
@@ -2228,11 +2228,13 @@ It could be a value of the dependent variable that is far outside of the rest of
 <li>They can help identify influential observations that may not be visible in a graph</li>
 <li>They partition the overall influence of an observation into what is unusual about its explanatory variable values and what is unusual about its response relative to the fitted model.</li>
 </ul>
-<p>We will discuss three different types of case-influence statistics:</p>
+<p>We will discuss five complementary case-influence statistics:</p>
 <ol type="1">
-<li>Leverage (<span style="color:#1565C0;"><em>unusualness in predictor</em></span>)</li>
-<li>Cook’s distance</li>
-<li>Studentized residuals (<span style="color:#1565C0;"><em>good for outlier detection</em></span>)</li>
+<li><strong>Leverage</strong> (<span style="color:#1565C0;"><strong><em>unusualness in predictor space</em></strong></span>)</li>
+<li><strong>Studentized residuals</strong> (<span style="color:#1565C0;"><strong><em>unusualness in the response; useful for outlier detection</em></strong></span>)</li>
+<li><strong>Cook’s distance</strong> (<span style="color:#1565C0;"><strong><em>overall influence on the fitted model</em></strong></span>)</li>
+<li><strong>DFFITS</strong> (<span style="color:#1565C0;"><strong><em>influence on an observation’s fitted value</em></strong></span>)</li>
+<li><strong>DFBETAS</strong> (<span style="color:#1565C0;"><strong><em>influence on individual model coefficients</em></strong></span>)</li>
 </ol>
 </section>
 <section class="slide level2">
