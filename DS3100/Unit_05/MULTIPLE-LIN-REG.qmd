@@ -850,9 +850,7 @@ st
 
 ### Multicollinearity
 
-The issue of linearly dependent (or “almost” linearly dependent) column/variables is called multicollinearity. Multicollinearity occurs when a variable column in your design matrix is highly or perfectly correlated with a linear combination of one or more columns. Design matrix $X$ having dependent columns a violates a key condition!
-
-- Intuitively, this means that the variable can be deduced from other variables and they are both not capable of adding new information to the model.
+The issue of linearly dependent (or “almost” linearly dependent) column/variables is called multicollinearity. Multicollinearity occurs when a variable column in your design matrix is highly or perfectly correlated with a linear combination of one or more columns. So the variable is not capable of adding new information to the model.
 
 <span style="color:#1565C0;"><b>Structural Multicollinearity</b></span>: Creating new predictors from other predictors through mathematical transformations. This is a design issue but does not reflect a problem with the data itself.
 
@@ -874,6 +872,18 @@ The issue of linearly dependent (or “almost” linearly dependent) column/vari
 - <b>Second check</b>: Variance Inflation Factor to systematically remove variables that can be explained by others.
     - $VIF = \frac{1}{(1-R^2_x)}$; where $R^2_x$ is the variation in $x$ that can be explained by its relationship to other variables in the model.
         - Treat x as the response variable that you are trying to predict from the remaining explanatory variables. Calculate $R^2$ of this auxiliary regression. *VIF over 10 is worrisome.*
+
+:::{.callout-note}
+
+## Why do we care?
+
+The main reason to address severe multicollinearity is not that it necessarily makes the regression fit poorly. Rather, it obfuscates the unique contributions of individual predictors within our model. For example if $X_1$ and $X_2$ always move together, holding $X_1$ constant there would be little observations in the dataset where $X_2$ independently changes making its association with the response hard to gauge. This has a few consequences.
+
+- Coefficient estimates are unstable upon minor changes in the sample.
+- Coefficient standard errors become larger due to the model's limited certainty around individual coefficients.
+- As a consequence, $t$-statistics, $p$-values and confidence intervals also become larger.
+
+:::
 
 
 ---
@@ -1501,10 +1511,130 @@ print(leverage>2*5/16)
 
 ---
 
-### Cook’s distance.
-Cook's distance measure the effect that omitting a case has on the estimated regression coeﬀicients. Joint effect of leverage and residual. 
-$$\scriptsize D_i = \sum\limits_{j=1}^{n}\frac{\hat{y_{j(i)}}-\hat{y_j}}{p\times se^2}$$
-where $\hat{y_j}$ is the $j$-th fitted value in a fit using all points, $\hat{y_{j(i)}}$ is the $j$-th fitted value in a fit that excludes the $i$th point in the dataset, $p$ is the number of regression coefficients, and $se^2$ is our estimated variance from the fit based on all observations (the square of our residual standard error as seen many times before).
+### DFFITS: Difference in Fits
+
+**DFFITS** measures how many standard-error units the fitted value of observation $i$ changes when it is removed from the model. Large absolute values indicate observations whose inclusion impart high influence.<br> 
+<span style="color:#1565C0;">**Rule of thumb**</span>: $\scriptsize |\text{DFFITS}_i| > 2\sqrt{\frac{p+1}{n}}$; $p$ is the **number of predictors**(*excluding the intercept*).
+$$\scriptsize
+\text{DFFITS}_i = \frac{\hat y_i-\hat y_{i(-i)}}{\text{se}}
+$$
+
+::: {.columns}
+
+::: {.column width="50%"}
+
+#### R
+
+```{r}
+dffits_vals <- dffits(model2)
+
+dffits_df <- data.frame(
+  DFFITS = dffits_vals
+)
+
+# Rule-of-thumb cutoff
+n <- nobs(model2)
+p <- length(coef(model2))
+cutoff <- 2 * sqrt(p / n)
+
+dffits_df$Flag <- abs(dffits_df$DFFITS) > cutoff
+
+dffits_df
+```
+
+:::
+
+::: {.column width="50%"}
+
+#### Python
+
+```{python}
+influence = model2.get_influence()
+
+dffits_vals, _ = influence.dffits
+
+n = model2.nobs
+p = len(model2.params)
+cutoff = 2 * np.sqrt(p / n)
+
+dffits_df = pd.DataFrame({
+    "DFFITS": dffits_vals,
+    "Flag": np.abs(dffits_vals) > cutoff
+})
+
+dffits_df
+```
+
+:::
+
+:::
+
+---
+
+### DFBETAS: Difference in Betas
+
+**DFBETAS** is a coefficient-centered measure. It scales how much an estimated coefficient $\beta_j$ changes, relative to it's standard error, when observation $i$ is removed . This tells us **which particular coefficient an observation is influencing**. 
+For coefficient $j$: $\scriptsize \text{DFBETAS}_{ij} = \frac{\hat\beta_j-\hat\beta_{j(-i)}}{se_{(-i)}(\hat\beta_j)}$. 
+<span style="color:#1565C0;">**Rule of thumb**</span>: $\scriptsize |\text{DFBETAS}_{ij}| > \frac{2}{\sqrt{n}}$
+
+::: {.columns}
+
+::: {.column width="50%"}
+
+#### R
+```{r}
+dfbetas_vals <- dfbetas(model2)
+
+# Flag coefficients exceeding cutoff
+n <- nobs(model2)
+cutoff <- 2 / sqrt(n)
+dfbetas_flags <- abs(dfbetas_vals) > cutoff
+
+# Print as a dataframe
+dfbetas_df <- as.data.frame(dfbetas_flags)
+dfbetas_df
+```
+
+:::
+
+::: {.column width="50%"}
+
+#### Python
+
+```{python}
+influence = model2.get_influence()
+dfbetas_vals = influence.dfbetas
+# Flag coefficients exceeding cutoff
+n = model2.nobs
+cutoff = 2 / np.sqrt(n)
+dfbetas_flags = pd.DataFrame(
+    np.abs(dfbetas_vals) > cutoff,
+    columns=model2.model.exog_names
+)
+dfbetas_flags
+```
+
+:::
+
+:::
+
+:::{.callout-note}
+
+## What does `model.exog_names` mean?
+
+In `statsmodels`, **exog** refers to the **exogenous variables** used to construct the regression design matrix $X$. This by default includes the intercept alongside the predictors in our data. 
+Also, if a categorical predictor with four levels is represented by three separate columns in \(X\), we will find three coefficient names (one for each new column) in `exog_names`.
+
+:::
+
+
+---
+
+### Cook’s distance
+
+**Cook's distance** measures the effect that omitting a case has on the estimated regression coeﬀicients. Joint effect of leverage and residual. 
+$$\scriptsize D_i = \sum\limits_{j=1}^{n}\frac{(\hat{y_j}-\hat{y_{j(-i)}})^2}{(p+1)\times se^2}$$
+where $\hat{y_j}$ is the $j$-th fitted value in a fit using all points, $\hat{y_{j(-i)}}$ is the $j$-th fitted value in a fit that excludes the $i$th point in the dataset, $p$ is the number of predictors, and $se^2$ is our estimated variance from the fit based on all observations (the square of our residual standard error as seen many times before).
 
 A case that is influential in changing the least squares estimates when deleted will have a high Cook's Distance.
 
@@ -1527,7 +1657,6 @@ print(cooks_d)
 ::: {.column width="50%"}
 
 #### Python
-
 ```{python}
 # Get Cook's distance
 sm_fr = influence.summary_frame()
@@ -1590,7 +1719,7 @@ A large studentized residual does not necessarily mean that the observation subs
 <b><u style="color: blue;">Studentized Residual</u></b>: This ensures that our residuals approximately follow a standard normal distribution. 95\% of the residuals must fall between -2 and 2 and those beyond that can be considered unusual.
 
 - Internally studentized residual: $\frac{e_i}{se\sqrt{1-h_i}}$; $h_i$ is the leverage of the corresponding observation
-- Externally studentized residual: $\frac{e_i}{se_{(i)}\sqrt{1-h_i}}$; $se_{(i)}$ is the estimated standard deviation of fit <span style="color:#1565C0;"><u>after removing</u></span> the observation in question. <span style="color:#1565C0;">*Gold Standard*</span>
+- Externally studentized residual: $\frac{e_i}{se_{(-i)}\sqrt{1-h_i}}$; $se_{(-i)}$ is the estimated residual standard error <span style="color:#1565C0;"><u>after removing</u></span> observation $i$. <span style="color:#1565C0;">*Gold Standard*</span>
 
 ::: {.columns}
 

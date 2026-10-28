@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Dr.&nbsp;Satadisha Saha Bhowmick">
-  <meta name="dcterms.date" content="2026-10-27">
+  <meta name="dcterms.date" content="2026-10-28">
   <title>DS 3100 | Multiple Linear Regression</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -210,7 +210,7 @@ Dr.&nbsp;Satadisha Saha Bhowmick
 </div>
 </div>
 
-  <p class="date">2026-10-27</p>
+  <p class="date">2026-10-28</p>
 </section>
 <section class="slide level2">
 
@@ -557,13 +557,13 @@ F-statistic: 42.39 on 5 and 10 DF,  p-value: 2.057e-06</code></pre>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">Date:</th>
-<td>Tue, 27 Oct 2026</td>
+<td>Wed, 28 Oct 2026</td>
 <th data-quarto-table-cell-role="th">Prob (F-statistic):</th>
 <td>2.06e-06</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">Time:</th>
-<td>14:05:16</td>
+<td>17:25:54</td>
 <th data-quarto-table-cell-role="th">Log-Likelihood:</th>
 <td>52.538</td>
 </tr>
@@ -719,13 +719,13 @@ F-statistic: 42.39 on 5 and 10 DF,  p-value: 2.057e-06</code></pre>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">Date:</th>
-<td>Tue, 27 Oct 2026</td>
+<td>Wed, 28 Oct 2026</td>
 <th data-quarto-table-cell-role="th">Prob (F-statistic):</th>
 <td>2.06e-06</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">Time:</th>
-<td>14:05:16</td>
+<td>17:25:54</td>
 <th data-quarto-table-cell-role="th">Log-Likelihood:</th>
 <td>52.538</td>
 </tr>
@@ -1490,10 +1490,7 @@ st
 :::
 -->
 <h3 id="multicollinearity">Multicollinearity</h3>
-<p>The issue of linearly dependent (or “almost” linearly dependent) column/variables is called multicollinearity. Multicollinearity occurs when a variable column in your design matrix is highly or perfectly correlated with a linear combination of one or more columns. Design matrix <span class="math inline">\(X\)</span> having dependent columns a violates a key condition!</p>
-<ul>
-<li>Intuitively, this means that the variable can be deduced from other variables and they are both not capable of adding new information to the model.</li>
-</ul>
+<p>The issue of linearly dependent (or “almost” linearly dependent) column/variables is called multicollinearity. Multicollinearity occurs when a variable column in your design matrix is highly or perfectly correlated with a linear combination of one or more columns. So the variable is not capable of adding new information to the model.</p>
 <p><span style="color:#1565C0;"><b>Structural Multicollinearity</b></span>: Creating new predictors from other predictors through mathematical transformations. This is a design issue but does not reflect a problem with the data itself.</p>
 <ul>
 <li>For example, multicollinearity can occur when <span class="math inline">\(p\)</span> dummy variables are incorporated into a model instead of <span class="math inline">\(p-1\)</span> for a categorical variable that has <span class="math inline">\(p\)</span> levels.</li>
@@ -1518,6 +1515,24 @@ st
 </ul></li>
 </ul></li>
 </ul>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Why do we care?</strong></p>
+</div>
+<div class="callout-content">
+<p>The main reason to address severe multicollinearity is not that it necessarily makes the regression fit poorly. Rather, it obfuscates the unique contributions of individual predictors within our model. For example if <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> always move together, holding <span class="math inline">\(X_1\)</span> constant there would be little observations in the dataset where <span class="math inline">\(X_2\)</span> independently changes making its association with the response hard to gauge. This has a few consequences.</p>
+<ul>
+<li>Coefficient estimates are unstable upon minor changes in the sample.</li>
+<li>Coefficient standard errors become larger due to the model’s limited certainty around individual coefficients.</li>
+<li>As a consequence, <span class="math inline">\(t\)</span>-statistics, <span class="math inline">\(p\)</span>-values and confidence intervals also become larger.</li>
+</ul>
+</div>
+</div>
+</div>
 </section>
 <section class="slide level2">
 
@@ -1596,13 +1611,13 @@ F-statistic: 42.39 on 5 and 10 DF,  p-value: 2.057e-06</code></pre>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">Date:</th>
-<td>Tue, 27 Oct 2026</td>
+<td>Wed, 28 Oct 2026</td>
 <th data-quarto-table-cell-role="th">Prob (F-statistic):</th>
 <td>2.06e-06</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">Time:</th>
-<td>14:05:16</td>
+<td>17:25:55</td>
 <th data-quarto-table-cell-role="th">Log-Likelihood:</th>
 <td>52.538</td>
 </tr>
@@ -2300,17 +2315,186 @@ FALSE FALSE FALSE </code></pre>
 </section>
 <section class="slide level2">
 
-<h3 id="cooks-distance.">Cook’s distance.</h3>
-<p>Cook’s distance measure the effect that omitting a case has on the estimated regression coeﬀicients. Joint effect of leverage and residual. <span class="math display">\[\scriptsize D_i = \sum\limits_{j=1}^{n}\frac{\hat{y_{j(i)}}-\hat{y_j}}{p\times se^2}\]</span> where <span class="math inline">\(\hat{y_j}\)</span> is the <span class="math inline">\(j\)</span>-th fitted value in a fit using all points, <span class="math inline">\(\hat{y_{j(i)}}\)</span> is the <span class="math inline">\(j\)</span>-th fitted value in a fit that excludes the <span class="math inline">\(i\)</span>th point in the dataset, <span class="math inline">\(p\)</span> is the number of regression coefficients, and <span class="math inline">\(se^2\)</span> is our estimated variance from the fit based on all observations (the square of our residual standard error as seen many times before).</p>
-<p>A case that is influential in changing the least squares estimates when deleted will have a high Cook’s Distance.</p>
-<p><u style="color: blue; font-size: 1.0em; font-weight: bold;">Rule of thumb</u>: <span class="math inline">\(\approx \frac{4}{n}\)</span> or above indicate large influence.</p>
+<h3 id="dffits-difference-in-fits">DFFITS: Difference in Fits</h3>
+<p><strong>DFFITS</strong> measures how many standard-error units the fitted value of observation <span class="math inline">\(i\)</span> changes when it is removed from the model. Large absolute values indicate observations whose inclusion impart high influence.<br> <span style="color:#1565C0;"><strong>Rule of thumb</strong></span>: <span class="math inline">\(\scriptsize |\text{DFFITS}_i| &gt; 2\sqrt{\frac{p+1}{n}}\)</span>; <span class="math inline">\(p\)</span> is the <strong>number of predictors</strong>(<em>excluding the intercept</em>). <span class="math display">\[\scriptsize
+\text{DFFITS}_i = \frac{\hat y_i-\hat y_{i(-i)}}{\text{se}}
+\]</span></p>
 <div class="columns">
 <div class="column" style="width:50%;">
 <h4 id="r-11">R</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="" aria-label="1"></a><span class="co"># Get Cook's distance</span></span>
-<span id="cb62-2"><a href="" aria-label="2"></a>cooks_d <span class="ot">&lt;-</span> <span class="fu">cooks.distance</span>(model2)</span>
-<span id="cb62-3"><a href="" aria-label="3"></a><span class="fu">print</span>(cooks_d)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="" aria-label="1"></a>dffits_vals <span class="ot">&lt;-</span> <span class="fu">dffits</span>(model2)</span>
+<span id="cb62-2"><a href="" aria-label="2"></a></span>
+<span id="cb62-3"><a href="" aria-label="3"></a>dffits_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb62-4"><a href="" aria-label="4"></a>  <span class="at">DFFITS =</span> dffits_vals</span>
+<span id="cb62-5"><a href="" aria-label="5"></a>)</span>
+<span id="cb62-6"><a href="" aria-label="6"></a></span>
+<span id="cb62-7"><a href="" aria-label="7"></a><span class="co"># Rule-of-thumb cutoff</span></span>
+<span id="cb62-8"><a href="" aria-label="8"></a>n <span class="ot">&lt;-</span> <span class="fu">nobs</span>(model2)</span>
+<span id="cb62-9"><a href="" aria-label="9"></a>p <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">coef</span>(model2))</span>
+<span id="cb62-10"><a href="" aria-label="10"></a>cutoff <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">sqrt</span>(p <span class="sc">/</span> n)</span>
+<span id="cb62-11"><a href="" aria-label="11"></a></span>
+<span id="cb62-12"><a href="" aria-label="12"></a>dffits_df<span class="sc">$</span>Flag <span class="ot">&lt;-</span> <span class="fu">abs</span>(dffits_df<span class="sc">$</span>DFFITS) <span class="sc">&gt;</span> cutoff</span>
+<span id="cb62-13"><a href="" aria-label="13"></a></span>
+<span id="cb62-14"><a href="" aria-label="14"></a>dffits_df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         DFFITS  Flag
+1   0.272893585 FALSE
+2  -0.141223349 FALSE
+3   1.360621580  TRUE
+4  -0.538232704 FALSE
+5   0.253724790 FALSE
+6   0.592525158 FALSE
+7   0.758325654 FALSE
+8  -0.615725785 FALSE
+9  -5.642344579  TRUE
+10  0.896800189 FALSE
+11 -0.048332707 FALSE
+12  0.103423640 FALSE
+13 -0.435286668 FALSE
+14  0.005296909 FALSE
+15  0.874593025 FALSE
+16 -0.180879171 FALSE</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<h4 id="python-11">Python</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb64-1"><a href="" aria-label="1"></a>influence <span class="op">=</span> model2.get_influence()</span>
+<span id="cb64-2"><a href="" aria-label="2"></a></span>
+<span id="cb64-3"><a href="" aria-label="3"></a>dffits_vals, _ <span class="op">=</span> influence.dffits</span>
+<span id="cb64-4"><a href="" aria-label="4"></a></span>
+<span id="cb64-5"><a href="" aria-label="5"></a>n <span class="op">=</span> model2.nobs</span>
+<span id="cb64-6"><a href="" aria-label="6"></a>p <span class="op">=</span> <span class="bu">len</span>(model2.params)</span>
+<span id="cb64-7"><a href="" aria-label="7"></a>cutoff <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> np.sqrt(p <span class="op">/</span> n)</span>
+<span id="cb64-8"><a href="" aria-label="8"></a></span>
+<span id="cb64-9"><a href="" aria-label="9"></a>dffits_df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb64-10"><a href="" aria-label="10"></a>    <span class="st">"DFFITS"</span>: dffits_vals,</span>
+<span id="cb64-11"><a href="" aria-label="11"></a>    <span class="st">"Flag"</span>: np.<span class="bu">abs</span>(dffits_vals) <span class="op">&gt;</span> cutoff</span>
+<span id="cb64-12"><a href="" aria-label="12"></a>})</span>
+<span id="cb64-13"><a href="" aria-label="13"></a></span>
+<span id="cb64-14"><a href="" aria-label="14"></a>dffits_df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      DFFITS   Flag
+0   0.272894  False
+1  -0.141223  False
+2   1.360622   True
+3  -0.538233  False
+4   0.253725  False
+5   0.592525  False
+6   0.758326  False
+7  -0.615726  False
+8  -5.642345   True
+9   0.896800  False
+10 -0.048333  False
+11  0.103424  False
+12 -0.435287  False
+13  0.005297  False
+14  0.874593  False
+15 -0.180879  False</code></pre>
+</div>
+</div>
+</div></div>
+</section>
+<section class="slide level2">
+
+<h3 id="dfbetas-difference-in-betas">DFBETAS: Difference in Betas</h3>
+<p><strong>DFBETAS</strong> is a coefficient-centered measure. It scales how much an estimated coefficient <span class="math inline">\(\beta_j\)</span> changes, relative to it’s standard error, when observation <span class="math inline">\(i\)</span> is removed . This tells us <strong>which particular coefficient an observation is influencing</strong>. For coefficient <span class="math inline">\(j\)</span>: <span class="math inline">\(\scriptsize \text{DFBETAS}_{ij} = \frac{\hat\beta_j-\hat\beta_{j(-i)}}{se_{(-i)}(\hat\beta_j)}\)</span>. <span style="color:#1565C0;"><strong>Rule of thumb</strong></span>: <span class="math inline">\(\scriptsize |\text{DFBETAS}_{ij}| &gt; \frac{2}{\sqrt{n}}\)</span></p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h4 id="r-12">R</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="" aria-label="1"></a>dfbetas_vals <span class="ot">&lt;-</span> <span class="fu">dfbetas</span>(model2)</span>
+<span id="cb66-2"><a href="" aria-label="2"></a></span>
+<span id="cb66-3"><a href="" aria-label="3"></a><span class="co"># Flag coefficients exceeding cutoff</span></span>
+<span id="cb66-4"><a href="" aria-label="4"></a>n <span class="ot">&lt;-</span> <span class="fu">nobs</span>(model2)</span>
+<span id="cb66-5"><a href="" aria-label="5"></a>cutoff <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">/</span> <span class="fu">sqrt</span>(n)</span>
+<span id="cb66-6"><a href="" aria-label="6"></a>dfbetas_flags <span class="ot">&lt;-</span> <span class="fu">abs</span>(dfbetas_vals) <span class="sc">&gt;</span> cutoff</span>
+<span id="cb66-7"><a href="" aria-label="7"></a></span>
+<span id="cb66-8"><a href="" aria-label="8"></a><span class="co"># Print as a dataframe</span></span>
+<span id="cb66-9"><a href="" aria-label="9"></a>dfbetas_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(dfbetas_flags)</span>
+<span id="cb66-10"><a href="" aria-label="10"></a>dfbetas_df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   (Intercept) Beers Weight_c Gender_OSU_male Sobr2
+1        FALSE FALSE    FALSE           FALSE FALSE
+2        FALSE FALSE    FALSE           FALSE FALSE
+3        FALSE FALSE     TRUE           FALSE FALSE
+4        FALSE FALSE    FALSE           FALSE FALSE
+5        FALSE FALSE    FALSE           FALSE FALSE
+6        FALSE FALSE    FALSE           FALSE FALSE
+7        FALSE FALSE    FALSE           FALSE FALSE
+8        FALSE FALSE    FALSE           FALSE FALSE
+9         TRUE  TRUE     TRUE            TRUE  TRUE
+10       FALSE FALSE     TRUE           FALSE FALSE
+11       FALSE FALSE    FALSE           FALSE FALSE
+12       FALSE FALSE    FALSE           FALSE FALSE
+13       FALSE FALSE    FALSE           FALSE FALSE
+14       FALSE FALSE    FALSE           FALSE FALSE
+15       FALSE  TRUE    FALSE           FALSE FALSE
+16       FALSE FALSE    FALSE           FALSE FALSE</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<h4 id="python-12">Python</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb68-1"><a href="" aria-label="1"></a>influence <span class="op">=</span> model2.get_influence()</span>
+<span id="cb68-2"><a href="" aria-label="2"></a>dfbetas_vals <span class="op">=</span> influence.dfbetas</span>
+<span id="cb68-3"><a href="" aria-label="3"></a><span class="co"># Flag coefficients exceeding cutoff</span></span>
+<span id="cb68-4"><a href="" aria-label="4"></a>n <span class="op">=</span> model2.nobs</span>
+<span id="cb68-5"><a href="" aria-label="5"></a>cutoff <span class="op">=</span> <span class="dv">2</span> <span class="op">/</span> np.sqrt(n)</span>
+<span id="cb68-6"><a href="" aria-label="6"></a>dfbetas_flags <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb68-7"><a href="" aria-label="7"></a>    np.<span class="bu">abs</span>(dfbetas_vals) <span class="op">&gt;</span> cutoff,</span>
+<span id="cb68-8"><a href="" aria-label="8"></a>    columns<span class="op">=</span>model2.model.exog_names</span>
+<span id="cb68-9"><a href="" aria-label="9"></a>)</span>
+<span id="cb68-10"><a href="" aria-label="10"></a>dfbetas_flags</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Intercept  Beers  Weight_c  Gender_OSU_male  Sobr2
+0       False  False     False            False  False
+1       False  False     False            False  False
+2       False  False      True            False  False
+3       False  False     False            False  False
+4       False  False     False            False  False
+5       False  False     False            False  False
+6       False  False     False            False  False
+7       False  False     False            False  False
+8        True   True      True             True   True
+9       False  False      True            False  False
+10      False  False     False            False  False
+11      False  False     False            False  False
+12      False  False     False            False  False
+13      False  False     False            False  False
+14      False   True     False            False  False
+15      False  False     False            False  False</code></pre>
+</div>
+</div>
+</div></div>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>What does <code>model.exog_names</code> mean?</strong></p>
+</div>
+<div class="callout-content">
+<p>In <code>statsmodels</code>, <strong>exog</strong> refers to the <strong>exogenous variables</strong> used to construct the regression design matrix <span class="math inline">\(X\)</span>. This by default includes the intercept alongside the predictors in our data. Also, if a categorical predictor with four levels is represented by three separate columns in (X), we will find three coefficient names (one for each new column) in <code>exog_names</code>.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="cooks-distance">Cook’s distance</h3>
+<p><strong>Cook’s distance</strong> measures the effect that omitting a case has on the estimated regression coeﬀicients. Joint effect of leverage and residual. <span class="math display">\[\scriptsize D_i = \sum\limits_{j=1}^{n}\frac{(\hat{y_j}-\hat{y_{j(-i)}})^2}{(p+1)\times se^2}\]</span> where <span class="math inline">\(\hat{y_j}\)</span> is the <span class="math inline">\(j\)</span>-th fitted value in a fit using all points, <span class="math inline">\(\hat{y_{j(-i)}}\)</span> is the <span class="math inline">\(j\)</span>-th fitted value in a fit that excludes the <span class="math inline">\(i\)</span>th point in the dataset, <span class="math inline">\(p\)</span> is the number of predictors, and <span class="math inline">\(se^2\)</span> is our estimated variance from the fit based on all observations (the square of our residual standard error as seen many times before).</p>
+<p>A case that is influential in changing the least squares estimates when deleted will have a high Cook’s Distance.</p>
+<p><u style="color: blue; font-size: 1.0em; font-weight: bold;">Rule of thumb</u>: <span class="math inline">\(\approx \frac{4}{n}\)</span> or above indicate large influence.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h4 id="r-13">R</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="" aria-label="1"></a><span class="co"># Get Cook's distance</span></span>
+<span id="cb70-2"><a href="" aria-label="2"></a>cooks_d <span class="ot">&lt;-</span> <span class="fu">cooks.distance</span>(model2)</span>
+<span id="cb70-3"><a href="" aria-label="3"></a><span class="fu">print</span>(cooks_d)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           1            2            3            4            5            6 
 1.597606e-02 4.372164e-03 3.557388e-01 5.928876e-02 1.381007e-02 7.507578e-02 
@@ -2321,11 +2505,11 @@ FALSE FALSE FALSE </code></pre>
 </div>
 </div>
 </div><div class="column" style="width:50%;">
-<h4 id="python-11">Python</h4>
+<h4 id="python-13">Python</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb64-1"><a href="" aria-label="1"></a><span class="co"># Get Cook's distance</span></span>
-<span id="cb64-2"><a href="" aria-label="2"></a>sm_fr <span class="op">=</span> influence.summary_frame()</span>
-<span id="cb64-3"><a href="" aria-label="3"></a><span class="bu">print</span>(<span class="st">"Summary Frame with Cook's Distance:</span><span class="ch">\n</span><span class="st">"</span>, sm_fr[<span class="st">'cooks_d'</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb72-1"><a href="" aria-label="1"></a><span class="co"># Get Cook's distance</span></span>
+<span id="cb72-2"><a href="" aria-label="2"></a>sm_fr <span class="op">=</span> influence.summary_frame()</span>
+<span id="cb72-3"><a href="" aria-label="3"></a><span class="bu">print</span>(<span class="st">"Summary Frame with Cook's Distance:</span><span class="ch">\n</span><span class="st">"</span>, sm_fr[<span class="st">'cooks_d'</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Summary Frame with Cook's Distance:
  0     0.015976
@@ -2398,14 +2582,14 @@ Name: cooks_d, dtype: float64</code></pre>
 <p><b><u style="color: blue;">Studentized Residual</u></b>: This ensures that our residuals approximately follow a standard normal distribution. 95% of the residuals must fall between -2 and 2 and those beyond that can be considered unusual.</p>
 <ul>
 <li>Internally studentized residual: <span class="math inline">\(\frac{e_i}{se\sqrt{1-h_i}}\)</span>; <span class="math inline">\(h_i\)</span> is the leverage of the corresponding observation</li>
-<li>Externally studentized residual: <span class="math inline">\(\frac{e_i}{se_{(i)}\sqrt{1-h_i}}\)</span>; <span class="math inline">\(se_{(i)}\)</span> is the estimated standard deviation of fit <span style="color:#1565C0;"><u>after removing</u></span> the observation in question. <span style="color:#1565C0;"><em>Gold Standard</em></span></li>
+<li>Externally studentized residual: <span class="math inline">\(\frac{e_i}{se_{(-i)}\sqrt{1-h_i}}\)</span>; <span class="math inline">\(se_{(-i)}\)</span> is the estimated residual standard error <span style="color:#1565C0;"><u>after removing</u></span> observation <span class="math inline">\(i\)</span>. <span style="color:#1565C0;"><em>Gold Standard</em></span></li>
 </ul>
 <div class="columns">
 <div class="column" style="width:50%;">
-<h4 id="r-12">R</h4>
+<h4 id="r-14">R</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="" aria-label="1"></a>studres <span class="ot">&lt;-</span> <span class="fu">rstudent</span>(model2)</span>
-<span id="cb66-2"><a href="" aria-label="2"></a>studres</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="" aria-label="1"></a>studres <span class="ot">&lt;-</span> <span class="fu">rstudent</span>(model2)</span>
+<span id="cb74-2"><a href="" aria-label="2"></a>studres</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           1            2            3            4            5            6 
  0.505066701 -0.188428716  1.203728933 -0.865767954  0.505374772  0.536776758 
@@ -2416,10 +2600,10 @@ Name: cooks_d, dtype: float64</code></pre>
 </div>
 </div>
 </div><div class="column" style="width:50%;">
-<h4 id="python-12">Python</h4>
+<h4 id="python-14">Python</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb68-1"><a href="" aria-label="1"></a>studres <span class="op">=</span> influence.get_resid_studentized_external()</span>
-<span id="cb68-2"><a href="" aria-label="2"></a>studres</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb76-1"><a href="" aria-label="1"></a>studres <span class="op">=</span> influence.get_resid_studentized_external()</span>
+<span id="cb76-2"><a href="" aria-label="2"></a>studres</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>array([ 0.52308864, -0.1972758 ,  1.17989119, -0.87579533,  0.52339976,
         0.55503688,  1.34238699, -1.39896462, -2.88021482,  1.13742758,
