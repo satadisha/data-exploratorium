@@ -881,7 +881,7 @@ The main reason to address severe multicollinearity is not that it necessarily m
 
 - Coefficient estimates are unstable upon minor changes in the sample.
 - Coefficient standard errors become larger due to the model's limited certainty around individual coefficients.
-- As a consequence, $t$-statistics, $p$-values and confidence intervals also become larger.
+- As a consequence, $p$-values and confidence intervals also become larger.
 
 :::
 
