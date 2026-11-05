@@ -1,0 +1,1959 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="LOGISTIC-REGRESSION_files/libs/clipboard/clipboard.min.js"></script>
+<script src="LOGISTIC-REGRESSION_files/libs/quarto-html/tabby.min.js"></script>
+<script src="LOGISTIC-REGRESSION_files/libs/quarto-html/popper.min.js"></script>
+<script src="LOGISTIC-REGRESSION_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="LOGISTIC-REGRESSION_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="LOGISTIC-REGRESSION_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="LOGISTIC-REGRESSION_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
+
+  <meta name="author" content="Dr.&nbsp;Satadisha Saha Bhowmick">
+  <meta name="dcterms.date" content="2026-11-04">
+  <title>DS 3100 | Logistic Regression</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="LOGISTIC-REGRESSION_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="LOGISTIC-REGRESSION_files/libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="LOGISTIC-REGRESSION_files/libs/revealjs/dist/theme/quarto-e7615ae3f47a09451c723600273e2044.css">
+  <link href="LOGISTIC-REGRESSION_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="LOGISTIC-REGRESSION_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="LOGISTIC-REGRESSION_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="LOGISTIC-REGRESSION_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">DS 3100 | Logistic Regression</h1>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Dr.&nbsp;Satadisha Saha Bhowmick
+</div>
+</div>
+</div>
+
+  <p class="date">2026-11-04</p>
+</section>
+<section class="slide level2">
+
+<style>
+.reveal blockquote {
+  margin-top: 0.2em;
+  margin-bottom: 0.2em;
+  padding-top: 0.1em;
+  padding-bottom: 0.1em;
+}
+.reveal .slides section {
+  font-size: 0.56em;
+}
+.reveal pre code {
+  font-size: 0.85em;
+}
+.reveal .cell-output {
+  font-size: 0.85em;
+}
+.small { font-size: 0.78em; }
+.tiny { font-size: 0.66em; }
+</style>
+<div style="height: 80vh; display: flex; align-items: center;">
+<div class="columns v-center">
+<div class="column" style="width:58%;">
+<h3 id="moving-beyond-linear-regression"><strong>Moving beyond Linear Regression…</strong></h3>
+<h4 id="modeling-binary-outcomes-with-logistic-regression">Modeling binary outcomes with Logistic Regression</h4>
+<h4 id="dr.-satadisha-saha-bhowmick"><em><span style="color: blue;">Dr.&nbsp;Satadisha Saha Bhowmick</span></em></h4>
+</div><div class="column" style="width:42%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/intro-pic.png" class="quarto-figure quarto-figure-center" style="width:70.0%"></p>
+</figure>
+</div>
+<div style="font-size:0.5em; text-align:center;">
+<p>Woman teaching geometry, from a fourteenth-century edition of Euclid’s geometry book.</p>
+</div>
+</div></div>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="learning-outcomes">Learning Outcomes</h3>
+<p>By the end of this lecture, you should be able to:</p>
+<div style="display: flex; gap: 2px;">
+<div style="flex: 1;">
+<ul>
+<li class="fragment">
+Explain why ordinary linear regression is inappropriate for a binary response.
+</li>
+<li class="fragment">
+Describe logistic regression as a Generalized Linear Model (GLM).
+</li>
+<li class="fragment">
+Move between probability, odds, log-odds, and the logistic (sigmoid) function.
+</li>
+</ul>
+</div>
+<div style="flex: 1;">
+<ul>
+<li class="fragment">
+Explain why logistic regression coefficients are estimated using maximum likelihood.
+</li>
+<li class="fragment">
+Fit and interpret logistic regression models in R and Python.
+</li>
+<li class="fragment">
+Recognize the main assumptions and common failure modes of logistic regression.
+</li>
+</ul>
+</div>
+</div>
+<div class="callout callout-caution callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>TIPS WHEN READING THESE LECTURE NOTES</strong></p>
+</div>
+<div class="callout-content">
+<p>These notes use mathematical notation to make the connections among linear regression, GLMs, and logistic regression explicit.</p>
+<ul>
+<li>Focus on the <strong>conceptual links</strong> between the ideas.</li>
+<li>You do <strong>not</strong> need to memorize every formula. In practice, software estimates the model parameters numerically.</li>
+<li>Keep track of the scale on which we are working: <strong>probability</strong>, <strong>odds</strong>, or <strong>log-odds</strong>.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="where-are-we-coming-from">Where Are We Coming From?</h3>
+<p>So far, regression has modeled a quantitative response using a linear combination of predictors: <span class="math display">\[
+E(Y\mid X)=\beta_0+\beta_1X_1+\cdots+\beta_pX_p.
+\]</span></p>
+<p>This framework is powerful because it lets us:</p>
+<ul>
+<li>combine several predictors;</li>
+<li>interpret coefficients conditionally, holding other predictors fixed;</li>
+<li>quantify uncertainty and assess model fit;</li>
+<li>make predictions for new observations.</li>
+</ul>
+<p>But what changes when the response is <strong>binary</strong>?</p>
+</section>
+<section class="slide level2">
+
+<h3 id="a-binary-response-changes-the-problem">A Binary Response Changes the Problem</h3>
+<p>Suppose</p>
+<p><span class="math display">\[
+Y\in\{0,1\}.
+\]</span></p>
+<p>Examples include:</p>
+<ul>
+<li>admitted / not admitted;</li>
+<li>churn / no churn;</li>
+<li>default / no default;</li>
+<li>disease present / absent.</li>
+</ul>
+<p>For a given predictor vector <span class="math inline">\(X\)</span>, the quantity we want to model is</p>
+<p><span class="math display">\[
+\pi(X)=P(Y=1\mid X).
+\]</span></p>
+<p>Because <span class="math inline">\(Y\)</span> is binary,</p>
+<p><span class="math display">\[
+E(Y\mid X)=P(Y=1\mid X)=\pi(X).
+\]</span></p>
+</section>
+<section class="slide level2">
+
+<h3 id="why-not-just-use-linear-regression">Why Not Just Use Linear Regression?</h3>
+<p>A tempting model is the <strong>linear probability model</strong>:</p>
+<p><span class="math display">\[
+P(Y=1\mid X)=\beta_0+\beta_1X_1+\cdots+\beta_pX_p.
+\]</span></p>
+<p>But it creates several problems:</p>
+<ol type="1">
+<li>Predictions are not restricted to <span class="math inline">\([0,1]\)</span>.</li>
+<li>A binary response is not normally distributed.</li>
+<li>The conditional variance is not constant.</li>
+<li>The relationship between predictors and probability is often not well represented by a straight line.</li>
+</ol>
+<p>We need to keep the useful <strong>linear predictor</strong> while changing how it connects to the response.</p>
+</section>
+<section class="slide level2">
+
+<h3 id="bernoulli-trials-for-binary-outcomes">Bernoulli Trials for Binary Outcomes</h3>
+<p>For problems with binary outcomes that can represent success/failure, we can model each independent observation as a <strong>Bernoulli trial</strong>.</p>
+<p><span class="math display">\[
+\boxed{Y_i\mid X_i \sim \text{Bernoulli}(\pi_i)},
+\]</span> where, <span class="math display">\[
+\pi_i=\mathbb{P}(Y_i=1\mid X_i).
+\]</span></p>
+<p>A single trial that follows a Bernoulli distribution has</p>
+<p><span class="math display">\[
+E(Y_i\mid X_i)=\pi_i,
+\qquad
+Var(Y_i\mid X_i)=\pi_i(1-\pi_i).
+\]</span></p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>Unlike OLS, the variance is <strong>not constant</strong>. It changes with the conditional mean <span class="math inline">\(\pi_i\)</span>.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="we-need-a-broader-regression-framework">We Need a Broader Regression Framework</h3>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>A unified framework for regression</strong></p>
+</div>
+<div class="callout-content">
+<p>We need a <strong>unified, consistent framework</strong> that can:</p>
+<blockquote>
+<p>model specific assumptions of linearity for diverse data types</p>
+</blockquote>
+<p>The usual linear regression model is too restrictive.</p>
+</div>
+</div>
+</div>
+<p>We would <em>still</em> like to keep the familiar linearcombination of explanatory variables,</p>
+<p><span class="math display">\[
+\eta_i=\beta_0+\beta_1x_{i1}+\cdots+\beta_px_{ip},
+\]</span></p>
+<p>while allowing the <strong>distribution of the response</strong> and the <strong>relationship between its expected value and the predictors</strong> to change according to the problem.</p>
+<p>Enter <span style="color:#1565C0;"><strong>Generalized Linear Models (GLMs)</strong></span>!</p>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>What can GLMs do for us?</strong></p>
+</div>
+<div class="callout-content">
+<p>They provide a common language for ordinary linear regression, logistic regression, and other regression models for outcomes such as counts.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="generalized-linear-models">Generalized Linear Models</h3>
+<p>A <strong>generalized linear model (GLM)</strong> is a model in which:</p>
+<ul>
+<li>a response variable is drawn from a specified probability distribution</li>
+<li>its <span style="color:#1565C0;"><strong>expected value</strong></span> <span class="math inline">\(\mathbb E(Y\mid X)\)</span> is related to the explanatory variables through a <span style="color:#1565C0;">regression equation</span>.</li>
+</ul>
+<p>There are <span style="color:#1565C0;"><strong><span class="math inline">\(3\)</span> components</strong></span> to a GLM:</p>
+<ol type="1">
+<li><p><strong>Random component:</strong> specifies the probability distribution of the response variable.</p></li>
+<li><p><strong>Systematic component:</strong> specifies the explanatory variables <span class="math inline">\((X_1,X_2,\ldots,X_k)\)</span> and their linear combination: <span class="math display">\[\eta=\beta_0+\beta_1X_1+\cdots+\beta_kX_k.\]</span></p></li>
+<li><p><strong>Link function:</strong> specifies relationship between the expected value of the response and the systematic component: <span class="math inline">\(g\!\left(\mathbb E(Y\mid X)\right)=\eta.\)</span></p></li>
+</ol>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Things to note about a GLM</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li>The choice of the response distribution and link function changes with the kind of outcome we wish to model.</li>
+<li>A GLM does <strong>not</strong> require the response itself to be linearly related to the predictors.</li>
+<li>Rather, the <em>transformed expected response</em> is linear in the coefficients. <span class="math display">\[
+\boxed{g\!\left(\mathbb E(Y\mid X_1,\ldots,X_k)\right)
+=\eta=\beta_0+\beta_1X_1+\cdots+\beta_kX_k.}
+\]</span></li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="ols-regression-is-a-special-case-of-a-glm">OLS Regression Is a Special Case of a GLM</h3>
+<ul>
+<li><strong>Random component:</strong> a continuous response <span class="math inline">\(Y\)</span> with a Normal distribution, conditional mean <span class="math inline">\(\mu=E(Y\mid X)\)</span>, and constant variance <span class="math inline">\(\sigma^2\)</span>.</li>
+<li><strong>Systematic component:</strong> a linear combination of continuous or discrete explanatory variables <span class="math display">\[\eta=\beta_0+\beta_1X_1+\cdots+\beta_kX_k\]</span></li>
+<li><strong>Link function:</strong> <span style="color:#1565C0;">the identity function</span>. <span class="math inline">\(g(\mu)=\mu\)</span>, so <span class="math inline">\(\eta=\mathbb E(Y\mid X)\)</span>.</li>
+</ul>
+<p>In OLS, we typically assume errors are independent of <span class="math inline">\(X\)</span> and have constant conditional variance. In a GLM, the conditional variance may instead be <em>variable</em>, depend on the conditional mean.</p>
+<p>The <em>generalization</em> retains the familiar linear combination of predictors while allowing for other distributions and link functions.</p>
+</section>
+<section class="slide level2">
+
+<h3 id="logistic-regression-the-three-glm-components">Logistic Regression: The Three GLM Components</h3>
+<p>For a binary response <span class="math inline">\(Y_i\in\{0,1\}\)</span>, the conditional mean is the probability of the positive outcome:</p>
+<p><span class="math display">\[\mathbb E(Y_i\mid X_i)=P(Y_i=1\mid X_i)=\pi_i.\]</span></p>
+<p>To round up the GLM specifications of logistic regression:</p>
+<ul>
+<li><p><strong>Random component:</strong> <span class="math inline">\(Y_i\mid X_i\sim\operatorname{Bernoulli}(\pi_i)\)</span>, equivalently a binomial variable with one trial and success probability <span class="math inline">\(\pi_i\)</span>.</p></li>
+<li><p><strong>Systematic component:</strong> <span class="math inline">\(\eta_i=\beta_0+\beta_1x_{i1}+\cdots+\beta_kx_{ik}\)</span>.</p></li>
+<li><p><strong>Link function:</strong> the log-odds or <span style="color:#1565C0;"><strong>logit</strong></span> function,</p>
+<p><span class="math display">\[g(\pi_i)=\log\left(\frac{\pi_i}{1-\pi_i}\right)=\eta_i.\]</span></p></li>
+</ul>
+<p>This completes the GLM specification.</p>
+</section>
+<section class="slide level2">
+
+<h3 id="why-a-link-function">Why a Link Function?</h3>
+<div class="columns">
+<div class="column" style="width:45%;">
+<p>The linear predictor <span class="math inline">\(\eta=X\beta\)</span> can take any value from <span class="math inline">\(-\infty\)</span> to <span class="math inline">\(+\infty\)</span>.</p>
+<p>But a probability must satisfy</p>
+<p><span class="math display">\[
+0\leq \pi\leq 1.
+\]</span></p>
+<p>We therefore need:</p>
+<ul>
+<li>a transformation that maps probabilities to the entire real line</li>
+<li>and an inverse transformation that maps the real line back into <span class="math inline">\([0,1]\)</span></li>
+</ul>
+<p>The standard choice for binary logistic regression is the <span style="color:#1565C0;"><strong>logit</strong></span>.</p>
+</div><div class="column" style="width:55%;">
+<p><img data-src="images/glm-log.png" style="width:100.0%"></p>
+</div></div>
+</section>
+<section class="slide level2">
+
+<h3 id="from-probability-to-odds">From Probability to Odds</h3>
+<p>To find the odds of an event, you can use counts of events. You can also divide the proportion of the events that did happen by the proportion of events that did not happen. Odds compare:</p>
+<blockquote>
+<p>How likely is the event to occur relative to not occurring?</p>
+</blockquote>
+<p>If an event has probability <span class="math inline">\(\pi\)</span>, its <strong>odds</strong> are <span class="math display">\[
+\boxed{\text{odds}=\frac{\pi}{1-\pi}.}
+\]</span> Conversely, <span class="math inline">\(\pi=\frac{\text{odds}}{1+\text{odds}}\)</span>.</p>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Example</strong></p>
+</div>
+<div class="callout-content">
+<p>For example, <span class="math inline">\(72.4\%\)</span> of people who regularly take Vitamin C still get colds. Hence the probability of getting a cold is <span class="math inline">\(\pi=0.724\)</span>. The odds of getting a cold are <span class="math inline">\(\frac{0.724}{1-0.724}\approx 2.62.\)</span>.</p>
+<p>This is often expressed as “the odds of getting a cold are 2.62 to 1.” <em>Another way to interpret this is that for every one person that does not develop a cold, 2.876 people do develop colds</em>, meaning the event is <strong><span class="math inline">\(2.86\)</span> times as likely to occur as not occur</strong>.</p>
+</div>
+</div>
+</div>
+<p><span style="color:#1565C0;"><strong>Odds range from <span class="math inline">\(0\)</span> to <span class="math inline">\(\infty\)</span>.</strong></span></p>
+</section>
+<section class="slide level2">
+
+<h3 id="from-odds-to-log-odds">From Odds to Log-Odds</h3>
+<p>Odds are positive but asymmetrical around the neutral value <span class="math inline">\(1\)</span>.</p>
+<blockquote>
+<p>Odds against an event that is <strong><em>highly likely</em></strong> can vary in the range <span class="math inline">\(0-1\)</span> but odds in favor can go from <span class="math inline">\(1-\infty\)</span>.</p>
+</blockquote>
+<div class="columns">
+<div class="column" style="width:45%;">
+<p>Taking the natural logarithm gives the <strong>log-odds</strong>, or <strong>logit</strong>:</p>
+<p><span class="math display">\[
+\boxed{\operatorname{logit}(\pi)=\log\left(\frac{\pi}{1-\pi}\right).}
+\]</span></p>
+<p>Now the scale runs from <span class="math inline">\(-\infty\)</span> to <span class="math inline">\(+\infty\)</span>:</p>
+<ul>
+<li><span class="math inline">\(\pi&lt;0.5 \Rightarrow \operatorname{logit}(\pi)&lt;0\)</span></li>
+<li><span class="math inline">\(\pi=0.5 \Rightarrow \operatorname{logit}(\pi)=0\)</span></li>
+<li><span class="math inline">\(\pi&gt;0.5 \Rightarrow \operatorname{logit}(\pi)&gt;0\)</span></li>
+</ul>
+<p>This is exactly the scale on which we place the linear predictor.</p>
+</div><div class="column" style="width:55%;">
+<p><img data-src="images/log-odds.png" style="width:100.0%"></p>
+</div></div>
+</section>
+<section class="slide level2">
+
+<h3 id="logistic-regression-model">Logistic Regression Model</h3>
+<p>Logistic regression assumes</p>
+<p><span class="math display">\[
+\boxed{
+\log\left(\frac{\pi_i}{1-\pi_i}\right)
+=
+\beta_0+\beta_1x_{i1}+\cdots+\beta_px_{ip}
+}
+\]</span></p>
+<p>or more compactly,</p>
+<p><span class="math display">\[
+\operatorname{logit}(\pi_i)=\eta_i=X_i\beta.
+\]</span></p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Interpreting a Coefficient: Log-Odds Scale</strong></p>
+</div>
+<div class="callout-content">
+<p>Logistic regression is <strong>linear in the coefficients on the log-odds scale</strong>. <span class="math display">\[
+\operatorname{logit}(\pi)=\beta_0+\beta_1X_1+\cdots+\beta_pX_p,
+\]</span></p>
+<blockquote>
+<p><span class="math inline">\(\beta_j\)</span> is the expected change in <strong>log-odds</strong> associated with a one-unit increase in <span class="math inline">\(X_j\)</span>, holding the other predictors fixed.</p>
+</blockquote>
+<p>This interpretation is mathematically clean, but log-odds are not especially intuitive. So we exponentiate the coefficient and that gives us the <strong>odds ratio</strong>.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="the-inverse-link-logistic-sigmoid-function">The Inverse Link: Logistic / Sigmoid Function</h3>
+<p>Solving the logit equation for <span class="math inline">\(\pi\)</span> gives</p>
+<p><span class="math display">\[
+\boxed{
+\pi_i
+=
+\frac{e^{\eta_i}}{1+e^{\eta_i}}
+=
+\frac{1}{1+e^{-\eta_i}}
+}
+\]</span></p>
+<p>where</p>
+<p><span class="math display">\[
+\eta_i=\beta_0+\beta_1x_{i1}+\cdots+\beta_px_{ip}.
+\]</span></p>
+<p>The logistic function maps every real-valued <span class="math inline">\(\eta\)</span> to a valid probability between <span class="math inline">\(0\)</span> and <span class="math inline">\(1\)</span>.</p>
+</section>
+<section class="slide level2">
+
+<h3 id="seeing-the-sigmoid">Seeing the Sigmoid</h3>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h4 id="r">R</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="" aria-label="1"></a>eta <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">6</span>, <span class="dv">6</span>, <span class="at">length.out =</span> <span class="dv">200</span>)</span>
+<span id="cb1-2"><a href="" aria-label="2"></a>prob <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="sc">-</span>eta))</span>
+<span id="cb1-3"><a href="" aria-label="3"></a></span>
+<span id="cb1-4"><a href="" aria-label="4"></a><span class="fu">plot</span>(eta, prob, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">lwd =</span> <span class="dv">2</span>,</span>
+<span id="cb1-5"><a href="" aria-label="5"></a>     <span class="at">xlab =</span> <span class="st">"Linear predictor (eta)"</span>,</span>
+<span id="cb1-6"><a href="" aria-label="6"></a>     <span class="at">ylab =</span> <span class="st">"P(Y = 1 | X)"</span>)</span>
+<span id="cb1-7"><a href="" aria-label="7"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fl">0.5</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb1-8"><a href="" aria-label="8"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="LOGISTIC-REGRESSION_files/figure-revealjs/unnamed-chunk-1-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<h4 id="python">Python</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="" aria-label="1"></a>eta <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">200</span>)</span>
+<span id="cb2-2"><a href="" aria-label="2"></a>prob <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> np.exp(<span class="op">-</span>eta))</span>
+<span id="cb2-3"><a href="" aria-label="3"></a></span>
+<span id="cb2-4"><a href="" aria-label="4"></a>plt.plot(eta, prob)</span>
+<span id="cb2-5"><a href="" aria-label="5"></a>plt.axhline(<span class="fl">0.5</span>, linestyle<span class="op">=</span><span class="st">"--"</span>)</span>
+<span id="cb2-6"><a href="" aria-label="6"></a>plt.axvline(<span class="dv">0</span>, linestyle<span class="op">=</span><span class="st">"--"</span>)</span>
+<span id="cb2-7"><a href="" aria-label="7"></a>plt.xlabel(<span class="st">"Linear predictor (eta)"</span>)</span>
+<span id="cb2-8"><a href="" aria-label="8"></a>plt.ylabel(<span class="st">"P(Y = 1 | X)"</span>)</span>
+<span id="cb2-9"><a href="" aria-label="9"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="LOGISTIC-REGRESSION_files/figure-revealjs/unnamed-chunk-2-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+</section>
+<section class="slide level2">
+
+<h3 id="exponentiating-logistic-regression-coefficients">Exponentiating Logistic Regression Coefficients</h3>
+<p>Recall that the logit is the <strong>log odds function</strong>. Exponentiating the logit yields the odds: <span class="math display">\[
+\omega = \frac{\pi}{1-\pi}
+= e^{\beta_0+\beta_1X_1+\cdots+\beta_pX_p}
+\]</span></p>
+<p>It is also helpful to think about the coefficients in terms of changes in the explanatory variables.</p>
+<p>Consider a logistic regression model with one predictor <span class="math inline">\(X\)</span>: <span class="math display">\[
+\omega(X)=e^{\beta_0+\beta_1X}
+\]</span></p>
+<p>For a one-unit increase in <span class="math inline">\(X\)</span>, the ratio of the odds becomes</p>
+<p><span class="math display">\[
+\frac{\omega(X+1)}{\omega(X)}
+=\frac{e^{\beta_0+\beta_1(X+1)}}{e^{\beta_0+\beta_1X}}
+=\boxed{e^{\beta_1}}
+\]</span></p>
+<p>Thus, <span style="color:blue;">if <span class="math inline">\(X\)</span> increases by one unit, the odds that <span class="math inline">\(Y=1\)</span> will change by a factor of <span class="math inline">\(e^{\beta_1}\)</span>.</span></p>
+</section>
+<section class="slide level2">
+
+<h3 id="odds-ratios">Odds Ratios</h3>
+<p>To compare proportions, we use <strong>differences</strong>. To compare odds, we use <strong>ratios</strong>. The <strong>odds ratio (OR)</strong> compares the odds of an event occurring at two different values of an explanatory variable: <span class="math display">\[\scriptsize
+OR=\frac{\text{Odds at }X=A}{\text{Odds at }X=B}
+=\frac{\omega(A)}{\omega(B)}
+\]</span></p>
+<p>For a one-unit increase in <span class="math inline">\(X\)</span>, the odds ratio is <span class="math inline">\(e^{\beta_1}\)</span>.</p>
+<ul>
+<li><span class="math inline">\(OR&gt;1\)</span>: The odds of the event <strong>increase</strong> as <span class="math inline">\(X\)</span> increases.</li>
+<li><span class="math inline">\(OR=1\)</span>: The odds remain unchanged.</li>
+<li><span class="math inline">\(OR&lt;1\)</span>: The odds of the event <strong>decrease</strong> as <span class="math inline">\(X\)</span> increases.</li>
+</ul>
+<p>For example, an odds ratio of <span class="math inline">\(1.25\)</span> means that the odds of the event occurring are <strong>1.25 times as large</strong> (25% higher) for a one-unit increase in <span class="math inline">\(X\)</span>.<br> An odds ratio of <span class="math inline">\(0.80\)</span> means that the odds are <strong>0.80 times as large</strong> (20% lower).</p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>An odds ratio describes a multiplicative change in <strong>odds</strong>, not a fixed change in probability. The same odds ratio produces different changes in probability depending on the initial probability of the event. For example, an odds ratio of 2 doubles the odds of an event:</p>
+<ul>
+<li>An initial probability of <span class="math inline">\(\pi=10\%\)</span> gives odds of <span class="math inline">\(\omega = 0.10/0.90=0.111\)</span>. Doubling these odds gives <span class="math inline">\(\omega' = 0.222\)</span>, corresponding to a new probability of <span class="math inline">\(\pi' = \frac{\omega'}{1+\omega'}=\frac{0.222}{1+0.222}=18.2\%\)</span>.</li>
+<li>An initial probability of <span class="math inline">\(\pi=50\%\)</span> gives odds of <span class="math inline">\(\omega = 0.50/0.50=1\)</span>. Doubling these odds gives <span class="math inline">\(\omega' = 2\)</span>, corresponding to a new probability of <span class="math inline">\(\pi' = \frac{\omega'}{1+\omega'}=\frac{2}{1+2}=66.7\%\)</span>.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="how-do-we-estimate-the-coefficients">How Do We Estimate the Coefficients?</h3>
+<p>We now know the form of the model: the explanatory variables combine linearly on the log-odds scale, and the inverse-logit function gives a predicted probability for each observation. But <strong>how should we choose the coefficients</strong> <span class="math inline">\(\beta_0,\beta_1,\ldots,\beta_p\)</span>?</p>
+<p>In ordinary least squares, we found coefficients that minimized the sum of squared residuals.</p>
+<p>For a Bernoulli response, that criterion is not derived from the response distribution we have chosen. Instead, we ask a more general question:</p>
+<blockquote>
+<p><strong>Which model makes the data we actually observed most plausible?</strong></p>
+</blockquote>
+<p>This is the idea behind <strong>maximum likelihood estimation (MLE)</strong>.</p>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Maximum Likelihood Estimation</strong></p>
+</div>
+<div class="callout-content">
+<p>It is a general procedure for obtaining estimates of model parameters, not specific to a logistic regression model. We specify the probability model for the data and search for the parameter values that maximize the likelihood of what was observed.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="probability-vs-likelihood">Probability vs Likelihood</h3>
+<p><span class="math inline">\(\color{blue}{\textbf{Which model makes the data we actually observed most plausible?}}\)</span></p>
+<p>This is the question addressed by maximum likelihood estimation.</p>
+<ul>
+<li><strong>Probability</strong> asks: <em>How likely is an outcome given fixed model parameters?</em> We write <span class="math inline">\(P(\text{data}\mid\theta)\)</span>.</li>
+<li><strong>Likelihood</strong> asks: <em>Which parameter values make the observed data most plausible?</em> The data are held fixed, and we vary <span class="math inline">\(\theta\)</span>.</li>
+</ul>
+<p>The same expression is now viewed as a function of the unknown parameters:</p>
+<p><span class="math display">\[\boxed{L(\theta)=P(\text{observed data}\mid\theta).}\]</span></p>
+<p>Likelihood is not the probability that a parameter is true. It is a way to compare how well candidate parameter values account for the observed data under the assumed model.</p>
+</section>
+<section class="slide level2">
+
+<h3 id="coin-flip-example-estimating-a-probability">Coin Flip Example: Estimating a Probability</h3>
+<p>Suppose we observe <strong>7 heads and 3 tails</strong> from 10 independent coin flips. If <span class="math inline">\(p\)</span> denotes the probability of heads, the likelihood of the observed sequence is</p>
+<p><span class="math display">\[L(p)=p^7(1-p)^3.\]</span></p>
+<p>Here the data (7 heads, 3 tails) are fixed, and <span class="math inline">\(p\)</span> is the quantity we vary to find where the likelihood is maximized.</p>
+<p><span class="math display">\[\boxed{\hat p=\frac{7}{10}=0.7.}\]</span></p>
+<p>In logistic regression, we use the same principle, but each observation has a probability <span class="math inline">\(\pi_i\)</span> determined by its predictors and the regression coefficients.</p>
+</section>
+<section class="slide level2">
+
+<h3 id="connection-back-to-ols">Connection Back to OLS</h3>
+<p>Suppose linear regression errors are Normal:</p>
+<p><span class="math display">\[
+Y_i=X_i\beta+\epsilon_i,
+\qquad
+\epsilon_i\sim N(0,\sigma^2).
+\]</span></p>
+<p>Under this model, maximizing the likelihood with respect to <span class="math inline">\(\beta\)</span> is equivalent to minimizing the residual sum of squares.</p>
+<p>So OLS is not disconnected from MLE:</p>
+<p><span class="math display">\[
+\boxed{\text{OLS is the MLE for }\beta\text{ under the usual Normal-error model.}}
+\]</span></p>
+<p>MLE therefore gives us a bridge from linear regression to other response distributions.</p>
+</section>
+<section class="slide level2">
+
+<h3 id="likelihood-for-logistic-regression">Likelihood for Logistic Regression</h3>
+<p>For observation <span class="math inline">\(i\)</span>,</p>
+<p><span class="math display">\[
+P(Y_i=y_i\mid X_i)
+=
+\pi_i^{y_i}(1-\pi_i)^{1-y_i}.
+\]</span></p>
+<p>Assuming independent observations, the likelihood is</p>
+<p><span class="math display">\[
+\boxed{
+L(\beta)
+=
+\prod_{i=1}^{n}
+\pi_i^{y_i}(1-\pi_i)^{1-y_i}
+}
+\]</span></p>
+<p>with</p>
+<p><span class="math display">\[
+\pi_i=\frac{1}{1+e^{-X_i\beta}}.
+\]</span></p>
+</section>
+<section class="slide level2">
+
+<h3 id="log-likelihood-and-negative-log-likelihood">Log-Likelihood and Negative Log-Likelihood</h3>
+<p>Products of many probabilities can become numerically tiny, so software works with the <strong>log-likelihood</strong>:</p>
+<p><span class="math display">\[
+\ell(\beta)
+=
+\sum_{i=1}^{n}
+\left[
+y_i\log(\pi_i)+(1-y_i)\log(1-\pi_i)
+\right].
+\]</span></p>
+<p>Maximizing <span class="math inline">\(\ell(\beta)\)</span> is equivalent to minimizing the <strong>negative log-likelihood</strong>:</p>
+<p><span class="math display">\[
+-\ell(\beta).
+\]</span></p>
+<p>There is generally no simple closed-form solution for <span class="math inline">\(\hat\beta\)</span>, so software uses numerical optimization.</p>
+</section>
+<section class="slide level2">
+
+<h3 id="our-example-data">Our Example Data</h3>
+<p>We will model a binary outcome, <code>admitted</code>, using:</p>
+<ul>
+<li><code>hours</code>: hours spent preparing;</li>
+<li><code>prior_score</code>: a prior assessment score.</li>
+</ul>
+<p>This is a small teaching dataset created to illustrate the mechanics of fitting and interpreting a logistic regression model.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h4 id="r-1">R</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="" aria-label="1"></a><span class="fu">head</span>(admit_data, <span class="dv">6</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  hours prior_score admitted
+1     8          86        1
+2    10          91        1
+3     6          59        0
+4     4          90        0
+5     3          80        0
+6     7          89        0</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="" aria-label="1"></a><span class="fu">table</span>(admit_data<span class="sc">$</span>admitted)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ 0  1 
+30 20 </code></pre>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<h4 id="python-1">Python</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-label="1"></a><span class="bu">print</span>(admit_data.head(<span class="dv">6</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   hours  prior_score  admitted
+0      8           86         1
+1     10           91         1
+2      6           59         0
+3      4           90         0
+4      3           80         0
+5      7           89         0</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a><span class="bu">print</span>(admit_data[<span class="st">"admitted"</span>].value_counts().sort_index())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>admitted
+0    30
+1    20
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+</div></div>
+</section>
+<section class="slide level2">
+
+<h3 id="visualizing-a-binary-outcome">Visualizing a Binary Outcome</h3>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h4 id="r-2">R</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="" aria-label="1"></a><span class="fu">plot</span>(admit_data<span class="sc">$</span>hours, admit_data<span class="sc">$</span>admitted,</span>
+<span id="cb11-2"><a href="" aria-label="2"></a>     <span class="at">pch =</span> <span class="dv">19</span>,</span>
+<span id="cb11-3"><a href="" aria-label="3"></a>     <span class="at">xlab =</span> <span class="st">"Hours"</span>,</span>
+<span id="cb11-4"><a href="" aria-label="4"></a>     <span class="at">ylab =</span> <span class="st">"Admitted (0/1)"</span>,</span>
+<span id="cb11-5"><a href="" aria-label="5"></a>     <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.05</span>, <span class="fl">1.05</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="LOGISTIC-REGRESSION_files/figure-revealjs/unnamed-chunk-5-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<h4 id="python-2">Python</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="" aria-label="1"></a>plt.scatter(admit_data[<span class="st">"hours"</span>], admit_data[<span class="st">"admitted"</span>])</span>
+<span id="cb12-2"><a href="" aria-label="2"></a>plt.xlabel(<span class="st">"Hours"</span>)</span>
+<span id="cb12-3"><a href="" aria-label="3"></a>plt.ylabel(<span class="st">"Admitted (0/1)"</span>)</span>
+<span id="cb12-4"><a href="" aria-label="4"></a>plt.ylim(<span class="op">-</span><span class="fl">0.05</span>, <span class="fl">1.05</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(-0.05, 1.05)</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="" aria-label="1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="LOGISTIC-REGRESSION_files/figure-revealjs/unnamed-chunk-6-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+<p>A straight line is not naturally constrained to produce valid probabilities.</p>
+</section>
+<section class="slide level2">
+
+<h3 id="fitting-a-logistic-regression-model">Fitting a Logistic Regression Model</h3>
+<p>We fit</p>
+<p><span class="math display">\[
+\operatorname{logit}\{P(Y=1\mid X)\}
+=
+\beta_0+\beta_1(\text{hours})+\beta_2(\text{prior score}).
+\]</span></p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h4 id="r-3">R</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="" aria-label="1"></a>logit_r <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
+<span id="cb15-2"><a href="" aria-label="2"></a>  admitted <span class="sc">~</span> hours <span class="sc">+</span> prior_score,</span>
+<span id="cb15-3"><a href="" aria-label="3"></a>  <span class="at">data =</span> admit_data,</span>
+<span id="cb15-4"><a href="" aria-label="4"></a>  <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"logit"</span>)</span>
+<span id="cb15-5"><a href="" aria-label="5"></a>)</span>
+<span id="cb15-6"><a href="" aria-label="6"></a></span>
+<span id="cb15-7"><a href="" aria-label="7"></a><span class="fu">summary</span>(logit_r)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = admitted ~ hours + prior_score, family = binomial(link = "logit"), 
+    data = admit_data)
+
+Coefficients:
+             Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept) -10.37291    3.16257  -3.280 0.001038 ** 
+hours         0.52137    0.15610   3.340 0.000838 ***
+prior_score   0.08955    0.03393   2.639 0.008315 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 67.301  on 49  degrees of freedom
+Residual deviance: 44.510  on 47  degrees of freedom
+AIC: 50.51
+
+Number of Fisher Scoring iterations: 5</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<h4 id="python-3">Python</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="" aria-label="1"></a>logit_py <span class="op">=</span> smf.glm(</span>
+<span id="cb17-2"><a href="" aria-label="2"></a>    <span class="st">"admitted ~ hours + prior_score"</span>,</span>
+<span id="cb17-3"><a href="" aria-label="3"></a>    data<span class="op">=</span>admit_data,</span>
+<span id="cb17-4"><a href="" aria-label="4"></a>    family<span class="op">=</span>sm.families.Binomial()</span>
+<span id="cb17-5"><a href="" aria-label="5"></a>).fit()</span>
+<span id="cb17-6"><a href="" aria-label="6"></a></span>
+<span id="cb17-7"><a href="" aria-label="7"></a><span class="bu">print</span>(logit_py.summary())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 Generalized Linear Model Regression Results                  
+==============================================================================
+Dep. Variable:               admitted   No. Observations:                   50
+Model:                            GLM   Df Residuals:                       47
+Model Family:                Binomial   Df Model:                            2
+Link Function:                  Logit   Scale:                          1.0000
+Method:                          IRLS   Log-Likelihood:                -22.255
+Date:                Wed, 04 Nov 2026   Deviance:                       44.510
+Time:                        22:47:36   Pearson chi2:                     41.0
+No. Iterations:                     5   Pseudo R-squ. (CS):             0.3661
+Covariance Type:            nonrobust                                         
+===============================================================================
+                  coef    std err          z      P&gt;|z|      [0.025      0.975]
+-------------------------------------------------------------------------------
+Intercept     -10.3729      3.163     -3.280      0.001     -16.571      -4.174
+hours           0.5214      0.156      3.340      0.001       0.215       0.827
+prior_score     0.0896      0.034      2.639      0.008       0.023       0.156
+===============================================================================</code></pre>
+</div>
+</div>
+</div></div>
+</section>
+<section class="slide level2">
+
+<h3 id="extracting-coefficients-and-odds-ratios">Extracting Coefficients and Odds Ratios</h3>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h4 id="r-4">R</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="" aria-label="1"></a><span class="fu">coef</span>(logit_r)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> (Intercept)        hours  prior_score 
+-10.37290859   0.52136915   0.08955388 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="" aria-label="1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(logit_r))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> (Intercept)        hours  prior_score 
+3.126821e-05 1.684332e+00 1.093686e+00 </code></pre>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<h4 id="python-4">Python</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="" aria-label="1"></a><span class="bu">print</span>(logit_py.params)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Intercept     -10.372909
+hours           0.521369
+prior_score     0.089554
+dtype: float64</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="" aria-label="1"></a><span class="bu">print</span>(np.exp(logit_py.params))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Intercept      0.000031
+hours          1.684332
+prior_score    1.093686
+dtype: float64</code></pre>
+</div>
+</div>
+</div></div>
+<p>Interpret each slope <strong>holding the other predictor fixed</strong>.</p>
+<ul>
+<li>Raw coefficient <span class="math inline">\(\hat\beta_j\)</span>: change in log-odds per one-unit increase in <span class="math inline">\(X_j\)</span>.</li>
+<li><span class="math inline">\(e^{\hat\beta_j}\)</span>: multiplicative change in odds per one-unit increase in <span class="math inline">\(X_j\)</span>.</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="confidence-intervals-for-odds-ratios">Confidence Intervals for Odds Ratios</h3>
+<p>A confidence interval for <span class="math inline">\(\beta_j\)</span> can be exponentiated to obtain a confidence interval for the odds ratio.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h4 id="r-5">R</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="" aria-label="1"></a>OR_r <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="fu">coef</span>(logit_r))</span>
+<span id="cb27-2"><a href="" aria-label="2"></a>OR_CI_r <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="fu">confint.default</span>(logit_r))</span>
+<span id="cb27-3"><a href="" aria-label="3"></a></span>
+<span id="cb27-4"><a href="" aria-label="4"></a><span class="fu">cbind</span>(<span class="at">OR =</span> OR_r, OR_CI_r)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                      OR        2.5 %     97.5 %
+(Intercept) 3.126821e-05 6.355097e-08 0.01538452
+hours       1.684332e+00 1.240393e+00 2.28715772
+prior_score 1.093686e+00 1.023310e+00 1.16890202</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<h4 id="python-5">Python</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="" aria-label="1"></a>OR_py <span class="op">=</span> np.exp(logit_py.params)</span>
+<span id="cb29-2"><a href="" aria-label="2"></a>OR_CI_py <span class="op">=</span> np.exp(logit_py.conf_int())</span>
+<span id="cb29-3"><a href="" aria-label="3"></a></span>
+<span id="cb29-4"><a href="" aria-label="4"></a><span class="bu">print</span>(pd.concat(</span>
+<span id="cb29-5"><a href="" aria-label="5"></a>    [OR_py.rename(<span class="st">"OR"</span>), OR_CI_py],</span>
+<span id="cb29-6"><a href="" aria-label="6"></a>    axis<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb29-7"><a href="" aria-label="7"></a>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   OR             0         1
+Intercept    0.000031  6.355097e-08  0.015385
+hours        1.684332  1.240393e+00  2.287158
+prior_score  1.093686  1.023310e+00  1.168902</code></pre>
+</div>
+</div>
+</div></div>
+<p>An odds-ratio interval containing <span class="math inline">\(1\)</span> corresponds to a coefficient interval containing <span class="math inline">\(0\)</span>.</p>
+</section>
+<section class="slide level2">
+
+<h3 id="predicted-probabilities">Predicted Probabilities</h3>
+<p>Logistic regression directly produces estimated probabilities:</p>
+<p><span class="math display">\[
+\hat\pi_i=P(Y_i=1\mid X_i;\hat\beta).
+\]</span></p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h4 id="r-6">R</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="" aria-label="1"></a>admit_data<span class="sc">$</span>prob_r <span class="ot">&lt;-</span> <span class="fu">predict</span>(</span>
+<span id="cb31-2"><a href="" aria-label="2"></a>  logit_r,</span>
+<span id="cb31-3"><a href="" aria-label="3"></a>  <span class="at">type =</span> <span class="st">"response"</span></span>
+<span id="cb31-4"><a href="" aria-label="4"></a>)</span>
+<span id="cb31-5"><a href="" aria-label="5"></a></span>
+<span id="cb31-6"><a href="" aria-label="6"></a><span class="fu">head</span>(admit_data[<span class="fu">c</span>(<span class="st">"hours"</span>, <span class="st">"prior_score"</span>, <span class="st">"prob_r"</span>)])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  hours prior_score    prob_r
+1     8          86 0.8175264
+2    10          91 0.9521288
+3     6          59 0.1233572
+4     4          90 0.4433485
+5     3          80 0.1618549
+6     7          89 0.7767750</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<h4 id="python-6">Python</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="" aria-label="1"></a>admit_data[<span class="st">"prob_py"</span>] <span class="op">=</span> logit_py.predict(admit_data)</span>
+<span id="cb33-2"><a href="" aria-label="2"></a></span>
+<span id="cb33-3"><a href="" aria-label="3"></a><span class="bu">print</span>(admit_data[[</span>
+<span id="cb33-4"><a href="" aria-label="4"></a>    <span class="st">"hours"</span>, <span class="st">"prior_score"</span>, <span class="st">"prob_py"</span></span>
+<span id="cb33-5"><a href="" aria-label="5"></a>]].head())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   hours  prior_score   prob_py
+0      8           86  0.817526
+1     10           91  0.952129
+2      6           59  0.123357
+3      4           90  0.443349
+4      3           80  0.161855</code></pre>
+</div>
+</div>
+</div></div>
+</section>
+<section class="slide level2">
+
+<h3 id="predicting-for-new-predictor-values">Predicting for New Predictor Values</h3>
+<p>Suppose we want the estimated probability for a case with 7 preparation hours and a prior score of 80.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h4 id="r-7">R</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="" aria-label="1"></a>new_case_r <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb35-2"><a href="" aria-label="2"></a>  <span class="at">hours =</span> <span class="dv">7</span>,</span>
+<span id="cb35-3"><a href="" aria-label="3"></a>  <span class="at">prior_score =</span> <span class="dv">80</span></span>
+<span id="cb35-4"><a href="" aria-label="4"></a>)</span>
+<span id="cb35-5"><a href="" aria-label="5"></a></span>
+<span id="cb35-6"><a href="" aria-label="6"></a><span class="fu">predict</span>(logit_r, <span class="at">newdata =</span> new_case_r,</span>
+<span id="cb35-7"><a href="" aria-label="7"></a>        <span class="at">type =</span> <span class="st">"response"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        1 
+0.6084938 </code></pre>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<h4 id="python-7">Python</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="" aria-label="1"></a>new_case_py <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb37-2"><a href="" aria-label="2"></a>    <span class="st">"hours"</span>: [<span class="dv">7</span>],</span>
+<span id="cb37-3"><a href="" aria-label="3"></a>    <span class="st">"prior_score"</span>: [<span class="dv">80</span>]</span>
+<span id="cb37-4"><a href="" aria-label="4"></a>})</span>
+<span id="cb37-5"><a href="" aria-label="5"></a></span>
+<span id="cb37-6"><a href="" aria-label="6"></a><span class="bu">print</span>(logit_py.predict(new_case_py))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0    0.608494
+dtype: float64</code></pre>
+</div>
+</div>
+</div></div>
+<p>The output is a <strong>probability</strong>, not a class label.</p>
+</section>
+<section class="slide level2">
+
+<h3 id="a-probability-scale-effect">A Probability-Scale Effect</h3>
+<p>To see how the probability changes when <code>hours</code> increases from 7 to 8 while <code>prior_score = 80</code>:</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h4 id="r-8">R</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="" aria-label="1"></a>compare_r <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb39-2"><a href="" aria-label="2"></a>  <span class="at">hours =</span> <span class="fu">c</span>(<span class="dv">7</span>, <span class="dv">8</span>),</span>
+<span id="cb39-3"><a href="" aria-label="3"></a>  <span class="at">prior_score =</span> <span class="fu">c</span>(<span class="dv">80</span>, <span class="dv">80</span>)</span>
+<span id="cb39-4"><a href="" aria-label="4"></a>)</span>
+<span id="cb39-5"><a href="" aria-label="5"></a></span>
+<span id="cb39-6"><a href="" aria-label="6"></a>p_r <span class="ot">&lt;-</span> <span class="fu">predict</span>(logit_r, compare_r,</span>
+<span id="cb39-7"><a href="" aria-label="7"></a>               <span class="at">type =</span> <span class="st">"response"</span>)</span>
+<span id="cb39-8"><a href="" aria-label="8"></a>p_r</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        1         2 
+0.6084938 0.7235930 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="" aria-label="1"></a>p_r[<span class="dv">2</span>] <span class="sc">-</span> p_r[<span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        2 
+0.1150992 </code></pre>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<h4 id="python-8">Python</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="" aria-label="1"></a>compare_py <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb43-2"><a href="" aria-label="2"></a>    <span class="st">"hours"</span>: [<span class="dv">7</span>, <span class="dv">8</span>],</span>
+<span id="cb43-3"><a href="" aria-label="3"></a>    <span class="st">"prior_score"</span>: [<span class="dv">80</span>, <span class="dv">80</span>]</span>
+<span id="cb43-4"><a href="" aria-label="4"></a>})</span>
+<span id="cb43-5"><a href="" aria-label="5"></a></span>
+<span id="cb43-6"><a href="" aria-label="6"></a>p_py <span class="op">=</span> logit_py.predict(compare_py)</span>
+<span id="cb43-7"><a href="" aria-label="7"></a><span class="bu">print</span>(p_py)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0    0.608494
+1    0.723593
+dtype: float64</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="" aria-label="1"></a><span class="bu">print</span>(p_py.iloc[<span class="dv">1</span>] <span class="op">-</span> p_py.iloc[<span class="dv">0</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.11509916640861084</code></pre>
+</div>
+</div>
+</div></div>
+<p>This probability difference is local to the chosen predictor values; it is not constant everywhere.</p>
+</section>
+<section class="slide level2">
+
+<h3 id="logistic-regression-with-categorical-predictors">Logistic Regression with Categorical Predictors</h3>
+<p>As in linear regression, categorical predictors enter through indicator/dummy variables.</p>
+<p>For example,</p>
+<p><span class="math display">\[
+\operatorname{logit}(\pi)
+=
+\beta_0+\beta_1X+\beta_2I(\text{Group}=B).
+\]</span></p>
+<p>Then <span class="math inline">\(e^{\beta_2}\)</span> compares the odds for Group B with the reference group, holding the other predictors fixed.</p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>The coding/reference category matters for interpretation, just as it did in multiple linear regression.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="what-about-model-fit">What About Model Fit?</h3>
+<p>There is no direct logistic-regression equivalent of the OLS interpretation</p>
+<blockquote>
+<p>“<span class="math inline">\(R^2\)</span> is the proportion of variance in <span class="math inline">\(Y\)</span> explained by the predictors.”</p>
+</blockquote>
+<p>Likelihood-based summaries compare how well models explain the observed binary outcomes.</p>
+<p>A common example is <strong>McFadden’s pseudo-<span class="math inline">\(R^2\)</span></strong>:</p>
+<p><span class="math display">\[
+R^2_{McFadden}=1-\frac{\ell(\text{fitted model})}{\ell(\text{intercept-only model})}.
+\]</span></p>
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Warning</strong></p>
+</div>
+<div class="callout-content">
+<p>Pseudo-<span class="math inline">\(R^2\)</span> values should <strong>not</strong> be interpreted as percent variance explained and should not be compared numerically to OLS <span class="math inline">\(R^2\)</span> as if they were the same statistic.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="logistic-regression-assumptions">Logistic Regression Assumptions</h3>
+<p>Logistic regression does <strong>not</strong> require:</p>
+<ul>
+<li>normally distributed predictors;</li>
+<li>normally distributed residuals;</li>
+<li>constant variance of the response.</li>
+</ul>
+<p>But it does rely on important conditions:</p>
+<ol type="1">
+<li>appropriate binary/Bernoulli response specification;</li>
+<li>independent observations, conditional on the model structure;</li>
+<li>linearity of continuous predictors with the <strong>logit</strong>, not necessarily with probability;</li>
+<li>no perfect multicollinearity;</li>
+<li>no complete or quasi-complete separation;</li>
+<li>enough information in the data for stable estimation.</li>
+</ol>
+</section>
+<section class="slide level2">
+
+<h3 id="independence">Independence</h3>
+<p>Standard logistic regression treats observations as independent contributions to the likelihood.</p>
+<p>Ask:</p>
+<ul>
+<li>Are there repeated measurements from the same person?</li>
+<li>Are observations clustered within schools, hospitals, firms, teams, or geographic units?</li>
+<li>Is there temporal or spatial dependence?</li>
+</ul>
+<p>If observations are meaningfully clustered, the basic independent Bernoulli model may understate uncertainty and a different modeling strategy may be needed.</p>
+</section>
+<section class="slide level2">
+
+<h3 id="linearity---but-on-which-scale">Linearity - But on Which Scale?</h3>
+<p>Logistic regression does <strong>not</strong> assume</p>
+<p><span class="math display">\[
+P(Y=1\mid X)
+\]</span></p>
+<p>is linear in a continuous predictor.</p>
+<p>It assumes the <strong>logit</strong> is linear in the predictors:</p>
+<p><span class="math display">\[
+\operatorname{logit}\{P(Y=1\mid X)\}
+=
+\beta_0+\beta_1X_1+\cdots+\beta_pX_p.
+\]</span></p>
+<p>Nonlinear terms, splines, or transformations can be added when a straight-line relationship on the logit scale is too restrictive.</p>
+</section>
+<section class="slide level2">
+
+<h3 id="multicollinearity">Multicollinearity</h3>
+<p>As in multiple linear regression, highly correlated predictors can make coefficient estimates unstable.</p>
+<p>Consequences include:</p>
+<ul>
+<li>large standard errors;</li>
+<li>coefficients that change substantially when predictors are added or removed;</li>
+<li>difficult conditional interpretations.</li>
+</ul>
+<p>Perfect multicollinearity makes the model unidentified.</p>
+<p>The conceptual diagnostic lesson carries over from linear regression: inspect relationships among predictors and avoid redundant encodings.</p>
+</section>
+<section class="slide level2">
+
+<h3 id="a-logistic-specific-failure-mode-separation">A Logistic-Specific Failure Mode: Separation</h3>
+<p><strong>Complete separation</strong> occurs when a predictor, or combination of predictors, perfectly separates the observed 0s and 1s.</p>
+<p>For example:</p>
+<ul>
+<li>every observation with <span class="math inline">\(X&lt;5\)</span> has <span class="math inline">\(Y=0\)</span>;</li>
+<li>every observation with <span class="math inline">\(X\geq5\)</span> has <span class="math inline">\(Y=1\)</span>.</li>
+</ul>
+<p>Then the likelihood can keep improving as a coefficient grows toward <span class="math inline">\(\pm\infty\)</span>.</p>
+<p>Symptoms include:</p>
+<ul>
+<li>extremely large coefficient estimates;</li>
+<li>huge standard errors;</li>
+<li>convergence warnings or failure.</li>
+</ul>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>Separation is an important addition to the usual regression diagnostic checklist because it is specific to binary-response modeling.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="outliers-leverage-and-influence">Outliers, Leverage, and Influence</h3>
+<p>Unusual observations can still strongly affect a logistic regression model.</p>
+<p>However, “residuals” are more complicated than in OLS because a binary outcome does not have a single Normal-error residual structure.</p>
+<p>Common diagnostic quantities include:</p>
+<ul>
+<li>Pearson residuals;</li>
+<li>deviance residuals;</li>
+<li>leverage / hat values;</li>
+<li>Cook’s distance and case-deletion influence measures.</li>
+</ul>
+<p>The goal is the same as before: identify observations that have disproportionate influence and investigate <strong>why</strong>.</p>
+</section>
+<section class="slide level2">
+
+<h3 id="residuals-are-different-here">Residuals Are Different Here</h3>
+<p>For OLS, the raw residual</p>
+<p><span class="math display">\[
+e_i=y_i-\hat y_i
+\]</span></p>
+<p>has a central role in diagnostics.</p>
+<p>For logistic regression, <span class="math inline">\(y_i\in\{0,1\}\)</span> and <span class="math inline">\(\hat\pi_i\in(0,1)\)</span>, so raw residuals have a very different distribution and variance.</p>
+<p>There are multiple residual definitions designed for different purposes.</p>
+<div class="callout callout-caution callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Caution</strong></p>
+</div>
+<div class="callout-content">
+<p>Do not mechanically apply Normal Q-Q plots or homoscedasticity checks from OLS to logistic regression. The response variance is inherently <span class="math inline">\(\pi_i(1-\pi_i)\)</span>.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="standard-errors-and-inference">Standard Errors and Inference</h3>
+<p>After MLE finds <span class="math inline">\(\hat\beta\)</span>, software estimates uncertainty from the curvature of the log-likelihood near its maximum.</p>
+<p>Typical output includes:</p>
+<ul>
+<li>coefficient estimate <span class="math inline">\(\hat\beta_j\)</span>;</li>
+<li>standard error;</li>
+<li>Wald statistic and p-value;</li>
+<li>confidence interval.</li>
+</ul>
+<p>The null hypothesis for a slope is commonly</p>
+<p><span class="math display">\[
+H_0:\beta_j=0,
+\]</span></p>
+<p>which is equivalent to</p>
+<p><span class="math display">\[
+H_0:e^{\beta_j}=1
+\]</span></p>
+<p>on the odds-ratio scale.</p>
+</section>
+<section class="slide level2">
+
+<h3 id="linear-vs-logistic-regression-the-big-picture">Linear vs Logistic Regression: The Big Picture</h3>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Question</th>
+<th>Linear Regression</th>
+<th>Logistic Regression</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>What is modeled?</td>
+<td><span class="math inline">\(E(Y\mid X)\)</span></td>
+<td><span class="math inline">\(P(Y=1\mid X)\)</span></td>
+</tr>
+<tr class="even">
+<td>Response distribution</td>
+<td>Normal model for errors</td>
+<td>Bernoulli</td>
+</tr>
+<tr class="odd">
+<td>Link</td>
+<td>Identity</td>
+<td>Logit</td>
+</tr>
+<tr class="even">
+<td>Predictor scale</td>
+<td>Mean response</td>
+<td>Log-odds</td>
+</tr>
+<tr class="odd">
+<td>Fitted values</td>
+<td>Unbounded</td>
+<td>Between 0 and 1</td>
+</tr>
+<tr class="even">
+<td>Main fitting criterion</td>
+<td>RSS / OLS</td>
+<td>Likelihood / MLE</td>
+</tr>
+<tr class="odd">
+<td>Slope interpretation</td>
+<td>Additive change in mean <span class="math inline">\(Y\)</span></td>
+<td>Additive change in log-odds / multiplicative change in odds</td>
+</tr>
+</tbody>
+</table>
+<p>Both use a linear predictor <span class="math inline">\(X\beta\)</span>; they differ in the <strong>response distribution and link</strong>.</p>
+</section>
+<section class="slide level2">
+
+<h3 id="a-useful-mental-model">A Useful Mental Model</h3>
+<p>Think of logistic regression as a connected modeling process, not merely as a formula for drawing an S-shaped curve.</p>
+<p>First, we specify a <strong>binary response</strong> and a Bernoulli model for the conditional distribution <span class="math inline">\(Y_i\mid X_i\)</span>. This tells us that the conditional mean is the event probability <span class="math inline">\(\pi_i\)</span> and that the conditional variance is <span class="math inline">\(\pi_i(1-\pi_i)\)</span>.</p>
+<p>Second, we retain the familiar <strong>linear combination of predictors</strong>, <span class="math inline">\(\eta_i=\beta_0+\beta_1x_{i1}+\cdots+\beta_px_{ip}\)</span>. The logit link equates that linear predictor with the log-odds of the event. Inverting the link produces a valid probability:</p>
+<p><span class="math display">\[
+\boxed{X_i\longrightarrow\eta_i=X_i\beta
+\longrightarrow\pi_i=\frac{1}{1+e^{-\eta_i}}.}
+\]</span></p>
+<p>Finally, we use <strong>maximum likelihood</strong> to estimate the coefficients: choose the values that make the observed 0/1 outcomes most plausible under the model. We can then interpret coefficients as changes in log-odds, exponentiated coefficients as odds ratios, and fitted values as predicted probabilities.</p>
+<p>The key lesson is that the <strong>linearity lives on the transformed mean scale</strong>. Logistic regression estimates probabilities; a separate decision rule is needed before we can turn those probabilities into binary class predictions.</p>
+</section>
+<section class="slide level2">
+
+<h3 id="logistic-regression-and-classification">Logistic Regression and Classification</h3>
+<p>A fitted logistic regression model gives</p>
+<p><span class="math display">\[
+\hat\pi_i=P(Y_i=1\mid X_i).
+\]</span></p>
+<p>That is a <strong>probability estimate</strong>, not yet a dichotomous prediction.</p>
+<p>To turn probabilities into labels, we must add a <strong>decision rule</strong>, for example</p>
+<p><span class="math display">\[
+\hat y_i=
+\begin{cases}
+1, &amp; \hat\pi_i&gt;c\\
+0, &amp; \hat\pi_i\leq c
+\end{cases}
+\]</span></p>
+<p>for some threshold <span class="math inline">\(c\)</span>.</p>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Important</strong></p>
+</div>
+<div class="callout-content">
+<p><strong>Logistic regression is not, by itself, a dichotomous classification algorithm.</strong> It becomes one when its predicted probabilities are combined with a decision rule.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="what-comes-next">What Comes Next?</h3>
+<p>This lecture stops at <strong>probability modeling</strong>.</p>
+<p>The next lecture will ask what happens after we choose a decision rule:</p>
+<ul>
+<li>How should a probability threshold be chosen?</li>
+<li>What counts as a correct or incorrect classification?</li>
+<li>How do we evaluate competing classification rules and models?</li>
+</ul>
+<p>Those questions lead to classification metrics, confusion matrices, ROC curves, and related evaluation tools.</p>
+<p>For now, remember the separation:</p>
+<p><span class="math display">\[
+\boxed{\text{Logistic regression estimates probabilities.}}
+\]</span></p>
+<p><span class="math display">\[
+\boxed{\text{A decision rule converts probabilities to class labels.}}
+\]</span></p>
+</section>
+<section class="slide level2">
+
+<h3 id="takeaways">Takeaways</h3>
+<ul>
+<li>Binary outcomes require a model whose predictions remain between 0 and 1.</li>
+<li>Logistic regression is a <strong>Bernoulli GLM with a logit link</strong>.</li>
+<li>The linear predictor models <strong>log-odds</strong>; the sigmoid maps log-odds to probabilities.</li>
+<li>Coefficients can be exponentiated to obtain <strong>odds ratios</strong>.</li>
+<li>Logistic regression is fitted using <strong>maximum likelihood</strong>, connecting naturally to the broader GLM framework.</li>
+<li>OLS assumptions do not transfer mechanically; independence, logit-linearity, multicollinearity, influence, and separation deserve attention.</li>
+<li>Logistic regression produces probabilities. <strong>Classification requires an additional decision rule.</strong></li>
+<li><em>Next</em>: <span style="color:#1565C0;">turning predicted probabilities into classifications and evaluating those decisions</span>.</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="thats-all-folks">That’s all folks!</h3>
+<h4 id="for-now"><strong>For now…</strong></h4>
+
+
+<img data-src="images/endslide.png" class="quarto-figure quarto-figure-center r-stretch" style="width:40.0%"></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="LOGISTIC-REGRESSION_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="LOGISTIC-REGRESSION_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="LOGISTIC-REGRESSION_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="LOGISTIC-REGRESSION_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="LOGISTIC-REGRESSION_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="LOGISTIC-REGRESSION_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="LOGISTIC-REGRESSION_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="LOGISTIC-REGRESSION_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="LOGISTIC-REGRESSION_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="LOGISTIC-REGRESSION_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'fade',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>
