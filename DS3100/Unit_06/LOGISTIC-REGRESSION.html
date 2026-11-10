@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Dr.&nbsp;Satadisha Saha Bhowmick">
-  <meta name="dcterms.date" content="2026-11-04">
+  <meta name="dcterms.date" content="2026-11-09">
   <title>DS 3100 | Logistic Regression</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -210,7 +210,7 @@ Dr.&nbsp;Satadisha Saha Bhowmick
 </div>
 </div>
 
-  <p class="date">2026-11-04</p>
+  <p class="date">2026-11-09</p>
 </section>
 <section class="slide level2">
 
@@ -315,7 +315,7 @@ E(Y\mid X)=\beta_0+\beta_1X_1+\cdots+\beta_pX_p.
 <li>quantify uncertainty and assess model fit;</li>
 <li>make predictions for new observations.</li>
 </ul>
-<p>But what changes when the response is <strong>binary</strong>?</p>
+<p><span style="color:#1565C0;">But what changes when the response is <strong>binary</strong>?</span></p>
 </section>
 <section class="slide level2">
 
@@ -359,7 +359,7 @@ P(Y=1\mid X)=\beta_0+\beta_1X_1+\cdots+\beta_pX_p.
 <section class="slide level2">
 
 <h3 id="bernoulli-trials-for-binary-outcomes">Bernoulli Trials for Binary Outcomes</h3>
-<p>For problems with binary outcomes that can represent success/failure, we can model each independent observation as a <strong>Bernoulli trial</strong>.</p>
+<p>For problems with binary outcomes that can represent success/failure, we can model each independent observation as a <strong>Bernoulli trial</strong>. In other words, a binary target variable <span class="math inline">\(Y_i\)</span> follows a <strong>Bernoulli distribution</strong>.</p>
 <p><span class="math display">\[
 \boxed{Y_i\mid X_i \sim \text{Bernoulli}(\pi_i)},
 \]</span> where, <span class="math display">\[
@@ -405,7 +405,7 @@ Var(Y_i\mid X_i)=\pi_i(1-\pi_i).
 </div>
 </div>
 </div>
-<p>We would <em>still</em> like to keep the familiar linearcombination of explanatory variables,</p>
+<p>We would <em>still</em> like to keep the familiar <span style="color:#1565C0;">linear combination of explanatory variables</span>,</p>
 <p><span class="math display">\[
 \eta_i=\beta_0+\beta_1x_{i1}+\cdots+\beta_px_{ip},
 \]</span></p>
@@ -435,9 +435,9 @@ Var(Y_i\mid X_i)=\pi_i(1-\pi_i).
 </ul>
 <p>There are <span style="color:#1565C0;"><strong><span class="math inline">\(3\)</span> components</strong></span> to a GLM:</p>
 <ol type="1">
-<li><p><strong>Random component:</strong> specifies the probability distribution of the response variable.</p></li>
-<li><p><strong>Systematic component:</strong> specifies the explanatory variables <span class="math inline">\((X_1,X_2,\ldots,X_k)\)</span> and their linear combination: <span class="math display">\[\eta=\beta_0+\beta_1X_1+\cdots+\beta_kX_k.\]</span></p></li>
-<li><p><strong>Link function:</strong> specifies relationship between the expected value of the response and the systematic component: <span class="math inline">\(g\!\left(\mathbb E(Y\mid X)\right)=\eta.\)</span></p></li>
+<li><p><span style="color:#1565C0;"><strong>Random component</strong></span>: specifies the probability distribution of the response variable.</p></li>
+<li><p><span style="color:#1565C0;"><strong>Systematic component</strong></span>: specifies the explanatory variables <span class="math inline">\((X_1,X_2,\ldots,X_k)\)</span> and their linear combination: <span class="math display">\[\eta=\beta_0+\beta_1X_1+\cdots+\beta_kX_k.\]</span></p></li>
+<li><p><span style="color:#1565C0;"><strong>Link function</strong></span>: specifies relationship between the expected value of the response and the systematic component: <span class="math inline">\(g\!\left(\mathbb E(Y\mid X)\right)=\eta\)</span> <em>or</em> <span class="math inline">\(\mathbb E(Y\mid X) = g^{-1}\left(\eta\right)\)</span></p></li>
 </ol>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
@@ -501,6 +501,7 @@ Var(Y_i\mid X_i)=\pi_i(1-\pi_i).
 <li>and an inverse transformation that maps the real line back into <span class="math inline">\([0,1]\)</span></li>
 </ul>
 <p>The standard choice for binary logistic regression is the <span style="color:#1565C0;"><strong>logit</strong></span>.</p>
+<p>Inverse of logit is the <span style="color:#1565C0;"><strong>Sigmoid</strong></span> function.</p>
 </div><div class="column" style="width:55%;">
 <p><img data-src="images/glm-log.png" style="width:100.0%"></p>
 </div></div>
@@ -513,7 +514,7 @@ Var(Y_i\mid X_i)=\pi_i(1-\pi_i).
 <p>How likely is the event to occur relative to not occurring?</p>
 </blockquote>
 <p>If an event has probability <span class="math inline">\(\pi\)</span>, its <strong>odds</strong> are <span class="math display">\[
-\boxed{\text{odds}=\frac{\pi}{1-\pi}.}
+\boxed{\text{odds}=\omega =\frac{\pi}{1-\pi}.}
 \]</span> Conversely, <span class="math inline">\(\pi=\frac{\text{odds}}{1+\text{odds}}\)</span>.</p>
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
@@ -525,11 +526,11 @@ Var(Y_i\mid X_i)=\pi_i(1-\pi_i).
 </div>
 <div class="callout-content">
 <p>For example, <span class="math inline">\(72.4\%\)</span> of people who regularly take Vitamin C still get colds. Hence the probability of getting a cold is <span class="math inline">\(\pi=0.724\)</span>. The odds of getting a cold are <span class="math inline">\(\frac{0.724}{1-0.724}\approx 2.62.\)</span>.</p>
-<p>This is often expressed as “the odds of getting a cold are 2.62 to 1.” <em>Another way to interpret this is that for every one person that does not develop a cold, 2.876 people do develop colds</em>, meaning the event is <strong><span class="math inline">\(2.86\)</span> times as likely to occur as not occur</strong>.</p>
+<p>This is often expressed as “the odds of getting a cold are 2.62 to 1.” <em>Another way to interpret this is that for every one person that does not develop a cold, 2.62 people do develop colds</em>, meaning the event is <strong><span class="math inline">\(2.62\)</span> times as likely to occur as not occur</strong>.</p>
 </div>
 </div>
 </div>
-<p><span style="color:#1565C0;"><strong>Odds range from <span class="math inline">\(0\)</span> to <span class="math inline">\(\infty\)</span>.</strong></span></p>
+<p><span style="color:#1565C0;"><strong>Odds range from <span class="math inline">\(0\)</span> to <span class="math inline">\(\infty\)</span></strong> <span class="math inline">\(\rightarrow\)</span> <em>removes the upper bound from the probability scale</em></span></p>
 </section>
 <section class="slide level2">
 
@@ -553,6 +554,7 @@ Var(Y_i\mid X_i)=\pi_i(1-\pi_i).
 <p>This is exactly the scale on which we place the linear predictor.</p>
 </div><div class="column" style="width:55%;">
 <p><img data-src="images/log-odds.png" style="width:100.0%"></p>
+<p><span style="color:#1565C0;"><em>Log odds of failure is the <strong>exact negative</strong> of log odds of success.</em></span></p>
 </div></div>
 </section>
 <section class="slide level2">
@@ -620,7 +622,7 @@ Var(Y_i\mid X_i)=\pi_i(1-\pi_i).
 <span id="cb1-2"><a href="" aria-label="2"></a>prob <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="sc">-</span>eta))</span>
 <span id="cb1-3"><a href="" aria-label="3"></a></span>
 <span id="cb1-4"><a href="" aria-label="4"></a><span class="fu">plot</span>(eta, prob, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">lwd =</span> <span class="dv">2</span>,</span>
-<span id="cb1-5"><a href="" aria-label="5"></a>     <span class="at">xlab =</span> <span class="st">"Linear predictor (eta)"</span>,</span>
+<span id="cb1-5"><a href="" aria-label="5"></a>     <span class="at">xlab =</span> <span class="st">"Systematic Component (eta)"</span>,</span>
 <span id="cb1-6"><a href="" aria-label="6"></a>     <span class="at">ylab =</span> <span class="st">"P(Y = 1 | X)"</span>)</span>
 <span id="cb1-7"><a href="" aria-label="7"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fl">0.5</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
 <span id="cb1-8"><a href="" aria-label="8"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -641,7 +643,7 @@ Var(Y_i\mid X_i)=\pi_i(1-\pi_i).
 <span id="cb2-4"><a href="" aria-label="4"></a>plt.plot(eta, prob)</span>
 <span id="cb2-5"><a href="" aria-label="5"></a>plt.axhline(<span class="fl">0.5</span>, linestyle<span class="op">=</span><span class="st">"--"</span>)</span>
 <span id="cb2-6"><a href="" aria-label="6"></a>plt.axvline(<span class="dv">0</span>, linestyle<span class="op">=</span><span class="st">"--"</span>)</span>
-<span id="cb2-7"><a href="" aria-label="7"></a>plt.xlabel(<span class="st">"Linear predictor (eta)"</span>)</span>
+<span id="cb2-7"><a href="" aria-label="7"></a>plt.xlabel(<span class="st">"Systematic Component (eta)"</span>)</span>
 <span id="cb2-8"><a href="" aria-label="8"></a>plt.ylabel(<span class="st">"P(Y = 1 | X)"</span>)</span>
 <span id="cb2-9"><a href="" aria-label="9"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
@@ -663,11 +665,11 @@ Var(Y_i\mid X_i)=\pi_i(1-\pi_i).
 \]</span></p>
 <p>It is also helpful to think about the coefficients in terms of changes in the explanatory variables.</p>
 <p>Consider a logistic regression model with one predictor <span class="math inline">\(X\)</span>: <span class="math display">\[
-\omega(X)=e^{\beta_0+\beta_1X}
+\omega_X=e^{\beta_0+\beta_1X}
 \]</span></p>
 <p>For a one-unit increase in <span class="math inline">\(X\)</span>, the ratio of the odds becomes</p>
 <p><span class="math display">\[
-\frac{\omega(X+1)}{\omega(X)}
+\frac{\omega_{X+1}}{\omega_X}
 =\frac{e^{\beta_0+\beta_1(X+1)}}{e^{\beta_0+\beta_1X}}
 =\boxed{e^{\beta_1}}
 \]</span></p>
@@ -678,7 +680,7 @@ Var(Y_i\mid X_i)=\pi_i(1-\pi_i).
 <h3 id="odds-ratios">Odds Ratios</h3>
 <p>To compare proportions, we use <strong>differences</strong>. To compare odds, we use <strong>ratios</strong>. The <strong>odds ratio (OR)</strong> compares the odds of an event occurring at two different values of an explanatory variable: <span class="math display">\[\scriptsize
 OR=\frac{\text{Odds at }X=A}{\text{Odds at }X=B}
-=\frac{\omega(A)}{\omega(B)}
+=\frac{\omega_A}{\omega_B}
 \]</span></p>
 <p>For a one-unit increase in <span class="math inline">\(X\)</span>, the odds ratio is <span class="math inline">\(e^{\beta_1}\)</span>.</p>
 <ul>
@@ -708,7 +710,8 @@ OR=\frac{\text{Odds at }X=A}{\text{Odds at }X=B}
 <section class="slide level2">
 
 <h3 id="how-do-we-estimate-the-coefficients">How Do We Estimate the Coefficients?</h3>
-<p>We now know the form of the model: the explanatory variables combine linearly on the log-odds scale, and the inverse-logit function gives a predicted probability for each observation. But <strong>how should we choose the coefficients</strong> <span class="math inline">\(\beta_0,\beta_1,\ldots,\beta_p\)</span>?</p>
+<p>We now know the form of the model: the explanatory variables combine linearly on the log-odds scale, and the inverse-logit function gives a predicted probability for each observation.</p>
+<p>But <strong>how should we choose the coefficients</strong> <span class="math inline">\(\beta_0,\beta_1,\ldots,\beta_p\)</span>?</p>
 <p>In ordinary least squares, we found coefficients that minimized the sum of squared residuals.</p>
 <p>For a Bernoulli response, that criterion is not derived from the response distribution we have chosen. Instead, we ask a more general question:</p>
 <blockquote>
@@ -731,23 +734,37 @@ OR=\frac{\text{Odds at }X=A}{\text{Odds at }X=B}
 </section>
 <section class="slide level2">
 
-<h3 id="probability-vs-likelihood">Probability vs Likelihood</h3>
+<h3 id="probability-vs-likelihood-opposite-perspectives">Probability vs Likelihood : Opposite Perspectives</h3>
 <p><span class="math inline">\(\color{blue}{\textbf{Which model makes the data we actually observed most plausible?}}\)</span></p>
 <p>This is the question addressed by maximum likelihood estimation.</p>
 <ul>
 <li><strong>Probability</strong> asks: <em>How likely is an outcome given fixed model parameters?</em> We write <span class="math inline">\(P(\text{data}\mid\theta)\)</span>.</li>
 <li><strong>Likelihood</strong> asks: <em>Which parameter values make the observed data most plausible?</em> The data are held fixed, and we vary <span class="math inline">\(\theta\)</span>.</li>
 </ul>
-<p>The same expression is now viewed as a function of the unknown parameters:</p>
-<p><span class="math display">\[\boxed{L(\theta)=P(\text{observed data}\mid\theta).}\]</span></p>
-<p>Likelihood is not the probability that a parameter is true. It is a way to compare how well candidate parameter values account for the observed data under the assumed model.</p>
+<p>The same expression is now viewed as a function of the unknown parameters. Perspective is reversed despite mathematical equivalence (<em>or proportionality</em>):</p>
+<p><span class="math display">\[\boxed{L(\theta\mid \text{observed data})\equiv P(\text{observed data}\mid\theta).}\]</span></p>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>What changes?</strong></p>
+</div>
+<div class="callout-content">
+<p>The relationship between your data and your parameters (<span class="math inline">\(\theta\)</span>) is captured by the exact same mathematical function, but its <span style="color:blue;"><em>meaning</em></span> changes depending on what we vary – the data, or the parameters.</p>
+<p><span class="math inline">\(P(data \mid \theta)\)</span> is a valid probability distribution that integrates to <span class="math inline">\(1\)</span> because for a fixed parameter set, the probabilities of all possible data outcomes must total <span class="math inline">\(100\%\)</span>. Likelihood is <span style="color:blue;"><em>not</em></span> a probability distribution. If you fix your data and add up the likelihood of all possible <span class="math inline">\(\theta\)</span> they will not add up to 1.</p>
+<p>Likelihood is <span style="color:blue;"><em>not</em></span> the probability that a parameter is true. It is a way to compare how well candidate parameter values account for the observed data under the assumed model. <span class="math inline">\(L(\theta =0.5 \mid \text{data}) = 0.12\)</span> <span style="color:blue;"><em>does not mean</em></span> that there is a <span class="math inline">\(12\%\)</span> chance that <span class="math inline">\(\theta =0.5\)</span>. Instead, it means that the probability of <span style="color:blue;"><em>generating</em></span> your specific dataset given <span class="math inline">\(\theta =0.5\)</span> is <span class="math inline">\(12\%\)</span>.</p>
+</div>
+</div>
+</div>
 </section>
 <section class="slide level2">
 
 <h3 id="coin-flip-example-estimating-a-probability">Coin Flip Example: Estimating a Probability</h3>
-<p>Suppose we observe <strong>7 heads and 3 tails</strong> from 10 independent coin flips. If <span class="math inline">\(p\)</span> denotes the probability of heads, the likelihood of the observed sequence is</p>
-<p><span class="math display">\[L(p)=p^7(1-p)^3.\]</span></p>
-<p>Here the data (7 heads, 3 tails) are fixed, and <span class="math inline">\(p\)</span> is the quantity we vary to find where the likelihood is maximized.</p>
+<p>Suppose we observe <strong>7 heads and 3 tails</strong> from 10 independent coin flips. If <span class="math inline">\(p\)</span> denotes the probability of heads, the likelihood of this event is</p>
+<p><span class="math display">\[L(p \mid \text{data})= \binom{10}{7}p^7(1-p)^3.\]</span></p>
+<p>Here the data (<span style="color:#1565C0;">7 heads, 3 tails in some random order</span>) are fixed, and <span class="math inline">\(p\)</span> is the quantity we vary to find where the likelihood is maximized.</p>
 <p><span class="math display">\[\boxed{\hat p=\frac{7}{10}=0.7.}\]</span></p>
 <p>In logistic regression, we use the same principle, but each observation has a probability <span class="math inline">\(\pi_i\)</span> determined by its predictors and the regression coefficients.</p>
 </section>
@@ -770,7 +787,7 @@ Y_i=X_i\beta+\epsilon_i,
 <section class="slide level2">
 
 <h3 id="likelihood-for-logistic-regression">Likelihood for Logistic Regression</h3>
-<p>For observation <span class="math inline">\(i\)</span>,</p>
+<p>For observation <span class="math inline">\(i\)</span>, the Bernoulli distribution tells us:</p>
 <p><span class="math display">\[
 P(Y_i=y_i\mid X_i)
 =
@@ -964,8 +981,8 @@ Model:                            GLM   Df Residuals:                       47
 Model Family:                Binomial   Df Model:                            2
 Link Function:                  Logit   Scale:                          1.0000
 Method:                          IRLS   Log-Likelihood:                -22.255
-Date:                Wed, 04 Nov 2026   Deviance:                       44.510
-Time:                        22:47:36   Pearson chi2:                     41.0
+Date:                Mon, 09 Nov 2026   Deviance:                       44.510
+Time:                        22:47:18   Pearson chi2:                     41.0
 No. Iterations:                     5   Pseudo R-squ. (CS):             0.3661
 Covariance Type:            nonrobust                                         
 ===============================================================================

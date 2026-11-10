@@ -149,7 +149,7 @@ This framework is powerful because it lets us:
 - quantify uncertainty and assess model fit;
 - make predictions for new observations.
 
-But what changes when the response is **binary**?
+<span style="color:#1565C0;">But what changes when the response is **binary**?</span>
 
 ---
 
@@ -203,7 +203,7 @@ We need to keep the useful **linear predictor** while changing how it connects t
 
 ### Bernoulli Trials for Binary Outcomes
 
-For problems with binary outcomes that can represent success/failure, we can model each independent observation as a **Bernoulli trial**.
+For problems with binary outcomes that can represent success/failure, we can model each independent observation as a **Bernoulli trial**. In other words, a binary target variable $Y_i$ follows a **Bernoulli distribution**.
 
 $$
 \boxed{Y_i\mid X_i \sim \text{Bernoulli}(\pi_i)},
@@ -241,7 +241,7 @@ The usual linear regression model is too restrictive.
 
 :::
 
-We would *still* like to keep the familiar linearcombination of explanatory variables,
+We would *still* like to keep the familiar <span style="color:#1565C0;">linear combination of explanatory variables</span>,
 
 $$
 \eta_i=\beta_0+\beta_1x_{i1}+\cdots+\beta_px_{ip},
@@ -269,12 +269,12 @@ A **generalized linear model (GLM)** is a model in which:
 
 There are <span style="color:#1565C0;">**$3$ components**</span> to a GLM:
 
-1. **Random component:** specifies the probability distribution of the response variable.
+1. <span style="color:#1565C0;">**Random component**</span>: specifies the probability distribution of the response variable.
 
-2. **Systematic component:** specifies the explanatory variables $(X_1,X_2,\ldots,X_k)$ and their linear combination:
+2. <span style="color:#1565C0;">**Systematic component**</span>: specifies the explanatory variables $(X_1,X_2,\ldots,X_k)$ and their linear combination:
    $$\eta=\beta_0+\beta_1X_1+\cdots+\beta_kX_k.$$
 
-3. **Link function:** specifies relationship between the expected value of the response and the systematic component: $g\!\left(\mathbb E(Y\mid X)\right)=\eta.$
+3. <span style="color:#1565C0;">**Link function**</span>: specifies relationship between the expected value of the response and the systematic component: $g\!\left(\mathbb E(Y\mid X)\right)=\eta$ *or* $\mathbb E(Y\mid X) = g^{-1}\left(\eta\right)$
 
 :::{.callout-note}
 
@@ -343,6 +343,8 @@ We therefore need:
 
 The standard choice for binary logistic regression is the <span style="color:#1565C0;">**logit**</span>.
 
+Inverse of logit is the <span style="color:#1565C0;">**Sigmoid**</span> function.
+
 :::
 
 ::: {.column width="55%"}
@@ -363,7 +365,7 @@ To find the odds of an event, you can use counts of events. You can also divide 
 
 If an event has probability $\pi$, its **odds** are
 $$
-\boxed{\text{odds}=\frac{\pi}{1-\pi}.}
+\boxed{\text{odds}=\omega =\frac{\pi}{1-\pi}.}
 $$
 Conversely, $\pi=\frac{\text{odds}}{1+\text{odds}}$.
 
@@ -372,10 +374,10 @@ Conversely, $\pi=\frac{\text{odds}}{1+\text{odds}}$.
 ### Example
 For example, $72.4\%$ of people who regularly take Vitamin C still get colds. Hence the probability of getting a cold is $\pi=0.724$. The odds of getting a cold are $\frac{0.724}{1-0.724}\approx 2.62.$.
 
-This is often expressed as "the odds of getting a cold are 2.62 to 1." *Another way to interpret this is that for every one person that does not develop a cold, 2.876 people do develop colds*, meaning the event is **$2.86$ times as likely to occur as not occur**.
+This is often expressed as "the odds of getting a cold are 2.62 to 1." *Another way to interpret this is that for every one person that does not develop a cold, 2.62 people do develop colds*, meaning the event is **$2.62$ times as likely to occur as not occur**.
 :::
 
-<span style="color:#1565C0;">**Odds range from $0$ to $\infty$.**</span>
+<span style="color:#1565C0;">**Odds range from $0$ to $\infty$** $\rightarrow$ *removes the upper bound from the probability scale*</span>
 
 ---
 
@@ -408,6 +410,8 @@ This is exactly the scale on which we place the linear predictor.
 ::: {.column width="55%"}
 
 ![](images/log-odds.png){width="100%"}
+
+<span style="color:#1565C0;">*Log odds of failure is the **exact negative** of log odds of success.*</span>
 
 :::
 
@@ -487,7 +491,7 @@ eta <- seq(-6, 6, length.out = 200)
 prob <- 1 / (1 + exp(-eta))
 
 plot(eta, prob, type = "l", lwd = 2,
-     xlab = "Linear predictor (eta)",
+     xlab = "Systematic Component (eta)",
      ylab = "P(Y = 1 | X)")
 abline(h = 0.5, lty = 2)
 abline(v = 0, lty = 2)
@@ -506,7 +510,7 @@ prob = 1 / (1 + np.exp(-eta))
 plt.plot(eta, prob)
 plt.axhline(0.5, linestyle="--")
 plt.axvline(0, linestyle="--")
-plt.xlabel("Linear predictor (eta)")
+plt.xlabel("Systematic Component (eta)")
 plt.ylabel("P(Y = 1 | X)")
 plt.show()
 ```
@@ -529,13 +533,13 @@ It is also helpful to think about the coefficients in terms of changes in the ex
 
 Consider a logistic regression model with one predictor $X$:
 $$
-\omega(X)=e^{\beta_0+\beta_1X}
+\omega_X=e^{\beta_0+\beta_1X}
 $$
 
 For a one-unit increase in $X$, the ratio of the odds becomes
 
 $$
-\frac{\omega(X+1)}{\omega(X)}
+\frac{\omega_{X+1}}{\omega_X}
 =\frac{e^{\beta_0+\beta_1(X+1)}}{e^{\beta_0+\beta_1X}}
 =\boxed{e^{\beta_1}}
 $$
@@ -549,7 +553,7 @@ Thus, <span style="color:blue;">if $X$ increases by one unit, the odds that $Y=1
 To compare proportions, we use **differences**. To compare odds, we use **ratios**. The **odds ratio (OR)** compares the odds of an event occurring at two different values of an explanatory variable:
 $$\scriptsize
 OR=\frac{\text{Odds at }X=A}{\text{Odds at }X=B}
-=\frac{\omega(A)}{\omega(B)}
+=\frac{\omega_A}{\omega_B}
 $$
 
 For a one-unit increase in $X$, the odds ratio is $e^{\beta_1}$.
@@ -576,7 +580,9 @@ An odds ratio describes a multiplicative change in **odds**, not a fixed change 
 
 ### How Do We Estimate the Coefficients?
 
-We now know the form of the model: the explanatory variables combine linearly on the log-odds scale, and the inverse-logit function gives a predicted probability for each observation. But **how should we choose the coefficients** $\beta_0,\beta_1,\ldots,\beta_p$?
+We now know the form of the model: the explanatory variables combine linearly on the log-odds scale, and the inverse-logit function gives a predicted probability for each observation. 
+
+But **how should we choose the coefficients** $\beta_0,\beta_1,\ldots,\beta_p$?
 
 In ordinary least squares, we found coefficients that minimized the sum of squared residuals. 
 
@@ -595,7 +601,7 @@ It is a general procedure for obtaining estimates of model parameters, not speci
 
 ---
 
-### Probability vs Likelihood
+### Probability vs Likelihood : Opposite Perspectives
 
 $\color{blue}{\textbf{Which model makes the data we actually observed most plausible?}}$ 
 
@@ -604,21 +610,31 @@ This is the question addressed by maximum likelihood estimation.
 - **Probability** asks: *How likely is an outcome given fixed model parameters?* We write $P(\text{data}\mid\theta)$.
 - **Likelihood** asks: *Which parameter values make the observed data most plausible?* The data are held fixed, and we vary $\theta$.
 
-The same expression is now viewed as a function of the unknown parameters:
+The same expression is now viewed as a function of the unknown parameters. Perspective is reversed despite mathematical equivalence (*or proportionality*):
 
-$$\boxed{L(\theta)=P(\text{observed data}\mid\theta).}$$
+$$\boxed{L(\theta\mid \text{observed data})\equiv P(\text{observed data}\mid\theta).}$$
 
-Likelihood is not the probability that a parameter is true. It is a way to compare how well candidate parameter values account for the observed data under the assumed model.
+:::{.callout-tip}
+
+## What changes?
+
+The relationship between your data and your parameters ($\theta$) is captured by the exact same mathematical function, but its <span style="color:blue;">*meaning*</span> changes depending on what we vary -- the data, or the parameters.
+
+$P(data \mid \theta)$ is a valid probability distribution that integrates to $1$ because for a fixed parameter set, the probabilities of all possible data outcomes must total $100\%$. Likelihood is <span style="color:blue;">*not*</span> a probability distribution. If you fix your data and add up the likelihood of all possible $\theta$ they will not add up to 1.
+
+Likelihood is <span style="color:blue;">*not*</span> the probability that a parameter is true. It is a way to compare how well candidate parameter values account for the observed data under the assumed model. $L(\theta =0.5 \mid \text{data}) = 0.12$ <span style="color:blue;">*does not mean*</span> that there is a $12\%$ chance that $\theta =0.5$. Instead, it means that the probability of <span style="color:blue;">*generating*</span> your specific dataset given $\theta =0.5$ is $12\%$.
+
+:::
 
 ---
 
 ### Coin Flip Example: Estimating a Probability
 
-Suppose we observe **7 heads and 3 tails** from 10 independent coin flips. If $p$ denotes the probability of heads, the likelihood of the observed sequence is
+Suppose we observe **7 heads and 3 tails** from 10 independent coin flips. If $p$ denotes the probability of heads, the likelihood of this event is
 
-$$L(p)=p^7(1-p)^3.$$
+$$L(p \mid \text{data})= \binom{10}{7}p^7(1-p)^3.$$
 
-Here the data (7 heads, 3 tails) are fixed, and $p$ is the quantity we vary to find where the likelihood is maximized.
+Here the data (<span style="color:#1565C0;">7 heads, 3 tails in some random order</span>) are fixed, and $p$ is the quantity we vary to find where the likelihood is maximized.
 
 $$\boxed{\hat p=\frac{7}{10}=0.7.}$$
 
@@ -650,7 +666,7 @@ MLE therefore gives us a bridge from linear regression to other response distrib
 
 ### Likelihood for Logistic Regression
 
-For observation $i$,
+For observation $i$, the Bernoulli distribution tells us:
 
 $$
 P(Y_i=y_i\mid X_i)

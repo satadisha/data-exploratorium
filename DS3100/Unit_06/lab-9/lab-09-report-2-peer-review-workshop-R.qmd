@@ -1,0 +1,296 @@
+---
+title: "Lab 9: Report 2 Peer Review Workshop"
+author: "FIRSTNAME LASTNAME"
+date: today
+format: html
+execute:
+  echo: true
+  warning: false
+  error: false
+---
+
+<!--
+
+Rename this file Lab-9_FIRSTNAME_LASTNAME.Rmd and put your name in the
+header above, keeping the quotation marks. Save it in a folder for
+Lab 9. The sheet needs no data file unless you add code or a figure
+that reads one. Submit the Rmd and its knitted PDF to Brightspace
+before you leave, with any files you added.
+
+Please have your Report 2 draft (or the work from Labs 6 to 8), its
+Rmd, its data and its PDF if it knits, and the Analysis Report 2
+brief open.
+
+The syllabus does not allow generative AI for peer review. Please
+read the drafts and write the feedback yourself. Its existing policy
+for work on your own report, including disclosure, still applies.
+
+If you miss your section, contact your TA promptly to arrange an
+exchange with a classmate. Complete all three parts within one week
+of your original lab time for the three progress points. Record the
+actual feedback exchanged. The Report 2 deadline stays 2026-11-16.
+For a TA-arranged pair, complete one peer-review block and all the
+other parts of the sheet, and note the arrangement under Group members.
+
+-->
+
+# Part 1: A look back, and a practice review
+
+Please discuss the first two questions with your group, then record
+your own responses. Share only what you are comfortable discussing.
+You do not need to name the people involved.
+
+**Your lab section and the date of the review:** *Your answer here.*
+
+**Group members:** *First names or initials are enough.*
+
+**A comment on your Report 1 that you acted on (in Lab 5, or with the
+marked report), and what you changed. If you decided against one, say
+which, and your reason looking back:**
+
+*Your answer here.*
+
+**How would you prefer this group to give you feedback?**
+
+*Your answer here.*
+
+## The practice passage
+
+Please read the invented passage in the handout on your own and write
+your comments on it. Then compare them with your group.
+
+**Star 1 (what works and why):** *Your answer here.*
+
+**Star 2 (what works and why):** *Your answer here.*
+
+**Wish (where, what could change, and why it would help):**
+
+*Your answer here.*
+
+**Did your group choose the same wish? Which change would you make
+first, and why?**
+
+*Your answer here.*
+
+# Part 2: Reviewing the drafts
+
+Please divide the review hour equally: 20 minutes each for three
+people, 15 for four, or 12 for five. Use the questions in the
+handout's "What to look for" section to guide the comments. You are
+not assigning grades. Keep notes as you go, and share your comments
+with the author.
+
+## Your draft
+
+Please fill this in before your turn so your group can see what you
+are working on. Where the draft has not reached a step, please say so.
+
+**Dataset, and what one row represents:** *Your answer here.*
+
+**The outcome, in its units:** *Your answer here.*
+
+**The predictor of interest, in its units, and the predictors held
+fixed:** *Your answer here.*
+
+**Research question:** *Your question here.*
+
+**Hypotheses:** $H_0$: *...* $H_A$: *...*
+
+**What the checks found, and what you changed in Section 8:**
+
+*Your answer here.*
+
+**The answer so far: what your final model says about the predictor
+of interest, in its units, with what is held fixed:**
+
+*Your answer here.*
+
+**One concern you would like your group to help with:**
+
+*Your answer here.*
+
+## Feedback you gave: first classmate
+
+Please refer to a section in each comment and explain why it works or
+how it could be improved. The handout's "What to look for" section has
+the review questions.
+
+**Author (first name or initials) and topic:** *Your answer here.*
+
+**Research question as you understood it:** *Your answer here.*
+
+**What you saw (which sections were available):**
+
+*Your answer here.*
+
+**The predictor of interest's sentence, said back as a comparison of
+two observations (or what was missing when you tried):**
+
+*Your answer here.*
+
+**The predictor of interest's coefficient in the Discussion and in
+the final model's table: the same number, from the same model?**
+
+*Your answer here.*
+
+**Star 1 (what works and why):** *Your answer here.*
+
+**Star 2 (what works and why):** *Your answer here.*
+
+**Wish (where, what could change, and why it would help):**
+
+*Your answer here.*
+
+**A variable not in the model: what it is, why it might be related to
+both the predictor of interest and the outcome, whether the
+coefficient would be larger or smaller with it held fixed, and whether
+it is in the data:**
+
+*Your answer here.*
+
+## Feedback you gave: second classmate
+
+Please record your comments on the next draft. Copy this whole
+section for each additional classmate in a group of four or five.
+
+**Author (first name or initials) and topic:** *Your answer here.*
+
+**Research question as you understood it:** *Your answer here.*
+
+**What you saw (which sections were available):**
+
+*Your answer here.*
+
+**The predictor of interest's sentence, said back as a comparison of
+two observations (or what was missing when you tried):**
+
+*Your answer here.*
+
+**The predictor of interest's coefficient in the Discussion and in
+the final model's table: the same number, from the same model?**
+
+*Your answer here.*
+
+**Star 1 (what works and why):** *Your answer here.*
+
+**Star 2 (what works and why):** *Your answer here.*
+
+**Wish (where, what could change, and why it would help):**
+
+*Your answer here.*
+
+**A variable not in the model: what it is, why it might be related to
+both the predictor of interest and the outcome, whether the
+coefficient would be larger or smaller with it held fixed, and whether
+it is in the data:**
+
+*Your answer here.*
+
+## Feedback you received
+
+Please record the comments on your own draft, with the section each
+refers to. Add rows if you need them. If you disagree with a
+suggestion, record it here and explain your decision in Part 3.
+
+| From | Section | What works, and why |
+|:-----|:--------|:--------------------|
+| ... | ... | ... |
+| ... | ... | ... |
+
+| From | Section | Suggested change, and why |
+|:-----|:--------|:-------------------------|
+| ... | ... | ... |
+| ... | ... | ... |
+
+**How the group said your sentence back, and whether that was what
+you meant:**
+
+*Your answer here.*
+
+**The variable not in the model that the group named, and what you
+will do with it (a sensitivity comparison, a limitation in the
+Discussion, or nothing, with your reason):**
+
+*Your answer here.*
+
+**A question you asked to clarify the feedback, and the answer (or
+say that nothing needed clarification):**
+
+*Your answer here.*
+
+# Part 3: Reflection and revision
+
+Please spend fifteen minutes on your own reflection and plan, then
+five minutes discussing the feedback process with your group. Use
+the next ten minutes to begin a revision and the last five to knit,
+show your TA your progress, and submit.
+
+## What you took from the feedback
+
+**Which one or two comments most changed how you see your draft, and
+why?**
+
+*Your answer here.*
+
+## Your revision plan
+
+Please list two or three specific changes in the order you intend to
+make them. Say how you will check each one, such as asking someone to
+say the revised sentence back without your explanation.
+
+| Priority | Section | Specific change | How you will check it |
+|:---------|:--------|:----------------|:----------------------|
+| 1 | ... | ... | ... |
+| 2 | ... | ... | ... |
+| 3 (if needed) | ... | ... | ... |
+
+**A suggestion you decided against, and why (or say you plan to try
+all the suggestions):**
+
+*Your answer here.*
+
+## What you learned from another draft
+
+What did someone else's approach help you notice about your own
+report? Please name the feature and how you could use that idea.
+
+*Your answer here.*
+
+## How the feedback was given
+
+Please discuss these questions with your group, then record your own
+responses. It is fine to say that one did not arise in your group.
+
+**Did giving feedback reveal something to change in your own report?**
+
+*Your answer here.*
+
+**Did someone's way of phrasing feedback help you understand it?**
+
+*Your answer here.*
+
+**Was a comment on the statistics harder to give than a comment on the
+writing? If it was, what helped?**
+
+*Your answer here.*
+
+## The first revision
+
+Please start the change in your report, then record it here. If it
+is not finished, say what you tried and what remains to do.
+
+**What you changed and where:** *Your answer here.*
+
+**How you checked it and what you found:** *Your answer here.*
+
+**What remains before the Report 2 deadline (2026-11-16, 11:59 pm):**
+
+*Your answer here.*
+
+# Generative AI disclosure
+
+The feedback above must be your own. Please disclose any generative
+AI used for other work on this lab, identifying the tool and purpose,
+or write "none". Keep your report's disclosure up to date separately.
+
+*Your answer here.*
