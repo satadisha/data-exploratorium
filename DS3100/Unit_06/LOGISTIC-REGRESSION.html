@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Dr.&nbsp;Satadisha Saha Bhowmick">
-  <meta name="dcterms.date" content="2026-11-09">
+  <meta name="dcterms.date" content="2026-11-11">
   <title>DS 3100 | Logistic Regression</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -210,7 +210,7 @@ Dr.&nbsp;Satadisha Saha Bhowmick
 </div>
 </div>
 
-  <p class="date">2026-11-09</p>
+  <p class="date">2026-11-11</p>
 </section>
 <section class="slide level2">
 
@@ -669,7 +669,8 @@ Var(Y_i\mid X_i)=\pi_i(1-\pi_i).
 \]</span></p>
 <p>For a one-unit increase in <span class="math inline">\(X\)</span>, the ratio of the odds becomes</p>
 <p><span class="math display">\[
-\frac{\omega_{X+1}}{\omega_X}
+\frac{\omega_\text{after}}{\omega_\text{before}}
+=\frac{\omega_{X+1}}{\omega_X}
 =\frac{e^{\beta_0+\beta_1(X+1)}}{e^{\beta_0+\beta_1X}}
 =\boxed{e^{\beta_1}}
 \]</span></p>
@@ -753,8 +754,8 @@ OR=\frac{\text{Odds at }X=A}{\text{Odds at }X=B}
 </div>
 <div class="callout-content">
 <p>The relationship between your data and your parameters (<span class="math inline">\(\theta\)</span>) is captured by the exact same mathematical function, but its <span style="color:blue;"><em>meaning</em></span> changes depending on what we vary – the data, or the parameters.</p>
-<p><span class="math inline">\(P(data \mid \theta)\)</span> is a valid probability distribution that integrates to <span class="math inline">\(1\)</span> because for a fixed parameter set, the probabilities of all possible data outcomes must total <span class="math inline">\(100\%\)</span>. Likelihood is <span style="color:blue;"><em>not</em></span> a probability distribution. If you fix your data and add up the likelihood of all possible <span class="math inline">\(\theta\)</span> they will not add up to 1.</p>
-<p>Likelihood is <span style="color:blue;"><em>not</em></span> the probability that a parameter is true. It is a way to compare how well candidate parameter values account for the observed data under the assumed model. <span class="math inline">\(L(\theta =0.5 \mid \text{data}) = 0.12\)</span> <span style="color:blue;"><em>does not mean</em></span> that there is a <span class="math inline">\(12\%\)</span> chance that <span class="math inline">\(\theta =0.5\)</span>. Instead, it means that the probability of <span style="color:blue;"><em>generating</em></span> your specific dataset given <span class="math inline">\(\theta =0.5\)</span> is <span class="math inline">\(12\%\)</span>.</p>
+<p><span class="math inline">\(P(data \mid \theta)\)</span> is a valid probability distribution over the data. It integrates to <span class="math inline">\(1\)</span> because for a fixed parameter set, the probabilities of all possible data outcomes must total <span class="math inline">\(100\%\)</span>. Likelihood is <span style="color:blue;"><em>not</em></span> a probability distribution over the parameters. If you fix your data and add up the likelihood of all possible <span class="math inline">\(\theta\)</span> they will not add up to 1.</p>
+<p>Individual likelihood is <span style="color:blue;"><em>not</em></span> the probability that a parameter is true. It is a way to compare how well candidate parameter values account for the observed data under the assumed model. <span class="math inline">\(L(\theta =0.5 \mid \text{data}) = 0.12\)</span> <span style="color:blue;"><em>does not mean</em></span> that there is a <span class="math inline">\(12\%\)</span> chance that <span class="math inline">\(\theta =0.5\)</span>. Instead, it means that the probability of <span style="color:blue;"><em>generating</em></span> your specific dataset given <span class="math inline">\(\theta =0.5\)</span> is <span class="math inline">\(12\%\)</span>.</p>
 </div>
 </div>
 </div>
@@ -762,39 +763,64 @@ OR=\frac{\text{Odds at }X=A}{\text{Odds at }X=B}
 <section class="slide level2">
 
 <h3 id="coin-flip-example-estimating-a-probability">Coin Flip Example: Estimating a Probability</h3>
-<p>Suppose we observe <strong>7 heads and 3 tails</strong> from 10 independent coin flips. If <span class="math inline">\(p\)</span> denotes the probability of heads, the likelihood of this event is</p>
-<p><span class="math display">\[L(p \mid \text{data})= \binom{10}{7}p^7(1-p)^3.\]</span></p>
-<p>Here the data (<span style="color:#1565C0;">7 heads, 3 tails in some random order</span>) are fixed, and <span class="math inline">\(p\)</span> is the quantity we vary to find where the likelihood is maximized.</p>
-<p><span class="math display">\[\boxed{\hat p=\frac{7}{10}=0.7.}\]</span></p>
-<p>In logistic regression, we use the same principle, but each observation has a probability <span class="math inline">\(\pi_i\)</span> determined by its predictors and the regression coefficients.</p>
+<p>Suppose we observe <strong>7 heads and 3 tails</strong> from 10 independent coin flips. This system has a single parameter, <span class="math inline">\(p\)</span>, which denotes the probability of head from a single flip.<br> The likelihood of this observed outcome is <span class="math display">\[L(p \mid \text{data})= \binom{10}{7}p^7(1-p)^3\]</span></p>
+<p>Here the data (<span style="color:#1565C0;">7 heads, 3 tails in some random order</span>) are fixed, and <span class="math inline">\(p\)</span> is the <span style="color:#1565C0;"><strong>parameter</strong></span> we vary to find where the likelihood is maximized. The right-hand side in this case comes from the <em>binomial distribution</em> and would remain unchanged even if we were interested in the conditional probability of the data given the parameter.<br> <span style="color:blue;">Remember</span> that likelihood and conditional probability have the same mathematical form, but the perspective is reversed.</p>
+<p>It turns out that the maximum likelihood estimate for <span class="math inline">\(p\)</span> in this case is simply the proportion of heads observed: <span class="math display">\[\boxed{\hat p=\frac{7}{10}=0.7}\]</span></p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>A note on the parameter <span class="math inline">\(p\)</span></strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li>The parameter <span class="math inline">\(p\)</span> is a fixed but unknown quantity. Even though it individually represents a probability, it is not a random variable, and it does not have a probability distribution. (<span style="color:#1565C0;"><em>Well actually, in some statistical frameworks it is, but we will not get into those weird, albeit important, philosophical debates here.</em></span>)</li>
+<li>In logistic regression, we use the same principle, but each observation has a probability <span class="math inline">\(\pi_i\)</span> determined by its predictors and the regression coefficients.</li>
+</ul>
+</div>
+</div>
+</div>
 </section>
 <section class="slide level2">
 
 <h3 id="connection-back-to-ols">Connection Back to OLS</h3>
-<p>Suppose linear regression errors are Normal:</p>
+<p>When linear regression errors are normal:</p>
 <p><span class="math display">\[
 Y_i=X_i\beta+\epsilon_i,
 \qquad
 \epsilon_i\sim N(0,\sigma^2).
 \]</span></p>
 <p>Under this model, maximizing the likelihood with respect to <span class="math inline">\(\beta\)</span> is equivalent to minimizing the residual sum of squares.</p>
-<p>So OLS is not disconnected from MLE:</p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>OLS is not disconnected from MLE:</strong></p>
+</div>
+<div class="callout-content">
 <p><span class="math display">\[
 \boxed{\text{OLS is the MLE for }\beta\text{ under the usual Normal-error model.}}
 \]</span></p>
 <p>MLE therefore gives us a bridge from linear regression to other response distributions.</p>
+</div>
+</div>
+</div>
 </section>
 <section class="slide level2">
 
 <h3 id="likelihood-for-logistic-regression">Likelihood for Logistic Regression</h3>
-<p>For observation <span class="math inline">\(i\)</span>, the Bernoulli distribution tells us:</p>
-<p><span class="math display">\[
+<p>For observation <span class="math inline">\(i\)</span>, the Bernoulli distribution tells us: <span class="math display">\[
 P(Y_i=y_i\mid X_i)
 =
-\pi_i^{y_i}(1-\pi_i)^{1-y_i}.
+\pi_i^{y_i}(1-\pi_i)^{1-y_i}; \text{ where } y_i\in\{0,1\}
+\]</span> <span style="color:blue;">Remember</span> that <span class="math inline">\(\pi_i\)</span> is the probability of success for observation <span class="math inline">\(i\)</span>, which depends on its predictors and the regression coefficients. <span class="math display">\[
+\pi_i=\frac{1}{1+e^{-X_i\beta}}
 \]</span></p>
-<p>Assuming independent observations, the likelihood is</p>
-<p><span class="math display">\[
+<p>Assuming independent observations, the likelihood is <span class="math display">\[
 \boxed{
 L(\beta)
 =
@@ -802,10 +828,19 @@ L(\beta)
 \pi_i^{y_i}(1-\pi_i)^{1-y_i}
 }
 \]</span></p>
-<p>with</p>
-<p><span class="math display">\[
-\pi_i=\frac{1}{1+e^{-X_i\beta}}.
-\]</span></p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>A note on the notation</strong></p>
+</div>
+<div class="callout-content">
+<p><span class="math inline">\(\prod_{i=1}^{n}\)</span> means “multiply together the terms for observations <span class="math inline">\(i=1,2,\ldots,n\)</span>.” It is the product analog of <span class="math inline">\(\sum_{i=1}^{n}\)</span>, which means “add together the terms for <span class="math inline">\(i=1,2,\ldots,n\)</span>.”</p>
+</div>
+</div>
+</div>
 </section>
 <section class="slide level2">
 
@@ -819,11 +854,20 @@ L(\beta)
 y_i\log(\pi_i)+(1-y_i)\log(1-\pi_i)
 \right].
 \]</span></p>
-<p>Maximizing <span class="math inline">\(\ell(\beta)\)</span> is equivalent to minimizing the <strong>negative log-likelihood</strong>:</p>
-<p><span class="math display">\[
--\ell(\beta).
-\]</span></p>
-<p>There is generally no simple closed-form solution for <span class="math inline">\(\hat\beta\)</span>, so software uses numerical optimization.</p>
+<p>Maximizing <span class="math inline">\(\ell(\beta)\)</span> is equivalent to minimizing the <strong>negative log-likelihood</strong>: <span class="math inline">\(-\ell(\beta).\)</span></p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>How to solve for <span class="math inline">\(\hat\beta\)</span>?</strong></p>
+</div>
+<div class="callout-content">
+<p>Unlike the OLS case, there is generally no simple closed-form solution for <span class="math inline">\(\hat\beta\)</span> here. So most softwares use numerical optimization like Gradient Descent or Newton-Raphson (You will learn more about these methods in a future course 🫠).</p>
+</div>
+</div>
+</div>
 </section>
 <section class="slide level2">
 
@@ -831,7 +875,7 @@ y_i\log(\pi_i)+(1-y_i)\log(1-\pi_i)
 <p>We will model a binary outcome, <code>admitted</code>, using:</p>
 <ul>
 <li><code>hours</code>: hours spent preparing;</li>
-<li><code>prior_score</code>: a prior assessment score.</li>
+<li><code>injury_risk_factor</code>: an injury assessment score.</li>
 </ul>
 <p>This is a small teaching dataset created to illustrate the mechanics of fitting and interpreting a logistic regression model.</p>
 <div class="columns">
@@ -840,13 +884,13 @@ y_i\log(\pi_i)+(1-y_i)\log(1-\pi_i)
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="" aria-label="1"></a><span class="fu">head</span>(admit_data, <span class="dv">6</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  hours prior_score admitted
-1     8          86        1
-2    10          91        1
-3     6          59        0
-4     4          90        0
-5     3          80        0
-6     7          89        0</code></pre>
+<pre><code>  hours injury_risk_factor admitted
+1     8                 86        1
+2    10                 91        1
+3     6                 59        0
+4     4                 90        0
+5     3                 80        0
+6     7                 89        0</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="" aria-label="1"></a><span class="fu">table</span>(admit_data<span class="sc">$</span>admitted)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -860,13 +904,13 @@ y_i\log(\pi_i)+(1-y_i)\log(1-\pi_i)
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-label="1"></a><span class="bu">print</span>(admit_data.head(<span class="dv">6</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   hours  prior_score  admitted
-0      8           86         1
-1     10           91         1
-2      6           59         0
-3      4           90         0
-4      3           80         0
-5      7           89         0</code></pre>
+<pre><code>   hours  injury_risk_factor  admitted
+0      8                  86         1
+1     10                  91         1
+2      6                  59         0
+3      4                  90         0
+4      3                  80         0
+5      7                  89         0</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a><span class="bu">print</span>(admit_data[<span class="st">"admitted"</span>].value_counts().sort_index())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -927,14 +971,14 @@ Name: count, dtype: int64</code></pre>
 <p><span class="math display">\[
 \operatorname{logit}\{P(Y=1\mid X)\}
 =
-\beta_0+\beta_1(\text{hours})+\beta_2(\text{prior score}).
+\beta_0+\beta_1(\text{hours})+\beta_2(\text{injury\_risk\_factor}).
 \]</span></p>
 <div class="columns">
 <div class="column" style="width:50%;">
 <h4 id="r-3">R</h4>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="" aria-label="1"></a>logit_r <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
-<span id="cb15-2"><a href="" aria-label="2"></a>  admitted <span class="sc">~</span> hours <span class="sc">+</span> prior_score,</span>
+<span id="cb15-2"><a href="" aria-label="2"></a>  admitted <span class="sc">~</span> hours <span class="sc">+</span> injury_risk_factor,</span>
 <span id="cb15-3"><a href="" aria-label="3"></a>  <span class="at">data =</span> admit_data,</span>
 <span id="cb15-4"><a href="" aria-label="4"></a>  <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"logit"</span>)</span>
 <span id="cb15-5"><a href="" aria-label="5"></a>)</span>
@@ -943,14 +987,14 @@ Name: count, dtype: int64</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
-glm(formula = admitted ~ hours + prior_score, family = binomial(link = "logit"), 
+glm(formula = admitted ~ hours + injury_risk_factor, family = binomial(link = "logit"), 
     data = admit_data)
 
 Coefficients:
-             Estimate Std. Error z value Pr(&gt;|z|)    
-(Intercept) -10.37291    3.16257  -3.280 0.001038 ** 
-hours         0.52137    0.15610   3.340 0.000838 ***
-prior_score   0.08955    0.03393   2.639 0.008315 ** 
+                    Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)        -10.37291    3.16257  -3.280 0.001038 ** 
+hours                0.52137    0.15610   3.340 0.000838 ***
+injury_risk_factor   0.08955    0.03393   2.639 0.008315 ** 
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
@@ -967,7 +1011,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
 <h4 id="python-3">Python</h4>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="" aria-label="1"></a>logit_py <span class="op">=</span> smf.glm(</span>
-<span id="cb17-2"><a href="" aria-label="2"></a>    <span class="st">"admitted ~ hours + prior_score"</span>,</span>
+<span id="cb17-2"><a href="" aria-label="2"></a>    <span class="st">"admitted ~ hours + injury_risk_factor"</span>,</span>
 <span id="cb17-3"><a href="" aria-label="3"></a>    data<span class="op">=</span>admit_data,</span>
 <span id="cb17-4"><a href="" aria-label="4"></a>    family<span class="op">=</span>sm.families.Binomial()</span>
 <span id="cb17-5"><a href="" aria-label="5"></a>).fit()</span>
@@ -981,17 +1025,17 @@ Model:                            GLM   Df Residuals:                       47
 Model Family:                Binomial   Df Model:                            2
 Link Function:                  Logit   Scale:                          1.0000
 Method:                          IRLS   Log-Likelihood:                -22.255
-Date:                Mon, 09 Nov 2026   Deviance:                       44.510
-Time:                        22:47:18   Pearson chi2:                     41.0
+Date:                Wed, 11 Nov 2026   Deviance:                       44.510
+Time:                        22:23:17   Pearson chi2:                     41.0
 No. Iterations:                     5   Pseudo R-squ. (CS):             0.3661
 Covariance Type:            nonrobust                                         
-===============================================================================
-                  coef    std err          z      P&gt;|z|      [0.025      0.975]
--------------------------------------------------------------------------------
-Intercept     -10.3729      3.163     -3.280      0.001     -16.571      -4.174
-hours           0.5214      0.156      3.340      0.001       0.215       0.827
-prior_score     0.0896      0.034      2.639      0.008       0.023       0.156
-===============================================================================</code></pre>
+======================================================================================
+                         coef    std err          z      P&gt;|z|      [0.025      0.975]
+--------------------------------------------------------------------------------------
+Intercept            -10.3729      3.163     -3.280      0.001     -16.571      -4.174
+hours                  0.5214      0.156      3.340      0.001       0.215       0.827
+injury_risk_factor     0.0896      0.034      2.639      0.008       0.023       0.156
+======================================================================================</code></pre>
 </div>
 </div>
 </div></div>
@@ -1005,13 +1049,13 @@ prior_score     0.0896      0.034      2.639      0.008       0.023       0.156
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="" aria-label="1"></a><span class="fu">coef</span>(logit_r)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> (Intercept)        hours  prior_score 
--10.37290859   0.52136915   0.08955388 </code></pre>
+<pre><code>       (Intercept)              hours injury_risk_factor 
+      -10.37290859         0.52136915         0.08955388 </code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="" aria-label="1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(logit_r))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> (Intercept)        hours  prior_score 
-3.126821e-05 1.684332e+00 1.093686e+00 </code></pre>
+<pre><code>       (Intercept)              hours injury_risk_factor 
+      3.126821e-05       1.684332e+00       1.093686e+00 </code></pre>
 </div>
 </div>
 </div><div class="column" style="width:50%;">
@@ -1019,16 +1063,16 @@ prior_score     0.0896      0.034      2.639      0.008       0.023       0.156
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="" aria-label="1"></a><span class="bu">print</span>(logit_py.params)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Intercept     -10.372909
-hours           0.521369
-prior_score     0.089554
+<pre><code>Intercept            -10.372909
+hours                  0.521369
+injury_risk_factor     0.089554
 dtype: float64</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="" aria-label="1"></a><span class="bu">print</span>(np.exp(logit_py.params))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Intercept      0.000031
-hours          1.684332
-prior_score    1.093686
+<pre><code>Intercept             0.000031
+hours                 1.684332
+injury_risk_factor    1.093686
 dtype: float64</code></pre>
 </div>
 </div>
@@ -1052,10 +1096,10 @@ dtype: float64</code></pre>
 <span id="cb27-3"><a href="" aria-label="3"></a></span>
 <span id="cb27-4"><a href="" aria-label="4"></a><span class="fu">cbind</span>(<span class="at">OR =</span> OR_r, OR_CI_r)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                      OR        2.5 %     97.5 %
-(Intercept) 3.126821e-05 6.355097e-08 0.01538452
-hours       1.684332e+00 1.240393e+00 2.28715772
-prior_score 1.093686e+00 1.023310e+00 1.16890202</code></pre>
+<pre><code>                             OR        2.5 %     97.5 %
+(Intercept)        3.126821e-05 6.355097e-08 0.01538452
+hours              1.684332e+00 1.240393e+00 2.28715772
+injury_risk_factor 1.093686e+00 1.023310e+00 1.16890202</code></pre>
 </div>
 </div>
 </div><div class="column" style="width:50%;">
@@ -1069,10 +1113,10 @@ prior_score 1.093686e+00 1.023310e+00 1.16890202</code></pre>
 <span id="cb29-6"><a href="" aria-label="6"></a>    axis<span class="op">=</span><span class="dv">1</span></span>
 <span id="cb29-7"><a href="" aria-label="7"></a>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                   OR             0         1
-Intercept    0.000031  6.355097e-08  0.015385
-hours        1.684332  1.240393e+00  2.287158
-prior_score  1.093686  1.023310e+00  1.168902</code></pre>
+<pre><code>                          OR             0         1
+Intercept           0.000031  6.355097e-08  0.015385
+hours               1.684332  1.240393e+00  2.287158
+injury_risk_factor  1.093686  1.023310e+00  1.168902</code></pre>
 </div>
 </div>
 </div></div>
@@ -1094,15 +1138,15 @@ prior_score  1.093686  1.023310e+00  1.168902</code></pre>
 <span id="cb31-3"><a href="" aria-label="3"></a>  <span class="at">type =</span> <span class="st">"response"</span></span>
 <span id="cb31-4"><a href="" aria-label="4"></a>)</span>
 <span id="cb31-5"><a href="" aria-label="5"></a></span>
-<span id="cb31-6"><a href="" aria-label="6"></a><span class="fu">head</span>(admit_data[<span class="fu">c</span>(<span class="st">"hours"</span>, <span class="st">"prior_score"</span>, <span class="st">"prob_r"</span>)])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb31-6"><a href="" aria-label="6"></a><span class="fu">head</span>(admit_data[<span class="fu">c</span>(<span class="st">"hours"</span>, <span class="st">"injury_risk_factor"</span>, <span class="st">"prob_r"</span>)])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  hours prior_score    prob_r
-1     8          86 0.8175264
-2    10          91 0.9521288
-3     6          59 0.1233572
-4     4          90 0.4433485
-5     3          80 0.1618549
-6     7          89 0.7767750</code></pre>
+<pre><code>  hours injury_risk_factor    prob_r
+1     8                 86 0.8175264
+2    10                 91 0.9521288
+3     6                 59 0.1233572
+4     4                 90 0.4433485
+5     3                 80 0.1618549
+6     7                 89 0.7767750</code></pre>
 </div>
 </div>
 </div><div class="column" style="width:50%;">
@@ -1111,15 +1155,15 @@ prior_score  1.093686  1.023310e+00  1.168902</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="" aria-label="1"></a>admit_data[<span class="st">"prob_py"</span>] <span class="op">=</span> logit_py.predict(admit_data)</span>
 <span id="cb33-2"><a href="" aria-label="2"></a></span>
 <span id="cb33-3"><a href="" aria-label="3"></a><span class="bu">print</span>(admit_data[[</span>
-<span id="cb33-4"><a href="" aria-label="4"></a>    <span class="st">"hours"</span>, <span class="st">"prior_score"</span>, <span class="st">"prob_py"</span></span>
+<span id="cb33-4"><a href="" aria-label="4"></a>    <span class="st">"hours"</span>, <span class="st">"injury_risk_factor"</span>, <span class="st">"prob_py"</span></span>
 <span id="cb33-5"><a href="" aria-label="5"></a>]].head())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   hours  prior_score   prob_py
-0      8           86  0.817526
-1     10           91  0.952129
-2      6           59  0.123357
-3      4           90  0.443349
-4      3           80  0.161855</code></pre>
+<pre><code>   hours  injury_risk_factor   prob_py
+0      8                  86  0.817526
+1     10                  91  0.952129
+2      6                  59  0.123357
+3      4                  90  0.443349
+4      3                  80  0.161855</code></pre>
 </div>
 </div>
 </div></div>
@@ -1127,14 +1171,14 @@ prior_score  1.093686  1.023310e+00  1.168902</code></pre>
 <section class="slide level2">
 
 <h3 id="predicting-for-new-predictor-values">Predicting for New Predictor Values</h3>
-<p>Suppose we want the estimated probability for a case with 7 preparation hours and a prior score of 80.</p>
+<p>Suppose we want the estimated probability for a case with 7 preparation hours and an injury risk factor of 80.</p>
 <div class="columns">
 <div class="column" style="width:50%;">
 <h4 id="r-7">R</h4>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="" aria-label="1"></a>new_case_r <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
 <span id="cb35-2"><a href="" aria-label="2"></a>  <span class="at">hours =</span> <span class="dv">7</span>,</span>
-<span id="cb35-3"><a href="" aria-label="3"></a>  <span class="at">prior_score =</span> <span class="dv">80</span></span>
+<span id="cb35-3"><a href="" aria-label="3"></a>  <span class="at">injury_risk_factor =</span> <span class="dv">80</span></span>
 <span id="cb35-4"><a href="" aria-label="4"></a>)</span>
 <span id="cb35-5"><a href="" aria-label="5"></a></span>
 <span id="cb35-6"><a href="" aria-label="6"></a><span class="fu">predict</span>(logit_r, <span class="at">newdata =</span> new_case_r,</span>
@@ -1149,7 +1193,7 @@ prior_score  1.093686  1.023310e+00  1.168902</code></pre>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="" aria-label="1"></a>new_case_py <span class="op">=</span> pd.DataFrame({</span>
 <span id="cb37-2"><a href="" aria-label="2"></a>    <span class="st">"hours"</span>: [<span class="dv">7</span>],</span>
-<span id="cb37-3"><a href="" aria-label="3"></a>    <span class="st">"prior_score"</span>: [<span class="dv">80</span>]</span>
+<span id="cb37-3"><a href="" aria-label="3"></a>    <span class="st">"injury_risk_factor"</span>: [<span class="dv">80</span>]</span>
 <span id="cb37-4"><a href="" aria-label="4"></a>})</span>
 <span id="cb37-5"><a href="" aria-label="5"></a></span>
 <span id="cb37-6"><a href="" aria-label="6"></a><span class="bu">print</span>(logit_py.predict(new_case_py))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1164,58 +1208,117 @@ dtype: float64</code></pre>
 <section class="slide level2">
 
 <h3 id="a-probability-scale-effect">A Probability-Scale Effect</h3>
-<p>To see how the probability changes when <code>hours</code> increases from 7 to 8 while <code>prior_score = 80</code>:</p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Different from an Odds-Scale Effect</strong></p>
+</div>
+<div class="callout-content">
+<p>Recall that a one-unit increase in <code>hours</code> multiplies the odds of the outcome by <span class="math inline">\(e^{\beta_{\text{hours}}}\)</span>, holding other predictors constant. But this does not imply the same change in probability. Let’s compare three scenarios, keeping <code>injury_risk_factor = 80</code> fixed.</p>
+</div>
+</div>
+</div>
 <div class="columns">
 <div class="column" style="width:50%;">
 <h4 id="r-8">R</h4>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="" aria-label="1"></a>compare_r <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb39-2"><a href="" aria-label="2"></a>  <span class="at">hours =</span> <span class="fu">c</span>(<span class="dv">7</span>, <span class="dv">8</span>),</span>
-<span id="cb39-3"><a href="" aria-label="3"></a>  <span class="at">prior_score =</span> <span class="fu">c</span>(<span class="dv">80</span>, <span class="dv">80</span>)</span>
+<span id="cb39-2"><a href="" aria-label="2"></a>  <span class="at">hours =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>),</span>
+<span id="cb39-3"><a href="" aria-label="3"></a>  <span class="at">injury_risk_factor =</span> <span class="dv">80</span></span>
 <span id="cb39-4"><a href="" aria-label="4"></a>)</span>
 <span id="cb39-5"><a href="" aria-label="5"></a></span>
-<span id="cb39-6"><a href="" aria-label="6"></a>p_r <span class="ot">&lt;-</span> <span class="fu">predict</span>(logit_r, compare_r,</span>
-<span id="cb39-7"><a href="" aria-label="7"></a>               <span class="at">type =</span> <span class="st">"response"</span>)</span>
-<span id="cb39-8"><a href="" aria-label="8"></a>p_r</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>        1         2 
-0.6084938 0.7235930 </code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="" aria-label="1"></a>p_r[<span class="dv">2</span>] <span class="sc">-</span> p_r[<span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>        2 
-0.1150992 </code></pre>
+<span id="cb39-6"><a href="" aria-label="6"></a>p_r <span class="ot">&lt;-</span> <span class="fu">predict</span>(logit_r, compare_r, <span class="at">type =</span> <span class="st">"response"</span>)</span>
+<span id="cb39-7"><a href="" aria-label="7"></a></span>
+<span id="cb39-8"><a href="" aria-label="8"></a>odds_ratio_r <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="fu">coef</span>(logit_r)[<span class="st">"hours"</span>])</span>
+<span id="cb39-9"><a href="" aria-label="9"></a></span>
+<span id="cb39-10"><a href="" aria-label="10"></a>results_r <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb39-11"><a href="" aria-label="11"></a>  <span class="at">Hours =</span> <span class="fu">c</span>(<span class="st">"3 to 4"</span>, <span class="st">"5 to 6"</span>, <span class="st">"7 to 8"</span>),</span>
+<span id="cb39-12"><a href="" aria-label="12"></a>  <span class="at">Initial_Prob =</span> p_r[<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>)],</span>
+<span id="cb39-13"><a href="" aria-label="13"></a>  <span class="at">New_Prob =</span> p_r[<span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>)],</span>
+<span id="cb39-14"><a href="" aria-label="14"></a>  <span class="at">Change =</span> p_r[<span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>)] <span class="sc">-</span> p_r[<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>)],</span>
+<span id="cb39-15"><a href="" aria-label="15"></a>  <span class="at">Odds_Ratio =</span> <span class="fu">rep</span>(odds_ratio_r, <span class="dv">3</span>)</span>
+<span id="cb39-16"><a href="" aria-label="16"></a>)</span>
+<span id="cb39-17"><a href="" aria-label="17"></a></span>
+<span id="cb39-18"><a href="" aria-label="18"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(results_r, <span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">Hours</th>
+<th style="text-align: right;">Initial_Prob</th>
+<th style="text-align: right;">New_Prob</th>
+<th style="text-align: right;">Change</th>
+<th style="text-align: right;">Odds_Ratio</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">3 to 4</td>
+<td style="text-align: right;">0.162</td>
+<td style="text-align: right;">0.245</td>
+<td style="text-align: right;">0.084</td>
+<td style="text-align: right;">1.684</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">5 to 6</td>
+<td style="text-align: right;">0.354</td>
+<td style="text-align: right;">0.480</td>
+<td style="text-align: right;">0.126</td>
+<td style="text-align: right;">1.684</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">7 to 8</td>
+<td style="text-align: right;">0.608</td>
+<td style="text-align: right;">0.724</td>
+<td style="text-align: right;">0.115</td>
+<td style="text-align: right;">1.684</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div><div class="column" style="width:50%;">
 <h4 id="python-8">Python</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="" aria-label="1"></a>compare_py <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb43-2"><a href="" aria-label="2"></a>    <span class="st">"hours"</span>: [<span class="dv">7</span>, <span class="dv">8</span>],</span>
-<span id="cb43-3"><a href="" aria-label="3"></a>    <span class="st">"prior_score"</span>: [<span class="dv">80</span>, <span class="dv">80</span>]</span>
-<span id="cb43-4"><a href="" aria-label="4"></a>})</span>
-<span id="cb43-5"><a href="" aria-label="5"></a></span>
-<span id="cb43-6"><a href="" aria-label="6"></a>p_py <span class="op">=</span> logit_py.predict(compare_py)</span>
-<span id="cb43-7"><a href="" aria-label="7"></a><span class="bu">print</span>(p_py)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="" aria-label="1"></a>compare_py <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb40-2"><a href="" aria-label="2"></a>    <span class="st">"hours"</span>: [<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>],</span>
+<span id="cb40-3"><a href="" aria-label="3"></a>    <span class="st">"injury_risk_factor"</span>: <span class="dv">80</span></span>
+<span id="cb40-4"><a href="" aria-label="4"></a>})</span>
+<span id="cb40-5"><a href="" aria-label="5"></a></span>
+<span id="cb40-6"><a href="" aria-label="6"></a>p_py <span class="op">=</span> logit_py.predict(compare_py).to_numpy()</span>
+<span id="cb40-7"><a href="" aria-label="7"></a>odds_ratio_py <span class="op">=</span> np.exp(logit_py.params[<span class="st">"hours"</span>])</span>
+<span id="cb40-8"><a href="" aria-label="8"></a></span>
+<span id="cb40-9"><a href="" aria-label="9"></a>results_py <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb40-10"><a href="" aria-label="10"></a>    <span class="st">"Hours"</span>: [<span class="st">"3 to 4"</span>, <span class="st">"5 to 6"</span>, <span class="st">"7 to 8"</span>],</span>
+<span id="cb40-11"><a href="" aria-label="11"></a>    <span class="st">"Initial Prob"</span>: p_py[[<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">4</span>]],</span>
+<span id="cb40-12"><a href="" aria-label="12"></a>    <span class="st">"New Prob"</span>: p_py[[<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>]],</span>
+<span id="cb40-13"><a href="" aria-label="13"></a>    <span class="st">"Change"</span>: p_py[[<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>]] <span class="op">-</span></span>
+<span id="cb40-14"><a href="" aria-label="14"></a>              p_py[[<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">4</span>]],</span>
+<span id="cb40-15"><a href="" aria-label="15"></a>    <span class="st">"Odds Ratio"</span>: [odds_ratio_py] <span class="op">*</span> <span class="dv">3</span></span>
+<span id="cb40-16"><a href="" aria-label="16"></a>})</span>
+<span id="cb40-17"><a href="" aria-label="17"></a></span>
+<span id="cb40-18"><a href="" aria-label="18"></a><span class="bu">print</span>(results_py.<span class="bu">round</span>(<span class="dv">3</span>).to_string(index<span class="op">=</span><span class="va">False</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>0    0.608494
-1    0.723593
-dtype: float64</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="" aria-label="1"></a><span class="bu">print</span>(p_py.iloc[<span class="dv">1</span>] <span class="op">-</span> p_py.iloc[<span class="dv">0</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>0.11509916640861084</code></pre>
+<pre><code> Hours  Initial Prob  New Prob  Change  Odds Ratio
+3 to 4         0.162     0.245   0.084       1.684
+5 to 6         0.354     0.480   0.126       1.684
+7 to 8         0.608     0.724   0.115       1.684</code></pre>
 </div>
 </div>
 </div></div>
-<p>This probability difference is local to the chosen predictor values; it is not constant everywhere.</p>
 </section>
 <section class="slide level2">
 
 <h3 id="logistic-regression-with-categorical-predictors">Logistic Regression with Categorical Predictors</h3>
-<p>As in linear regression, categorical predictors enter through indicator/dummy variables.</p>
-<p>For example,</p>
-<p><span class="math display">\[
+<p>As in linear regression, categorical predictors enter through indicator/dummy variables. Here we also do the drop-one (<em>drop-first</em>) trick to avoid perfect multicollinearity.</p>
+<p>For example, <span class="math display">\[
 \operatorname{logit}(\pi)
 =
 \beta_0+\beta_1X+\beta_2I(\text{Group}=B).
@@ -1230,7 +1333,7 @@ dtype: float64</code></pre>
 <p><strong>Note</strong></p>
 </div>
 <div class="callout-content">
-<p>The coding/reference category matters for interpretation, just as it did in multiple linear regression.</p>
+<p>The coding/reference category matters for interpretation, just as it did in multiple linear regression. The coefficients for the other groups are interpreted relative to this reference group.</p>
 </div>
 </div>
 </div>
@@ -1264,78 +1367,105 @@ R^2_{McFadden}=1-\frac{\ell(\text{fitted model})}{\ell(\text{intercept-only mode
 <section class="slide level2">
 
 <h3 id="logistic-regression-assumptions">Logistic Regression Assumptions</h3>
-<p>Logistic regression does <strong>not</strong> require:</p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Logistic regression <strong>does not</strong> require:</strong></p>
+</div>
+<div class="callout-content">
 <ul>
-<li>normally distributed predictors;</li>
-<li>normally distributed residuals;</li>
-<li>constant variance of the response.</li>
+<li>normally distributed predictors</li>
+<li>normally distributed residuals</li>
+<li>constant variance of the response</li>
 </ul>
-<p>But it does rely on important conditions:</p>
+</div>
+</div>
+</div>
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Logistic regression <strong>does</strong> rely on these important conditions:</strong></p>
+</div>
+<div class="callout-content">
 <ol type="1">
-<li>appropriate binary/Bernoulli response specification;</li>
-<li>independent observations, conditional on the model structure;</li>
-<li>linearity of continuous predictors with the <strong>logit</strong>, not necessarily with probability;</li>
-<li>no perfect multicollinearity;</li>
-<li>no complete or quasi-complete separation;</li>
-<li>enough information in the data for stable estimation.</li>
+<li>appropriate binary/Bernoulli response specification</li>
+<li>independent observations, conditional on the model structure</li>
+<li>linearity of continuous predictors with the <strong>logit</strong>, not necessarily with probability</li>
+<li>no perfect multicollinearity</li>
+<li>no complete or quasi-complete separation</li>
+<li>enough data for stable parameter estimation</li>
 </ol>
+</div>
+</div>
+</div>
 </section>
 <section class="slide level2">
 
 <h3 id="independence">Independence</h3>
-<p>Standard logistic regression treats observations as independent contributions to the likelihood.</p>
+<p>Standard logistic regression treats observations as as a brand-new piece of information, making independent contributions to the likelihood.</p>
 <p>Ask:</p>
 <ul>
 <li>Are there repeated measurements from the same person?</li>
 <li>Are observations clustered within schools, hospitals, firms, teams, or geographic units?</li>
 <li>Is there temporal or spatial dependence?</li>
 </ul>
-<p>If observations are meaningfully clustered, the basic independent Bernoulli model may understate uncertainty and a different modeling strategy may be needed.</p>
+<p>If observations are meaningfully clustered, the basic independent Bernoulli model may understate uncertainty (<em>standard errors</em>) though the estimated coefficients remain unbiased.</p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>An example of clustered data: hospital readmissions</strong></p>
+</div>
+<div class="callout-content">
+<p>Imagine you are building a logistic regression model to predict whether a patient gets readmitted to the hospital within <span class="math inline">\(30\)</span> days (<span class="math inline">\(1\)</span> = Yes, <span class="math inline">\(0\)</span> = No) based on whether they received a new follow-up phone call (<span class="math inline">\(1\)</span> = Call, <span class="math inline">\(0\)</span> = No Call).</p>
+<ul>
+<li>You collect <span class="math inline">\(1,000\)</span> hospital visits from <span class="math inline">\(200\)</span> patients (each patient visited the hospital <span class="math inline">\(5\)</span> times over two years).</li>
+<li>The Violation: Multiple rows belong to the exact same patient. A patient with severe chronic illness is naturally much more likely to be readmitted across all 5 visits than a generally healthy patient. These observations are clustered and not independent.</li>
+<li>Consequence: Standard logistic regression treats those 1,000 rows as 1,000 completely different people. Suppose the follow-up call actually has zero real effect on readmission. Because the model overestimates the effective sample size, it might generate a small p-value, tricking you into rolling out an expensive, ineffective program.</li>
+</ul>
+</div>
+</div>
+</div>
 </section>
 <section class="slide level2">
 
 <h3 id="linearity---but-on-which-scale">Linearity - But on Which Scale?</h3>
-<p>Logistic regression does <strong>not</strong> assume</p>
-<p><span class="math display">\[
-P(Y=1\mid X)
-\]</span></p>
-<p>is linear in a continuous predictor.</p>
-<p>It assumes the <strong>logit</strong> is linear in the predictors:</p>
-<p><span class="math display">\[
+<p>Logistic regression does <strong>not</strong> assume <span class="math inline">\(P(Y=1\mid X)\)</span> is linear in its continuous predictors.</p>
+<p>It assumes the <strong>logit</strong> is linear in the predictors: <span class="math display">\[
 \operatorname{logit}\{P(Y=1\mid X)\}
 =
-\beta_0+\beta_1X_1+\cdots+\beta_pX_p.
+\beta_0+\beta_1X_1+\cdots+\beta_pX_p
 \]</span></p>
 <p>Nonlinear terms, splines, or transformations can be added when a straight-line relationship on the logit scale is too restrictive.</p>
 </section>
 <section class="slide level2">
 
 <h3 id="multicollinearity">Multicollinearity</h3>
-<p>As in multiple linear regression, highly correlated predictors can make coefficient estimates unstable.</p>
-<p>Consequences include:</p>
+<p>As in multiple linear regression, highly correlated predictors can make coefficient estimates unstable. Consequences include:</p>
 <ul>
-<li>large standard errors;</li>
-<li>coefficients that change substantially when predictors are added or removed;</li>
-<li>difficult conditional interpretations.</li>
+<li>large standard errors</li>
+<li>coefficients that change substantially when predictors are added or removed</li>
+<li>difficult conditional interpretations</li>
 </ul>
-<p>Perfect multicollinearity makes the model unidentified.</p>
-<p>The conceptual diagnostic lesson carries over from linear regression: inspect relationships among predictors and avoid redundant encodings.</p>
+<p>Hence it is important to check for multicollinearity and avoid perfect multicollinearity. We use the same diagnostics as in linear regression, as well as the same empirical VIF rule of thumb: <span style="color:red;"><span class="math inline">\(VIF&gt;5\)</span> is concerning; <span class="math inline">\(VIF&gt;10\)</span> is a red flag!</span></p>
 </section>
 <section class="slide level2">
 
-<h3 id="a-logistic-specific-failure-mode-separation">A Logistic-Specific Failure Mode: Separation</h3>
-<p><strong>Complete separation</strong> occurs when a predictor, or combination of predictors, perfectly separates the observed 0s and 1s.</p>
-<p>For example:</p>
+<h3 id="a-logistic-specific-failure-mode-perfect-separation">A Logistic-Specific Failure Mode: Perfect Separation</h3>
+<p><strong>Complete separation</strong> occurs when a predictor, or combination of predictors, perfectly separates observations. For example: <span class="math inline">\(\text{Every observation with } X&lt;5 \text{ has } Y=0; \quad Y=1 \text{ for all } X\geq5.\)</span></p>
+<p>Paradoxically, when a predictor distinguishes the outcomes perfectly, standard Maximum Likelihood Estimation (MLE) breaks down because <span style="color:blue;">in cases of complete separation, finite maximum likelihood estimates do not exist.</span> Instead, we have:</p>
 <ul>
-<li>every observation with <span class="math inline">\(X&lt;5\)</span> has <span class="math inline">\(Y=0\)</span>;</li>
-<li>every observation with <span class="math inline">\(X\geq5\)</span> has <span class="math inline">\(Y=1\)</span>.</li>
-</ul>
-<p>Then the likelihood can keep improving as a coefficient grows toward <span class="math inline">\(\pm\infty\)</span>.</p>
-<p>Symptoms include:</p>
-<ul>
-<li>extremely large coefficient estimates;</li>
-<li>huge standard errors;</li>
-<li>convergence warnings or failure.</li>
+<li>Extremely large coefficient estimates</li>
+<li>Very large standard errors</li>
+<li>Convergence warnings or failure</li>
 </ul>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
@@ -1343,10 +1473,15 @@ P(Y=1\mid X)
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Note</strong></p>
+<p><strong>What Happens When the Two Outcomes Are Perfectly Separated?</strong></p>
 </div>
 <div class="callout-content">
-<p>Separation is an important addition to the usual regression diagnostic checklist because it is specific to binary-response modeling.</p>
+<p>Recall that logistic regression maps a linear combination of predictors to probabilities between 0 and 1 using the S-shaped sigmoid function. During MLE, we seek to <strong>minimize the negative log-likelihood</strong>, which penalizes incorrect probability estimates. Assigning a very low probability to an example where <span class="math inline">\(Y=1\)</span> produces a very large penalty: <em>being wrong and confident is especially costly!</em></p>
+<ul>
+<li><p><strong>With overlapping outcomes:</strong> Some observations will lie on the wrong side of a steep sigmoid curve. Their increasingly large penalties act as <em>brakes</em>, preventing the model from making the curve too steep. The likelihood therefore typically reaches its maximum at finite coefficient values.</p></li>
+<li><p><strong>With complete separation:</strong> There are no such exceptions. The model can continually improve its likelihood by making the sigmoid curve steeper around the predictor value that separates the two outcomes. Predicted probabilities move increasingly close to <strong>0 for observed 0s</strong> and <strong>1 for observed 1s</strong>. Achieving this requires the slope coefficient <span class="math inline">\(\beta \approx \pm\infty\)</span>.</p></li>
+</ul>
+<p><strong>TLDR;</strong> Because the sigmoid function never reaches exactly 0 or 1 for finite coefficients, the negative log-likelihood keeps decreasing toward zero without attaining it at any finite parameter values. This prevents standard MLE from producing finite coefficient estimates.</p>
 </div>
 </div>
 </div>
@@ -1358,30 +1493,26 @@ P(Y=1\mid X)
 <p>However, “residuals” are more complicated than in OLS because a binary outcome does not have a single Normal-error residual structure.</p>
 <p>Common diagnostic quantities include:</p>
 <ul>
-<li>Pearson residuals;</li>
-<li>deviance residuals;</li>
-<li>leverage / hat values;</li>
-<li>Cook’s distance and case-deletion influence measures.</li>
+<li>Pearson residuals</li>
+<li>Deviance residuals</li>
+<li>leverage / hat values</li>
+<li>Cook’s distance and case-deletion influence measures</li>
 </ul>
 <p>The goal is the same as before: identify observations that have disproportionate influence and investigate <strong>why</strong>.</p>
 </section>
 <section class="slide level2">
 
 <h3 id="residuals-are-different-here">Residuals Are Different Here</h3>
-<p>For OLS, the raw residual</p>
-<p><span class="math display">\[
-e_i=y_i-\hat y_i
-\]</span></p>
-<p>has a central role in diagnostics.</p>
+<p>For OLS, the raw residual <span class="math inline">\(e_i=y_i-\hat y_i\)</span> has a central role in diagnostics.</p>
 <p>For logistic regression, <span class="math inline">\(y_i\in\{0,1\}\)</span> and <span class="math inline">\(\hat\pi_i\in(0,1)\)</span>, so raw residuals have a very different distribution and variance.</p>
-<p>There are multiple residual definitions designed for different purposes.</p>
+<p>There are multiple residual definitions designed for different purposes and there is no one unique formula.</p>
 <div class="callout callout-caution callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Caution</strong></p>
+<p><strong>Non-constant error variance</strong></p>
 </div>
 <div class="callout-content">
 <p>Do not mechanically apply Normal Q-Q plots or homoscedasticity checks from OLS to logistic regression. The response variance is inherently <span class="math inline">\(\pi_i(1-\pi_i)\)</span>.</p>
@@ -1392,13 +1523,12 @@ e_i=y_i-\hat y_i
 <section class="slide level2">
 
 <h3 id="standard-errors-and-inference">Standard Errors and Inference</h3>
-<p>After MLE finds <span class="math inline">\(\hat\beta\)</span>, software estimates uncertainty from the curvature of the log-likelihood near its maximum.</p>
-<p>Typical output includes:</p>
+<p>Common uncertainty estimates for inferential statistics on a logistic regression model include:</p>
 <ul>
-<li>coefficient estimate <span class="math inline">\(\hat\beta_j\)</span>;</li>
-<li>standard error;</li>
-<li>Wald statistic and p-value;</li>
-<li>confidence interval.</li>
+<li>coefficient estimate <span class="math inline">\(\hat\beta_j\)</span></li>
+<li>standard error</li>
+<li>Wald statistic and p-value</li>
+<li>confidence interval</li>
 </ul>
 <p>The null hypothesis for a slope is commonly</p>
 <p><span class="math display">\[
@@ -1468,24 +1598,8 @@ H_0:e^{\beta_j}=1
 </section>
 <section class="slide level2">
 
-<h3 id="a-useful-mental-model">A Useful Mental Model</h3>
-<p>Think of logistic regression as a connected modeling process, not merely as a formula for drawing an S-shaped curve.</p>
-<p>First, we specify a <strong>binary response</strong> and a Bernoulli model for the conditional distribution <span class="math inline">\(Y_i\mid X_i\)</span>. This tells us that the conditional mean is the event probability <span class="math inline">\(\pi_i\)</span> and that the conditional variance is <span class="math inline">\(\pi_i(1-\pi_i)\)</span>.</p>
-<p>Second, we retain the familiar <strong>linear combination of predictors</strong>, <span class="math inline">\(\eta_i=\beta_0+\beta_1x_{i1}+\cdots+\beta_px_{ip}\)</span>. The logit link equates that linear predictor with the log-odds of the event. Inverting the link produces a valid probability:</p>
-<p><span class="math display">\[
-\boxed{X_i\longrightarrow\eta_i=X_i\beta
-\longrightarrow\pi_i=\frac{1}{1+e^{-\eta_i}}.}
-\]</span></p>
-<p>Finally, we use <strong>maximum likelihood</strong> to estimate the coefficients: choose the values that make the observed 0/1 outcomes most plausible under the model. We can then interpret coefficients as changes in log-odds, exponentiated coefficients as odds ratios, and fitted values as predicted probabilities.</p>
-<p>The key lesson is that the <strong>linearity lives on the transformed mean scale</strong>. Logistic regression estimates probabilities; a separate decision rule is needed before we can turn those probabilities into binary class predictions.</p>
-</section>
-<section class="slide level2">
-
 <h3 id="logistic-regression-and-classification">Logistic Regression and Classification</h3>
-<p>A fitted logistic regression model gives</p>
-<p><span class="math display">\[
-\hat\pi_i=P(Y_i=1\mid X_i).
-\]</span></p>
+<p>A fitted logistic regression model gives <span class="math inline">\(\hat\pi_i=P(Y_i=1\mid X_i)\)</span></p>
 <p>That is a <strong>probability estimate</strong>, not yet a dichotomous prediction.</p>
 <p>To turn probabilities into labels, we must add a <strong>decision rule</strong>, for example</p>
 <p><span class="math display">\[
@@ -1521,27 +1635,6 @@ H_0:e^{\beta_j}=1
 <li>How do we evaluate competing classification rules and models?</li>
 </ul>
 <p>Those questions lead to classification metrics, confusion matrices, ROC curves, and related evaluation tools.</p>
-<p>For now, remember the separation:</p>
-<p><span class="math display">\[
-\boxed{\text{Logistic regression estimates probabilities.}}
-\]</span></p>
-<p><span class="math display">\[
-\boxed{\text{A decision rule converts probabilities to class labels.}}
-\]</span></p>
-</section>
-<section class="slide level2">
-
-<h3 id="takeaways">Takeaways</h3>
-<ul>
-<li>Binary outcomes require a model whose predictions remain between 0 and 1.</li>
-<li>Logistic regression is a <strong>Bernoulli GLM with a logit link</strong>.</li>
-<li>The linear predictor models <strong>log-odds</strong>; the sigmoid maps log-odds to probabilities.</li>
-<li>Coefficients can be exponentiated to obtain <strong>odds ratios</strong>.</li>
-<li>Logistic regression is fitted using <strong>maximum likelihood</strong>, connecting naturally to the broader GLM framework.</li>
-<li>OLS assumptions do not transfer mechanically; independence, logit-linearity, multicollinearity, influence, and separation deserve attention.</li>
-<li>Logistic regression produces probabilities. <strong>Classification requires an additional decision rule.</strong></li>
-<li><em>Next</em>: <span style="color:#1565C0;">turning predicted probabilities into classifications and evaluating those decisions</span>.</li>
-</ul>
 </section>
 <section class="slide level2">
 

@@ -1,0 +1,266 @@
+---
+title: "Unit 5 | Logistic Regression Deep Dive"
+author: "FIRSTNAME LASTNAME"
+date: "`r format(Sys.time(), 'Compiled %X on %A, %B %d, %Y')`"
+output: pdf_document
+---
+
+# Load packages
+
+```{r, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Load packages
+library(tidyverse); library(EGAnet)
+library(DescTools); library(car)
+library(ggplot2); library(GGally)
+```
+
+# Motivating Dataset 1: WNBA
+
+Research question: Are there stats that predict the number of games a young player will start?
+
+*Whether a player will start or not*
+
+Load the data
+
+```{r, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+wnba <- read.csv("./data/wnba_player-stats_2024-2025.csv")
+```
+
+Look at the data using `str()`
+
+```{r, echo = TRUE, eval = FALSE, comment = NA, warning = FALSE, message = FALSE}
+str(wnba)
+```
+
+Let's check out the players
+
+```{r, echo = TRUE, eval = FALSE, comment = NA, warning = FALSE, message = FALSE}
+table(wnba$athlete_display_name)
+```
+
+Hold up... we have players listed multiple times...
+
+These data are from box scores of *each* game that the players played. We need to get summaries of their statistics in order to answer our question.
+
+```{r, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Let's get summaries
+wnba_summary <- wnba %>%
+  group_by(athlete_id, athlete_display_name) %>%
+  summarize(
+    GS = sum(starter, na.rm = TRUE), # sum for total games started
+    PTS = mean(points, na.rm = TRUE), # average points per game
+    TRB = mean(rebounds, na.rm = TRUE), # average rebounds per game
+    AST = mean(assists, na.rm = TRUE), # average assists per game
+    STL = mean(steals, na.rm = TRUE), # average steals per game
+    BLK = mean(blocks, na.rm = TRUE), # average blocks per game
+    TOV = mean(turnovers, na.rm = TRUE), # average turnovers per game
+    Age = unique(age) # age at start of season
+  )
+```
+
+OK. Now that we're set up with our variables of interest, let's tackle what "young" means with respect to our research question.
+
+```{r, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+hist(wnba_summary$Age, breaks = "FD")
+```
+
+A histogram helps a little bit but we might want to be more objective. Let's classify "young" as the 25th percentile of the age of people in the WNBA.
+
+```{r, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+quantile(wnba_summary$Age, probs = 0.25, na.rm = TRUE)
+```
+
+> Your turn: Subset the `Age` to be ages less than or equal to the 25th percentile and store in an object called `young_wnba`
+
+```{r, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+young_wnba <- wnba_summary[
+  wnba_summary$Age <= 
+  quantile(wnba_summary$Age, probs = 0.25, na.rm = TRUE),
+]
+```
+
+> Check out the frequencies of games started
+
+```{r, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+table(young_wnba$GS)
+```
+
+Now, let's fit a linear regression model predicting games started (`GS`) with points (`PTS`), total rebounds (`TRB`), assists (`AST`), steals (`STL`), blocks (`BLK`), and turnovers (`TOV`)
+
+```{r, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+summary(gs_lm <- lm(GS ~ PTS + TRB + AST + STL + BLK + TOV, data = young_wnba))
+```
+
+Interpret the `AST` estimate (remember, we're using *average per game* statistics)
+
+> Answer:
+
+<!--- delete this comment and write your response --->
+
+Now, let's shift over to a logistic regression approach. First, let's create a binarized variable of games started.
+
+> Your Turn: Convert games started (`GS`) into `0` and `1`, where games started > 0 is `1` and games started equal to 0 is `0`. Store it in a variable called `start` in `young_wnba`
+
+```{r, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+young_wnba$start <- ifelse(young_wnba$GS > 0, 1, 0)
+
+young_wnba$start <- as.numeric(young_wnba$GS > 0)
+```
+
+Let's see if our new variable, `start`, is balanced (use `table`)
+
+```{r, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+table(young_wnba$start)
+```
+
+Before doing logistic regression, let's see what happens with linear regression
+
+```{r, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+summary(start_lm <- lm(start ~ PTS + TRB + AST + STL + BLK + TOV, data = young_wnba))
+```
+
+Comment on the differences between this model and our previous model (using `GS`)
+
+> Answer:
+
+<!--- delete this comment and write your response --->
+
+Let's plot our predicted values
+
+```{r, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Create a new vector
+start_fitted <- numeric(length = nrow(young_wnba))
+
+# Identify missing observations
+missing_start <- is.na(young_wnba$start)
+
+# Populate start fitted vector
+start_fitted[missing_start] <- NA
+start_fitted[!missing_start] <- start_lm$fitted.values
+  
+# Add fitted values
+young_wnba$start_fitted <- start_fitted
+
+# Plot
+young_wnba %>%
+ggplot(aes(x = start_fitted, y = young_wnba$start)) +
+  geom_point() +
+  geom_smooth(formula = "y ~ x", method = "lm", se = FALSE) +
+  labs(x = "Fitted Start", y = "Observed Start") +
+  theme_classic()
+# Demonstration of what NOT to do!
+```
+
+Let's try logistic regression now
+
+```{r, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Logistic regression
+start_logm <- glm(
+  start ~ PTS + AST + STL + BLK + TOV, 
+  data = young_wnba, family = "binomial" 
+  # do not forget to change 'family'!
+  # by default, linear regression is performed
+  # unless you change 'family'
+)
+
+# Summarize to get parameters
+summary(start_logm)
+```
+
+These parameter estimates are tricky. They are *log* of the odds ratios. Interpreting these parameters can give you a headache.
+
+Instead, we can convert them to odds ratios:
+
+```{r, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Get coefficients and convert them
+exp(coef(start_logm))
+```
+
+Here's an example of how to interpret `AST`:
+
+For each unit increase in `AST`, the odds are 0.724 times more likely to have started a game in the 2024-2025 season than not.
+
+For each assist per game, the odds are 0.724 times more likely to have started a game in the 2024-2025 season than not.
+
+For each assist per game, the odds are 1.38 times less likely to have started a game in the 2024-2025 season than not, controlling for other predictors.
+
+<!---
+Flip the OR for a more intuitive interpretation
+1 / OR
+--->
+
+<!--- Back to the slides --->
+
+We can also get a measure of pseudo-$R^2$. It's not truly an $R^2$ measure like we talked about in linear regression. It will be an approximation intended to be *like* $R^2$.
+
+```{r, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# You'll need to install the {DescTools} package (if you don't have it)
+library(DescTools)
+
+# McFadden's R-squared
+PseudoR2(start_logm)
+```
+
+Another convenient function comes from the \{margins\} package:
+
+```{r, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# You'll need to install the {margins} package (if you don't have it)
+library(margins)
+
+# Print out margins
+summary(margins(start_logm))
+```
+
+Like linear regression, we need to check for multicollinear variables.
+
+```{r, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Load {car}
+library(car)
+
+# Print out VIF
+vif(start_logm)
+```
+
+As a final model evaluation step, we can see how well our model predicts our outcome.
+
+```{r, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# You'll need to install the {caret} package (if you don't have it)
+library(caret)
+
+# First, we need to get predictions out from our model
+predictions <- predict(start_logm, type = "response")
+# We need `type = "response"` to get probabilities out
+
+# Afterward, we can convert the probabilities to classes
+classes <- ifelse(predictions > 0.50, 1, 0)
+# Remember that our prediction is toward the class valued as `1`
+# Higher probabilities mean a greater likelihood of belonging to `1`
+# (according to our model)
+
+# Using the {caret} package, we can create a confusion matrix
+confusionMatrix(
+  data = factor(classes, levels = c(0, 1)), # your predictions
+  reference = factor(na.omit(young_wnba$start), levels = c(0, 1)), # actual data
+  positive = "1" # set to the outcome?
+)
+```
+
+We can also visualize our predictions using a mosaic plot:
+
+```{r, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# First, we'll need to create a table of our prediction and actual
+mosaic_table <- table(
+  prediction = classes,
+  actual = na.omit(young_wnba$start)
+)
+
+# Print out the table
+mosaic_table
+
+# Next we can input this into the mosaicplot() function in base R
+mosaicplot(
+  mosaic_table, main = 'Confusion Matrix', 
+  xlab = 'actual', ylab = 'prediction',
+  color = 'darkgreen'
+)
+```

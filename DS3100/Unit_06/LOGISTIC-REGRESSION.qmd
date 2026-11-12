@@ -76,7 +76,7 @@ options(warn = -1)
 
 admit_data <- data.frame(
   hours = c(8,10,6,4,3,7,1,10,5,8,5,1,10,6,6,2,8,11,9,3,10,4,7,1,8,3,8,4,3,5,9,5,3,3,7,10,10,3,1,11,9,10,4,9,5,3,6,6,2,6),
-  prior_score = c(86,91,59,90,80,89,59,65,59,76,70,90,86,60,60,55,80,93,63,83,79,67,60,68,58,80,87,87,89,93,74,73,61,60,65,71,55,69,84,72,92,76,90,59,83,94,55,72,88,55),
+  injury_risk_factor = c(86,91,59,90,80,89,59,65,59,76,70,90,86,60,60,55,80,93,63,83,79,67,60,68,58,80,87,87,89,93,74,73,61,60,65,71,55,69,84,72,92,76,90,59,83,94,55,72,88,55),
   admitted = c(1,1,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,1,0,0,1,0,0,0,1,1,1,0,1,0,1,0,0,0,1,1,1,0,0,0,1,1,1,0,1,1,0,0,0,0)
 )
 ```
@@ -93,7 +93,7 @@ import statsmodels.formula.api as smf
 
 admit_data = pd.DataFrame({
     "hours": [8,10,6,4,3,7,1,10,5,8,5,1,10,6,6,2,8,11,9,3,10,4,7,1,8,3,8,4,3,5,9,5,3,3,7,10,10,3,1,11,9,10,4,9,5,3,6,6,2,6],
-    "prior_score": [86,91,59,90,80,89,59,65,59,76,70,90,86,60,60,55,80,93,63,83,79,67,60,68,58,80,87,87,89,93,74,73,61,60,65,71,55,69,84,72,92,76,90,59,83,94,55,72,88,55],
+    "injury_risk_factor": [86,91,59,90,80,89,59,65,59,76,70,90,86,60,60,55,80,93,63,83,79,67,60,68,58,80,87,87,89,93,74,73,61,60,65,71,55,69,84,72,92,76,90,59,83,94,55,72,88,55],
     "admitted": [1,1,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,1,0,0,1,0,0,0,1,1,1,0,1,0,1,0,0,0,1,1,1,0,0,0,1,1,1,0,1,1,0,0,0,0]
 })
 ```
@@ -539,7 +539,8 @@ $$
 For a one-unit increase in $X$, the ratio of the odds becomes
 
 $$
-\frac{\omega_{X+1}}{\omega_X}
+\frac{\omega_\text{after}}{\omega_\text{before}}
+=\frac{\omega_{X+1}}{\omega_X}
 =\frac{e^{\beta_0+\beta_1(X+1)}}{e^{\beta_0+\beta_1X}}
 =\boxed{e^{\beta_1}}
 $$
@@ -620,9 +621,9 @@ $$\boxed{L(\theta\mid \text{observed data})\equiv P(\text{observed data}\mid\the
 
 The relationship between your data and your parameters ($\theta$) is captured by the exact same mathematical function, but its <span style="color:blue;">*meaning*</span> changes depending on what we vary -- the data, or the parameters.
 
-$P(data \mid \theta)$ is a valid probability distribution that integrates to $1$ because for a fixed parameter set, the probabilities of all possible data outcomes must total $100\%$. Likelihood is <span style="color:blue;">*not*</span> a probability distribution. If you fix your data and add up the likelihood of all possible $\theta$ they will not add up to 1.
+$P(data \mid \theta)$ is a valid probability distribution over the data. It integrates to $1$ because for a fixed parameter set, the probabilities of all possible data outcomes must total $100\%$. Likelihood is <span style="color:blue;">*not*</span> a probability distribution over the parameters. If you fix your data and add up the likelihood of all possible $\theta$ they will not add up to 1.
 
-Likelihood is <span style="color:blue;">*not*</span> the probability that a parameter is true. It is a way to compare how well candidate parameter values account for the observed data under the assumed model. $L(\theta =0.5 \mid \text{data}) = 0.12$ <span style="color:blue;">*does not mean*</span> that there is a $12\%$ chance that $\theta =0.5$. Instead, it means that the probability of <span style="color:blue;">*generating*</span> your specific dataset given $\theta =0.5$ is $12\%$.
+Individual likelihood is <span style="color:blue;">*not*</span> the probability that a parameter is true. It is a way to compare how well candidate parameter values account for the observed data under the assumed model. $L(\theta =0.5 \mid \text{data}) = 0.12$ <span style="color:blue;">*does not mean*</span> that there is a $12\%$ chance that $\theta =0.5$. Instead, it means that the probability of <span style="color:blue;">*generating*</span> your specific dataset given $\theta =0.5$ is $12\%$.
 
 :::
 
@@ -630,21 +631,29 @@ Likelihood is <span style="color:blue;">*not*</span> the probability that a para
 
 ### Coin Flip Example: Estimating a Probability
 
-Suppose we observe **7 heads and 3 tails** from 10 independent coin flips. If $p$ denotes the probability of heads, the likelihood of this event is
+Suppose we observe **7 heads and 3 tails** from 10 independent coin flips. This system has a single parameter, $p$, which denotes the probability of head from a single flip.<br> 
+The likelihood of this observed outcome is
+$$L(p \mid \text{data})= \binom{10}{7}p^7(1-p)^3$$
 
-$$L(p \mid \text{data})= \binom{10}{7}p^7(1-p)^3.$$
+Here the data (<span style="color:#1565C0;">7 heads, 3 tails in some random order</span>) are fixed, and $p$ is the <span style="color:#1565C0;">**parameter**</span> we vary to find where the likelihood is maximized. The right-hand side in this case comes from the *binomial distribution* and would remain unchanged even if we were interested in the conditional probability of the data given the parameter.<br> 
+<span style="color:blue;">Remember</span> that likelihood and conditional probability have the same mathematical form, but the perspective is reversed.
 
-Here the data (<span style="color:#1565C0;">7 heads, 3 tails in some random order</span>) are fixed, and $p$ is the quantity we vary to find where the likelihood is maximized.
+It turns out that the maximum likelihood estimate for $p$ in this case is simply the proportion of heads observed:
+$$\boxed{\hat p=\frac{7}{10}=0.7}$$
 
-$$\boxed{\hat p=\frac{7}{10}=0.7.}$$
+:::{.callout-note}
 
-In logistic regression, we use the same principle, but each observation has a probability $\pi_i$ determined by its predictors and the regression coefficients.
+## A note on the parameter $p$
+
+- The parameter $p$ is a fixed but unknown quantity. Even though it individually represents a probability, it is not a random variable, and it does not have a probability distribution. (<span style="color:#1565C0;">*Well actually, in some statistical frameworks it is, but we will not get into those weird, albeit important, philosophical debates here.*</span>)
+- In logistic regression, we use the same principle, but each observation has a probability $\pi_i$ determined by its predictors and the regression coefficients.
+:::
 
 ---
 
 ### Connection Back to OLS
 
-Suppose linear regression errors are Normal:
+When linear regression errors are normal:
 
 $$
 Y_i=X_i\beta+\epsilon_i,
@@ -654,28 +663,33 @@ $$
 
 Under this model, maximizing the likelihood with respect to $\beta$ is equivalent to minimizing the residual sum of squares.
 
-So OLS is not disconnected from MLE:
+:::{.callout-note}
+
+## OLS is not disconnected from MLE:
 
 $$
 \boxed{\text{OLS is the MLE for }\beta\text{ under the usual Normal-error model.}}
 $$
 
 MLE therefore gives us a bridge from linear regression to other response distributions.
+:::
 
 ---
 
 ### Likelihood for Logistic Regression
 
 For observation $i$, the Bernoulli distribution tells us:
-
 $$
 P(Y_i=y_i\mid X_i)
 =
-\pi_i^{y_i}(1-\pi_i)^{1-y_i}.
+\pi_i^{y_i}(1-\pi_i)^{1-y_i}; \text{ where } y_i\in\{0,1\}
+$$
+<span style="color:blue;">Remember</span> that $\pi_i$ is the probability of success for observation $i$, which depends on its predictors and the regression coefficients.
+$$
+\pi_i=\frac{1}{1+e^{-X_i\beta}}
 $$
 
 Assuming independent observations, the likelihood is
-
 $$
 \boxed{
 L(\beta)
@@ -685,11 +699,13 @@ L(\beta)
 }
 $$
 
-with
+:::{.callout-note}
 
-$$
-\pi_i=\frac{1}{1+e^{-X_i\beta}}.
-$$
+## A note on the notation
+
+$\prod_{i=1}^{n}$ means "multiply together the terms for observations $i=1,2,\ldots,n$." It is the product analog of $\sum_{i=1}^{n}$, which means "add together the terms for $i=1,2,\ldots,n$."
+
+:::
 
 ---
 
@@ -706,13 +722,15 @@ $$
 \right].
 $$
 
-Maximizing $\ell(\beta)$ is equivalent to minimizing the **negative log-likelihood**:
+Maximizing $\ell(\beta)$ is equivalent to minimizing the **negative log-likelihood**: $-\ell(\beta).$
 
-$$
--\ell(\beta).
-$$
+:::{.callout-note}
 
-There is generally no simple closed-form solution for $\hat\beta$, so software uses numerical optimization.
+## How to solve for $\hat\beta$?
+
+Unlike the OLS case, there is generally no simple closed-form solution for $\hat\beta$ here. So most softwares use numerical optimization like Gradient Descent or Newton-Raphson (You will learn more about these methods in a future course 🫠).
+
+:::
 
 ---
 
@@ -721,7 +739,7 @@ There is generally no simple closed-form solution for $\hat\beta$, so software u
 We will model a binary outcome, `admitted`, using:
 
 - `hours`: hours spent preparing;
-- `prior_score`: a prior assessment score.
+- `injury_risk_factor`: an injury assessment score.
 
 This is a small teaching dataset created to illustrate the mechanics of fitting and interpreting a logistic regression model.
 
@@ -798,7 +816,7 @@ We fit
 $$
 \operatorname{logit}\{P(Y=1\mid X)\}
 =
-\beta_0+\beta_1(\text{hours})+\beta_2(\text{prior score}).
+\beta_0+\beta_1(\text{hours})+\beta_2(\text{injury\_risk\_factor}).
 $$
 
 ::: {.columns}
@@ -809,7 +827,7 @@ $$
 
 ```{r}
 logit_r <- glm(
-  admitted ~ hours + prior_score,
+  admitted ~ hours + injury_risk_factor,
   data = admit_data,
   family = binomial(link = "logit")
 )
@@ -825,7 +843,7 @@ summary(logit_r)
 
 ```{python}
 logit_py = smf.glm(
-    "admitted ~ hours + prior_score",
+    "admitted ~ hours + injury_risk_factor",
     data=admit_data,
     family=sm.families.Binomial()
 ).fit()
@@ -935,7 +953,7 @@ admit_data$prob_r <- predict(
   type = "response"
 )
 
-head(admit_data[c("hours", "prior_score", "prob_r")])
+head(admit_data[c("hours", "injury_risk_factor", "prob_r")])
 ```
 
 :::
@@ -948,7 +966,7 @@ head(admit_data[c("hours", "prior_score", "prob_r")])
 admit_data["prob_py"] = logit_py.predict(admit_data)
 
 print(admit_data[[
-    "hours", "prior_score", "prob_py"
+    "hours", "injury_risk_factor", "prob_py"
 ]].head())
 ```
 
@@ -960,7 +978,7 @@ print(admit_data[[
 
 ### Predicting for New Predictor Values
 
-Suppose we want the estimated probability for a case with 7 preparation hours and a prior score of 80.
+Suppose we want the estimated probability for a case with 7 preparation hours and an injury risk factor of 80.
 
 ::: {.columns}
 
@@ -971,7 +989,7 @@ Suppose we want the estimated probability for a case with 7 preparation hours an
 ```{r}
 new_case_r <- data.frame(
   hours = 7,
-  prior_score = 80
+  injury_risk_factor = 80
 )
 
 predict(logit_r, newdata = new_case_r,
@@ -987,7 +1005,7 @@ predict(logit_r, newdata = new_case_r,
 ```{python}
 new_case_py = pd.DataFrame({
     "hours": [7],
-    "prior_score": [80]
+    "injury_risk_factor": [80]
 })
 
 print(logit_py.predict(new_case_py))
@@ -999,11 +1017,18 @@ print(logit_py.predict(new_case_py))
 
 The output is a **probability**, not a class label.
 
+
 ---
 
 ### A Probability-Scale Effect
 
-To see how the probability changes when `hours` increases from 7 to 8 while `prior_score = 80`:
+:::{.callout-note}
+
+## Different from an Odds-Scale Effect
+
+Recall that a one-unit increase in `hours` multiplies the odds of the outcome by $e^{\beta_{\text{hours}}}$, holding other predictors constant. But this does not imply the same change in probability. Let's compare three scenarios, keeping `injury_risk_factor = 80` fixed.
+
+:::
 
 ::: {.columns}
 
@@ -1013,14 +1038,23 @@ To see how the probability changes when `hours` increases from 7 to 8 while `pri
 
 ```{r}
 compare_r <- data.frame(
-  hours = c(7, 8),
-  prior_score = c(80, 80)
+  hours = c(3, 4, 5, 6, 7, 8),
+  injury_risk_factor = 80
 )
 
-p_r <- predict(logit_r, compare_r,
-               type = "response")
-p_r
-p_r[2] - p_r[1]
+p_r <- predict(logit_r, compare_r, type = "response")
+
+odds_ratio_r <- exp(coef(logit_r)["hours"])
+
+results_r <- data.frame(
+  Hours = c("3 to 4", "5 to 6", "7 to 8"),
+  Initial_Prob = p_r[c(1, 3, 5)],
+  New_Prob = p_r[c(2, 4, 6)],
+  Change = p_r[c(2, 4, 6)] - p_r[c(1, 3, 5)],
+  Odds_Ratio = rep(odds_ratio_r, 3)
+)
+
+knitr::kable(results_r, digits = 3)
 ```
 
 :::
@@ -1031,29 +1065,36 @@ p_r[2] - p_r[1]
 
 ```{python}
 compare_py = pd.DataFrame({
-    "hours": [7, 8],
-    "prior_score": [80, 80]
+    "hours": [3, 4, 5, 6, 7, 8],
+    "injury_risk_factor": 80
 })
 
-p_py = logit_py.predict(compare_py)
-print(p_py)
-print(p_py.iloc[1] - p_py.iloc[0])
+p_py = logit_py.predict(compare_py).to_numpy()
+odds_ratio_py = np.exp(logit_py.params["hours"])
+
+results_py = pd.DataFrame({
+    "Hours": ["3 to 4", "5 to 6", "7 to 8"],
+    "Initial Prob": p_py[[0, 2, 4]],
+    "New Prob": p_py[[1, 3, 5]],
+    "Change": p_py[[1, 3, 5]] -
+              p_py[[0, 2, 4]],
+    "Odds Ratio": [odds_ratio_py] * 3
+})
+
+print(results_py.round(3).to_string(index=False))
 ```
 
 :::
 
 :::
 
-This probability difference is local to the chosen predictor values; it is not constant everywhere.
-
 ---
 
 ### Logistic Regression with Categorical Predictors
 
-As in linear regression, categorical predictors enter through indicator/dummy variables.
+As in linear regression, categorical predictors enter through indicator/dummy variables. Here we also do the drop-one (*drop-first*) trick to avoid perfect multicollinearity.
 
 For example,
-
 $$
 \operatorname{logit}(\pi)
 =
@@ -1063,7 +1104,7 @@ $$
 Then $e^{\beta_2}$ compares the odds for Group B with the reference group, holding the other predictors fixed.
 
 :::{.callout-note}
-The coding/reference category matters for interpretation, just as it did in multiple linear regression.
+The coding/reference category matters for interpretation, just as it did in multiple linear regression. The coefficients for the other groups are interpreted relative to this reference group.
 :::
 
 ---
@@ -1090,26 +1131,34 @@ Pseudo-$R^2$ values should **not** be interpreted as percent variance explained 
 
 ### Logistic Regression Assumptions
 
-Logistic regression does **not** require:
+:::{.callout-note}
 
-- normally distributed predictors;
-- normally distributed residuals;
-- constant variance of the response.
+## Logistic regression **does not** require:
 
-But it does rely on important conditions:
+- normally distributed predictors
+- normally distributed residuals
+- constant variance of the response
 
-1. appropriate binary/Bernoulli response specification;
-2. independent observations, conditional on the model structure;
-3. linearity of continuous predictors with the **logit**, not necessarily with probability;
-4. no perfect multicollinearity;
-5. no complete or quasi-complete separation;
-6. enough information in the data for stable estimation.
+:::
+
+:::{.callout-warning}
+
+## Logistic regression **does** rely on these important conditions:
+
+1. appropriate binary/Bernoulli response specification
+2. independent observations, conditional on the model structure
+3. linearity of continuous predictors with the **logit**, not necessarily with probability
+4. no perfect multicollinearity
+5. no complete or quasi-complete separation
+6. enough data for stable parameter estimation
+
+:::
 
 ---
 
 ### Independence
 
-Standard logistic regression treats observations as independent contributions to the likelihood.
+Standard logistic regression treats observations as as a brand-new piece of information, making independent contributions to the likelihood.
 
 Ask:
 
@@ -1117,26 +1166,31 @@ Ask:
 - Are observations clustered within schools, hospitals, firms, teams, or geographic units?
 - Is there temporal or spatial dependence?
 
-If observations are meaningfully clustered, the basic independent Bernoulli model may understate uncertainty and a different modeling strategy may be needed.
+If observations are meaningfully clustered, the basic independent Bernoulli model may understate uncertainty (*standard errors*) though the estimated coefficients remain unbiased.
+
+:::{.callout-note}
+
+## An example of clustered data: hospital readmissions
+
+Imagine you are building a logistic regression model to predict whether a patient gets readmitted to the hospital within $30$ days ($1$ = Yes, $0$ = No) based on whether they received a new follow-up phone call ($1$ = Call, $0$ = No Call).
+
+- You collect $1,000$ hospital visits from $200$ patients (each patient visited the hospital $5$ times over two years).
+- The Violation: Multiple rows belong to the exact same patient. A patient with severe chronic illness is naturally much more likely to be readmitted across all 5 visits than a generally healthy patient. These observations are clustered and not independent.
+- Consequence: Standard logistic regression treats those 1,000 rows as 1,000 completely different people. Suppose the follow-up call actually has zero real effect on readmission. Because the model overestimates the effective sample size, it might generate a small p-value, tricking you into rolling out an expensive, ineffective program.
+
+:::
 
 ---
 
 ### Linearity - But on Which Scale?
 
-Logistic regression does **not** assume
-
-$$
-P(Y=1\mid X)
-$$
-
-is linear in a continuous predictor.
+Logistic regression does **not** assume $P(Y=1\mid X)$ is linear in its continuous predictors.
 
 It assumes the **logit** is linear in the predictors:
-
 $$
 \operatorname{logit}\{P(Y=1\mid X)\}
 =
-\beta_0+\beta_1X_1+\cdots+\beta_pX_p.
+\beta_0+\beta_1X_1+\cdots+\beta_pX_p
 $$
 
 Nonlinear terms, splines, or transformations can be added when a straight-line relationship on the logit scale is too restrictive.
@@ -1145,41 +1199,42 @@ Nonlinear terms, splines, or transformations can be added when a straight-line r
 
 ### Multicollinearity
 
-As in multiple linear regression, highly correlated predictors can make coefficient estimates unstable.
+As in multiple linear regression, highly correlated predictors can make coefficient estimates unstable. Consequences include:
 
-Consequences include:
+- large standard errors
+- coefficients that change substantially when predictors are added or removed
+- difficult conditional interpretations
 
-- large standard errors;
-- coefficients that change substantially when predictors are added or removed;
-- difficult conditional interpretations.
+Hence it is important to check for multicollinearity and avoid perfect multicollinearity. We use the same diagnostics as in linear regression, as well as the same empirical VIF rule of thumb: <span style="color:red;">$VIF>5$ is concerning; $VIF>10$ is a red flag!</span>
 
-Perfect multicollinearity makes the model unidentified.
-
-The conceptual diagnostic lesson carries over from linear regression: inspect relationships among predictors and avoid redundant encodings.
 
 ---
 
-### A Logistic-Specific Failure Mode: Separation
+### A Logistic-Specific Failure Mode: Perfect Separation
 
-**Complete separation** occurs when a predictor, or combination of predictors, perfectly separates the observed 0s and 1s.
+**Complete separation** occurs when a predictor, or combination of predictors, perfectly separates observations. For example:
+$\text{Every observation with } X<5 \text{ has } Y=0; \quad Y=1 \text{ for all } X\geq5.$
 
-For example:
+Paradoxically, when a predictor distinguishes the outcomes perfectly, standard Maximum Likelihood Estimation (MLE) breaks down because <span style="color:blue;">in cases of complete separation, finite maximum likelihood estimates do not exist.</span> Instead, we have:
 
-- every observation with $X<5$ has $Y=0$;
-- every observation with $X\geq5$ has $Y=1$.
+- Extremely large coefficient estimates
+- Very large standard errors
+- Convergence warnings or failure
 
-Then the likelihood can keep improving as a coefficient grows toward $\pm\infty$.
+::: {.callout-note}
 
-Symptoms include:
+## What Happens When the Two Outcomes Are Perfectly Separated?
 
-- extremely large coefficient estimates;
-- huge standard errors;
-- convergence warnings or failure.
+Recall that logistic regression maps a linear combination of predictors to probabilities between 0 and 1 using the S-shaped sigmoid function. During MLE, we seek to **minimize the negative log-likelihood**, which penalizes incorrect probability estimates. Assigning a very low probability to an example where $Y=1$ produces a very large penalty: *being wrong and confident is especially costly!*
 
-:::{.callout-note}
+- **With overlapping outcomes:** Some observations will lie on the wrong side of a steep sigmoid curve. Their increasingly large penalties act as *brakes*, preventing the model from making the curve too steep. The likelihood therefore typically reaches its maximum at finite coefficient values.
 
-Separation is an important addition to the usual regression diagnostic checklist because it is specific to binary-response modeling.
+- **With complete separation:** There are no such exceptions. The model can continually improve its likelihood by making the sigmoid curve steeper around the predictor value that separates the two outcomes. Predicted probabilities move increasingly close to **0 for observed 0s** and **1 for observed 1s**. Achieving this requires the slope coefficient $\beta \approx \pm\infty$.
+
+**TLDR;** Because the sigmoid function never reaches exactly 0 or 1 for finite coefficients, the negative log-likelihood keeps decreasing toward zero without attaining it at any finite parameter values. This prevents standard MLE from producing finite coefficient estimates.
+
 :::
+
 
 ---
 
@@ -1191,10 +1246,10 @@ However, “residuals” are more complicated than in OLS because a binary outco
 
 Common diagnostic quantities include:
 
-- Pearson residuals;
-- deviance residuals;
-- leverage / hat values;
-- Cook's distance and case-deletion influence measures.
+- Pearson residuals
+- Deviance residuals
+- leverage / hat values
+- Cook's distance and case-deletion influence measures
 
 The goal is the same as before: identify observations that have disproportionate influence and investigate **why**.
 
@@ -1202,19 +1257,16 @@ The goal is the same as before: identify observations that have disproportionate
 
 ### Residuals Are Different Here
 
-For OLS, the raw residual
-
-$$
-e_i=y_i-\hat y_i
-$$
-
-has a central role in diagnostics.
+For OLS, the raw residual $e_i=y_i-\hat y_i$ has a central role in diagnostics.
 
 For logistic regression, $y_i\in\{0,1\}$ and $\hat\pi_i\in(0,1)$, so raw residuals have a very different distribution and variance.
 
-There are multiple residual definitions designed for different purposes.
+There are multiple residual definitions designed for different purposes and there is no one unique formula.
 
 :::{.callout-caution}
+
+## Non-constant error variance
+
 Do not mechanically apply Normal Q-Q plots or homoscedasticity checks from OLS to logistic regression. The response variance is inherently $\pi_i(1-\pi_i)$.
 :::
 
@@ -1222,14 +1274,12 @@ Do not mechanically apply Normal Q-Q plots or homoscedasticity checks from OLS t
 
 ### Standard Errors and Inference
 
-After MLE finds $\hat\beta$, software estimates uncertainty from the curvature of the log-likelihood near its maximum.
+Common uncertainty estimates for inferential statistics on a logistic regression model include:
 
-Typical output includes:
-
-- coefficient estimate $\hat\beta_j$;
-- standard error;
-- Wald statistic and p-value;
-- confidence interval.
+- coefficient estimate $\hat\beta_j$
+- standard error
+- Wald statistic and p-value
+- confidence interval
 
 The null hypothesis for a slope is commonly
 
@@ -1263,32 +1313,9 @@ Both use a linear predictor $X\beta$; they differ in the **response distribution
 
 ---
 
-### A Useful Mental Model
-
-Think of logistic regression as a connected modeling process, not merely as a formula for drawing an S-shaped curve.
-
-First, we specify a **binary response** and a Bernoulli model for the conditional distribution $Y_i\mid X_i$. This tells us that the conditional mean is the event probability $\pi_i$ and that the conditional variance is $\pi_i(1-\pi_i)$.
-
-Second, we retain the familiar **linear combination of predictors**, $\eta_i=\beta_0+\beta_1x_{i1}+\cdots+\beta_px_{ip}$. The logit link equates that linear predictor with the log-odds of the event. Inverting the link produces a valid probability:
-
-$$
-\boxed{X_i\longrightarrow\eta_i=X_i\beta
-\longrightarrow\pi_i=\frac{1}{1+e^{-\eta_i}}.}
-$$
-
-Finally, we use **maximum likelihood** to estimate the coefficients: choose the values that make the observed 0/1 outcomes most plausible under the model. We can then interpret coefficients as changes in log-odds, exponentiated coefficients as odds ratios, and fitted values as predicted probabilities.
-
-The key lesson is that the **linearity lives on the transformed mean scale**. Logistic regression estimates probabilities; a separate decision rule is needed before we can turn those probabilities into binary class predictions.
-
----
-
 ### Logistic Regression and Classification
 
-A fitted logistic regression model gives
-
-$$
-\hat\pi_i=P(Y_i=1\mid X_i).
-$$
+A fitted logistic regression model gives $\hat\pi_i=P(Y_i=1\mid X_i)$
 
 That is a **probability estimate**, not yet a dichotomous prediction.
 
@@ -1321,29 +1348,6 @@ The next lecture will ask what happens after we choose a decision rule:
 - How do we evaluate competing classification rules and models?
 
 Those questions lead to classification metrics, confusion matrices, ROC curves, and related evaluation tools.
-
-For now, remember the separation:
-
-$$
-\boxed{\text{Logistic regression estimates probabilities.}}
-$$
-
-$$
-\boxed{\text{A decision rule converts probabilities to class labels.}}
-$$
-
----
-
-### Takeaways
-
-- Binary outcomes require a model whose predictions remain between 0 and 1.
-- Logistic regression is a **Bernoulli GLM with a logit link**.
-- The linear predictor models **log-odds**; the sigmoid maps log-odds to probabilities.
-- Coefficients can be exponentiated to obtain **odds ratios**.
-- Logistic regression is fitted using **maximum likelihood**, connecting naturally to the broader GLM framework.
-- OLS assumptions do not transfer mechanically; independence, logit-linearity, multicollinearity, influence, and separation deserve attention.
-- Logistic regression produces probabilities. **Classification requires an additional decision rule.**
-- *Next*: <span style="color:#1565C0;">turning predicted probabilities into classifications and evaluating those decisions</span>.
 
 ---
 

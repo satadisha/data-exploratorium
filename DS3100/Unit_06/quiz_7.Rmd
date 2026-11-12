@@ -1,0 +1,222 @@
+## Your Turn:
+
+Research question: Can we correctly classify whether an exoplanet is a Super Earth or Gas Giant?
+
+Here's the source for the data: https://www.kaggle.com/datasets/adityamishraml/nasaexoplanets
+
+> Load in the `nasa_exoplanets.csv`
+
+```{r, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+exoplanets <- read.csv("./data/nasa_exoplanets.csv")
+```
+
+Here are some descriptions of the variables of interest:
+
++   `name` (character): name of planet by NASA
+
++   `distance` (numeric): distance of the planet from Earth in light years
+
++   `stellar_magnitude` (numeric): brightness of the planet (lower number = brighter)
+
++   `planet_type` (character): *type of planet (Neptune-like, Gas Giant, Super Earth)*
+
++   `discovery_year` (numeric): year in which planet got discovered
+
++   `mass_multiplier` (numeric): mass multiplier with respect to the planet in `mass_wrt`
+
++   `mass_wrt` (character): planet in our solar system in which the mass of the exoplanet is compared to (Neptune, Jupiter, Earth, respectively)
+
++   `radius_multiplier` (numeric): radius multiplier with respect to the planet in `mass_wrt`
+
++   `radius_wrt` (character): planet in our solar system in which the radius of the exoplanet is compared to (Neptune, Jupiter, Earth, respectively)
+
++   `orbital_radius` (numeric): radial distance the exoplanet takes around its sun in astronomical units
+
++   `orbital_period` (numeric): time in years it takes the exoplanet to go around its sun
+
++   `eccentricity` (numeric): how circular the exoplanet's orbital path is around the sun (values close to zero equaling circular)
+
++   `detection_method` (character): method used to detect the planet (Transit, Radial Velocity)
+
+> Check the balance of your outcome: `planet_type`
+
+```{r, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+table(exoplanets$planet_type)
+```
+
+> Subset `planet_type` based on our research question (see above loading the data)
+
+```{r, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Need to subset for Super Earths and Gas Giants
+exo_subset <- exoplanets[
+  exoplanets$planet_type %in% c("Super Earth", "Gas Giant"),
+]
+```
+
+> Are the outcomes balanced?
+
+```{r, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Obtain frequency of outcomes
+outcome_freq <- table(exo_subset$planet_type)
+
+# Obtain proportions
+outcome_freq / sum(outcome_freq)
+```
+
+Quite balanced.
+
+> Do the following:
+
++   Remove the variables `names` and `detection_method`
+
++   Set your outcome to a factor with levels: Super Earth and Gas Giant (in that order!)
+
+    +   Set the `*_wrt` variables to factors in the same pattern of levels (Earth and Jupiter)
+
+```{r, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Remove variables
+exo_voi <- exo_subset[,-c(1, 13)]
+
+# Set factors
+## I plan to set Super Earth = 0 and Gas Giant = 1,
+## I will want to set up these factors in the same way
+exo_voi$planet_type <- factor(exo_voi$planet_type, levels = c("Super Earth", "Gas Giant"))
+exo_voi$mass_wrt <- factor(exo_voi$mass_wrt, levels = c("Earth", "Jupiter"))
+exo_voi$radius_wrt <- factor(exo_voi$radius_wrt, levels = c("Earth", "Jupiter"))
+```
+
+> Perform logistic regression using all variables to predict `planet_type`
+
+```{r, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Perform logistic regression
+model <- glm(planet_type ~ ., family = "binomial", data = exo_voi)
+
+# # Check mulitcollinearity
+# vif(model)
+# Looped over to determine variables to keep
+
+# Keep variables
+keep <- !(colnames(exo_voi) %in% c("mass_wrt", "radius_wrt", "orbital_radius"))
+
+# Removed variables:
+# 1. `mass_wrt` = highest VIF
+# 2. `radius_wrt` = next highest VIF
+# 3. `orbital_radius` = next highest VIF
+model <- glm(
+  planet_type ~ ., family = "binomial", 
+  data = exo_voi[,keep]
+); summary(model)
+```
+
+> Cycle through the following steps until your results satisfy multicollinearity
+
++   Check for multicollinearity and handle any issues (use `Std. Error` to guide you)
+
++   Re-estimate model
+
++   Repeat until you have your final model
+
+> Final model
+
+```{r, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Subset to final data
+exo_final <- exo_voi[,keep]
+
+# Final model
+final_model <- glm(planet_type ~ ., family = "binomial", data = exo_final)
+summary(final_model)
+```
+
+> Show that your model satisfies multicollinearity
+
+```{r, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Check multicollinearity
+vif(final_model)
+```
+
+> Compute the pseudo-$R^2$
+
+```{r, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# McFadden's R-squared
+PseudoR2(final_model)
+```
+
+> Compute the accuracy, sensitivity, specificity, and kappa of your predictions (hint: you'll need to subset your original data!)
+
+```{r, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Get predictions
+predictions <- predict(final_model, type = "response")
+
+# Convert probabilities to predicted classes
+classes <- factor(
+  ifelse(predictions > 0.50, "Gas Giant", "Super Earth"),
+  levels = c("Super Earth", "Gas Giant")
+) # P(Y = 1 | X) = Gas Giant
+
+# There are missing data so a prediction cannot be made
+# unless the missing data are removed
+exo_final <- na.omit(exo_final)
+
+# Print confusion matrix
+confusionMatrix(
+  data = classes, # predictions
+  reference = exo_final$planet_type, # actual
+  positive = "Gas Giant" 
+)
+```
+
+<!---
+
+If you set everything up the way I did, then you'll get:
+
+Confusion Matrix and Statistics
+
+             Reference
+Prediction    Super Earth Gas Giant
+  Super Earth        1408       337
+  Gas Giant           169      1143
+                                               
+               Accuracy : 0.8345               
+                 95% CI : (0.8208, 0.8475)     
+    No Information Rate : 0.5159               
+    P-Value [Acc > NIR] : < 0.00000000000000022
+                                               
+                  Kappa : 0.6675               
+                                               
+ Mcnemar's Test P-Value : 0.0000000000001136   
+                                               
+            Sensitivity : 0.7723               
+            Specificity : 0.8928               
+         Pos Pred Value : 0.8712               
+         Neg Pred Value : 0.8069               
+             Prevalence : 0.4841               
+         Detection Rate : 0.3739               
+   Detection Prevalence : 0.4292               
+      Balanced Accuracy : 0.8326               
+                                               
+       'Positive' Class : Gas Giant
+       
+It's possible due to different decisions in handling multicollinearity that these
+results can be different (but they should be fairly close to each other)
+
+--->
+
+> Create a mosaic plot
+
+```{r, echo = TRUE, eval = TRUE, comment = NA, warning = FALSE, message = FALSE}
+# Create mosaic table
+mosaic_table <- table(
+  prediction = classes,
+  actual = exo_final$planet_type
+)
+
+# Print out the table
+mosaic_table
+
+# Next we can input this into the mosaicplot() function in base R
+mosaicplot(
+  mosaic_table, main = 'Confusion Matrix', 
+  xlab = 'actual', ylab = 'prediction',
+  color = '#824670', border = "#F7B32B"
+)
+```
