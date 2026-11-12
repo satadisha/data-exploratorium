@@ -523,7 +523,11 @@ plt.show()
 
 ### Exponentiating Logistic Regression Coefficients
 
-Recall that the logit is the **log odds function**. Exponentiating the logit yields the odds:
+Recall that the logit is the **log odds function**.
+$$
+\log\left(\frac{\pi}{1-\pi}\right)=\beta_0+\beta_1X_1+\cdots+\beta_pX_p
+$$
+Exponentiating the logit yields the odds:
 $$
 \omega = \frac{\pi}{1-\pi}
 = e^{\beta_0+\beta_1X_1+\cdots+\beta_pX_p}
@@ -1197,6 +1201,52 @@ Nonlinear terms, splines, or transformations can be added when a straight-line r
 
 ---
 
+### Residuals Are Different Here
+
+For OLS, the raw residual $e_i=y_i-\hat y_i$ has a central role in diagnostics.
+
+For logistic regression, $y_i\in\{0,1\}$ and $\hat\pi_i\in(0,1)$, so raw residuals: $e_i=y_i-\hat\pi_i$ have a very different distribution and variance.
+
+There are multiple residual definitions designed for different purposes and there is no one unique formula.
+
+- Raw response residuals
+- Pearson residuals
+- Deviance residuals
+
+:::{.callout-caution}
+
+## Non-constant error variance
+
+Do not mechanically apply Normal Q-Q plots or homoscedasticity checks from OLS to logistic regression. The response variance is inherently variable $\pi_i(1-\pi_i)$ and therefore heteroscedastic.
+:::
+
+---
+
+### Standard Errors and Inference
+
+Common uncertainty estimates for inferential statistics on a logistic regression model include:
+
+- coefficient estimate $\hat\beta_j$
+- standard error
+- Wald statistic and p-value
+- confidence interval
+
+The null hypothesis for a slope is commonly
+
+$$
+H_0:\beta_j=0,
+$$
+
+which is equivalent to
+
+$$
+H_0:e^{\beta_j}=1
+$$
+
+on the odds-ratio scale.
+
+---
+
 ### Multicollinearity
 
 As in multiple linear regression, highly correlated predictors can make coefficient estimates unstable. Consequences include:
@@ -1252,48 +1302,6 @@ Common diagnostic quantities include:
 - Cook's distance and case-deletion influence measures
 
 The goal is the same as before: identify observations that have disproportionate influence and investigate **why**.
-
----
-
-### Residuals Are Different Here
-
-For OLS, the raw residual $e_i=y_i-\hat y_i$ has a central role in diagnostics.
-
-For logistic regression, $y_i\in\{0,1\}$ and $\hat\pi_i\in(0,1)$, so raw residuals have a very different distribution and variance.
-
-There are multiple residual definitions designed for different purposes and there is no one unique formula.
-
-:::{.callout-caution}
-
-## Non-constant error variance
-
-Do not mechanically apply Normal Q-Q plots or homoscedasticity checks from OLS to logistic regression. The response variance is inherently $\pi_i(1-\pi_i)$.
-:::
-
----
-
-### Standard Errors and Inference
-
-Common uncertainty estimates for inferential statistics on a logistic regression model include:
-
-- coefficient estimate $\hat\beta_j$
-- standard error
-- Wald statistic and p-value
-- confidence interval
-
-The null hypothesis for a slope is commonly
-
-$$
-H_0:\beta_j=0,
-$$
-
-which is equivalent to
-
-$$
-H_0:e^{\beta_j}=1
-$$
-
-on the odds-ratio scale.
 
 ---
 
