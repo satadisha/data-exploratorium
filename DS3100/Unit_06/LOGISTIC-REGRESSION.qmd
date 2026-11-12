@@ -1271,11 +1271,21 @@ Paradoxically, when a predictor distinguishes the outcomes perfectly, standard M
 - Very large standard errors
 - Convergence warnings or failure
 
+---
+
+### What Happens When the Two Outcomes Are Perfectly Separated?
+
+::: {.columns}
+
+::: {.column width="60%"}
+
+Recall that logistic regression maps a linear combination of predictors to probabilities between 0 and 1 using the S-shaped sigmoid function. During MLE, we seek to **minimize the negative log-likelihood**, which penalizes incorrect probability estimates. 
+
+Assigning a very low probability to an example where $Y=1$ (or a very high probability to an example where $Y=0$) produces a very large penalty: *being wrong and confident is especially costly!*
+
 ::: {.callout-note}
 
-## What Happens When the Two Outcomes Are Perfectly Separated?
-
-Recall that logistic regression maps a linear combination of predictors to probabilities between 0 and 1 using the S-shaped sigmoid function. During MLE, we seek to **minimize the negative log-likelihood**, which penalizes incorrect probability estimates. Assigning a very low probability to an example where $Y=1$ produces a very large penalty: *being wrong and confident is especially costly!*
+## Model fitting with MLE
 
 - **With overlapping outcomes:** Some observations will lie on the wrong side of a steep sigmoid curve. Their increasingly large penalties act as *brakes*, preventing the model from making the curve too steep. The likelihood therefore typically reaches its maximum at finite coefficient values.
 
@@ -1285,6 +1295,17 @@ Recall that logistic regression maps a linear combination of predictors to proba
 
 :::
 
+:::
+
+::: {.column width="40%"}
+
+![](images/overlapping-samples.png){width=70% fig-align="center"}
+
+![](images/perfect-separation.png){width=70% fig-align="center"}
+
+:::
+
+:::
 
 ---
 

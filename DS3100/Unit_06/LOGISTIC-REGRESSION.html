@@ -1028,7 +1028,7 @@ Model Family:                Binomial   Df Model:                            2
 Link Function:                  Logit   Scale:                          1.0000
 Method:                          IRLS   Log-Likelihood:                -22.255
 Date:                Thu, 12 Nov 2026   Deviance:                       44.510
-Time:                        13:22:36   Pearson chi2:                     41.0
+Time:                        14:09:02   Pearson chi2:                     41.0
 No. Iterations:                     5   Pseudo R-squ. (CS):             0.3661
 Covariance Type:            nonrobust                                         
 ======================================================================================
@@ -1514,16 +1514,23 @@ H_0:e^{\beta_j}=1
 <li>Very large standard errors</li>
 <li>Convergence warnings or failure</li>
 </ul>
+</section>
+<section class="slide level2">
+
+<h3 id="what-happens-when-the-two-outcomes-are-perfectly-separated">What Happens When the Two Outcomes Are Perfectly Separated?</h3>
+<div class="columns">
+<div class="column" style="width:60%;">
+<p>Recall that logistic regression maps a linear combination of predictors to probabilities between 0 and 1 using the S-shaped sigmoid function. During MLE, we seek to <strong>minimize the negative log-likelihood</strong>, which penalizes incorrect probability estimates.</p>
+<p>Assigning a very low probability to an example where <span class="math inline">\(Y=1\)</span> (or a very high probability to an example where <span class="math inline">\(Y=0\)</span>) produces a very large penalty: <em>being wrong and confident is especially costly!</em></p>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>What Happens When the Two Outcomes Are Perfectly Separated?</strong></p>
+<p><strong>Model fitting with MLE</strong></p>
 </div>
 <div class="callout-content">
-<p>Recall that logistic regression maps a linear combination of predictors to probabilities between 0 and 1 using the S-shaped sigmoid function. During MLE, we seek to <strong>minimize the negative log-likelihood</strong>, which penalizes incorrect probability estimates. Assigning a very low probability to an example where <span class="math inline">\(Y=1\)</span> produces a very large penalty: <em>being wrong and confident is especially costly!</em></p>
 <ul>
 <li><p><strong>With overlapping outcomes:</strong> Some observations will lie on the wrong side of a steep sigmoid curve. Their increasingly large penalties act as <em>brakes</em>, preventing the model from making the curve too steep. The likelihood therefore typically reaches its maximum at finite coefficient values.</p></li>
 <li><p><strong>With complete separation:</strong> There are no such exceptions. The model can continually improve its likelihood by making the sigmoid curve steeper around the predictor value that separates the two outcomes. Predicted probabilities move increasingly close to <strong>0 for observed 0s</strong> and <strong>1 for observed 1s</strong>. Achieving this requires the slope coefficient <span class="math inline">\(\beta \approx \pm\infty\)</span>.</p></li>
@@ -1532,6 +1539,18 @@ H_0:e^{\beta_j}=1
 </div>
 </div>
 </div>
+</div><div class="column" style="width:40%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/overlapping-samples.png" class="quarto-figure quarto-figure-center" style="width:70.0%"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/perfect-separation.png" class="quarto-figure quarto-figure-center" style="width:70.0%"></p>
+</figure>
+</div>
+</div></div>
 </section>
 <section class="slide level2">
 
