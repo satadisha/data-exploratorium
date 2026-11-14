@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Dr.&nbsp;Satadisha Saha Bhowmick">
-  <meta name="dcterms.date" content="2026-11-12">
+  <meta name="dcterms.date" content="2026-11-14">
   <title>DS 3100 | Logistic Regression</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -210,7 +210,7 @@ Dr.&nbsp;Satadisha Saha Bhowmick
 </div>
 </div>
 
-  <p class="date">2026-11-12</p>
+  <p class="date">2026-11-14</p>
 </section>
 <section class="slide level2">
 
@@ -279,6 +279,9 @@ Fit and interpret logistic regression models in R and Python.
 </li>
 <li class="fragment">
 Recognize the main assumptions and common failure modes of logistic regression.
+</li>
+<li class="fragment">
+Evaluate binary classification problems.
 </li>
 </ul>
 </div>
@@ -1027,8 +1030,8 @@ Model:                            GLM   Df Residuals:                       47
 Model Family:                Binomial   Df Model:                            2
 Link Function:                  Logit   Scale:                          1.0000
 Method:                          IRLS   Log-Likelihood:                -22.255
-Date:                Thu, 12 Nov 2026   Deviance:                       44.510
-Time:                        14:09:02   Pearson chi2:                     41.0
+Date:                Sat, 14 Nov 2026   Deviance:                       44.510
+Time:                        00:19:32   Pearson chi2:                     41.0
 No. Iterations:                     5   Pseudo R-squ. (CS):             0.3661
 Covariance Type:            nonrobust                                         
 ======================================================================================
@@ -1483,15 +1486,27 @@ R^2_{McFadden}=1-\frac{\ell(\text{fitted model})}{\ell(\text{intercept-only mode
 <li>Wald statistic and p-value</li>
 <li>confidence interval</li>
 </ul>
-<p>The null hypothesis for a slope is commonly</p>
-<p><span class="math display">\[
-H_0:\beta_j=0,
-\]</span></p>
-<p>which is equivalent to</p>
-<p><span class="math display">\[
-H_0:e^{\beta_j}=1
-\]</span></p>
-<p>on the odds-ratio scale.</p>
+<p>The null hypothesis for a slope is commonly <span class="math inline">\(H_0:\beta_j=0\)</span>. This is equivalent to <span class="math inline">\(H_0:e^{\beta_j}=1\)</span> on the odds-ratio scale.</p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>The Wald Test</strong></p>
+</div>
+<div class="callout-content">
+<p>The <span style="color:blue;"><strong>Wald test</strong></span> is used to assess the statistical significance of an individual predictor for Logistic Regression: <span class="math display">\[
+z_j=\frac{\hat{\beta}_j}{SE(\hat{\beta}_j)}
+\]</span> This is analogous to the <span style="color:#1565C0;"><strong><span class="math inline">\(t\)</span>-test for variable significance in linear regression</strong></span>.</p>
+<p>The key difference is that the Wald statistic in logistic regression is typically compared to a <strong>standard normal (<span class="math inline">\(z\)</span>) distribution</strong>, unlike the corresponding statistic in classical linear regression which follows a <strong><span class="math inline">\(t\)</span>-distribution</strong> under the usual assumptions.</p>
+<ul>
+<li>In Linear regression, since <span class="math inline">\(Y\)</span> follows a Normal distribution, an additional error variance is estimated from the data, that adds to the uncertainty of the coefficient estimate, which is accounted for by using the t-distribution.</li>
+<li>In Logistic regression, since <span class="math inline">\(Y\)</span> follows a Bernoulli distribution, the variance is fully tied to the mean (probability of success), and there is no additional error variance to estimate. Therefore, using a standard normal distribution is reasonable here.</li>
+</ul>
+</div>
+</div>
+</div>
 </section>
 <section class="slide level2">
 
@@ -1502,7 +1517,8 @@ H_0:e^{\beta_j}=1
 <li>coefficients that change substantially when predictors are added or removed</li>
 <li>difficult conditional interpretations</li>
 </ul>
-<p>Hence it is important to check for multicollinearity and avoid perfect multicollinearity. We use the same diagnostics as in linear regression, as well as the same empirical VIF rule of thumb: <span style="color:red;"><span class="math inline">\(VIF&gt;5\)</span> is concerning; <span class="math inline">\(VIF&gt;10\)</span> is a red flag!</span></p>
+<p>Hence it is important to check for multicollinearity and avoid perfect multicollinearity. We use the same diagnostics as in linear regression, as well as the same empirical VIF rule of thumb:</p>
+<p><span style="color:red;"><span class="math inline">\(VIF&gt;5\)</span> is concerning; <span class="math inline">\(VIF&gt;10\)</span> is a red flag!</span></p>
 </section>
 <section class="slide level2">
 
@@ -1625,10 +1641,8 @@ H_0:e^{\beta_j}=1
 <section class="slide level2">
 
 <h3 id="logistic-regression-and-classification">Logistic Regression and Classification</h3>
-<p>A fitted logistic regression model gives <span class="math inline">\(\hat\pi_i=P(Y_i=1\mid X_i)\)</span></p>
-<p>That is a <strong>probability estimate</strong>, not yet a dichotomous prediction.</p>
-<p>To turn probabilities into labels, we must add a <strong>decision rule</strong>, for example</p>
-<p><span class="math display">\[
+<p>A fitted logistic regression model gives <span class="math inline">\(\hat\pi_i=P(Y_i=1\mid X_i)\)</span>. That is a <strong>probability estimate</strong>, not yet a binary outcome. That’s because <strong>logistic regression is not, by itself, a dichotomous classification algorithm.</strong> It becomes one when its predicted probabilities are combined with a decision rule.</p>
+<p>A sample <strong>decision rule</strong> looks like: <span class="math display">\[
 \hat y_i=
 \begin{cases}
 1, &amp; \hat\pi_i&gt;c\\
@@ -1636,31 +1650,191 @@ H_0:e^{\beta_j}=1
 \end{cases}
 \]</span></p>
 <p>for some threshold <span class="math inline">\(c\)</span>.</p>
-<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Important</strong></p>
+<p><strong>How to make a classification decision rule?</strong></p>
 </div>
 <div class="callout-content">
-<p><strong>Logistic regression is not, by itself, a dichotomous classification algorithm.</strong> It becomes one when its predicted probabilities are combined with a decision rule.</p>
+<p>A common choice for a probability threshold <span class="math inline">\(c=0.50\)</span>.</p>
+<ul>
+<li>A predicted probability of <span class="math inline">\(0.75\)</span> becomes class <span class="math inline">\(1\)</span>.</li>
+<li>A predicted probability of <span class="math inline">\(0.30\)</span> becomes class <span class="math inline">\(0\)</span>.</li>
+</ul>
+<p>However, <strong>0.50 is not a mandatory threshold</strong>. We can choose any value between 0 and 1, and we<em>should</em> choose <span class="math inline">\(c\)</span> depending on the problem and the consequences of incorrect classifications.</p>
 </div>
 </div>
 </div>
 </section>
 <section class="slide level2">
 
-<h3 id="what-comes-next">What Comes Next?</h3>
-<p>This lecture stops at <strong>probability modeling</strong>.</p>
-<p>The next lecture will ask what happens after we choose a decision rule:</p>
+<h3 id="evaluating-classification-confusion-matrix-and-metrics">Evaluating Classification: Confusion Matrix and Metrics</h3>
+<p>With a decision rule we can generate class labels for the observations in our dataset. We can then compare the reality (<em><span style="color:#1565C0;">actual</span> outcomes</em>) <strong>vs</strong> what comes out of the model (<em><span style="color:#1565C0;">predicted</span> class labels</em>) to evaluate classification performance. A <span style="color:#1565C0;"><strong>confusion matrix</strong></span> helps us accomplish this by organizing the results into four categories:</p>
+<div style="font-size: 0.65em;">
+<table class="caption-top">
+<colgroup>
+<col style="width: 28%">
+<col style="width: 35%">
+<col style="width: 35%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Actual / Predicted</th>
+<th style="text-align: center;"><span style="color:green;">Predicted 1</span></th>
+<th style="text-align: center;"><span style="color:green;">Predicted 0</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span style="color:green;"><strong>Actual 1</strong></span></td>
+<td style="text-align: center;">True Positive (TP)</td>
+<td style="text-align: center;">False Negative (FN)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span style="color:green;"><strong>Actual 0</strong></span></td>
+<td style="text-align: center;">False Positive (FP)</td>
+<td style="text-align: center;">True Negative (TN)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>From these four counts, we can compute several measures of classification performance, each highlighting a different aspect of the model’s behavior.</p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Evaluation Metrics</strong></p>
+</div>
+<div class="callout-content">
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><span style="color:green;"><u><strong>Accuracy</strong></u></span>: Proportion of all observations classified correctly.</p>
+<p><span class="math display">\[
+\text{Accuracy}=\frac{TP+TN}{TP+TN+FP+FN}
+\]</span></p>
+<p><span style="color:#1565C0;"><strong>Sensitivity (Recall)</strong></span>: Ability to correctly identify actual positives.</p>
+<p><span class="math display">\[
+\text{Sensitivity}=\frac{TP}{TP+FN}
+\]</span></p>
+<p><span style="color:#1565C0;"><strong>Specificity</strong></span>: Ability to correctly separate actual negatives.</p>
+<p><span class="math display">\[\begin{aligned}
+\text{Specificity}&amp;=\frac{TN}{TN+FP}\\
+\text{False Positive Rate} &amp;= 1-\text{Specificity} = \frac{FP}{TN+FP}
+\end{aligned}\]</span></p>
+</div><div class="column" style="width:50%;">
+<p><span style="color:#1565C0;"><strong>Precision</strong></span>: Proportion of predicted positives that are actually positive.</p>
+<p><span class="math display">\[
+\text{Precision}=\frac{TP}{TP+FP}
+\]</span></p>
+<p><span style="color:#1565C0;"><strong>Balanced Accuracy</strong></span>: Average of sensitivity and specificity.</p>
+<p><span class="math display">\[
+\text{Balanced Accuracy}
+=\frac{\text{Sensitivity}+\text{Specificity}}{2}
+\]</span></p>
+<p><span style="color:green;"><u><strong>F1-score</strong></u></span>: Harmonic mean of precision and recall.</p>
+<p><span class="math display">\[
+F_1=2\frac{\text{Precision}\times\text{Recall}}
+{\text{Precision}+\text{Recall}}
+\]</span></p>
+</div></div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="class-imbalance-and-the-choice-of-threshold">Class Imbalance and the Choice of Threshold</h3>
+<p>Suppose your classification model is being used to identify patients with a rare disease. In this case, the cost of failing to identify a patient who actually has the disease (false negative) is much higher than false flagging a few healthy patients (false positive).</p>
+<p>This is a good reminder that <strong>classification performance is context-dependent</strong>. Your decision rule and subsequent evaluation metrics should reflect the costs of different types of errors in your specific application.</p>
+<p>This is especially important when the outcome distribution is <strong>imbalanced</strong>, meaning that one class occurs much more frequently than the other.</p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>A model that predicts rare outcomes</strong></p>
+</div>
+<div class="callout-content">
+<p>If only 5% of patients in a dataset have a particular disease we need to be careful about two things:</p>
+<ol type="1">
+<li><p>Choice of classification threshold: Since false negatives are more costly than false positives, we may want to adjust our decision rule to a <strong>lower threshold</strong> for classifying a patient as having the disease. This would increase sensitivity at the cost of specificity.</p></li>
+<li><p>Choice of evaluation metric also matters: <span style="color:#1565C0;"><em>High accuracy does not necessarily imply good classification performance</em></span>, particularly when the model fails its primary purpose.</p>
 <ul>
-<li>How should a probability threshold be chosen?</li>
-<li>What counts as a correct or incorrect classification?</li>
-<li>How do we evaluate competing classification rules and models?</li>
+<li>A naive classifier that predicts “no disease” for every patient achieves <strong>95% accuracy</strong>. However, its sensitivity (<em>recall</em>) is <strong>0%</strong>, since it fails to identify every patient who actually has the disease.</li>
+</ul></li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="roc-curves-and-area-under-the-curve-auc">ROC Curves and Area Under the Curve (AUC)</h3>
+<p>Every classification threshold you choose for your model produces a different confusion matrix and therefore different evaluation metrics.</p>
+<p>To choose an optimal threshold, we can examine how the model performs across a range of thresholds. But keeping track of several matrices and metrics can be cumbersome. Instead, we can use a <span style="color:#1565C0;"><strong>Receiver Operating Characteristic (ROC) curve</strong></span> to visualize the trade-off between sensitivity (<em>recall</em>) and false positives across thresholds. The ROC curve plots:</p>
+<div class="columns">
+<div class="column" style="width:65%;">
+<div style="font-size: 0.72em;">
+<ul>
+<li><span style="color:#1565C0;"><strong>True Positive Rate (TPR)</strong></span>: Sensitivity, <span class="math inline">\(\frac{TP}{TP+FN}\)</span>, on the <span class="math inline">\(y\)</span> axis.</li>
+<li><span style="color:#1565C0;"><strong>False Positive Rate (FPR)</strong></span>: <span class="math inline">\(1-\text{Specificity}=\frac{FP}{FP+TN}\)</span>, on the <span class="math inline">\(x\)</span> axis.</li>
 </ul>
-<p>Those questions lead to classification metrics, confusion matrices, ROC curves, and related evaluation tools.</p>
+<p><span style="color:#1565C0;"><strong>Area Under the Curve (AUC)</strong></span> summarizes the ROC curve and the overall model performance into a single number between 0 and 1.</p>
+<ul>
+<li><span style="color:#1565C0;"><strong>AUC = 1</strong></span>: Perfect discrimination between the two classes.</li>
+<li><span style="color:#1565C0;"><strong>AUC = 0.5</strong></span>: Discrimination equivalent to random guessing.</li>
+<li><span style="color:#1565C0;"><strong>AUC &lt; 0.5</strong></span>: The model ranks positive cases below negative cases.</li>
+</ul>
+</div>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Core Purposes of an ROC Curve</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li>Threshold-Free Model Evaluation: The ROC curve is <strong>threshold-independent</strong>. It summarizes the model’s ability to discriminate between the two classes across all possible thresholds.</li>
+<li>Comparing Multiple Models: ROC curves can be plotted for multiple models on the same graph, allowing for visual comparison of their discriminative abilities. The model with the curve closest to the top-left corner (higher TPR and lower FPR) is generally preferred. The AUC also provides a single metric for comparison in that regard.</li>
+</ul>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:35%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/roc-curve.png" class="quarto-figure quarto-figure-center" style="width:80.0%" data-caption="ROC curve"></p>
+</figure>
+</div>
+</div></div>
+</section>
+<section id="before-we-wrap-up" class="slide level2">
+<h2>Before we wrap up…</h2>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Take a guided tour</strong></p>
+</div>
+<div class="callout-content">
+<p>Take a moment to explore this interactive logistic regression demos below prepared by our incredible co-instructor, Prof.&nbsp;Simon Lilburn.</p>
+<ul>
+<li><span style="color:green;"><strong>Moving the prediction threshold</strong></span>: A demonstration of decision rules, confusion matrices and the ROC-AUC on the problem of predicting starters among WNBA athletes. You can find it <a href="https://simonlilburn.net/ds-3100-fall-2026/wk12/move-the-cutoff.html">here</a>.</li>
+<li><span style="color:green;"><strong>From probabilities to likelihood</strong></span>: A demonstration of logistic regression with many predictors and a visualization of the log-likelihood function for the model to choosing the optimal predictor combination. For each predictor added to a model, we want a part of the variance that was previously unexplained to be reduced. Also check out how backward elimination is used to trim the model. You can find it <a href="https://simonlilburn.net/ds-3100-fall-2026/wk12/choose-the-predictors.html">here</a>.</li>
+</ul>
+</div>
+</div>
+</div>
 </section>
 <section class="slide level2">
 

@@ -117,6 +117,7 @@ By the end of this lecture, you should be able to:
 <li class="fragment">Explain why logistic regression coefficients are estimated using maximum likelihood.</li>
 <li class="fragment">Fit and interpret logistic regression models in R and Python.</li>
 <li class="fragment">Recognize the main assumptions and common failure modes of logistic regression.</li>
+<li class="fragment">Evaluate binary classification problems.</li>
 </ul>
 </div>
 
@@ -1231,19 +1232,24 @@ Common uncertainty estimates for inferential statistics on a logistic regression
 - Wald statistic and p-value
 - confidence interval
 
-The null hypothesis for a slope is commonly
+The null hypothesis for a slope is commonly $H_0:\beta_j=0$. This is equivalent to $H_0:e^{\beta_j}=1$ on the odds-ratio scale.
 
-$$
-H_0:\beta_j=0,
-$$
+::: {.callout-note}
 
-which is equivalent to
+## The Wald Test
 
+The <span style="color:blue;">**Wald test**</span> is used to assess the statistical significance of an individual predictor for Logistic Regression:
 $$
-H_0:e^{\beta_j}=1
+z_j=\frac{\hat{\beta}_j}{SE(\hat{\beta}_j)}
 $$
+This is analogous to the <span style="color:#1565C0;">**$t$-test for variable significance in linear regression**</span>.
 
-on the odds-ratio scale.
+The key difference is that the Wald statistic in logistic regression is typically compared to a **standard normal ($z$) distribution**, unlike the corresponding statistic in classical linear regression which follows a **$t$-distribution** under the usual assumptions.
+
+- In Linear regression, since $Y$ follows a Normal distribution, an additional error variance is estimated from the data, that adds to the uncertainty of the coefficient estimate, which is accounted for by using the t-distribution.
+- In Logistic regression, since $Y$ follows a Bernoulli distribution, the variance is fully tied to the mean (probability of success), and there is no additional error variance to estimate. Therefore, using a standard normal distribution is reasonable here.
+
+:::
 
 ---
 
@@ -1255,7 +1261,9 @@ As in multiple linear regression, highly correlated predictors can make coeffici
 - coefficients that change substantially when predictors are added or removed
 - difficult conditional interpretations
 
-Hence it is important to check for multicollinearity and avoid perfect multicollinearity. We use the same diagnostics as in linear regression, as well as the same empirical VIF rule of thumb: <span style="color:red;">$VIF>5$ is concerning; $VIF>10$ is a red flag!</span>
+Hence it is important to check for multicollinearity and avoid perfect multicollinearity. We use the same diagnostics as in linear regression, as well as the same empirical VIF rule of thumb: 
+
+<span style="color:red;">$VIF>5$ is concerning; $VIF>10$ is a red flag!</span>
 
 
 ---
@@ -1344,12 +1352,9 @@ Both use a linear predictor $X\beta$; they differ in the **response distribution
 
 ### Logistic Regression and Classification
 
-A fitted logistic regression model gives $\hat\pi_i=P(Y_i=1\mid X_i)$
+A fitted logistic regression model gives $\hat\pi_i=P(Y_i=1\mid X_i)$. That is a **probability estimate**, not yet a binary outcome. That's because **logistic regression is not, by itself, a dichotomous classification algorithm.** It becomes one when its predicted probabilities are combined with a decision rule.
 
-That is a **probability estimate**, not yet a dichotomous prediction.
-
-To turn probabilities into labels, we must add a **decision rule**, for example
-
+A sample **decision rule** looks like:
 $$
 \hat y_i=
 \begin{cases}
@@ -1360,23 +1365,176 @@ $$
 
 for some threshold $c$.
 
-:::{.callout-important}
-**Logistic regression is not, by itself, a dichotomous classification algorithm.** It becomes one when its predicted probabilities are combined with a decision rule.
+:::{.callout-note}
+
+## How to make a classification decision rule?
+
+A common choice for a probability threshold $c=0.50$.
+
+- A predicted probability of $0.75$ becomes class $1$.
+- A predicted probability of $0.30$ becomes class $0$.
+
+However, **0.50 is not a mandatory threshold**. We can choose any value between 0 and 1, and we*should* choose $c$ depending on the problem and the consequences of incorrect classifications.
+
 :::
 
 ---
 
-### What Comes Next?
+### Evaluating Classification: Confusion Matrix and Metrics
 
-This lecture stops at **probability modeling**.
+With a decision rule we can generate class labels for the observations in our dataset. We can then compare the reality (*<span style="color:#1565C0;">actual</span> outcomes*) **vs** what comes out of the model (*<span style="color:#1565C0;">predicted</span> class labels*) to evaluate classification performance. 
+A <span style="color:#1565C0;">**confusion matrix**</span> helps us accomplish this by organizing the results into four categories:
 
-The next lecture will ask what happens after we choose a decision rule:
+::: {style="font-size: 0.65em;"}
 
-- How should a probability threshold be chosen?
-- What counts as a correct or incorrect classification?
-- How do we evaluate competing classification rules and models?
+| Actual / Predicted | <span style="color:green;">Predicted 1</span> | <span style="color:green;">Predicted 0</span> |
+|:---|:---:|:---:|
+| <span style="color:green;">**Actual 1**</span> | True Positive (TP) | False Negative (FN) |
+| <span style="color:green;">**Actual 0**</span> | False Positive (FP) | True Negative (TN) |
 
-Those questions lead to classification metrics, confusion matrices, ROC curves, and related evaluation tools.
+:::
+
+From these four counts, we can compute several measures of classification performance, each highlighting a different aspect of the model's behavior.
+
+::: {.callout-note}
+
+## Evaluation Metrics
+
+::: {.columns}
+
+::: {.column width="50%"}
+
+<span style="color:green;"><u>**Accuracy**</u></span>: Proportion of all observations classified correctly.
+
+$$
+\text{Accuracy}=\frac{TP+TN}{TP+TN+FP+FN}
+$$
+
+<span style="color:#1565C0;">**Sensitivity (Recall)**</span>: Ability to correctly identify actual positives.
+
+$$
+\text{Sensitivity}=\frac{TP}{TP+FN}
+$$
+
+<span style="color:#1565C0;">**Specificity**</span>: Ability to correctly separate actual negatives.
+
+$$\begin{aligned}
+\text{Specificity}&=\frac{TN}{TN+FP}\\
+\text{False Positive Rate} &= 1-\text{Specificity} = \frac{FP}{TN+FP}
+\end{aligned}$$
+
+:::
+
+::: {.column width="50%"}
+
+<span style="color:#1565C0;">**Precision**</span>: Proportion of predicted positives that are actually positive.
+
+$$
+\text{Precision}=\frac{TP}{TP+FP}
+$$
+
+<span style="color:#1565C0;">**Balanced Accuracy**</span>: Average of sensitivity and specificity.
+
+$$
+\text{Balanced Accuracy}
+=\frac{\text{Sensitivity}+\text{Specificity}}{2}
+$$
+
+<span style="color:green;"><u>**F1-score**</u></span>: Harmonic mean of precision and recall.
+
+$$
+F_1=2\frac{\text{Precision}\times\text{Recall}}
+{\text{Precision}+\text{Recall}}
+$$
+
+:::
+
+:::
+
+:::
+
+---
+
+### Class Imbalance and the Choice of Threshold
+
+Suppose your classification model is being used to identify patients with a rare disease. In this case, the cost of failing to identify a patient who actually has the disease (false negative) is much higher than false flagging a few healthy patients (false positive).
+
+This is a good reminder that **classification performance is context-dependent**. Your decision rule and subsequent evaluation metrics should reflect the costs of different types of errors in your specific application.
+
+This is especially important when the outcome distribution is **imbalanced**, meaning that one class occurs much more frequently than the other.
+
+::: {.callout-note}
+
+## A model that predicts rare outcomes
+
+If only 5% of patients in a dataset have a particular disease we need to be careful about two things:
+
+1. Choice of classification threshold: Since false negatives are more costly than false positives, we may want to adjust our decision rule to a **lower threshold** for classifying a patient as having the disease. This would increase sensitivity at the cost of specificity.
+
+2. Choice of evaluation metric also matters: <span style="color:#1565C0;">*High accuracy does not necessarily imply good classification performance*</span>, particularly when the model fails its primary purpose.
+
+    - A naive classifier that predicts "no disease" for every patient achieves **95% accuracy**. However, its sensitivity (*recall*) is **0%**, since it fails to identify every patient who actually has the disease.
+
+:::
+
+---
+
+### ROC Curves and Area Under the Curve (AUC)
+
+Every classification threshold you choose for your model produces a different confusion matrix and therefore different evaluation metrics.
+
+To choose an optimal threshold, we can examine how the model performs across a range of thresholds. But keeping track of several matrices and metrics can be cumbersome. Instead, we can use a <span style="color:#1565C0;">**Receiver Operating Characteristic (ROC) curve**</span> to visualize the trade-off between sensitivity (*recall*) and false positives across thresholds. The ROC curve plots:
+
+::: {.columns}
+
+::: {.column width="65%"}
+
+::: {style="font-size: 0.72em;"}
+
+- <span style="color:#1565C0;">**True Positive Rate (TPR)**</span>: Sensitivity, $\frac{TP}{TP+FN}$, on the $y$ axis.
+- <span style="color:#1565C0;">**False Positive Rate (FPR)**</span>: $1-\text{Specificity}=\frac{FP}{FP+TN}$, on the $x$ axis.
+
+<span style="color:#1565C0;">**Area Under the Curve (AUC)**</span> summarizes the ROC curve and the overall model performance into a single number between 0 and 1.
+
+- <span style="color:#1565C0;">**AUC = 1**</span>: Perfect discrimination between the two classes.
+- <span style="color:#1565C0;">**AUC = 0.5**</span>: Discrimination equivalent to random guessing.
+- <span style="color:#1565C0;">**AUC < 0.5**</span>: The model ranks positive cases below negative cases.
+
+:::
+
+::: {.callout-note}
+
+## Core Purposes of an ROC Curve
+
+- Threshold-Free Model Evaluation: The ROC curve is **threshold-independent**. It summarizes the model's ability to discriminate between the two classes across all possible thresholds.
+- Comparing Multiple Models: ROC curves can be plotted for multiple models on the same graph, allowing for visual comparison of their discriminative abilities. The model with the curve closest to the top-left corner (higher TPR and lower FPR) is generally preferred. The AUC also provides a single metric for comparison in that regard.
+
+:::
+
+:::
+
+::: {.column width="35%"}
+
+![](images/roc-curve.png){width=80% fig-align="center" caption="ROC curve"}
+:::
+
+:::
+
+
+---
+
+## Before we wrap up...
+
+::: {.callout-tip}
+
+### Take a guided tour
+
+Take a moment to explore this interactive logistic regression demos below prepared by our incredible co-instructor, Prof. Simon Lilburn.
+
+- <span style="color:green;">**Moving the prediction threshold**</span>: A demonstration of decision rules, confusion matrices and the ROC-AUC on the problem of predicting starters among WNBA athletes. You can find it [here](https://simonlilburn.net/ds-3100-fall-2026/wk12/move-the-cutoff.html).
+- <span style="color:green;">**From probabilities to likelihood**</span>: A demonstration of logistic regression with many predictors and a visualization of the log-likelihood function for the model to choosing the optimal predictor combination. For each predictor added to a model, we want a part of the variance that was previously unexplained to be reduced. Also check out how backward elimination is used to trim the model. You can find it [here](https://simonlilburn.net/ds-3100-fall-2026/wk12/choose-the-predictors.html).
+
+:::
 
 ---
 
