@@ -1,0 +1,186 @@
+country,iso3,region,income,life,adult_mort,gdp,health,internet,school,school_exp,population
+Afghanistan,AFG,Eastern Mediterranean,Low,61.8,293.8,497,74,17.6,2.7,10.6,37856121
+Albania,ALB,Europe,Upper middle,78.5,62.8,6069,366,68.6,10.1,15,2567801
+Algeria,DZA,Africa,Lower middle,76.5,81.6,4468,242,55.8,7,15.2,43294546
+Angola,AGO,Africa,Lower middle,64.4,257.9,2508,64,32.1,5.7,12.2,32375632
+Antigua and Barbuda,ATG,Americas,High,76.5,109.8,18896,808,71.1,11.7,15.5,91364
+Argentina,ARG,Americas,Upper middle,77,106.1,9956,1007,79.9,11.1,18.1,44973465
+Armenia,ARM,Europe,Upper middle,76,111.8,4597,534,66.5,11.3,14,2962500
+Australia,AUS,Western Pacific,High,82.6,60.9,55195,5543,93.6,12.6,21.4,25334826
+Austria,AUT,Europe,High,81.6,58.3,49886,5313,87.8,12.3,16.1,8879920
+Azerbaijan,AZE,Europe,Upper middle,74.8,100.8,4806,199,81.1,10.6,13.5,10024283
+Bahamas,BHS,Americas,High,72,193,33640,1881,90.7,12.6,11.8,394675
+Bahrain,BHR,Eastern Mediterranean,High,80.1,75.5,27260,1030,99.7,10.8,16.4,1483756
+Bangladesh,BGD,South-East Asia,Lower middle,73.4,116.6,2130,45,30.4,6.6,11.7,164913055
+Barbados,BRB,Americas,High,76.8,112.9,21929,1168,70.3,9.9,16.4,281207
+Belarus,BLR,Europe,Upper middle,74.2,148.1,6838,400,82.8,12.1,14.4,9419758
+Belgium,BEL,Europe,High,81.6,62.6,46717,5087,90.3,12.4,19.6,11488980
+Belize,BLZ,Americas,Upper middle,72.7,154.3,6172,298,58.8,8.9,13.3,385829
+Benin,BEN,Africa,Lower middle,63.8,201,1131,34,20.5,3,10.8,12726755
+Bhutan,BTN,South-East Asia,Lower middle,74.6,114.1,3577,116,74.2,5.2,13,764824
+Bolivia (Plurinational State of),BOL,Americas,Lower middle,73.3,131,4203,241,47.5,9.9,15.4,11671386
+Bosnia and Herzegovina,BIH,Europe,Upper middle,78,92.2,6122,546,69.9,10.2,13.4,3345533
+Botswana,BWA,Africa,Upper middle,67,297.6,7172,438,48.8,10.3,11.5,2332083
+Brazil,BRA,Americas,Upper middle,75.6,126,9030,868,73.9,8.1,15.4,207455459
+Brunei Darussalam,BRN,Western Pacific,High,77,101.2,30427,679,95,9.2,13.8,442680
+Bulgaria,BGR,Europe,Upper middle,75,133.4,10354,733,67.9,11.4,15.6,6616726
+Burkina Faso,BFA,Africa,Low,62.9,233.1,765,41,9.3,2.1,8.9,20961952
+Burundi,BDI,Africa,Low,64.7,234.9,234,22,6.1,3.1,10.1,12255336
+Cabo Verde,CPV,Africa,Lower middle,75.6,138.2,4381,211,61.9,6,11.7,514104
+Cambodia,KHM,Western Pacific,Lower middle,70.7,182.7,2226,113,52.3,4.8,11.2,16481304
+Cameroon,CMR,Africa,Lower middle,62.6,267,1555,57,36.5,6.5,11.3,25506095
+Canada,CAN,Americas,High,82,65.6,46353,5099,91.9,13.8,15.9,37618495
+Central African Republic,CAF,Africa,Low,42.2,439.7,449,36,7.5,3.9,7.1,4944703
+Chad,TCD,Africa,Low,59.5,258.6,893,30,7.6,2.2,8,16685223
+Chile,CHL,Americas,High,81.3,76.5,14497,1349,85,10.9,16.6,19197744
+China,CHN,Western Pacific,Upper middle,78.5,87.6,10343,539,64.1,7.9,15,1407745000
+Colombia,COL,Americas,Upper middle,77.9,89,6473,507,65,8.6,14.5,49907985
+Comoros,COM,Africa,Lower middle,68.5,179.8,1519,78,16.4,5.6,12.8,786578
+Congo,COG,Africa,Lower middle,63.7,293,2488,58,16.1,8.2,12.2,5616661
+Congo (Democratic Republic of the),COD,Africa,Low,61.5,248.7,504,19,13,7.1,10.4,92947442
+Costa Rica,CRI,Americas,Upper middle,80.6,84.7,12952,930,81.2,8.8,15.8,4999553
+Croatia,HRV,Europe,High,78.3,86.1,15564,1064,79.1,11.8,16,3949390
+Cuba,CUB,Americas,Upper middle,77.5,100.1,9232,1023,68,10.7,14.3,11202846
+Cyprus,CYP,Europe,High,82,51.5,29227,2059,86.1,12.4,16,1286671
+Czechia,CZE,Europe,High,79.1,79.3,24063,1805,80.9,12.9,16.1,10671870
+Côte d'Ivoire,CIV,Africa,Lower middle,63.6,239,2142,68,36.3,4.8,9.9,28193009
+Denmark,DNK,Europe,High,81.3,57.2,59404,6050,98,12.9,18.6,5814422
+Djibouti,DJI,Eastern Mediterranean,Lower middle,65.6,232.2,2837,68,58.5,3.8,6,1088709
+Dominican Republic,DOM,Americas,Upper middle,73.4,153.4,8183,357,79.7,8.9,14.5,10894043
+Ecuador,ECU,Americas,Upper middle,78.8,101.3,6205,485,59.2,8.8,14.1,17340021
+Egypt,EGY,Eastern Mediterranean,Lower middle,71.2,138.4,2963,143,57.3,9.6,12.7,107553158
+El Salvador,SLV,Americas,Lower middle,73.5,173.2,4320,381,50.5,7.1,11.1,6222318
+Equatorial Guinea,GNQ,Africa,Upper middle,62.4,284.7,6804,223,49.1,8.2,11.9,1670177
+Eritrea,ERI,Africa,Low,64.5,284.7,,28,11.2,4.9,7.3,3240194
+Estonia,EST,Europe,High,78.9,99.8,24021,1599,90.2,13.6,15.7,1326898
+Eswatini (Kingdom of),SWZ,Africa,Lower middle,57.1,467.7,3913,320,43.9,8.1,14.6,1179874
+Ethiopia,ETH,Africa,Low,68.4,172.7,793,26,16,2.4,9,115737383
+Fiji,FJI,Western Pacific,Upper middle,68.3,218.4,5842,255,63.2,10.5,13.7,914899
+Finland,FIN,Europe,High,81.6,65.9,48358,4460,89.6,12.9,19,5521606
+France,FRA,Europe,High,82.4,66.3,40408,4520,83.3,11.6,15.9,67382061
+Gabon,GAB,Africa,Upper middle,65.9,256,7441,206,59.5,9.4,12.4,2267706
+Gambia,GMB,Africa,Low,65.7,246.2,738,23,31.1,4.3,8.8,2456844
+Georgia,GEO,Europe,Upper middle,74.1,142,4741,340,68.8,12.8,16.3,3720161
+Germany,DEU,Europe,High,81,65.5,47656,5447,88.1,14.2,17.2,83092962
+Ghana,GHA,Africa,Lower middle,66.4,232.7,2187,71,22.1,6.5,11.3,31258945
+Greece,GRC,Europe,High,81.3,68.2,19335,1569,75.7,11.1,19.6,10721582
+Grenada,GRD,Americas,Upper middle,74.8,142.8,10463,516,64.3,9.4,16.6,115981
+Guatemala,GTM,Americas,Upper middle,71.4,168,4512,279,44.4,5.7,10.8,17103803
+Guinea,GIN,Africa,Low,61.1,240.6,1031,42,23.9,2.2,10,13034346
+Guinea-Bissau,GNB,Africa,Low,59.6,334.3,811,54,17.9,3.7,10.4,1967696
+Guyana,GUY,Americas,Upper middle,64.2,223.8,6406,314,55.3,8.6,12.9,807665
+Haiti,HTI,Americas,Low,64,254.9,1352,49,35.8,5.4,11,11105163
+Honduras,HND,Americas,Lower middle,72.2,165,2502,184,39.4,7.1,10,9943633
+Hungary,HUN,Europe,High,76.3,117,17013,1062,80.4,12.2,15,9694824
+Iceland,ISL,Europe,High,82.3,55.3,69296,5912,99.5,13.7,18.2,360563
+India,IND,South-East Asia,Lower middle,70.5,163,2041,61,29.5,6.3,11.8,1389030312
+Indonesia,IDN,Western Pacific,Upper middle,72,152.5,4107,118,47.7,8.4,13.2,272489381
+Iran (Islamic Republic of),IRN,Eastern Mediterranean,Upper middle,77.3,87,3997,224,72.5,10.6,14.2,87051648
+Iraq,IRQ,Eastern Mediterranean,Upper middle,73,136.1,5672,242,44.3,6.7,12.1,41192171
+Ireland,IRL,Europe,High,82.1,56.2,81828,5454,87,11.6,19.2,4976456
+Israel,ISR,Europe,High,82.7,53.2,44092,3335,86.8,13.3,14.8,9054000
+Italy,ITA,Europe,High,83,50.1,33813,2909,67.9,10.7,16.4,59729081
+Jamaica,JAM,Americas,Upper middle,73.9,143.9,6031,391,70.8,9.5,12.5,2823271
+Japan,JPN,Western Pacific,High,84.2,49.8,41425,4431,92.7,12.7,15.4,126633000
+Jordan,JOR,Eastern Mediterranean,Upper middle,79.1,63.5,4558,295,70.1,10.4,12.9,10671891
+Kazakhstan,KAZ,Europe,Upper middle,73.2,158.9,9457,264,81.9,12.3,14.6,19209555
+Kenya,KEN,Africa,Lower middle,67,239.9,1960,86,22.7,8,11.3,51202827
+Kiribati,KIR,Western Pacific,Lower middle,62.3,294.3,1750,178,41.8,9.1,11.8,123921
+Korea (Democratic People's Rep. of),PRK,South-East Asia,Low,72.5,162,,,,,12,26037632
+Korea (Republic of),KOR,Western Pacific,High,83.7,55.7,33827,2602,96.2,12.5,16.4,51764822
+Kuwait,KWT,Eastern Mediterranean,High,83.3,55.2,31708,1643,99.5,7.3,15.5,4442316
+Kyrgyzstan,KGZ,Europe,Lower middle,73.4,139.2,1422,61,64.1,11.9,12.5,6590211
+Lao People's Democratic Republic,LAO,Western Pacific,Lower middle,68.8,179.6,2589,68,47,5.9,10.5,7237636
+Latvia,LVA,Europe,High,75.7,143.5,17295,1183,86.1,13.2,16.5,1913822
+Lebanon,LBN,Eastern Mediterranean,Upper middle,78.8,68,8906,798,81.5,10.4,11.8,5794594
+Lesotho,LSO,Africa,Lower middle,53.2,551.8,1082,236,42.3,7.4,11.2,2209405
+Liberia,LBR,Africa,Low,62.8,227.2,658,51,19.9,5.6,10.4,5043721
+Libya,LBY,Eastern Mediterranean,Upper middle,73.4,149.8,9963,553,71.4,7.8,13.2,6951033
+Lithuania,LTU,Europe,High,76.3,137.4,19609,1361,81.6,13.4,16.2,2811089
+Luxembourg,LUX,Europe,High,82.8,48.1,112697,6222,97.1,12.5,14.2,620001
+Madagascar,MDG,Africa,Low,64.3,232.6,500,16,9.4,4.9,9.4,28219554
+Malawi,MWI,Africa,Low,63.7,297.1,581,37,11.1,5.3,10.1,19025752
+Malaysia,MYS,Western Pacific,Upper middle,74.3,139.4,10920,419,84.2,10.6,13.1,33440596
+Maldives,MDV,South-East Asia,Upper middle,79.3,61.9,11740,881,77.5,7.1,12.2,487731
+Mali,MLI,Africa,Low,62.5,225.3,972,31,25,2,7.1,21068405
+Malta,MLT,Europe,High,82.2,53.1,32422,2947,85.8,12,15.6,503912
+Mauritania,MRT,Africa,Lower middle,70.2,150.2,1767,55,25.1,4.6,8.7,4467708
+Mauritius,MUS,Africa,High,74,152.3,11568,639,61.7,9.9,14.6,1265985
+Mexico,MEX,Americas,Upper middle,75,138.7,10370,550,69.6,9.1,14.9,125762982
+Micronesia (Federated States of),FSM,Western Pacific,Lower middle,66.2,268.2,3582,425,38,7.3,11.5,110282
+Moldova (Republic of),MDA,Europe,Lower middle,70.5,146.5,4405,284,73.3,11.8,14.5,2664224
+Mongolia,MNG,Western Pacific,Lower middle,72.4,210.6,4348,198,51.1,10.2,14.5,3267673
+Montenegro,MNE,Europe,Upper middle,76.8,100.4,8749,755,73.5,12.5,15.4,626753
+Morocco,MAR,Eastern Mediterranean,Lower middle,74.2,118.7,3508,179,84.1,5.9,13.7,36210898
+Mozambique,MOZ,Africa,Low,59.4,360.5,519,41,12.5,3.6,10.6,29884380
+Myanmar,MMR,South-East Asia,Lower middle,69.1,180.2,1426,54,36.5,6.4,11.5,52640713
+Namibia,NAM,Africa,Upper middle,64,306.8,4732,419,49.8,7.2,11.7,2650494
+Nepal,NPL,South-East Asia,Lower middle,71.1,148.9,1203,54,33.3,4.3,12.9,28414064
+Netherlands,NLD,Europe,High,82.3,53.7,53555,5341,93.3,12.4,18.4,17344874
+New Zealand,NZL,Western Pacific,High,80.1,64.9,42872,3680,89.9,13,19.5,4970300
+Nicaragua,NIC,Americas,Lower middle,77.1,106.6,1959,166,39,9.6,11.3,6483657
+Niger,NER,Africa,Low,60.2,211.4,541,32,11.3,1.3,7.5,22947757
+Nigeria,NGA,Africa,Lower middle,62.6,188.1,3190,68,29.7,7.2,10.1,209485641
+North Macedonia,MKD,Europe,Upper middle,76.3,86.6,6719,469,81.4,11,13.4,1876262
+Norway,NOR,Europe,High,82.6,48.8,79329,8007,98,13,18.2,5347896
+Oman,OMN,Eastern Mediterranean,High,77.1,99.3,19180,730,90.3,11.4,14,4591241
+Pakistan,PAK,Eastern Mediterranean,Lower middle,66.9,179.9,1390,36,17.1,4.5,7.6,230800899
+"Palestine, State of",PSE,Eastern Mediterranean,Lower middle,77.7,83.4,3657,317,70.6,9.7,13.3,4685306
+Panama,PAN,Americas,High,78.7,91.1,16478,1339,63.6,10.5,13.2,4234700
+Papua New Guinea,PNG,Western Pacific,Lower middle,67,210.9,2576,60,13.6,4.9,10.8,9609010
+Paraguay,PRY,Americas,Upper middle,73.5,125,5821,417,68.5,8.8,13.5,6515058
+Peru,PER,Americas,Upper middle,78.8,97.6,7037,368,60,9.9,14.7,32449303
+Philippines,PHL,Western Pacific,Lower middle,70.3,190,3401,142,43,9,13,110804683
+Poland,POL,Europe,High,77.7,111,15875,1014,80.4,13.1,15.9,37965475
+Portugal,PRT,Europe,High,81.6,70.3,23343,2210,75.3,9.3,16.6,10286263
+Puerto Rico (US),PRI,Americas,High,78.9,104.8,31831,,77.7,,,3302691
+Qatar,QAT,Eastern Mediterranean,High,81.1,66.7,66841,2008,99.7,10.1,13.2,2638657
+Romania,ROU,Europe,High,75.5,134.1,12910,739,73.7,11.3,14.4,19371648
+Russian Federation,RUS,Europe,Upper middle,73.2,186.1,11448,650,82.6,12.4,15.2,145453291
+Rwanda,RWA,Africa,Low,68.1,196.8,823,40,21.4,4.6,11.5,12776103
+Saint Lucia,LCA,Americas,Upper middle,73.6,125.9,11764,506,61.1,8.6,12.7,177661
+Saint Vincent and the Grenadines,VCT,Americas,Upper middle,72.7,179.2,8741,372,59.6,11,16,104167
+Samoa,WSM,Western Pacific,Upper middle,69.9,198.2,4352,243,,11.4,12.4,209780
+Sao Tome and Principe,STP,Africa,Lower middle,72.7,156,1935,107,44.3,5.8,12.5,213392
+Saudi Arabia,SAU,Eastern Mediterranean,High,77.2,86.1,29567,1505,95.7,10.9,16,30063799
+Senegal,SEN,Africa,Lower middle,68.3,182.4,1431,64,43.4,2.8,8.9,16352922
+Serbia,SRB,Europe,Upper middle,75.9,110,7756,641,77.4,11.4,14.9,6945235
+Seychelles,SYC,Africa,High,73,157.2,19142,675,76.6,11.2,18.7,97625
+Sierra Leone,SLE,Africa,Low,60.5,236.4,844,48,15.7,3.5,9,7731991
+Singapore,SGP,Western Pacific,High,83.9,46.3,66069,2924,88.9,11.7,16.7,5703569
+Slovakia,SVK,Europe,High,77.6,101.6,19406,1342,82.9,12.9,14.5,5454147
+Slovenia,SVN,Europe,High,81.3,65.3,25814,2219,83.1,12.8,17.3,2088385
+Solomon Islands,SLB,Western Pacific,Lower middle,65.6,284.8,2224,99,22.5,5.9,11.3,728147
+Somalia,SOM,Eastern Mediterranean,Low,55.3,355.6,540,13,2.7,,,16030971
+South Africa,ZAF,Africa,Upper middle,65.7,288.6,6534,539,69.7,11.4,14.2,59587885
+South Sudan,SSD,Africa,Low,59.7,292.6,,35,6.7,5.7,5.6,10423384
+Spain,ESP,Europe,High,83.1,53.8,29787,2757,90.7,10.4,17.5,47118501
+Sri Lanka,LKA,South-East Asia,Lower middle,77,101.9,4082,147,32,10.6,13.5,21803000
+Sudan,SDN,Eastern Mediterranean,Low,69,150.7,710,32,,3.8,8.4,45548175
+Suriname,SUR,Americas,Upper middle,71.7,175.9,6630,589,62,8.3,11,605768
+Sweden,SWE,Europe,High,82.6,48.3,51649,5688,94.5,12.6,18.5,10278887
+Switzerland,CHE,Europe,High,83.4,43.4,85873,9610,93.1,13.9,16.3,8575280
+Syrian Arab Republic,SYR,Eastern Mediterranean,Low,72.2,180.8,1110,55,,6,7.5,20353534
+Tajikistan,TJK,Europe,Low,72.8,109.5,871,61,22.7,11.3,10.9,9529966
+Tanzania (United Republic of),TZA,Africa,Lower middle,67,221.2,1063,40,16.6,5.7,8.7,59174891
+Thailand,THA,South-East Asia,Upper middle,78.2,141.6,7606,288,66.7,8.7,15.6,71522271
+Timor-Leste,TLS,South-East Asia,Lower middle,69,160.6,1562,78,28,5.8,13.2,1300945
+Togo,TGO,Africa,Low,63.5,250,918,49,20.7,5.3,12.8,7619925
+Tonga,TON,Western Pacific,Upper middle,72.5,163.4,4789,267,51.6,10.9,17.4,105669
+Trinidad and Tobago,TTO,Americas,High,71.2,161.9,17213,1097,75,10.8,14,1363985
+Tunisia,TUN,Eastern Mediterranean,Lower middle,76.5,84,3529,213,66.7,7.3,14.6,11875081
+Turkmenistan,TKM,Europe,Upper middle,68.6,184.7,4365,433,,11.1,12.1,6803944
+Türkiye,TUR,Europe,Upper middle,78.5,80,9395,389,74,8.6,19.2,82579440
+Uganda,UGA,Africa,Low,65.8,238.7,822,33,11.7,6.1,11.4,42999637
+Ukraine,UKR,Europe,Lower middle,73,179.7,3620,243,70.1,11.1,13.7,44957458
+United Arab Emirates,ARE,Eastern Mediterranean,High,83.1,42.8,45939,1962,99.1,12.7,13.5,9445785
+United Kingdom,GBR,Europe,High,81.2,68.8,43161,4260,92.5,13.3,17.3,66628000
+United States,USA,Americas,High,78.8,106.8,65228,10550,89.4,13.6,16.6,330226227
+Uruguay,URY,Americas,High,76.9,112.4,18316,1693,83.4,9,16.5,3397206
+Uzbekistan,UZB,Europe,Lower middle,74.6,141.3,2129,99,70.4,11.9,12.2,32964701
+Vanuatu,VUT,Western Pacific,Lower middle,67.3,254.3,3636,112,,7,11.7,291985
+Venezuela (Bolivarian Republic of),VEN,Americas,Upper middle,73,151.4,2523,113,49.1,9.8,13.2,28938098
+Viet Nam,VNM,Western Pacific,Lower middle,74.5,128.8,3441,171,68.7,8.4,14.8,97173776
+Yemen,YEM,Eastern Mediterranean,Low,66.9,204.4,,81,17.5,4.7,7.5,35111408
+Zambia,ZMB,Africa,Lower middle,63.2,311.5,1259,85,14.5,7.2,11,18513839
+Zimbabwe,ZWE,Africa,Lower middle,60,388.7,2185,55,26.6,8.7,11,15271368

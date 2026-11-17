@@ -1,0 +1,284 @@
+---
+title: "Lab 10: Elevator Pitch Preparation"
+author: "FIRSTNAME LASTNAME"
+date: "`r format(Sys.time(), 'Compiled %X on %A, %B %d, %Y')`"
+output: pdf_document
+---
+
+<!--
+Please rename this file Lab-10_FIRSTNAME_LASTNAME.Rmd and put your
+name in the header above, keeping the quotation marks. Please save it
+in a folder for Lab 10, with countries_2019.csv and your report's data
+file in a data/ folder beside it. Before you leave your section,
+please submit this Rmd, its knitted PDF, and the data files it reads
+on Brightspace. The lab grading and the makeup rule are in the
+handout. Part 1 and the slide plan in Part 2 are half of the sheet.
+
+Please have the report you will pitch open, with its Rmd and its data.
+For Report 1, please also have the marked report and its feedback.
+-->
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE,
+                      fig.width = 6, fig.height = 3.5, fig.align = "center")
+```
+
+We use the tidyverse, so there is nothing new to install.
+
+```{r load-packages}
+library(tidyverse)
+```
+
+Every other chunk of code is switched off with a hash character at the
+start of each line. When you reach a chunk, please remove the hashes
+(select the lines and press Ctrl+Shift+C, or Cmd+Shift+C on a Mac), run
+the chunk, and look at the result before reading on. For the countries
+example the code is complete. For your own figure you also replace the
+names in capitals with your own file and column names.
+
+Please answer the questions in bold as you reach them. Most of them are
+one or two sentences.
+
+# Part 1: From a report to a pitch
+
+**Your lab section and the date:** *Your answer here.*
+
+**The report you will pitch (Report 1 or Report 2), its dataset, and
+what one row represents:** *Your answer here.*
+
+**Why this report rather than the other one:** *Your answer here.*
+
+## Three sentences
+
+Please write each in one sentence. The handout has an example for the
+countries file.
+
+**Your research question:**
+
+*Your answer here.*
+
+**Your key finding, with its number in its units:**
+
+*Your answer here.*
+
+**Your take-home message, the one thing a listener should remember:**
+
+*Your answer here.*
+
+## What stays in the report
+
+Please name three things from your report that the pitch leaves out,
+and say why a listener can follow the three sentences without each
+one.
+
+1. *Your answer here.*
+2. *Your answer here.*
+3. *Your answer here.*
+
+# Part 2: The slides and the figure
+
+## The plan
+
+Please fill in a row for each slide. Combine or add rows if your
+slides differ from the handout's five, and keep the total between 180
+and 240 seconds.
+
+| Slide | Seconds | What is on it | The one point you make |
+|:-------------------|-------:|:---------------------------|:---------------------------|
+| 1. Motivation | 30 | ... | ... |
+| 2. Data | 30 | ... | ... |
+| 3. The result | 75 | ... | ... |
+| 4. Limitation | 30 | ... | ... |
+| 5. Take-home message | 20 | ... | ... |
+| **Total** | **185** | | |
+
+**The number you will say aloud, as you will say it.** For a Report 2
+pitch, the predictor of interest's coefficient as a comparison of two
+observations, with what is held fixed, in units a listener can
+picture. For a Report 1 pitch, the number from your figure that
+carries the answer, in its units, compared with something:
+
+*Your answer here.*
+
+**The limitation you will name, and why it is specific to your data
+rather than true of almost any study:**
+
+*Your answer here.*
+
+## The countries example
+
+`countries` is the 2019 countries file without the four countries
+that have no GDP: one row per country, with life expectancy at birth
+(`life`, in years) and GDP per person (`gdp`, in current US dollars).
+
+```{r read-countries}
+# countries <- read_csv("data/countries_2019.csv") |>
+#   filter(!is.na(gdp))
+# nrow(countries)
+```
+
+This is the figure as a report might draw it: a point for each
+country, colored by its WHO region, with GDP on a log scale and the
+default text size. It is a reasonable figure for a reader with time to
+study it.
+
+```{r report-figure}
+# ggplot(countries, aes(x = gdp, y = life, color = region)) +
+#   geom_point() +
+#   scale_x_log10() +
+#   labs(x = "GDP per person (current US dollars, log scale)",
+#        y = "Life expectancy at birth (years)",
+#        color = "WHO region")
+```
+
+`countries_model` is the straight line fitted to life expectancy
+against the logarithm of GDP. Its slope is the difference in life
+expectancy for a tenfold difference in GDP per person.
+
+```{r countries-model}
+# countries_model <- lm(life ~ log10(gdp), data = countries)
+# coef(countries_model)
+```
+
+`slide_figure` is the same data drawn for a slide. The text is twice
+the default size (`base_size = 22`). The title states the finding,
+with the slope rounded. `geom_smooth(method = "lm")` draws the fitted
+line. `label_dollar(accuracy = 1)`, from the package `scales`
+(installed with the tidyverse), writes the axis numbers as whole
+dollars. The colors and
+their legend are gone, because the pitch does not discuss the regions.
+The chunk draws the figure at the shape of a slide, 10 by 5.625
+inches.
+
+```{r slide-figure, fig.width = 10, fig.height = 5.625, out.width = "100%"}
+# slide_figure <- ggplot(countries, aes(x = gdp, y = life)) +
+#   geom_point(size = 3, alpha = 0.5) +
+#   geom_smooth(method = "lm", se = FALSE, linewidth = 1.5) +
+#   scale_x_log10(breaks = c(300, 1000, 3000, 10000, 30000, 100000),
+#                 labels = scales::label_dollar(accuracy = 1)) +
+#   labs(title = "Ten times the income goes with 10 more years",
+#        x = "GDP per person (log scale)",
+#        y = "Life expectancy (years)") +
+#   theme_minimal(base_size = 22)
+# slide_figure
+```
+
+**Name two changes between the two figures. For each, say what it
+does for a listener in the room:**
+
+*Your answer here.*
+
+## Your figure for a slide
+
+Please choose the figure from your report that carries your key
+finding, and copy its code into the chunk below in place of the
+skeleton. The skeleton is a scatterplot; if your figure is of another
+kind (a bar chart, a box plot, a faceted figure), please start from
+your report's own code instead. If your report changed the data before
+drawing the figure (with `na_if()` or `factor()`, for instance),
+please copy those lines in too. Then make the changes from the
+handout's "A figure for a slide". `my_figure` is your figure.
+
+```{r my-figure, fig.width = 10, fig.height = 5.625, out.width = "100%"}
+# my_data <- read_csv("data/YOUR-FILE.csv")
+# my_figure <- ggplot(my_data, aes(x = PREDICTOR, y = OUTCOME)) +
+#   geom_point(size = 3, alpha = 0.5) +
+#   labs(title = "THE FINDING IN A FEW WORDS",
+#        x = "PREDICTOR IN WORDS (UNITS)",
+#        y = "OUTCOME IN WORDS (UNITS)") +
+#   theme_minimal(base_size = 22)
+# my_figure
+```
+
+`ggsave()` writes `my_figure` to `pitch-figure.png`, beside this
+sheet, at the shape of a slide, ready to put on one.
+
+```{r save-figure}
+# ggsave("pitch-figure.png", my_figure, width = 10, height = 5.625,
+#        dpi = 200)
+```
+
+**What did you change from your report's version of the figure, and
+why?**
+
+*Your answer here.*
+
+**What you will say about the figure on the slide: the axes, what one
+mark is, and the feature that answers your question:**
+
+*Your answer here.*
+
+# Part 3: Practice with a partner
+
+**Partner (first name or initials) and the report they pitched:**
+*Your answer here.*
+
+## Your pitch
+
+**Its time, as your partner measured it (minutes and seconds):**
+*Your answer here.*
+
+**The clearest part, according to your partner, and why:**
+
+*Your answer here.*
+
+**Where your partner was lost, if anywhere:**
+
+*Your answer here.*
+
+**Your take-home message as your partner said it back. Was that what
+you meant?**
+
+*Your answer here.*
+
+**Your key number as your partner said it back. Was that what you
+meant?**
+
+*Your answer here.*
+
+## Your partner's pitch
+
+**Its time (minutes and seconds):** *Your answer here.*
+
+**The clearest part, and why it was clear:**
+
+*Your answer here.*
+
+**A point where you were confused or lost, and what would have helped
+(or say that there was none):**
+
+*Your answer here.*
+
+**The take-home message, in your own words:**
+
+*Your answer here.*
+
+**The key number, said back (for a Report 2 pitch, as a comparison of
+two observations):**
+
+*Your answer here.*
+
+## Your revision
+
+**The change you made to your slides after the feedback, and why:**
+
+*Your answer here.*
+
+**What remains to do before your slides are due (11:59 pm on the day
+before your Lab 11 section):**
+
+*Your answer here.*
+
+**If you gave the pitch a second time: its time, and what the second
+listener said back:**
+
+*Your answer here, or "no second run".*
+
+# Generative AI disclosure
+
+The feedback you gave in Part 3 must be your own. Please disclose any
+generative AI used for other work on this lab (for the slides or the
+figure, for instance), identifying the tool and its purpose, or write
+"none".
+
+*Your answer here.*
