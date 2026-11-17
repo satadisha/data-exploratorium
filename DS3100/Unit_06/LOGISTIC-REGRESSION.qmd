@@ -1270,14 +1270,47 @@ Hence it is important to check for multicollinearity and avoid perfect multicoll
 
 ### A Logistic-Specific Failure Mode: Perfect Separation
 
-**Complete separation** occurs when a predictor, or combination of predictors, perfectly separates observations. For example:
-$\text{Every observation with } X<5 \text{ has } Y=0; \quad Y=1 \text{ for all } X\geq5.$
+:::{.callout-tip}
 
+## Complete separation
+
+Occurs when a predictor, or combination of predictors, perfectly separates observations. For example:
+$\text{Every observation with } X<5 \text{ has } Y=0; \quad Y=1 \text{ for all } X\geq5.$<br>
 Paradoxically, when a predictor distinguishes the outcomes perfectly, standard Maximum Likelihood Estimation (MLE) breaks down because <span style="color:blue;">in cases of complete separation, finite maximum likelihood estimates do not exist.</span> Instead, we have:
 
 - Extremely large coefficient estimates
 - Very large standard errors
 - Convergence warnings or failure
+:::
+
+::: {.columns .v-center}
+
+::: {.column width="50%"}
+
+::: {style="text-align: center;"}
+
+![](images/overlapping-samples.png){width="70%"}
+
+**Overlapping Samples**
+
+:::
+
+:::
+
+::: {.column width="50%"}
+
+::: {style="text-align: center;"}
+
+![](images/perfect-separation.png){width="70%"}
+
+**Perfectly separable Samples**
+
+:::
+
+:::
+
+:::
+
 
 ---
 
@@ -1307,9 +1340,9 @@ Assigning a very low probability to an example where $Y=1$ (or a very high proba
 
 ::: {.column width="40%"}
 
-![](images/overlapping-samples.png){width=70% fig-align="center"}
+![](images/logisticregressionanimatedgif.gif){width=70% fig-align="center"}
 
-![](images/perfect-separation.png){width=70% fig-align="center"}
+![](images/complete_separation.gif){width=70% fig-align="center"}
 
 :::
 

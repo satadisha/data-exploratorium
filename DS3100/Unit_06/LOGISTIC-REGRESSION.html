@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Dr.&nbsp;Satadisha Saha Bhowmick">
-  <meta name="dcterms.date" content="2026-11-14">
+  <meta name="dcterms.date" content="2026-11-16">
   <title>DS 3100 | Logistic Regression</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -210,7 +210,7 @@ Dr.&nbsp;Satadisha Saha Bhowmick
 </div>
 </div>
 
-  <p class="date">2026-11-14</p>
+  <p class="date">2026-11-16</p>
 </section>
 <section class="slide level2">
 
@@ -1030,8 +1030,8 @@ Model:                            GLM   Df Residuals:                       47
 Model Family:                Binomial   Df Model:                            2
 Link Function:                  Logit   Scale:                          1.0000
 Method:                          IRLS   Log-Likelihood:                -22.255
-Date:                Sat, 14 Nov 2026   Deviance:                       44.510
-Time:                        00:19:32   Pearson chi2:                     41.0
+Date:                Mon, 16 Nov 2026   Deviance:                       44.510
+Time:                        22:19:20   Pearson chi2:                     41.0
 No. Iterations:                     5   Pseudo R-squ. (CS):             0.3661
 Covariance Type:            nonrobust                                         
 ======================================================================================
@@ -1523,13 +1523,36 @@ z_j=\frac{\hat{\beta}_j}{SE(\hat{\beta}_j)}
 <section class="slide level2">
 
 <h3 id="a-logistic-specific-failure-mode-perfect-separation">A Logistic-Specific Failure Mode: Perfect Separation</h3>
-<p><strong>Complete separation</strong> occurs when a predictor, or combination of predictors, perfectly separates observations. For example: <span class="math inline">\(\text{Every observation with } X&lt;5 \text{ has } Y=0; \quad Y=1 \text{ for all } X\geq5.\)</span></p>
-<p>Paradoxically, when a predictor distinguishes the outcomes perfectly, standard Maximum Likelihood Estimation (MLE) breaks down because <span style="color:blue;">in cases of complete separation, finite maximum likelihood estimates do not exist.</span> Instead, we have:</p>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Complete separation</strong></p>
+</div>
+<div class="callout-content">
+<p>Occurs when a predictor, or combination of predictors, perfectly separates observations. For example: <span class="math inline">\(\text{Every observation with } X&lt;5 \text{ has } Y=0; \quad Y=1 \text{ for all } X\geq5.\)</span><br> Paradoxically, when a predictor distinguishes the outcomes perfectly, standard Maximum Likelihood Estimation (MLE) breaks down because <span style="color:blue;">in cases of complete separation, finite maximum likelihood estimates do not exist.</span> Instead, we have:</p>
 <ul>
 <li>Extremely large coefficient estimates</li>
 <li>Very large standard errors</li>
 <li>Convergence warnings or failure</li>
 </ul>
+</div>
+</div>
+</div>
+<div class="columns v-center">
+<div class="column" style="width:50%;">
+<div style="text-align: center;">
+<p><img data-src="images/overlapping-samples.png" style="width:70.0%"></p>
+<p><strong>Overlapping Samples</strong></p>
+</div>
+</div><div class="column" style="width:50%;">
+<div style="text-align: center;">
+<p><img data-src="images/perfect-separation.png" style="width:70.0%"></p>
+<p><strong>Perfectly separable Samples</strong></p>
+</div>
+</div></div>
 </section>
 <section class="slide level2">
 
@@ -1558,12 +1581,12 @@ z_j=\frac{\hat{\beta}_j}{SE(\hat{\beta}_j)}
 </div><div class="column" style="width:40%;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="images/overlapping-samples.png" class="quarto-figure quarto-figure-center" style="width:70.0%"></p>
+<p><img data-src="images/logisticregressionanimatedgif.gif" class="quarto-figure quarto-figure-center" style="width:70.0%"></p>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="images/perfect-separation.png" class="quarto-figure quarto-figure-center" style="width:70.0%"></p>
+<p><img data-src="images/complete_separation.gif" class="quarto-figure quarto-figure-center" style="width:70.0%"></p>
 </figure>
 </div>
 </div></div>
