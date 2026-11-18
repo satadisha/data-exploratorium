@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Dr.&nbsp;Satadisha Saha Bhowmick">
-  <meta name="dcterms.date" content="2026-11-16">
+  <meta name="dcterms.date" content="2026-11-18">
   <title>DS 3100 | Logistic Regression</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -210,7 +210,7 @@ Dr.&nbsp;Satadisha Saha Bhowmick
 </div>
 </div>
 
-  <p class="date">2026-11-16</p>
+  <p class="date">2026-11-18</p>
 </section>
 <section class="slide level2">
 
@@ -1030,8 +1030,8 @@ Model:                            GLM   Df Residuals:                       47
 Model Family:                Binomial   Df Model:                            2
 Link Function:                  Logit   Scale:                          1.0000
 Method:                          IRLS   Log-Likelihood:                -22.255
-Date:                Mon, 16 Nov 2026   Deviance:                       44.510
-Time:                        22:19:20   Pearson chi2:                     41.0
+Date:                Wed, 18 Nov 2026   Deviance:                       44.510
+Time:                        01:19:39   Pearson chi2:                     41.0
 No. Iterations:                     5   Pseudo R-squ. (CS):             0.3661
 Covariance Type:            nonrobust                                         
 ======================================================================================
@@ -1799,8 +1799,10 @@ F_1=2\frac{\text{Precision}\times\text{Recall}}
 <section class="slide level2">
 
 <h3 id="roc-curves-and-area-under-the-curve-auc">ROC Curves and Area Under the Curve (AUC)</h3>
+<div style="font-size: 0.75em;">
 <p>Every classification threshold you choose for your model produces a different confusion matrix and therefore different evaluation metrics.</p>
 <p>To choose an optimal threshold, we can examine how the model performs across a range of thresholds. But keeping track of several matrices and metrics can be cumbersome. Instead, we can use a <span style="color:#1565C0;"><strong>Receiver Operating Characteristic (ROC) curve</strong></span> to visualize the trade-off between sensitivity (<em>recall</em>) and false positives across thresholds. The ROC curve plots:</p>
+</div>
 <div class="columns">
 <div class="column" style="width:65%;">
 <div style="font-size: 0.72em;">
@@ -1808,7 +1810,7 @@ F_1=2\frac{\text{Precision}\times\text{Recall}}
 <li><span style="color:#1565C0;"><strong>True Positive Rate (TPR)</strong></span>: Sensitivity, <span class="math inline">\(\frac{TP}{TP+FN}\)</span>, on the <span class="math inline">\(y\)</span> axis.</li>
 <li><span style="color:#1565C0;"><strong>False Positive Rate (FPR)</strong></span>: <span class="math inline">\(1-\text{Specificity}=\frac{FP}{FP+TN}\)</span>, on the <span class="math inline">\(x\)</span> axis.</li>
 </ul>
-<p><span style="color:#1565C0;"><strong>Area Under the Curve (AUC)</strong></span> summarizes the ROC curve and the overall model performance into a single number between 0 and 1.</p>
+<p><span style="color:#1565C0;"><strong>Area Under the Curve (AUC)</strong></span> summarizes the ROC curve and the overall model performance into a single number between 0 and 1.<br> <strong>Probabilistic Meaning</strong>: An AUC score of <span class="math inline">\(0.85\)</span> means that if you randomly pick a positive observation and a negative one, the model will assign a higher probability score to the positive example <span class="math inline">\(85\%\)</span> of the time.</p>
 <ul>
 <li><span style="color:#1565C0;"><strong>AUC = 1</strong></span>: Perfect discrimination between the two classes.</li>
 <li><span style="color:#1565C0;"><strong>AUC = 0.5</strong></span>: Discrimination equivalent to random guessing.</li>

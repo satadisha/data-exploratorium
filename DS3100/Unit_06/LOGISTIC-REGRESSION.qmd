@@ -1514,9 +1514,13 @@ If only 5% of patients in a dataset have a particular disease we need to be care
 
 ### ROC Curves and Area Under the Curve (AUC)
 
+::: {style="font-size: 0.75em;"}
+
 Every classification threshold you choose for your model produces a different confusion matrix and therefore different evaluation metrics.
 
 To choose an optimal threshold, we can examine how the model performs across a range of thresholds. But keeping track of several matrices and metrics can be cumbersome. Instead, we can use a <span style="color:#1565C0;">**Receiver Operating Characteristic (ROC) curve**</span> to visualize the trade-off between sensitivity (*recall*) and false positives across thresholds. The ROC curve plots:
+
+:::
 
 ::: {.columns}
 
@@ -1527,14 +1531,13 @@ To choose an optimal threshold, we can examine how the model performs across a r
 - <span style="color:#1565C0;">**True Positive Rate (TPR)**</span>: Sensitivity, $\frac{TP}{TP+FN}$, on the $y$ axis.
 - <span style="color:#1565C0;">**False Positive Rate (FPR)**</span>: $1-\text{Specificity}=\frac{FP}{FP+TN}$, on the $x$ axis.
 
-<span style="color:#1565C0;">**Area Under the Curve (AUC)**</span> summarizes the ROC curve and the overall model performance into a single number between 0 and 1.
+<span style="color:#1565C0;">**Area Under the Curve (AUC)**</span> summarizes the ROC curve and the overall model performance into a single number between 0 and 1.<br>
+**Probabilistic Meaning**: An AUC score of $0.85$ means that if you randomly pick a positive observation and a negative one, the model will assign a higher probability score to the positive example $85\%$ of the time.
 
 - <span style="color:#1565C0;">**AUC = 1**</span>: Perfect discrimination between the two classes.
 - <span style="color:#1565C0;">**AUC = 0.5**</span>: Discrimination equivalent to random guessing.
 - <span style="color:#1565C0;">**AUC < 0.5**</span>: The model ranks positive cases below negative cases.
-
 :::
-
 ::: {.callout-note}
 
 ## Core Purposes of an ROC Curve
